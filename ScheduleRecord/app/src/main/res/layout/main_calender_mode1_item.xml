@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,20 +14,36 @@
         android:background="@drawable/abaa_item_im_em"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="4dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UnusedAttribute,UselessParent">
 
         <CheckBox
             android:id="@+id/mode1ItemCheckBox"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:textSize="30sp"
-            android:text="12:01" />
+            android:layout_width="30dp"
+            android:layout_height="100dp" />
 
         <EditText
-            android:id="@+id/mode1ItemEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:id="@+id/mode1ItemEditText1"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:inputType="datetime"
+            android:textSize="30sp"
+            android:background="@drawable/abaa_item_edittext"
+            android:text="12:01"/>
 
+        <EditText
+            android:id="@+id/mode1ItemEditText2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="点击写入日程"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:layout_margin="5dp"
+            android:paddingHorizontal="3dp"
+            android:background="@drawable/abaa_item_edittext"
+            android:maxLines="3"
+            android:minLines="3" />
+
+    </LinearLayout>
 
 </LinearLayout>

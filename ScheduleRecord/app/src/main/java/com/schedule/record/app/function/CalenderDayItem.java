@@ -1,13 +1,21 @@
 package com.schedule.record.app.function;
 
 public class CalenderDayItem {
-    private String news,time;
+    private String news,time,check;
 
-    public CalenderDayItem(  String time,String news) {
+    public CalenderDayItem(String time,String news) {
+        this.time = time;
+        this.news = news;
+    }
+    public CalenderDayItem(String check,String time,String news) {
+        this.check = check;
         this.time = time;
         this.news = news;
     }
 
+    public String getCheck() {
+        return check;
+    }
     public String getNews() {
         return news;
     }
@@ -15,10 +23,13 @@ public class CalenderDayItem {
         return time;
     }
 
-    public void setNews(String name) {
+    public void setCheck(String check) {
+        this.check = check;
+    }
+    public void setNews(String news) {
         this.news = news;
     }
-    public void setTime(String name) {
+    public void setTime(String time) {
         this.time = time;
     }
 

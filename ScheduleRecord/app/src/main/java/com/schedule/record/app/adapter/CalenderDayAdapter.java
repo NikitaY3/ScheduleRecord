@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,9 @@ public class CalenderDayAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.main_calender_mode1_item,null);
             holder = new ViewHolder();
             holder.tv1= convertView.findViewById(R.id.mode1ItemCheckBox);
-            holder.tv2= convertView.findViewById(R.id.mode1ItemEditText);
+            holder.tv2= convertView.findViewById(R.id.mode1ItemEditText1);
+            holder.tv3= convertView.findViewById(R.id.mode1ItemEditText2);
+
 //            holder.btn= convertView.findViewById(R.id.mode1ItemLinearLayout);
             convertView.setTag(holder);
         }
@@ -57,13 +60,24 @@ public class CalenderDayAdapter extends BaseAdapter {
         }
         //数据
         CalenderDayItem pb=list.get(position);
-        holder.tv1.setText(pb.getTime());
-        holder.tv2.setText(pb.getNews());
+//        holder.tv1.setText(pb.getNews());
+        holder.tv2.setText(pb.getTime());
+        holder.tv3.setText(pb.getNews());
+//        holder.tv2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//
+//                }else{
+//
+//                }
+//            }
+//        });
 //        holder.btn.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {
 //                Toast.makeText(context,"该位置"+ position,Toast.LENGTH_SHORT).show();
-//                return false;
+//                return true;
 //            }
 //        });
 
@@ -80,7 +94,8 @@ public class CalenderDayAdapter extends BaseAdapter {
     }
 
     static class ViewHolder{
-        TextView tv1,tv2;
+        CheckBox tv1;
+        TextView tv2,tv3;
         Button btn;
     }
 }

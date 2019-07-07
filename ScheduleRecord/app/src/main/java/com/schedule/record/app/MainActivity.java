@@ -2,6 +2,7 @@ package com.schedule.record.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -24,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     RadioButton radioButton3;
     @BindView(R.id.mainRadioGroup)
     RadioGroup mainRadioGroup;
-    @BindView(R.id.MainlinearLayout1)
-    LinearLayout MainlinearLayout1;
 
 
     private FragmentController controller;
@@ -33,14 +32,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
 
         controller = FragmentController.getInstance(this, R.id.mainFrameLayout);
         controller.showFragment(0);
 
-//        mainTitle = findViewById(R.id.mainTitle);
         mainRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
