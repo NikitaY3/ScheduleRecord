@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/calendar2Button1"
+        android:layout_width="30dp"
+        android:layout_height="42dp"
+        android:layout_weight="1"
+        android:background="@drawable/abb_calendar_month"
+        android:text="7月"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/calendar2LinearLayout1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ac_my_head"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/calendar2Button1"
+        app:layout_constraintTop_toBottomOf="@+id/calendar2TextView1">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="日"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="一"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="二"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="三"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="四"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="五"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="六"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calendar2LinearLayout1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/calendar2LinearLayout3"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calendar2LinearLayout1">
+
+                <Button
+                    android:id="@+id/calendar2ButtonC1"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="1" />
+
+                <Button
+                    android:id="@+id/calendar2ButtonC2"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="2" />
+
+                <Button
+                    android:id="@+id/calendar2ButtonC3"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="3" />
+
+                <Button
+                    android:id="@+id/calendar2ButtonC4"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="4" />
+
+                <Button
+                    android:id="@+id/calendar2ButtonC5"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="5" />
+
+                <Button
+                    android:id="@+id/calendar2ButtonC6"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="6" />
+
+                <Button
+                    android:id="@+id/calendar2ButtonC7"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="7" />
+
+                <Button
+                    android:id="@+id/calendar2ButtonC8"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="8" />
+
+                <Button
+                    android:id="@+id/calendar2ButtonC9"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/abb_calendar_month"
+                    android:text="9" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

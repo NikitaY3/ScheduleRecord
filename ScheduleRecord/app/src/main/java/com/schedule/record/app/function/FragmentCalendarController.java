@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.schedule.record.app.Fragment.Calendar1Fragment;
 import com.schedule.record.app.Fragment.Calendar2Fragment;
 import com.schedule.record.app.Fragment.Calendar3Fragment;
 import com.schedule.record.app.Fragment.CalendarFragment;
@@ -13,34 +14,34 @@ import com.schedule.record.app.Fragment.MyFragment;
 
 import java.util.ArrayList;
 
-public class FragmentController {
+public class FragmentCalendarController {
 
     private int containerId;
     private FragmentManager fm;
     private ArrayList<Fragment> fragments;
 
-    private static FragmentController controller;
+    private static FragmentCalendarController controller;
 
-    public static FragmentController getInstance(FragmentActivity activity, int containerId) {
+    public static FragmentCalendarController getInstance(Fragment parentFragment, int containerId) {
         if (controller == null) {
-            controller = new FragmentController(activity, containerId);
-            return controller;
-        }else {
-            return null;
+            controller = new FragmentCalendarController(parentFragment, containerId);
         }
+        return controller;
     }
 
-    private FragmentController(FragmentActivity activity, int containerId) {
+    private FragmentCalendarController(Fragment fragment, int containerId) {
         this.containerId = containerId;
-        fm = activity.getSupportFragmentManager();
+        //fragment嵌套fragment，调用getChildFragmentManager
+        fm = fragment.getChildFragmentManager();
+
         initFragment();
     }
 
     private void initFragment() {
         fragments = new ArrayList<Fragment>();
-        fragments.add(new EquimentFragment());
-        fragments.add(new CalendarFragment());
-        fragments.add(new MyFragment());
+        fragments.add(new Calendar1Fragment());
+        fragments.add(new Calendar2Fragment());
+        fragments.add(new Calendar3Fragment());
 
         FragmentTransaction ft = fm.beginTransaction();
         for(Fragment fragment : fragments) {
@@ -69,8 +70,5 @@ public class FragmentController {
 
     public Fragment getFragment(int position) {
         return fragments.get(position);
-    }
-    public static void destoryController(){
-        controller = null;
     }
 }

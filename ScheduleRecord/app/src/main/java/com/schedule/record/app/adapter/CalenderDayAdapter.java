@@ -1,6 +1,7 @@
 package com.schedule.record.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.schedule.record.app.MainCalender1Edit;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.CalenderDayItem;
 
@@ -63,6 +64,13 @@ public class CalenderDayAdapter extends BaseAdapter {
 //        holder.tv1.setText(pb.getNews());
         holder.tv2.setText(pb.getTime());
         holder.tv3.setText(pb.getNews());
+        holder.tv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(context, MainCalender1Edit.class);
+                context.startActivity(intent);
+            }
+        });
 //        holder.tv2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
 //            public void onFocusChange(View v, boolean hasFocus) {

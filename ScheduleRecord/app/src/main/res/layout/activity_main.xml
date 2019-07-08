@@ -20,6 +20,7 @@
             android:id="@+id/mainRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
@@ -30,6 +31,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/a_main_button"
                 android:button="@null"
+                android:checked="true"
                 android:gravity="center"
                 android:text="设备" />
 

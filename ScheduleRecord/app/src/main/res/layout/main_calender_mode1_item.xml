@@ -22,27 +22,29 @@
             android:layout_width="30dp"
             android:layout_height="100dp" />
 
-        <EditText
+        <TextView
             android:id="@+id/mode1ItemEditText1"
             android:layout_width="120dp"
             android:layout_height="match_parent"
-            android:inputType="datetime"
             android:textSize="30sp"
+            android:gravity="center_vertical"
             android:background="@drawable/abaa_item_edittext"
+            android:textColor="#000"
             android:text="12:01"/>
 
-        <EditText
+        <TextView
             android:id="@+id/mode1ItemEditText2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:hint="点击写入日程"
-            android:inputType="textMultiLine"
-            android:scrollbars="vertical"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:ellipsize="end"
             android:layout_margin="5dp"
             android:paddingHorizontal="3dp"
             android:background="@drawable/abaa_item_edittext"
-            android:maxLines="3"
-            android:minLines="3" />
+            android:maxLines="3" />
 
     </LinearLayout>
 

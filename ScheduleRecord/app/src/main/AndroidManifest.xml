@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".MainMyLogon"/>
         <activity android:name=".MainMyLogonPhone"/>
+        <activity android:name=".MainCalender1Edit"/>
     </application>
 
 </manifest>

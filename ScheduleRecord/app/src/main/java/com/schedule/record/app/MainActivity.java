@@ -3,6 +3,7 @@ package com.schedule.record.app;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mainRadioGroup)
     RadioGroup mainRadioGroup;
 
+    private Button calendarbutton1;
 
     private FragmentController controller;
 
@@ -55,6 +57,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }
