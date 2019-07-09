@@ -10,39 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/calenderTextView1"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/calenderTextView1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
 
         <Spinner
             android:id="@+id/calendarSpinner"
-            android:layout_width="40dp"
+            android:layout_width="90dp"
             android:layout_height="40dp"
             android:layout_margin="5dp"
-            android:background="@color/green"
+            android:background="@drawable/ab_calender_spinner"
+            android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/calendarButton1"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/aba_calender_circle"
-            app:layout_constraintStart_toStartOf="@id/calenderTextView1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/calendarButton2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/aba_calender_circle"
-            app:layout_constraintEnd_toEndOf="@+id/calenderTextView1"
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>

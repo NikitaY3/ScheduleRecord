@@ -8,22 +8,26 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/calendar1Button2"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="5dp"
+            android:text="+"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
             android:background="@drawable/aba_calender_circle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+        <ListView
+            android:id="@+id/calendar1ListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteY="45dp" />
 
-    <ListView
-        android:id="@+id/calendar1ListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

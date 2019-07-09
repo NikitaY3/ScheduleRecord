@@ -28,8 +28,8 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/calendar2Button1"
-        app:layout_constraintTop_toBottomOf="@+id/calendar2TextView1">
+        app:layout_constraintStart_toEndOf="@id/calendar2Button1"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <Button
@@ -99,7 +99,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/calendar2LinearLayout3"
@@ -107,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/calendar2LinearLayout1">
+                app:layout_constraintTop_toBottomOf="@id/calendar2LinearLayout1"
+                tools:ignore="UselessParent">
 
                 <Button
                     android:id="@+id/calendar2ButtonC1"
@@ -182,6 +183,11 @@
                     android:text="9" />
 
             </LinearLayout>
+
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
     </ScrollView>
 
