@@ -64,7 +64,7 @@ public class CalendarFragment extends Fragment {
         teamList = new ArrayList<>();
         teamList.add("我的一天");
         teamList.add("我的一周");
-        teamList.add("我的一月");
+        teamList.add("我的一个月");
         arrayAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getActivity()),R.layout.main_calendar_item,teamList);
         //设置下拉列表的风格
         arrayAdapter.setDropDownViewResource(R.layout.main_calendar_item);
@@ -78,7 +78,6 @@ public class CalendarFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String s=((TextView)view).getText().toString();
                 Toast.makeText(getActivity(),s,Toast.LENGTH_SHORT).show();
-//                calendarButton1.setText(s);
                 calenderFrameLayout.showFragment(position);
             }
             @Override

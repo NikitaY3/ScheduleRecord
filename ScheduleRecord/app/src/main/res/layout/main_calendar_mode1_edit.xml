@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/editTextView1">
 
         <CheckBox
-            android:id="@+id/checkBox1"
+            android:id="@+id/editCheckBox1"
             android:layout_width="30dp"
             android:layout_height="100dp"/>
 

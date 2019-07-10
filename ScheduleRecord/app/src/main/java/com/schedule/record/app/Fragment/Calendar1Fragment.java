@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.CalenderDayAdapter;
 import com.schedule.record.app.function.CalenderDayItem;
+import com.schedule.record.app.function.DaySQLiteUser;
+import com.schedule.record.app.function.DaySQLiteUserDao;
+import com.schedule.record.app.sqlite.DaySQLite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +31,16 @@ public class Calendar1Fragment extends Fragment {
 
     @BindView(R.id.calendar1Button2)
     Button calendar1Button2;
-
     Unbinder unbinder;
+
     private View view;
     private ListView calendar1ListView;
     private List<CalenderDayItem> dataList;
 
+    private DaySQLite helper;
+    String DBName="day_1";
+    int version=1;
+    int Dayid1 = -1;
 
     @Nullable
     @Override
@@ -67,6 +75,16 @@ public class Calendar1Fragment extends Fragment {
                 final CalenderDayAdapter adapter = new CalenderDayAdapter(getActivity(), dataList);
                 //ListView关联适配器
                 calendar1ListView.setAdapter(adapter);
+
+                helper=new DaySQLite(getActivity(),DBName,null,version);
+                helper.getReadableDatabase();
+                DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+                Dayid1++;
+                String Dayid = String.valueOf(Dayid1);
+                dao.insert(new DaySQLiteUser(Dayid,false,"0000-00-00 00:00:00",
+                        "ddddddddd","12","dddd","0000-00-00","this is diary","test"));
+                Toast.makeText(getActivity(),"添加图书信息成功",Toast.LENGTH_SHORT).show();
+
                 break;
         }
     }
