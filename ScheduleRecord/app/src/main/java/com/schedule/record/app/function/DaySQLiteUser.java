@@ -93,16 +93,14 @@ public class DaySQLiteUser {
 
     @Override
     public String toString() {
-        return "DaySQLiteUser{" +
-                "dayid='" + dayid + '\'' +
-                ", checkbox=" + checkbox +
-                ", time='" + time + '\'' +
-                ", title='" + title + '\'' +
-                ", repeat='" + repeat + '\'' +
-                ", endday='" + endday + '\'' +
-                ", diary='" + diary + '\'' +
-                ", picture='" + picture + '\'' +
-                ", important='" + important + '\'' +
-                '}';
+        return "当前日程Dayid为：" + dayid + '\n' +
+                "是否已经完成：" + checkbox + '\n' +
+                "日程创建时间：" + time + '\n' +
+                "日程标题：" + title + '\n' +
+                "日程重复" + repeat + '\n' +
+                "日程截止时间：" + endday + '\n' +
+                "日程详细记录：" + diary + '\n' +
+                "日程图片：" + picture + '\n' +
+                "日程重要程度：" + important + '\n'+'\n';
     }
 }

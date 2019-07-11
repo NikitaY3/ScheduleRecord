@@ -60,19 +60,21 @@ public class CalendarFragment extends Fragment {
         calenderFrameLayout = FragmentCalendarController.getInstance(this, R.id.calenderFrameLayout);
         calenderFrameLayout.showFragment(0);
 
+        MySpinner();
+
+        return view;
+    }
+
+    private void MySpinner() {
         calendarSpinner = view.findViewById(R.id.calendarSpinner);
         teamList = new ArrayList<>();
         teamList.add("我的一天");
         teamList.add("我的一周");
         teamList.add("我的一个月");
         arrayAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getActivity()),R.layout.main_calendar_item,teamList);
-        //设置下拉列表的风格
         arrayAdapter.setDropDownViewResource(R.layout.main_calendar_item);
-        //将adapter 添加到spinner中
         calendarSpinner.setAdapter(arrayAdapter);
-        //设置默认选项
         calendarSpinner.setSelection(0);
-        //设置点击事件
         calendarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -84,7 +86,5 @@ public class CalendarFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-
-        return view;
     }
 }

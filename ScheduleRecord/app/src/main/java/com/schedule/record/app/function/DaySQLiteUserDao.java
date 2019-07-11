@@ -38,9 +38,12 @@ public class DaySQLiteUserDao {
         SQLiteDatabase db=helper.getWritableDatabase();
         db.delete(TABLE,"dayid=?",new String[]{dayid});
     }
+    public void deleteAll(){
+        SQLiteDatabase db=helper.getWritableDatabase();
+        db.delete(TABLE,null,null);
+    }
 
     public void update(DaySQLiteUser user){
-        DaySQLiteUser user1=user;
         SQLiteDatabase db=helper.getWritableDatabase();
         db.delete(TABLE,"dayid=?",new String[]{user.getDayid()});
 

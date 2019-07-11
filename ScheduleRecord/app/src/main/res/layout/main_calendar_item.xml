@@ -10,7 +10,6 @@
     android:gravity="center"
     android:singleLine="true"
     android:textColor="@color/colorPrimary"
-    style="?android:attr/spinnerDropDownItemStyle"
-    android:text="this is test">
+    style="?android:attr/spinnerDropDownItemStyle">
 
 </TextView>
