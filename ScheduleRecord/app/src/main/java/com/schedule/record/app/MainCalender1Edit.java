@@ -23,10 +23,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainCalender1Edit extends AppCompatActivity {
+
+    @BindView(R.id.editButton1)
+    Button editButton1;
     @BindView(R.id.editCheckBox1)
     CheckBox editCheckBox1;
+    @BindView(R.id.editEditText0)
+    EditText editEditText0;
     @BindView(R.id.editEditText1)
     EditText editEditText1;
+    @BindView(R.id.editLinearLayout1)
+    LinearLayout editLinearLayout1;
+    @BindView(R.id.editTextView2)
+    TextView editTextView2;
     @BindView(R.id.editButton21)
     Button editButton21;
     @BindView(R.id.editButton22)
@@ -35,10 +44,26 @@ public class MainCalender1Edit extends AppCompatActivity {
     Button editButton23;
     @BindView(R.id.editButton24)
     Button editButton24;
+    @BindView(R.id.editLinearLayout2)
+    LinearLayout editLinearLayout2;
+    @BindView(R.id.editTextView3)
+    TextView editTextView3;
+    @BindView(R.id.editRadio1)
+    RadioButton editRadio1;
+    @BindView(R.id.editRadio2)
+    RadioButton editRadio2;
+    @BindView(R.id.editRadio3)
+    RadioButton editRadio3;
     @BindView(R.id.editRadioGroup)
     RadioGroup editRadioGroup;
+    @BindView(R.id.editLinearLayout3)
+    LinearLayout editLinearLayout3;
+    @BindView(R.id.editTextView4)
+    TextView editTextView4;
     @BindView(R.id.editButton41)
     TextView editButton41;
+    @BindView(R.id.editLinearLayout4)
+    LinearLayout editLinearLayout4;
     @BindView(R.id.editEditText2)
     EditText editEditText2;
     @BindView(R.id.editImageButton1)
@@ -47,19 +72,8 @@ public class MainCalender1Edit extends AppCompatActivity {
     ImageButton editImageButton2;
     @BindView(R.id.editImageButton3)
     ImageButton editImageButton3;
-    @BindView(R.id.editEditText0)
-    EditText editEditText0;
-    @BindView(R.id.editLinearLayout1)
-    LinearLayout editLinearLayout1;
-    @BindView(R.id.editRadio1)
-    RadioButton editRadio1;
-    @BindView(R.id.editRadio2)
-    RadioButton editRadio2;
-    @BindView(R.id.editRadio3)
-    RadioButton editRadio3;
-    @BindView(R.id.editButton1)
-    Button editButton1;
-
+    @BindView(R.id.editLinearLayout5)
+    LinearLayout editLinearLayout5;
     private DaySQLite helper;
     DaySQLiteUserDao dao;
     DaySQLiteUser user;
@@ -120,17 +134,80 @@ public class MainCalender1Edit extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.editButton1)
-    public void onViewClicked() {
-//        user.setDayid(user.getDayid());
-        user.setDiary(editEditText0.getText().toString());
-//        user.setTime(editEditText1.getText().toString());
-        user.setTitle(editEditText1.getText().toString());
-        dao.updateAll(user);
+//    @OnClick(R.id.editButton1)
+//    public void onViewClicked() {
+////        user.setDayid(user.getDayid());
+//        user.setDiary(editEditText0.getText().toString());
+////        user.setTime(editEditText1.getText().toString());
+//        user.setTitle(editEditText1.getText().toString());
+//        dao.updateAll(user);
+//    }
+//    @OnClick({R.id.editButton21, R.id.editButton22, R.id.editButton23, R.id.editButton24, R.id.editButton41, R.id.editImageButton1, R.id.editImageButton2, R.id.editImageButton3})
+//    public void onViewClicked(View view) {
+//        switch (view.getId()) {
+//            case R.id.editButton21:
+//                user.setImportant("a");
+//                dao.updateAll(user);
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+//                break;
+//            case R.id.editButton22:
+//                user.setImportant("b");
+//                dao.updateAll(user);
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+//                break;
+//            case R.id.editButton23:
+//                user.setImportant("c");
+//                dao.updateAll(user);
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+//                break;
+//            case R.id.editButton24:
+//                user.setImportant("d");
+//                dao.updateAll(user);
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+//                break;
+//            case R.id.editButton41:
+//                editButton41.setText("2019年9月1日");
+//                break;
+//            case R.id.editImageButton1:
+//                break;
+//            case R.id.editImageButton2:
+//                break;
+//            case R.id.editImageButton3:
+//                break;
+//        }
+//    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        super.finish();
+        return super.onKeyDown(keyCode, event);
     }
-    @OnClick({R.id.editButton21, R.id.editButton22, R.id.editButton23, R.id.editButton24, R.id.editButton41, R.id.editImageButton1, R.id.editImageButton2, R.id.editImageButton3})
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @OnClick({R.id.editButton1, R.id.editEditText0, R.id.editEditText1, R.id.editButton21, R.id.editButton22, R.id.editButton23, R.id.editButton24, R.id.editButton41, R.id.editEditText2, R.id.editImageButton1, R.id.editImageButton2, R.id.editImageButton3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.editButton1:
+//        user.setDayid(user.getDayid());
+        user.setDiary(editEditText2.getText().toString());
+//        user.setTime(editEditText0.getText().toString());
+        user.setTitle(editEditText1.getText().toString());
+        dao.updateAll(user);
+                break;
+            case R.id.editEditText0:
+                break;
+            case R.id.editEditText1:
+                break;
             case R.id.editButton21:
                 user.setImportant("a");
                 dao.updateAll(user);
@@ -154,6 +231,8 @@ public class MainCalender1Edit extends AppCompatActivity {
             case R.id.editButton41:
                 editButton41.setText("2019年9月1日");
                 break;
+            case R.id.editEditText2:
+                break;
             case R.id.editImageButton1:
                 break;
             case R.id.editImageButton2:
@@ -162,22 +241,4 @@ public class MainCalender1Edit extends AppCompatActivity {
                 break;
         }
     }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        super.finish();
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        super.finish();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
 }

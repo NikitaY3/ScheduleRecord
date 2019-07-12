@@ -89,7 +89,6 @@ public class DaySQLiteUserDao {
     }
 
     public List<DaySQLiteUser> quiryAndSetItem(List<DaySQLiteUser> dataList1) {
-        List<DaySQLiteUser> dataList = dataList1;
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
@@ -107,12 +106,12 @@ public class DaySQLiteUserDao {
             String diary = cursor.getString(7);
             String picture = cursor.getString(8);
             boolean checkbox;
-            if(checkbox1>0){checkbox = true;}else {checkbox=false;}
+            checkbox = checkbox1 > 0;
             user=new DaySQLiteUser(dayid,checkbox,time,title,important,repeat,endday,diary,picture);
-            DaySQLiteUser things = new DaySQLiteUser(user.getTime(),user.isCheckbox() ,user.getTime(),user.getTitle(),user.getImportant(),user.getRepeat(),user.getEndday(),user.getDiary(),user.getPicture());
-            dataList.add(things);
+            DaySQLiteUser things = new DaySQLiteUser(user.getDayid(),user.isCheckbox() ,user.getTime(),user.getTitle(),user.getImportant(),user.getRepeat(),user.getEndday(),user.getDiary(),user.getPicture());
+            dataList1.add(things);
         }
-        return dataList;
+        return dataList1;
     }
 
     public void deleteAll(){
