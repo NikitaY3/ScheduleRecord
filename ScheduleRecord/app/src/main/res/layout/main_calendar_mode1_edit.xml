@@ -19,6 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/editButton1"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:text="保存"
+        android:textColor="@drawable/ac_my_button1_text"
+        app:layout_constraintEnd_toEndOf="@+id/editTextView1"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/editLinearLayout1"
         android:layout_width="match_parent"
@@ -34,6 +46,16 @@
             android:id="@+id/editCheckBox1"
             android:layout_width="30dp"
             android:layout_height="100dp"/>
+
+        <EditText
+            android:id="@+id/editEditText0"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/abaa_item_edittext"
+            android:gravity="center_vertical"
+            android:text="XX:XX"
+            android:textColor="#000"
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/editEditText1"
@@ -135,7 +157,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/editButton31"
+                android:id="@+id/editRadio1"
                 android:layout_width="35dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
@@ -148,7 +170,7 @@
                 android:text="每天" />
 
             <RadioButton
-                android:id="@+id/editButton32"
+                android:id="@+id/editRadio2"
                 android:layout_width="35dp"
                 android:layout_height="25dp"
                 android:layout_weight="1"
@@ -159,7 +181,7 @@
                 android:text="每周星期*" />
 
             <RadioButton
-                android:id="@+id/editButton33"
+                android:id="@+id/editRadio3"
                 android:layout_width="35dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"

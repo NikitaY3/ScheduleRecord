@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import com.schedule.record.app.R;
@@ -18,10 +17,7 @@ import com.schedule.record.app.function.CalenderWeekItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class Calendar2Fragment extends Fragment {
 

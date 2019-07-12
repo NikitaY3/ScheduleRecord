@@ -24,13 +24,13 @@
 
         <TextView
             android:id="@+id/mode1ItemEditText1"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:textSize="30sp"
-            android:gravity="center_vertical"
             android:background="@drawable/abaa_item_edittext"
+            android:gravity="center_vertical"
+            android:text="12:01"
             android:textColor="#000"
-            android:text="12:01"/>
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/mode1ItemEditText2"

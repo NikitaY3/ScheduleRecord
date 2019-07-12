@@ -4,19 +4,18 @@ public class DaySQLiteUser {
 //    dayid varchar(50) primary key, checkbox bit,time datetime,title varchar(150),important char(2),repeat varchar(50),endday date,diary text,picture char(50);
     private String dayid;
     private boolean checkbox;
-    private String time,title,repeat,endday,diary,picture;
-    private String important;
+    private String time,title,important,repeat,endday,diary,picture;
 
-    public DaySQLiteUser(String dayid, boolean checkbox, String time, String title, String repeat, String endday, String diary, String picture, String important) {
+    public DaySQLiteUser(String dayid, boolean checkbox, String time, String title, String important, String repeat, String endday, String diary, String picture) {
         this.dayid = dayid;
         this.checkbox = checkbox;
         this.time = time;
         this.title = title;
+        this.important = important;
         this.repeat = repeat;
         this.endday = endday;
         this.diary = diary;
         this.picture = picture;
-        this.important = important;
     }
 
     public String getDayid() {
@@ -51,6 +50,14 @@ public class DaySQLiteUser {
         this.title = title;
     }
 
+    public String getImportant() {
+        return important;
+    }
+
+    public void setImportant(String important) {
+        this.important = important;
+    }
+
     public String getRepeat() {
         return repeat;
     }
@@ -81,14 +88,6 @@ public class DaySQLiteUser {
 
     public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public String getImportant() {
-        return important;
-    }
-
-    public void setImportant(String important) {
-        this.important = important;
     }
 
     @Override
