@@ -23,7 +23,6 @@ public class DaySQLiteUserDao {
     public void insert(DaySQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-
         content.put("dayid",user.getDayid());
         content.put("checkbox",user.isCheckbox());
         content.put("time",user.getTime());
@@ -43,7 +42,7 @@ public class DaySQLiteUserDao {
     }
 
     public  DaySQLiteUser queryBydayid(String Dayid){
-        SQLiteDatabase db=helper.getWritableDatabase();
+        SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.query(TABLE,null, "dayid=?", new String[]{Dayid}, null, null, null);
         DaySQLiteUser user = null;
         while (cursor.moveToNext()) {

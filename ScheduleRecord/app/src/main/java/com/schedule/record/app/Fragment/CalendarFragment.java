@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.schedule.record.app.MainActivity;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.FragmentCalendarController;
 
@@ -67,7 +68,6 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String s=((TextView)view).getText().toString();
-                Toast.makeText(getActivity(),s,Toast.LENGTH_SHORT).show();
                 calenderFrameLayout.showFragment(position);
             }
             @Override

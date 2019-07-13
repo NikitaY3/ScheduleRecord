@@ -54,6 +54,7 @@
             android:background="@drawable/abaa_item_edittext"
             android:gravity="center_vertical"
             android:text="XX:XX"
+            android:editable="false"
             android:textColor="#000"
             android:textSize="30sp" />
 

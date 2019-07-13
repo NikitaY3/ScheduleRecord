@@ -3,6 +3,7 @@ package com.schedule.record.app.dialog;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.schedule.record.app.R;
@@ -26,6 +28,7 @@ import com.schedule.record.app.sqlite.DaySQLite;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -47,6 +50,9 @@ public class DayDialog extends Dialog {
     private Button inputItemButton;
     private Spinner inputItemButton21,inputItemButton22,inputItemButton23,inputItemButton24;
     private List<String> button21List,button22List,button23List,button24List;
+
+    public String radio2;
+    final Calendar cale1 = Calendar.getInstance();
 
     public DayDialog(Context context, ListView calendar1ListView, List<DaySQLiteUser> dataList) {
         super(context, R.style.MyDialog);
@@ -71,6 +77,26 @@ public class DayDialog extends Dialog {
         //调用获取时间的函数
         Dayidlog = getInternetTime();
         inputItemEditText1.setText(Dayidlog.substring(11,16));
+        inputItemEditText1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        if (minute<9 && hourOfDay<9){
+                            radio2 = "0"+hourOfDay + ":0" + minute;
+                        }else if(minute<9) {
+                            radio2 = hourOfDay + ":0" + minute;
+                        }else if(hourOfDay<9) {
+                            radio2 = "0"+hourOfDay + ":" + minute;
+                        }else {
+                            radio2 = hourOfDay+":"+minute ;
+                        }
+                        inputItemEditText1.setText(radio2);
+                    }
+                },cale1.get(Calendar.HOUR),cale1.get(Calendar.MINUTE),true).show();
+            }
+        });
         //软键盘的弹出和焦点获取
         inputItemEditText1.setFocusable(true);
         inputItemEditText1.setFocusableInTouchMode(true);
@@ -86,7 +112,7 @@ public class DayDialog extends Dialog {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Thesday1();
+                        insertDataBase();
                     }
                 },1000);
             }
@@ -109,23 +135,29 @@ public class DayDialog extends Dialog {
 
     }
 
-    private void Thesday1() {
+    private void insertDataBase() {
         //确认添加按钮点击后创建Item及将数据写入数据库
         Dayidbutton = getInternetTime();
         Toast.makeText(getContext(),"当前时间为："+Dayidbutton,Toast.LENGTH_SHORT).show();
+
         //Item适配器的调用及Item的生成
         String dayTitle = String.valueOf(inputItemEditText2.getText());
-        DaySQLiteUser things = new DaySQLiteUser(Dayidbutton,false,Dayidbutton,dayTitle,"b","dddd","0000-00-00","this is diary","b");
-//        DaySQLiteUser things = new DaySQLiteUser("",false,"","","b","","","","");
-        dataList.add(things);
-        final CalenderDayAdapter adapter = new CalenderDayAdapter(getContext(), dataList);
-        calendar1ListView.setAdapter(adapter);
+        DaySQLiteUser things = new DaySQLiteUser(Dayidbutton,false,inputItemEditText1.getText().toString(),dayTitle,"b","everyday","0000-00-00","this is diary","b");
 
         //数据写入数据库
         helper=new DaySQLite(getContext(),DBName,null,version);
         helper.getReadableDatabase();
         DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
         dao.insert(things);
+
+        //刷新所有Item
+        dataList = new ArrayList<DaySQLiteUser>();
+        helper=new DaySQLite(getContext(),DBName,null,version);
+        helper.getReadableDatabase();
+        dataList = (List<DaySQLiteUser>) dao.quiryAndSetItem(dataList);
+        final CalenderDayAdapter adapter = new CalenderDayAdapter(getContext(), dataList);
+        calendar1ListView.setAdapter(adapter);
+
     }
 
     private String getInternetTime() {

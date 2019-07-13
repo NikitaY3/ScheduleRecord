@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.schedule.record.app.Fragment.Calendar1Fragment;
+import com.schedule.record.app.Fragment.CalendarFragment;
 import com.schedule.record.app.function.FragmentController;
 
 import butterknife.BindView;
@@ -16,6 +18,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final Calendar1Fragment Calendar1Fragment = new Calendar1Fragment();
+    private static final CalendarFragment CalendarFragment = new CalendarFragment();
     @BindView(R.id.mainFrameLayout)
     FrameLayout mainFrameLayout;
     @BindView(R.id.radioButton1)
@@ -30,6 +34,23 @@ public class MainActivity extends AppCompatActivity {
     private Button calendarbutton1;
 
     private FragmentController controller;
+
+//    //重写改变焦点的方法
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus ) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if(Calendar1Fragment instanceof MainonWindowFocusChanged){
+//            ((MainonWindowFocusChanged) Calendar1Fragment).onWindowFocusChanged(hasFocus);
+//        }
+//        if(CalendarFragment instanceof MainonWindowFocusChanged){
+//            ((MainonWindowFocusChanged) CalendarFragment).onWindowFocusChanged(hasFocus);
+//        }
+//        Toast.makeText(this,"!!!!!!!!!!!!!!",Toast.LENGTH_SHORT).show();
+//    }
+//    //改变焦点接口
+//    public interface MainonWindowFocusChanged{
+//        void onWindowFocusChanged(boolean hasFocus);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

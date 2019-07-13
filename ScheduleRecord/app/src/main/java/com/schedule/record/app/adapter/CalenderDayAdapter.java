@@ -1,5 +1,6 @@
 package com.schedule.record.app.adapter;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.schedule.record.app.MainCalender1Edit;
@@ -19,6 +22,7 @@ import com.schedule.record.app.function.DaySQLiteUser;
 import com.schedule.record.app.function.DaySQLiteUserDao;
 import com.schedule.record.app.sqlite.DaySQLite;
 
+import java.util.Calendar;
 import java.util.List;
 
 import static com.schedule.record.app.R.*;
@@ -33,6 +37,9 @@ public class CalenderDayAdapter extends BaseAdapter {
     private DaySQLite helper;
     String DBName="day_1";
     int version = 1;
+
+    public String radio2;
+    final Calendar cale1 = Calendar.getInstance();
 
     public CalenderDayAdapter(Context context, List<DaySQLiteUser> list) {
         this.context = context;
@@ -58,7 +65,7 @@ public class CalenderDayAdapter extends BaseAdapter {
     //每一个item调用该方法---视图缓存机制
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         if(convertView == null){
             convertView = inflater.inflate(layout.main_calendar_mode1_item,null);
             holder = new ViewHolder();
@@ -71,10 +78,56 @@ public class CalenderDayAdapter extends BaseAdapter {
         else{
             holder = (ViewHolder) convertView.getTag();
         }
-        DaySQLiteUser pb = list.get(position);
-        holder.tv2.setText(pb.getDayid().substring(11,16));//设置时间
+        final DaySQLiteUser pb = list.get(position);
+        if(pb.isCheckbox()){
+            holder.tv1.setChecked(true);
+        }
+        holder.tv2.setText(pb.getTime());//设置时间
         holder.tv3.setText(pb.getTitle());
 
+        holder.tv1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(holder.tv1.isChecked()){
+                    pb.setCheckbox(true);
+                    helper=new DaySQLite(context,DBName,null,version);
+                    helper.getReadableDatabase();
+                    DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+                    CalenderDayAdapter.this.notifyDataSetChanged();
+                    dao.updateAll(pb);
+                }
+            }
+        });
+        holder.tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        if (minute<9 && hourOfDay<9){
+                            radio2 = "0"+hourOfDay + ":0" + minute;
+                        }else if(minute<9) {
+                            radio2 = hourOfDay + ":0" + minute;
+                        }else if(hourOfDay<9) {
+                            radio2 = "0"+hourOfDay + ":" + minute;
+                        }else {
+                            radio2 = hourOfDay+":"+minute ;
+                        }
+                        holder.tv2.setText(radio2);
+                        pb.setTime(radio2);
+                        Toast.makeText(context,"等待插入更新数据库的函数"+ pb.getTime(),Toast.LENGTH_SHORT).show();
+                        helper=new DaySQLite(context,DBName,null,version);
+                        helper.getReadableDatabase();
+                        DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+                        CalenderDayAdapter.this.notifyDataSetChanged();
+                        dao.updateAll(pb);
+                    }
+                },cale1.get(Calendar.HOUR),cale1.get(Calendar.MINUTE),true).show();
+
+
+            }
+        });
             switch (pb.getImportant()) {
                 case "a":
                     holder.linearLayout.setBackgroundResource(drawable.abaa_item_im_em);
