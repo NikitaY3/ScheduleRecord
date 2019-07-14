@@ -20,7 +20,7 @@
         <CheckBox
             android:id="@+id/mode1ItemCheckBox"
             android:layout_width="30dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"/>
 
         <TextView
             android:id="@+id/mode1ItemEditText1"

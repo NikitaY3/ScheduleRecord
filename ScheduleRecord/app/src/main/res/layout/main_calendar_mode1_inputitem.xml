@@ -89,18 +89,20 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:background="@drawable/abaa_item_im_no"
-            android:textColor="@drawable/ac_my_button1_text" />
+            android:textColor="@color/colorPrimary" />
 
 
-        <Spinner
+        <Button
             android:id="@+id/inputItemButton23"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:text="截止日期"
+            android:textSize="15sp"
             android:background="@drawable/abaa_item_no_em"
-            android:textColor="@drawable/ac_my_button1_text" />
+            android:textColor="@color/colorPrimary"/>
 
         <Spinner
             android:id="@+id/inputItemButton24"
@@ -110,7 +112,7 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:background="@drawable/abaa_item_no_no"
-            android:textColor="@drawable/ac_my_button1_text" />
+            android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
 

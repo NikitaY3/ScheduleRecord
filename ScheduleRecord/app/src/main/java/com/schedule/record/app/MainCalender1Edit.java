@@ -3,16 +3,14 @@ package com.schedule.record.app;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.schedule.record.app.function.DaySQLiteUser;
 import com.schedule.record.app.function.DaySQLiteUserDao;
@@ -37,8 +36,6 @@ import butterknife.OnClick;
 
 public class MainCalender1Edit extends AppCompatActivity {
 
-    @BindView(R.id.editButton1)
-    Button editButton1;
     @BindView(R.id.editCheckBox1)
     CheckBox editCheckBox1;
     @BindView(R.id.editEditText0)
@@ -94,7 +91,6 @@ public class MainCalender1Edit extends AppCompatActivity {
     String DBName = "day_1";
     int version = 1;
 
-
     public String radio2,radio3;
     final Calendar cale1 = Calendar.getInstance();
 
@@ -116,17 +112,13 @@ public class MainCalender1Edit extends AppCompatActivity {
                     case R.id.editRadio1:
                         break;
                     case R.id.editRadio2:
-                        new TimePickerDialog(MainCalender1Edit.this, new TimePickerDialog.OnTimeSetListener() {
+                        new DatePickerDialog(MainCalender1Edit.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                if (minute>9){
-                                    radio2 = "每周" + hourOfDay+":"+minute ;
-                                }else {
-                                    radio2 = "每周" + hourOfDay + ":0" + minute;
-                                }
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                radio2 = "每周" + dayOfMonth+"日";
                                 editRadio2.setText(radio2);
                             }
-                        },cale1.get(Calendar.HOUR),cale1.get(Calendar.MINUTE),true).show();
+                        },cale1.get(Calendar.YEAR),cale1.get(Calendar.MONTH),cale1.get(Calendar.DAY_OF_WEEK)).show();
                         break;
                     case R.id.editRadio3:
                         new DatePickerDialog(MainCalender1Edit.this,new DatePickerDialog.OnDateSetListener() {
@@ -140,27 +132,27 @@ public class MainCalender1Edit extends AppCompatActivity {
                 }
             }
         });
+
+        editCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                helper=new DaySQLite(MainCalender1Edit.this,DBName,null,version);
+                helper.getReadableDatabase();
+                DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+                if( editCheckBox1.isChecked()){
+                    user.setCheckbox(true);
+                    dao.updateAll(user);
+                }else{
+                    user.setCheckbox(false);
+                    dao.updateAll(user);
+                }
+            }
+        });
     }
 
-    @OnClick({R.id.editButton1, R.id.editEditText0, R.id.editEditText1, R.id.editButton21, R.id.editButton22, R.id.editButton23, R.id.editButton24, R.id.editButton41, R.id.editEditText2, R.id.editImageButton1, R.id.editImageButton2, R.id.editImageButton3})
+    @OnClick({ R.id.editEditText0, R.id.editEditText1, R.id.editButton21, R.id.editButton22, R.id.editButton23, R.id.editButton24, R.id.editButton41, R.id.editEditText2, R.id.editImageButton1, R.id.editImageButton2, R.id.editImageButton3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.editButton1:
-                user.setTime(editEditText0.getText().toString());
-                user.setTitle(editEditText1.getText().toString());
-                if(editRadio1.isChecked()){
-                    user.setRepeat("everyday");
-                }
-                if(editRadio2.isChecked()){
-                    user.setRepeat("everywee"+editRadio2.getText().toString());
-                }
-                if (editRadio3.isChecked()){
-                    user.setRepeat("everymou"+editRadio3.getText().toString());
-                }
-                user.setEndday(editButton41.getText().toString());
-                user.setDiary(editEditText2.getText().toString());
-                dao.updateAll(user);
-                break;
             case R.id.editEditText0:
                 new TimePickerDialog(MainCalender1Edit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -295,6 +287,25 @@ public class MainCalender1Edit extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    @Override
+    public void onPause() {
+        user.setTime(editEditText0.getText().toString());
+        user.setTitle(editEditText1.getText().toString());
+        if(editRadio1.isChecked()){
+            user.setRepeat("everyday");
+        }
+        if(editRadio2.isChecked()){
+            user.setRepeat("everywee"+editRadio2.getText().toString());
+        }
+        if (editRadio3.isChecked()){
+            user.setRepeat("everymou"+editRadio3.getText().toString());
+        }
+        user.setEndday(editButton41.getText().toString());
+        user.setDiary(editEditText2.getText().toString());
+        dao.updateAll(user);
+        Toast.makeText(MainCalender1Edit.this,"已保存数据",Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
     @SuppressLint("ResourceType")
     private void layoutFilling() {
         //获取DayItem传递的Dayid
@@ -308,6 +319,8 @@ public class MainCalender1Edit extends AppCompatActivity {
         //设置当前布局填充
         if(d.isCheckbox()){
             editCheckBox1.setChecked(true);
+        }else{
+            editCheckBox1.setChecked(false);
         }
         editEditText0.setText(d.getTime());
         editEditText1.setText(d.getTitle());

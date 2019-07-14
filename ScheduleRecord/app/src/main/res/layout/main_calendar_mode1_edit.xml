@@ -19,18 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/editButton1"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:text="保存"
-        android:textColor="@drawable/ac_my_button1_text"
-        app:layout_constraintEnd_toEndOf="@+id/editTextView1"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/editLinearLayout1"
         android:layout_width="match_parent"
@@ -175,11 +163,11 @@
                 android:layout_width="35dp"
                 android:layout_height="25dp"
                 android:layout_weight="1"
-                android:button="@null"
-                android:textColor="@color/varygray2"
                 android:background="@drawable/abaaa_edit_repat"
+                android:button="@null"
                 android:gravity="center"
-                android:text="每周星期*" />
+                android:text="每周星期一"
+                android:textColor="@color/varygray2" />
 
             <RadioButton
                 android:id="@+id/editRadio3"
@@ -187,11 +175,11 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:button="@null"
-                android:textColor="@color/varygray2"
                 android:background="@drawable/abaaa_edit_repat"
+                android:button="@null"
                 android:gravity="center"
-                android:text="每月**日" />
+                android:text="每月1日"
+                android:textColor="@color/varygray2" />
         </RadioGroup>
     </LinearLayout>
 

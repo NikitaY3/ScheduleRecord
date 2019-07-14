@@ -4,15 +4,16 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.schedule.record.app.MainCalender1Edit;
 import com.schedule.record.app.function.DaySQLiteUser;
 import com.schedule.record.app.function.DaySQLiteUserDao;
+import com.schedule.record.app.function.Mode1ProgressBar;
 import com.schedule.record.app.sqlite.DaySQLite;
 
 import java.util.Calendar;
@@ -40,12 +42,14 @@ public class CalenderDayAdapter extends BaseAdapter {
 
     public String radio2;
     final Calendar cale1 = Calendar.getInstance();
+    private ProgressBar mode1ProgressBar;
 
-    public CalenderDayAdapter(Context context, List<DaySQLiteUser> list) {
+    public CalenderDayAdapter(Context context, List<DaySQLiteUser> list, ProgressBar mode1ProgressBar) {
         this.context = context;
         this.list = list;
         inflater=LayoutInflater.from(context);
-        CalenderDayAdapter.this.notifyDataSetChanged();
+        this.mode1ProgressBar = mode1ProgressBar;
+//        CalenderDayAdapter.this.notifyDataSetChanged();
     }
     @Override
     public int getCount() {
@@ -81,23 +85,34 @@ public class CalenderDayAdapter extends BaseAdapter {
         final DaySQLiteUser pb = list.get(position);
         if(pb.isCheckbox()){
             holder.tv1.setChecked(true);
+        }else{
+            holder.tv1.setChecked(false);
         }
         holder.tv2.setText(pb.getTime());//设置时间
         holder.tv3.setText(pb.getTitle());
 
-        holder.tv1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(holder.tv1.isChecked()){
-                    pb.setCheckbox(true);
-                    helper=new DaySQLite(context,DBName,null,version);
-                    helper.getReadableDatabase();
-                    DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
-                    CalenderDayAdapter.this.notifyDataSetChanged();
-                    dao.updateAll(pb);
-                }
-            }
-        });
+//        holder.tv1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked){
+//                    pb.setCheckbox(true);
+////                    Toast.makeText(context,"点击checkBox:"+pb.isCheckbox(),Toast.LENGTH_SHORT).show();
+////                    CalenderDayAdapter.this.notifyDataSetChanged();
+////                    dao.updateAll(pb);
+//                }else{
+//                    pb.setCheckbox(false);
+////                    Toast.makeText(context,"点击checkBox:"+pb.isCheckbox(),Toast.LENGTH_SHORT).show();
+////                    CalenderDayAdapter.this.notifyDataSetChanged();
+//                }
+//                helper=new DaySQLite(context,DBName,null,version);
+//                helper.getReadableDatabase();
+//                DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+//                Toast.makeText(context,"Day"+pb.isCheckbox()+pb.getDayid(),Toast.LENGTH_SHORT).show();
+//                dao.updateAll(pb);
+//                new Mode1ProgressBar(dao.CountBar(),dao.CountAllBar(),mode1ProgressBar);
+//            }
+//        });
+
         holder.tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +131,6 @@ public class CalenderDayAdapter extends BaseAdapter {
                         }
                         holder.tv2.setText(radio2);
                         pb.setTime(radio2);
-                        Toast.makeText(context,"等待插入更新数据库的函数"+ pb.getTime(),Toast.LENGTH_SHORT).show();
                         helper=new DaySQLite(context,DBName,null,version);
                         helper.getReadableDatabase();
                         DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
@@ -124,8 +138,6 @@ public class CalenderDayAdapter extends BaseAdapter {
                         dao.updateAll(pb);
                     }
                 },cale1.get(Calendar.HOUR),cale1.get(Calendar.MINUTE),true).show();
-
-
             }
         });
             switch (pb.getImportant()) {
@@ -168,10 +180,8 @@ public class CalenderDayAdapter extends BaseAdapter {
     static class ViewHolder{
         CheckBox tv1;
         TextView tv2,tv3;
-        Button btn;
         LinearLayout linearLayout;
     }
-
     //弹框函数
     private void dayConfirmationDialogs(final int position, final String time) {
         frame1 = new AlertDialog.Builder(context);
@@ -198,4 +208,5 @@ public class CalenderDayAdapter extends BaseAdapter {
         frame1.setTitle("提示");
         frame1.show();
     }
+
 }

@@ -67,7 +67,7 @@ public class CalendarFragment extends Fragment {
         calendarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                String s=((TextView)view).getText().toString();
+//                String s=((TextView)view).getText().toString();
                 calenderFrameLayout.showFragment(position);
             }
             @Override

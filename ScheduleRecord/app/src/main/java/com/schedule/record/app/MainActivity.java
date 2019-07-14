@@ -31,26 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mainRadioGroup)
     RadioGroup mainRadioGroup;
 
-    private Button calendarbutton1;
-
     private FragmentController controller;
-
-//    //重写改变焦点的方法
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus ) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if(Calendar1Fragment instanceof MainonWindowFocusChanged){
-//            ((MainonWindowFocusChanged) Calendar1Fragment).onWindowFocusChanged(hasFocus);
-//        }
-//        if(CalendarFragment instanceof MainonWindowFocusChanged){
-//            ((MainonWindowFocusChanged) CalendarFragment).onWindowFocusChanged(hasFocus);
-//        }
-//        Toast.makeText(this,"!!!!!!!!!!!!!!",Toast.LENGTH_SHORT).show();
-//    }
-//    //改变焦点接口
-//    public interface MainonWindowFocusChanged{
-//        void onWindowFocusChanged(boolean hasFocus);
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
