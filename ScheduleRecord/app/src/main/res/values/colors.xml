@@ -20,4 +20,8 @@
     <color name="bule">#03A9F4</color>
     <color name="varybule">#037DFF</color>
     <color name="huaqin">#cc99ff</color>
+
+    <color name="lineChart1">#f2f2f2</color>
+    <color name="lineChart2">#ff4631</color>
+    <color name="lineChart3">#999999</color>
 </resources>

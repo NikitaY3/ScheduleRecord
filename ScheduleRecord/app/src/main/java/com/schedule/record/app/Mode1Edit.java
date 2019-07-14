@@ -34,7 +34,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainCalender1Edit extends AppCompatActivity {
+@SuppressLint("Registered")
+public
+class Mode1Edit extends AppCompatActivity {
 
     @BindView(R.id.editCheckBox1)
     CheckBox editCheckBox1;
@@ -97,7 +99,7 @@ public class MainCalender1Edit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_calendar_mode1_edit);
+        setContentView(R.layout.mode1_edit);
         ButterKnife.bind(this);
         layoutFilling();
         onRadioGroupChecked();
@@ -112,7 +114,7 @@ public class MainCalender1Edit extends AppCompatActivity {
                     case R.id.editRadio1:
                         break;
                     case R.id.editRadio2:
-                        new DatePickerDialog(MainCalender1Edit.this, new DatePickerDialog.OnDateSetListener() {
+                        new DatePickerDialog(Mode1Edit.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 radio2 = "每周" + dayOfMonth+"日";
@@ -121,7 +123,7 @@ public class MainCalender1Edit extends AppCompatActivity {
                         },cale1.get(Calendar.YEAR),cale1.get(Calendar.MONTH),cale1.get(Calendar.DAY_OF_WEEK)).show();
                         break;
                     case R.id.editRadio3:
-                        new DatePickerDialog(MainCalender1Edit.this,new DatePickerDialog.OnDateSetListener() {
+                        new DatePickerDialog(Mode1Edit.this,new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 radio3 = "每月" + dayOfMonth+"日";
@@ -136,7 +138,7 @@ public class MainCalender1Edit extends AppCompatActivity {
         editCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                helper=new DaySQLite(MainCalender1Edit.this,DBName,null,version);
+                helper=new DaySQLite(Mode1Edit.this,DBName,null,version);
                 helper.getReadableDatabase();
                 DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
                 if( editCheckBox1.isChecked()){
@@ -154,7 +156,7 @@ public class MainCalender1Edit extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.editEditText0:
-                new TimePickerDialog(MainCalender1Edit.this, new TimePickerDialog.OnTimeSetListener() {
+                new TimePickerDialog(Mode1Edit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if (minute<9 && hourOfDay<9){
@@ -195,7 +197,7 @@ public class MainCalender1Edit extends AppCompatActivity {
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
                 break;
             case R.id.editButton41:
-                new DatePickerDialog(MainCalender1Edit.this,new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(Mode1Edit.this,new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         radio3 = year+"年"+(month+1)+"月"+dayOfMonth+"日";
@@ -223,7 +225,7 @@ public class MainCalender1Edit extends AppCompatActivity {
         final int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(MainCalender1Edit.this, AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(Mode1Edit.this, AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
@@ -256,7 +258,7 @@ public class MainCalender1Edit extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(MainCalender1Edit.this, AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(Mode1Edit.this, AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
@@ -303,7 +305,7 @@ public class MainCalender1Edit extends AppCompatActivity {
         user.setEndday(editButton41.getText().toString());
         user.setDiary(editEditText2.getText().toString());
         dao.updateAll(user);
-        Toast.makeText(MainCalender1Edit.this,"已保存数据",Toast.LENGTH_SHORT).show();
+        Toast.makeText(Mode1Edit.this,"已保存数据",Toast.LENGTH_SHORT).show();
         super.onPause();
     }
     @SuppressLint("ResourceType")

@@ -4,7 +4,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.schedule.record.app.MainCalender1Edit;
+import com.schedule.record.app.Mode1Edit;
 import com.schedule.record.app.function.DaySQLiteUser;
 import com.schedule.record.app.function.DaySQLiteUserDao;
 import com.schedule.record.app.function.Mode1ProgressBar;
@@ -83,6 +82,7 @@ public class CalenderDayAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         final DaySQLiteUser pb = list.get(position);
+        holder.tv1.setOnCheckedChangeListener(null);
         if(pb.isCheckbox()){
             holder.tv1.setChecked(true);
         }else{
@@ -91,27 +91,29 @@ public class CalenderDayAdapter extends BaseAdapter {
         holder.tv2.setText(pb.getTime());//设置时间
         holder.tv3.setText(pb.getTitle());
 
-//        holder.tv1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    pb.setCheckbox(true);
-////                    Toast.makeText(context,"点击checkBox:"+pb.isCheckbox(),Toast.LENGTH_SHORT).show();
-////                    CalenderDayAdapter.this.notifyDataSetChanged();
-////                    dao.updateAll(pb);
-//                }else{
-//                    pb.setCheckbox(false);
-////                    Toast.makeText(context,"点击checkBox:"+pb.isCheckbox(),Toast.LENGTH_SHORT).show();
-////                    CalenderDayAdapter.this.notifyDataSetChanged();
-//                }
-//                helper=new DaySQLite(context,DBName,null,version);
-//                helper.getReadableDatabase();
-//                DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
-//                Toast.makeText(context,"Day"+pb.isCheckbox()+pb.getDayid(),Toast.LENGTH_SHORT).show();
-//                dao.updateAll(pb);
-//                new Mode1ProgressBar(dao.CountBar(),dao.CountAllBar(),mode1ProgressBar);
-//            }
-//        });
+        holder.tv1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    pb.setCheckbox(true);
+//                    CalenderDayAdapter.this.notifyDataSetInvalidated();
+//                    Toast.makeText(context,"点击checkBox:"+pb.isCheckbox(),Toast.LENGTH_SHORT).show();
+//                    CalenderDayAdapter.this.notifyDataSetChanged();
+//                    dao.updateAll(pb);
+                }else{
+                    pb.setCheckbox(false);
+//                    Toast.makeText(context,"点击checkBox:"+pb.isCheckbox(),Toast.LENGTH_SHORT).show();
+//                    CalenderDayAdapter.this.notifyDataSetChanged();
+                }
+                helper=new DaySQLite(context,DBName,null,version);
+                helper.getReadableDatabase();
+                DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+                Toast.makeText(context,"Day"+pb.isCheckbox()+pb.getDayid(),Toast.LENGTH_SHORT).show();
+                dao.updateAll(pb);
+                new Mode1ProgressBar(dao.CountBar(),dao.CountAllBar(),mode1ProgressBar);
+//                CalenderDayAdapter.this.notifyDataSetInvalidated();
+            }
+        });
 
         holder.tv2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +161,7 @@ public class CalenderDayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 DaySQLiteUser pb = list.get(position);
-                Intent intent= new Intent(context, MainCalender1Edit.class);
+                Intent intent= new Intent(context, Mode1Edit.class);
                 intent.putExtra("dayid",pb.getDayid());
                 context.startActivity(intent);
             }

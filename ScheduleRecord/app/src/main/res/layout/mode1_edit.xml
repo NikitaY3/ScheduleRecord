@@ -12,7 +12,6 @@
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
         android:text="编辑日程"
-        android:paddingStart="8dp"
         android:textSize="15sp"
         android:textColor="@color/white"
         android:gravity="center"

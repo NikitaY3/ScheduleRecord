@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -24,7 +25,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.schedule.record.app.MainCalender1Edit;
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.CalenderDayAdapter;
 import com.schedule.record.app.function.DaySQLiteUser;
@@ -43,13 +43,14 @@ import java.util.TimeZone;
 
 public class DayDialog extends Dialog {
     private Context context;
+    private LinearLayout inputItemLinearLayout1;
     private ListView calendar1ListView;
     private ArrayAdapter<String> arrayAdapter;
     private List<DaySQLiteUser> dataList;
 
     private DaySQLite helper;
     private String DBName="day_1";
-    int version=1;
+    private int version=1;
     private String Dayid,Dayidbutton;
 
     private EditText inputItemEditText1,inputItemEditText2;
@@ -58,8 +59,12 @@ public class DayDialog extends Dialog {
     private List<String> button21List,button22List,button24List;
 
     public String radio2;
-    final Calendar cale1 = Calendar.getInstance();
+    private final Calendar cale1 = Calendar.getInstance();
     private ProgressBar mode1ProgressBar;
+
+
+    private String important,endday,repeat,diary,picture;
+    private boolean remind = true;
 
     public DayDialog(Context context, ListView calendar1ListView, List<DaySQLiteUser> dataList, ProgressBar mode1ProgressBar) {
         super(context, R.style.MyDialog);
@@ -67,6 +72,17 @@ public class DayDialog extends Dialog {
         this.calendar1ListView = calendar1ListView;
         this.dataList = dataList;
         this.mode1ProgressBar = mode1ProgressBar;
+
+        updateDiaLog();
+    }
+
+    private void updateDiaLog() {
+        important = "a";
+        endday = "0000-00-00";
+        repeat = "everyday";
+        remind = true;
+        diary = "this is diary";
+        picture = "picture";
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -75,6 +91,7 @@ public class DayDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_calendar_mode1_inputitem);
 
+        inputItemLinearLayout1 = findViewById(R.id.inputItemLinearLayout1);
         inputItemEditText1 = findViewById(R.id.inputItemEditText1);
         inputItemEditText2 = findViewById(R.id.inputItemEditText2);
         inputItemButton = findViewById(R.id.inputItemButton);
@@ -118,6 +135,14 @@ public class DayDialog extends Dialog {
         inputItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+                inputItemEditText1.setText("XX:XX");
+                inputItemEditText2.setText("");
+                updateDiaLog();
+                inputItemButton21.setSelection(0);
+                inputItemButton22.setSelection(0);
+                inputItemButton23.setText("截止日期");
+                inputItemButton24.setSelection(0);
                 //延时函数
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -134,10 +159,8 @@ public class DayDialog extends Dialog {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String radio = year+"."+(month+1)+"."+dayOfMonth;
-//                        inputItemButton23.setTextColor(Integer.parseInt("#008577"));
                         inputItemButton23.setText(radio);
-//                        user.setRepeat(radio3);
-//                        dao.updateAll(user);
+                        endday = radio;
                     }
                 },cale1.get(Calendar.YEAR),cale1.get(Calendar.MONTH),cale1.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -162,8 +185,10 @@ public class DayDialog extends Dialog {
         Toast.makeText(context,"当前时间为："+Dayidbutton,Toast.LENGTH_SHORT).show();
 
         //Item适配器的调用及Item的生成
-        String dayTitle = String.valueOf(inputItemEditText2.getText());
-        DaySQLiteUser things = new DaySQLiteUser(Dayidbutton,false,inputItemEditText1.getText().toString(),dayTitle,"b","everyday","0000-00-00","this is diary","b");
+        String dayTitle = inputItemEditText2.getText().toString();
+        String time = inputItemEditText1.getText().toString();
+
+        DaySQLiteUser things = new DaySQLiteUser(Dayidbutton,false,remind,time,dayTitle,important,repeat,endday,diary,picture);
 
         //数据写入数据库
         helper=new DaySQLite(context,DBName,null,version);
@@ -228,31 +253,35 @@ public class DayDialog extends Dialog {
                 Toast.makeText(context,"创建成功"+s,Toast.LENGTH_SHORT).show();
                 switch (s) {
                     case "提醒":
-
+                        remind = true;
                         break;
                     case "不提醒":
-
+                        remind = false;
                         break;
                     case "每天":
-
+                        repeat = "everyday";
                         break;
                     case "每周":
-
+                        repeat = "everywee"+"每周一";
                         break;
                     case "每月":
-
+                        repeat = "everymou"+"每月1日";
                         break;
                     case "等级一":
-
+                        important = "a";
+                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
                         break;
                     case "等级二":
-
+                        important = "b";
+                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
                         break;
                     case "等级三":
-
+                        important = "c";
+                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
                         break;
                     case "等级四":
-
+                        important = "d";
+                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
                         break;
                 }
             }

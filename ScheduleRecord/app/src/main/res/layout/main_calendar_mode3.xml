@@ -475,7 +475,7 @@
             </GridLayout>
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/mode3Button1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abc_calendar_button1"
@@ -485,17 +485,17 @@
                 android:textColor="@drawable/ac_my_button1_text" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/mode3Button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abc_calendar_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
-                android:text="当前月份日程完成比例图"
+                android:text="当前月份日程完成数量折线图"
                 android:textColor="@drawable/ac_my_button1_text" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/mode3Button3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abc_calendar_button1"
@@ -505,7 +505,7 @@
                 android:textColor="@drawable/ac_my_button1_text" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/mode3Button4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abc_calendar_button1"
@@ -515,7 +515,7 @@
                 android:textColor="@drawable/ac_my_button1_text" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/mode3Button5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abc_calendar_button1"
@@ -525,7 +525,7 @@
                 android:text="Button" />
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/mode3Button7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abc_calendar_button1"
@@ -535,7 +535,7 @@
                 android:text="Button" />
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/mode3Button6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abc_calendar_button1"

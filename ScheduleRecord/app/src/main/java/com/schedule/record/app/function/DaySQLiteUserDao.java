@@ -4,10 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
-import com.schedule.record.app.MainCalender1Edit;
-import com.schedule.record.app.adapter.CalenderDayAdapter;
 import com.schedule.record.app.sqlite.DaySQLite;
 
 import java.util.ArrayList;
@@ -28,6 +25,7 @@ public class DaySQLiteUserDao {
         ContentValues content=new ContentValues();
         content.put("dayid",user.getDayid());
         content.put("checkbox",user.isCheckbox());
+        content.put("remind",user.isRemind());
         content.put("time",user.getTime());
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
@@ -52,16 +50,19 @@ public class DaySQLiteUserDao {
         while (cursor.moveToNext()) {
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);
-            String time = cursor.getString(2);
-            String title = cursor.getString(3);
-            String important = cursor.getString(4);
-            String repeat = cursor.getString(5);
-            String endday = cursor.getString(6);
-            String diary = cursor.getString(7);
-            String picture = cursor.getString(8);
+            int remind1 = cursor.getInt(2);
+            String time = cursor.getString(3);
+            String title = cursor.getString(4);
+            String important = cursor.getString(5);
+            String repeat = cursor.getString(6);
+            String endday = cursor.getString(7);
+            String diary = cursor.getString(8);
+            String picture = cursor.getString(9);
             boolean checkbox;
             checkbox = checkbox1 > 0;
-            user = new DaySQLiteUser(dayid,checkbox,time,title,important,repeat,endday,diary,picture);
+            boolean remind;
+            remind = remind1 > 0;
+            user = new DaySQLiteUser(dayid,checkbox,remind,time,title,important,repeat,endday,diary,picture);
         }
         db.close();
         return user;
@@ -74,16 +75,19 @@ public class DaySQLiteUserDao {
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);
-            String time = cursor.getString(2);
-            String title = cursor.getString(3);
-            String important = cursor.getString(4);
-            String repeat = cursor.getString(5);
-            String endday = cursor.getString(6);
-            String diary = cursor.getString(7);
-            String picture = cursor.getString(8);
+            int remind1 = cursor.getInt(2);
+            String time = cursor.getString(3);
+            String title = cursor.getString(4);
+            String important = cursor.getString(5);
+            String repeat = cursor.getString(6);
+            String endday = cursor.getString(7);
+            String diary = cursor.getString(8);
+            String picture = cursor.getString(9);
             boolean checkbox;
             checkbox = checkbox1 > 0;
-            DaySQLiteUser user=new DaySQLiteUser(dayid,checkbox,time,title,important,repeat,endday,diary,picture);
+            boolean remind;
+            remind = remind1 > 0;
+            DaySQLiteUser user=new DaySQLiteUser(dayid,checkbox,remind,time,title,important,repeat,endday,diary,picture);
             sb.append(user.toString()).append("\n");
         }
         db.close();
@@ -101,17 +105,20 @@ public class DaySQLiteUserDao {
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);
-            String time = cursor.getString(2);
-            String title = cursor.getString(3);
-            String important = cursor.getString(4);
-            String repeat = cursor.getString(5);
-            String endday = cursor.getString(6);
-            String diary = cursor.getString(7);
-            String picture = cursor.getString(8);
+            int remind1 = cursor.getInt(2);
+            String time = cursor.getString(3);
+            String title = cursor.getString(4);
+            String important = cursor.getString(5);
+            String repeat = cursor.getString(6);
+            String endday = cursor.getString(7);
+            String diary = cursor.getString(8);
+            String picture = cursor.getString(9);
             boolean checkbox;
             checkbox = checkbox1 > 0;
-            user=new DaySQLiteUser(dayid,checkbox,time,title,important,repeat,endday,diary,picture);
-            DaySQLiteUser things = new DaySQLiteUser(user.getDayid(),user.isCheckbox() ,user.getTime(),user.getTitle(),user.getImportant(),user.getRepeat(),user.getEndday(),user.getDiary(),user.getPicture());
+            boolean remind;
+            remind = remind1 > 0;
+            user=new DaySQLiteUser(dayid,checkbox,remind,time,title,important,repeat,endday,diary,picture);
+            DaySQLiteUser things = new DaySQLiteUser(user.getDayid(),user.isCheckbox(),user.isRemind() ,user.getTime(),user.getTitle(),user.getImportant(),user.getRepeat(),user.getEndday(),user.getDiary(),user.getPicture());
             dataList.add(things);
         }
         db.close();
@@ -129,6 +136,7 @@ public class DaySQLiteUserDao {
         ContentValues content=new ContentValues();
         content.put("dayid",user.getDayid());
         content.put("checkbox",user.isCheckbox());
+        content.put("remind",user.isRemind());
         content.put("time",user.getTime());
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());

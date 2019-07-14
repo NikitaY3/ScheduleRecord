@@ -3,12 +3,13 @@ package com.schedule.record.app.function;
 public class DaySQLiteUser {
 //    dayid varchar(50) primary key, checkbox bit,time datetime,title varchar(150),important char(2),repeat varchar(50),endday date,diary text,picture char(50);
     private String dayid;
-    private boolean checkbox;
+    private boolean checkbox,remind;
     private String time,title,important,repeat,endday,diary,picture;
 
-    public DaySQLiteUser(String dayid, boolean checkbox, String time, String title, String important, String repeat, String endday, String diary, String picture) {
+    public DaySQLiteUser(String dayid, boolean checkbox,boolean remind, String time, String title, String important, String repeat, String endday, String diary, String picture) {
         this.dayid = dayid;
         this.checkbox = checkbox;
+        this.remind = remind;
         this.time = time;
         this.title = title;
         this.important = important;
@@ -32,6 +33,14 @@ public class DaySQLiteUser {
 
     public void setCheckbox(boolean checkbox) {
         this.checkbox = checkbox;
+    }
+
+    public boolean isRemind() {
+        return remind;
+    }
+
+    public void setRemind(boolean checkbox) {
+        this.remind = remind;
     }
 
     public String getTime() {
