@@ -1,74 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.schedule.record.app.aboutmycalendar.CalendarView
+        android:id="@+id/Mode3Calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:background="@drawable/ac_my_head">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="1"
-            android:background="@drawable/abc_calendar_datehead"
-            android:text="日"
-            android:textSize="15sp"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="1"
-            android:background="@drawable/abc_calendar_datehead"
-            android:text="一"
-            android:textSize="15sp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="1"
-            android:background="@drawable/abc_calendar_datehead"
-            android:text="二"
-            android:textSize="15sp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="1"
-            android:background="@drawable/abc_calendar_datehead"
-            android:text="三"
-            android:textSize="15sp"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="1"
-            android:background="@drawable/abc_calendar_datehead"
-            android:text="四"
-            android:textSize="15sp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="1"
-            android:background="@drawable/abc_calendar_datehead"
-            android:text="五"
-            android:textSize="15sp"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="1"
-            android:background="@drawable/abc_calendar_datehead"
-            android:text="六"
-            android:textSize="15sp" />
-    </LinearLayout>
-
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        tools:layout_editor_absoluteX="0dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -79,401 +22,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/gray"
-                android:columnCount="7"
-                android:paddingBottom="5dp"
-                android:rowCount="6">
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/abc_calendar_date"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="7"
-                    tools:targetApi="lollipop" />
-
-            </GridLayout>
-
             <Button
                 android:id="@+id/mode3Button1"
                 android:layout_width="match_parent"
@@ -482,6 +30,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
                 android:text="当前月份日程完成比例图"
+                tools:ignore="RtlSymmetry"
                 android:textColor="@drawable/ac_my_button1_text" />
 
             <Button
@@ -492,6 +41,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
                 android:text="当前月份日程完成数量折线图"
+                tools:ignore="RtlSymmetry"
                 android:textColor="@drawable/ac_my_button1_text" />
 
             <Button
@@ -502,6 +52,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
                 android:text="当前月份被延时日程"
+                tools:ignore="RtlSymmetry"
                 android:textColor="@drawable/ac_my_button1_text" />
 
             <Button
@@ -512,6 +63,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
                 android:text="当前月份未完成日程"
+                tools:ignore="RtlSymmetry"
                 android:textColor="@drawable/ac_my_button1_text" />
 
             <Button
@@ -521,6 +73,7 @@
                 android:background="@drawable/abc_calendar_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry"
                 android:textColor="@drawable/ac_my_button1_text"
                 android:text="Button" />
 
@@ -531,6 +84,7 @@
                 android:background="@drawable/abc_calendar_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry"
                 android:textColor="@drawable/ac_my_button1_text"
                 android:text="Button" />
 
@@ -541,6 +95,7 @@
                 android:background="@drawable/abc_calendar_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry"
                 android:textColor="@drawable/ac_my_button1_text"
                 android:text="Button" />
         </LinearLayout>

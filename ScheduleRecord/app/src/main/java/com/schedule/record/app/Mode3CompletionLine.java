@@ -1,15 +1,13 @@
 package com.schedule.record.app;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+
+import com.schedule.record.app.function.ChartView;
 
 import java.util.LinkedList;
 
-public class Mode3CompletionRatio extends AppCompatActivity {
+public class Mode3CompletionLine extends AppCompatActivity {
     LinkedList<Double> yList;
     LinkedList<String> xRawData;
     ChartView chartView;
@@ -17,7 +15,7 @@ public class Mode3CompletionRatio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mode3_completion_ratio);
+        setContentView(R.layout.mode3_completion_line);
         chartView = (ChartView) findViewById(R.id.chartView);
 
         yList = new LinkedList<>();

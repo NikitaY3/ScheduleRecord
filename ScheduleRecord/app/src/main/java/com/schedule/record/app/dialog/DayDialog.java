@@ -250,7 +250,6 @@ public class DayDialog extends Dialog {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String s=((TextView)view).getText().toString();
-                Toast.makeText(context,"创建成功"+s,Toast.LENGTH_SHORT).show();
                 switch (s) {
                     case "提醒":
                         remind = true;

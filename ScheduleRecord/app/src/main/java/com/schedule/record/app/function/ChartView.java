@@ -1,4 +1,4 @@
-package com.schedule.record.app;
+package com.schedule.record.app.function;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,8 +15,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-import java.util.LinkedList;
+import com.schedule.record.app.R;
 
+import java.util.LinkedList;
+//折线图
 public class ChartView extends SurfaceView implements SurfaceHolder.Callback , Runnable
 {
     private Context mContext;

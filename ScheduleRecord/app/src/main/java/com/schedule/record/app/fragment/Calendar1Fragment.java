@@ -1,4 +1,4 @@
-package com.schedule.record.app.Fragment;
+package com.schedule.record.app.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

@@ -22,7 +22,9 @@
             android:layout_height="50dp"
             android:background="@color/white"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:backgroundTint="@color/varygray"
+            android:orientation="horizontal"
+            tools:targetApi="lollipop">
 
             <RadioButton
                 android:id="@+id/radioButton1"

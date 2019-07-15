@@ -9,8 +9,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.schedule.record.app.Fragment.Calendar1Fragment;
-import com.schedule.record.app.Fragment.CalendarFragment;
+import com.schedule.record.app.fragment.Calendar1Fragment;
+import com.schedule.record.app.fragment.CalendarFragment;
 import com.schedule.record.app.function.FragmentController;
 
 import butterknife.BindView;

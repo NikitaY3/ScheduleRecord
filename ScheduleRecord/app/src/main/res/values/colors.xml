@@ -24,4 +24,6 @@
     <color name="lineChart1">#f2f2f2</color>
     <color name="lineChart2">#ff4631</color>
     <color name="lineChart3">#999999</color>
+
+    <!--<color name="name1">#0xff</color>-->
 </resources>

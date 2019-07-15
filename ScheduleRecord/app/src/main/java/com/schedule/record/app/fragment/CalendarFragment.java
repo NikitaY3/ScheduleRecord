@@ -1,4 +1,4 @@
-package com.schedule.record.app.Fragment;
+package com.schedule.record.app.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
