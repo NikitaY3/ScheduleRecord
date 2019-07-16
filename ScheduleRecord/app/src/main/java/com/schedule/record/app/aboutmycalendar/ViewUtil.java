@@ -19,6 +19,7 @@ import android.content.res.Resources;
  * WeekGridAdapter
  * CalendarView
  */
+
 public class ViewUtil {
 
     /**

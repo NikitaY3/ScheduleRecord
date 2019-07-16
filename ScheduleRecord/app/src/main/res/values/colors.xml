@@ -25,5 +25,6 @@
     <color name="lineChart2">#ff4631</color>
     <color name="lineChart3">#999999</color>
 
+    <color name="red">#FF0000</color>
     <!--<color name="name1">#0xff</color>-->
 </resources>

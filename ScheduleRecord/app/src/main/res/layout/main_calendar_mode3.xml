@@ -5,13 +5,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.schedule.record.app.aboutmycalendar.CalendarView
-        android:id="@+id/Mode3Calendar"
+    <LinearLayout
+        android:id="@+id/mode3LinearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ac_my_head"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="日"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="一"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="二"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="三"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="四"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="五"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/abc_calendar_datehead"
+            android:text="六"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+    <!--静态加载fragment-->
+    <fragment
+        android:id="@+id/mode3CalendarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/white"
-        tools:layout_editor_absoluteX="0dp" />
+        android:name="com.schedule.record.app.fragment.Calendar3ViewFragment" />
 
     <ScrollView
         android:layout_width="match_parent"

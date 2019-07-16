@@ -158,6 +158,16 @@ public class DaySQLiteUserDao {
         return (int) count;
     }
 
+    public int CountFinishByDay(){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from day_1 where checkbox = true and day=? ",new String[]{"1"});
+        cursor.moveToFirst();
+        long count = cursor.getLong(0);
+        cursor.close();
+        db.close();
+        return (int) count;
+    }
+
     public int CountAllBar(){
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select count(*) from day_1",null);

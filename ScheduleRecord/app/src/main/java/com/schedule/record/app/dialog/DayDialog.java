@@ -135,19 +135,25 @@ public class DayDialog extends Dialog {
         inputItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                inputItemEditText1.setText("XX:XX");
-                inputItemEditText2.setText("");
-                updateDiaLog();
-                inputItemButton21.setSelection(0);
-                inputItemButton22.setSelection(0);
-                inputItemButton23.setText("截止日期");
-                inputItemButton24.setSelection(0);
                 //延时函数
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         insertDataBase();
+                    }
+                },10);
+                //延时函数
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+                        inputItemEditText1.setText("XX:XX");
+                        inputItemEditText2.setText("");
+                        updateDiaLog();
+                        inputItemButton21.setSelection(0);
+                        inputItemButton22.setSelection(0);
+                        inputItemButton23.setText("截止日期");
+                        inputItemButton24.setSelection(0);
                     }
                 },100);
             }

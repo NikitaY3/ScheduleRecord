@@ -50,16 +50,9 @@ public class Calendar1Fragment extends Fragment{
         unbinder = ButterKnife.bind(this, view);
 
         calendar1ListView = view.findViewById(R.id.calendar1ListView);
-        onResume1();
 
         return view;
     }
-
-//    @Override
-//    public boolean onTouch(View v, MotionEvent event) {
-//        onResume1();
-//        return true;
-//    }
 
     @Override
     public void onResume() {
@@ -78,7 +71,6 @@ public class Calendar1Fragment extends Fragment{
 
         new Mode1ProgressBar(countBar,dataList.size(),mode1ProgressBar);
         calendar1ListView.setAdapter(adapter);
-        super.onResume();
     }
 
     @Override

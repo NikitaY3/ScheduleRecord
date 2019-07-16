@@ -1,10 +1,12 @@
 package com.schedule.record.app.aboutmycalendar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+
+import com.schedule.record.app.R;
 
 public class CalendarGridView  extends GridView {
 
@@ -15,9 +17,7 @@ public class CalendarGridView  extends GridView {
 
     /**
      * CalendarGridView 构造器
-     *
-     * @param context
-     *            当前操作的上下文对象
+     * 当前操作的上下文对象
      */
     public CalendarGridView(Context context) {
         super(context);
@@ -28,6 +28,7 @@ public class CalendarGridView  extends GridView {
     /**
      * 初始化gridView 控件的布局
      */
+    @SuppressLint("ResourceAsColor")
     private void initGirdView() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -36,7 +37,7 @@ public class CalendarGridView  extends GridView {
         setGravity(Gravity.CENTER_VERTICAL);// 位置居中
         setVerticalSpacing(1);// 垂直间隔
         setHorizontalSpacing(1);// 水平间隔
-        setBackgroundColor(Color.argb(0xff, 0xe3, 0xee, 0xf4));
+        setBackgroundColor(R.color.colorPrimary);
 
         int i = mContext.getResources().getDisplayMetrics().widthPixels / 7;
         int j = mContext.getResources().getDisplayMetrics().widthPixels
