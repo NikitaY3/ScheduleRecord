@@ -188,11 +188,11 @@ public class DayDialog extends Dialog {
     private void insertDataBase() {
         //确认添加按钮点击后创建Item及将数据写入数据库
         Dayidbutton = getInternetTime();
-        Toast.makeText(context,"当前时间为："+Dayidbutton,Toast.LENGTH_SHORT).show();
 
         //Item适配器的调用及Item的生成
         String dayTitle = inputItemEditText2.getText().toString();
-        String time = inputItemEditText1.getText().toString();
+        String time = Dayidbutton.substring(0,11)+inputItemEditText1.getText().toString();
+        Toast.makeText(context,"当前时间为："+time,Toast.LENGTH_SHORT).show();
 
         DaySQLiteUser things = new DaySQLiteUser(Dayidbutton,false,remind,time,dayTitle,important,repeat,endday,diary,picture);
 

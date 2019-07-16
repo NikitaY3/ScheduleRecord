@@ -8,11 +8,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/mode2ItemTextView1"
+        android:id="@+id/mode2ItemButton1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/abaa_item_im_em"
+        android:background="@drawable/abb_calendar_month"
         android:gravity="center"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
