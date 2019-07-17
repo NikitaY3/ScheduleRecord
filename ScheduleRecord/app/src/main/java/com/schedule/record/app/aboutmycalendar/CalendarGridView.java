@@ -10,15 +10,8 @@ import com.schedule.record.app.R;
 
 public class CalendarGridView  extends GridView {
 
-    /**
-     * 当前操作的上下文对象
-     */
     private Context mContext;
 
-    /**
-     * CalendarGridView 构造器
-     * 当前操作的上下文对象
-     */
     public CalendarGridView(Context context) {
         super(context);
         mContext = context;

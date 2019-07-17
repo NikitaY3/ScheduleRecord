@@ -267,7 +267,7 @@ public class DayDialog extends Dialog {
                         repeat = "everyday";
                         break;
                     case "每周":
-                        repeat = "everywee"+"每周一";
+                        repeat = "everywee"+"每周星期1";
                         break;
                     case "每月":
                         repeat = "everymou"+"每月1日";

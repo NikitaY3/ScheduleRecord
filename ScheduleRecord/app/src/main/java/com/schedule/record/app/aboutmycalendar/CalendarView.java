@@ -148,7 +148,7 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
 
         // 最下方的一条线条
         LinearLayout br = new LinearLayout(mContext);
-        br.setBackgroundColor(Color.argb(0xff, 0xc2, 0xa5, 0x3d));
+        br.setBackgroundColor(Color.argb(0xff, 0x00, 0x85, 0x77));
         LinearLayout.LayoutParams params_br = new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT, 3);
         mMainLayout.addView(br, params_br);
     }
@@ -160,22 +160,9 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
         RelativeLayout top = new RelativeLayout(mContext);
         mTitle = new TextView(mContext);
 
-        // 左方按钮
         ImageButton mLeftView = new ImageButton(mContext);
-//        top.addView(mLeftView);
 
-        // 右方按钮
         ImageButton mRightView = new ImageButton(mContext);
-//        mRightView.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                viewFlipper.setInAnimation(slideLeftIn);
-//                viewFlipper.setOutAnimation(slideLeftOut);
-//                viewFlipper.showNext();
-//                setNextViewItem();
-//            }
-//        });
-//        top.addView(mRightView);
     }
 
     /** 生成中间显示week */

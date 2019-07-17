@@ -1,13 +1,16 @@
 package com.schedule.record.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.schedule.record.app.Mode1Edit;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.CalenderWeekItem;
 
@@ -46,14 +49,10 @@ public class CalenderWeekAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = inflater.inflate(R.layout.main_calendar_mode2_item,null);
             holder = new ViewHolder();
-//            holder.btn= convertView.findViewById(R.id.mode2ItemButton1);
-            holder.tv1= convertView.findViewById(R.id.mode2ItemTextView1);
-//            holder.tv2= convertView.findViewById(R.id.mode2ItemTextView2);
-//            holder.tv3= convertView.findViewById(R.id.mode2ItemTextView3);
-//            holder.tv4= convertView.findViewById(R.id.mode2ItemTextView4);
-//            holder.tv5= convertView.findViewById(R.id.mode2ItemTextView5);
-//            holder.tv6= convertView.findViewById(R.id.mode2ItemTextView6);
-//            holder.tv7= convertView.findViewById(R.id.mode2ItemTextView7);
+            holder.tv1 = convertView.findViewById(R.id.mode2ItemTextView1);
+            holder.tv2 = convertView.findViewById(R.id.mode2ItemTextView2);
+            holder.btn1 = convertView.findViewById(R.id.mode2ItemLinear1);
+            holder.btn2 = convertView.findViewById(R.id.mode2ItemLinear2);
 
             convertView.setTag(holder);
         }
@@ -62,19 +61,39 @@ public class CalenderWeekAdapter extends BaseAdapter {
         }
         //数据
         CalenderWeekItem pb=list.get(position);
-//        holder.btn.setText(pb.getCount());
-        holder.tv1.setText(pb.getMonday());
-//        holder.tv2.setText(pb.getTuesday());
-//        holder.tv3.setText(pb.getWednesday());
-//        holder.tv4.setText(pb.getThursday());
-//        holder.tv5.setText(pb.getFriday());
-//        holder.tv6.setText(pb.getSaturday());
-//        holder.tv7.setText(pb.getSunday());
+        holder.tv1.setText((position+1)+"");
+        holder.tv2.setText(pb.getTitle());
+        holder.btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalenderWeekItem pb=list.get(position);
+                Intent intent= new Intent(context, Mode1Edit.class);
+                intent.putExtra("dayid",pb.getDayid());
+                context.startActivity(intent);
+            }
+        });
+        if (pb.isCheckbox()) {
+            holder.btn2.setBackgroundResource(R.drawable.abb_mode2_finish);
+        }
+        switch (pb.getImportant()) {
+            case "a":
+                holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_em);
+                break;
+            case "b":
+                holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_no);
+                break;
+            case "c":
+                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_em);
+                break;
+            case "d":
+                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_no);
+                break;
+        }
         return convertView;
     }
 
     static class ViewHolder{
-        TextView tv1,tv2,tv3,tv4,tv5,tv6,tv7;
-        Button btn;
+        TextView tv1,tv2;
+        LinearLayout btn1,btn2;
     }
 }

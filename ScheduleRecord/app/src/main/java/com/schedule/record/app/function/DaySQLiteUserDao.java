@@ -98,10 +98,8 @@ public class DaySQLiteUserDao {
         List<DaySQLiteUser> dataList = new ArrayList<DaySQLiteUser>();//item的list
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
-        DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
         SQLiteDatabase db=helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null,null,null,null,"important,time");
-        DaySQLiteUser user = null;
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);
@@ -117,8 +115,28 @@ public class DaySQLiteUserDao {
             checkbox = checkbox1 > 0;
             boolean remind;
             remind = remind1 > 0;
-            user=new DaySQLiteUser(dayid,checkbox,remind,time,title,important,repeat,endday,diary,picture);
-            DaySQLiteUser things = new DaySQLiteUser(user.getDayid(),user.isCheckbox(),user.isRemind() ,user.getTime(),user.getTitle(),user.getImportant(),user.getRepeat(),user.getEndday(),user.getDiary(),user.getPicture());
+            DaySQLiteUser things = new DaySQLiteUser(dayid,checkbox,remind,time,title,important,repeat,endday,diary,picture);
+            dataList.add(things);
+        }
+        db.close();
+        return dataList;
+    }
+
+    public List<CalenderWeekItem> quiryAndSetWeekItem() {
+        List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();
+        helper.getReadableDatabase();
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null,null,null,null,"time");
+        while (cursor.moveToNext()){
+            String dayid = cursor.getString(0);
+            int checkbox1 = cursor.getInt(1);
+            String time = cursor.getString(3);
+            String title = cursor.getString(4);
+            String important = cursor.getString(5);
+            String repeat = cursor.getString(6);
+            boolean checkbox;
+            checkbox = checkbox1 > 0;
+            CalenderWeekItem things = new CalenderWeekItem(dayid,checkbox,time,title,important,repeat);
             dataList.add(things);
         }
         db.close();

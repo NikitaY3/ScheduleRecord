@@ -5,21 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.function.CalenderWeekItem;
 
 import java.util.List;
 
 public class CalenderWeek2Adapter extends BaseAdapter {
     private Context context;
-    private List<CalenderWeekItem> list;
+    private List<Integer> list;
     //布局填充--
     private LayoutInflater inflater;
 
-    public CalenderWeek2Adapter(Context context, List<CalenderWeekItem> list) {
+    public CalenderWeek2Adapter(Context context, List<Integer> list) {
         this.context = context;
         this.list = list;
         inflater=LayoutInflater.from(context);
@@ -54,12 +52,12 @@ public class CalenderWeek2Adapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         //数据
-        CalenderWeekItem pb=list.get(position);
-        holder.tv1.setText(pb.getMonday());
+        Integer pb=list.get(position);
+        holder.tv1.setText((position+1)+"");
         return convertView;
     }
 
     static class ViewHolder{
-        TextView tv1,tv2,tv3,tv4,tv5,tv6,tv7;
+        TextView tv1;
     }
 }

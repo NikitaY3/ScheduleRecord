@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.schedule.record.app.function.CalculationWeek;
 import com.schedule.record.app.function.DaySQLiteUser;
 import com.schedule.record.app.function.DaySQLiteUserDao;
 import com.schedule.record.app.sqlite.DaySQLite;
@@ -117,8 +118,17 @@ class Mode1Edit extends AppCompatActivity {
                         new DatePickerDialog(Mode1Edit.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                radio2 = "每周" + dayOfMonth+"日";
-                                editRadio2.setText(radio2);
+                                if (month<10 && dayOfMonth<10){
+                                    radio2 = year+"-0"+month+"-0"+dayOfMonth;
+                                }else if(month<10) {
+                                    radio2 = year+"-0"+month+"-"+dayOfMonth;
+                                }else if(dayOfMonth<10) {
+                                    radio2 = year+"-"+month+"-0"+dayOfMonth;
+                                }else {
+                                    radio2 = year+"-"+month+"-"+dayOfMonth;
+                                }
+                                String myweek = new CalculationWeek(radio2).getWeek();
+                                editRadio2.setText("每周星期" + myweek);
                             }
                         },cale1.get(Calendar.YEAR),cale1.get(Calendar.MONTH),cale1.get(Calendar.DAY_OF_WEEK)).show();
                         break;
@@ -159,11 +169,11 @@ class Mode1Edit extends AppCompatActivity {
                 new TimePickerDialog(Mode1Edit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if (minute<9 && hourOfDay<9){
+                        if (minute<10 && hourOfDay<10){
                             radio2 = "0"+hourOfDay + ":0" + minute;
-                        }else if(minute<9) {
+                        }else if(minute<10) {
                             radio2 = hourOfDay + ":0" + minute;
-                        }else if(hourOfDay<9) {
+                        }else if(hourOfDay<10) {
                             radio2 = "0"+hourOfDay + ":" + minute;
                         }else {
                             radio2 = hourOfDay+":"+minute ;

@@ -1,87 +1,71 @@
 package com.schedule.record.app.function;
 
 public class CalenderWeekItem {
-    private String Count,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday;
+    private String dayid,time,title,important,repeat;
+    private boolean checkbox;
 
-    public CalenderWeekItem(String Count, String Sunday, String Monday, String Tuesday, String Wednesday, String Thursday, String Friday, String Saturday) {
-        this.Count = Count;
-        this.Sunday = Sunday;
-        this.Monday = Monday;
-        this.Tuesday = Tuesday;
-        this.Wednesday = Wednesday;
-        this.Thursday = Thursday;
-        this.Friday = Friday;
-        this.Saturday = Saturday;
-    }
-
-    public String getCount() {
-        return Count;
-    }
-    public void setCount(String count) {
-        Count = count;
+    public CalenderWeekItem( String dayid, boolean checkbox, String time, String title,String important,String repeat) {
+        this.dayid = dayid;
+        this.checkbox = checkbox;
+        this.time = time;
+        this.title = title;
+        this.important = important;
+        this.repeat = repeat;
     }
 
-    public String getSunday() {
-        return Sunday;
-    }
-    public void setSunday(String sunday) {
-        Sunday = sunday;
+    public String getDayid() {
+        return dayid;
     }
 
-    public String getMonday() {
-        return Monday;
-    }
-    public void setMonday(String monday) {
-        Monday = monday;
+    public boolean isCheckbox() {
+        return checkbox;
     }
 
-    public String getTuesday() {
-        return Tuesday;
-    }
-    public void setTuesday(String tuesday) {
-        Tuesday = tuesday;
+    public void setCheckbox(boolean checkbox) {
+        this.checkbox = checkbox;
     }
 
-    public String getWednesday() {
-        return Wednesday;
-    }
-    public void setWednesday(String wednesday) {
-        Wednesday = wednesday;
+    public String getTitle() {
+        return title;
     }
 
-    public String getThursday() {
-        return Thursday;
-    }
-    public void setThursday(String thursday) {
-        Thursday = thursday;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getFriday() {
-        return Friday;
-    }
-    public void setFriday(String friday) {
-        Friday = friday;
+    public String getTime() {
+        return time;
     }
 
-    public String getSaturday() {
-        return Saturday;
-    }
-    public void setSaturday(String saturday) {
-        Saturday = saturday;
+    public void setTime(String time) {
+        this.time = time;
     }
 
+    public String getImportant() {
+        return important;
+    }
+
+    public void setImportant(String important) {
+        this.important = important;
+    }
+
+    public String getRepeat() {
+        return repeat;
+    }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
+    }
 
     @Override
     public String toString() {
         return "CalenderWeekItem{" +
-                "Count='" + Count + '\'' +
-                ", Sunday='" + Sunday + '\'' +
-                ", Monday='" + Monday + '\'' +
-                ", Tuesday='" + Tuesday + '\'' +
-                ", Wednesday='" + Wednesday + '\'' +
-                ", Thursday='" + Thursday + '\'' +
-                ", Friday='" + Friday + '\'' +
-                ", Saturday='" + Saturday + '\'' +
+                "dayid='" + dayid + '\'' +
+                ", time='" + time + '\'' +
+                ", title='" + title + '\'' +
+                ", important='" + important + '\'' +
+                ", repeat='" + repeat + '\'' +
+                ", checkbox=" + checkbox +
                 '}';
     }
 }

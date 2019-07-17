@@ -3,7 +3,7 @@ package com.schedule.record.app;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.schedule.record.app.function.ChartView;
+import com.schedule.record.app.customlayout.ChartView;
 
 import java.util.LinkedList;
 

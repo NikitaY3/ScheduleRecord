@@ -1,4 +1,4 @@
-package com.schedule.record.app.function;
+package com.schedule.record.app.customlayout;
 
 import android.content.Context;
 import android.content.res.Resources;

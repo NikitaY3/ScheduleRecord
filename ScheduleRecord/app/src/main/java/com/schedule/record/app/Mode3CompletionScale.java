@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.schedule.record.app.function.ColumnView;
+import com.schedule.record.app.customlayout.ColumnView;
 
 import java.util.ArrayList;
 import java.util.List;

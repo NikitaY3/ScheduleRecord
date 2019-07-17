@@ -8,15 +8,16 @@
     <color name="green">#90008577</color>
     <color name="green2">#8F008577</color>
 
-    <color name="green3">#70008577</color>
-    <color name="green4">#703DC08C</color>
-    <color name="green5">#7070FFA0</color>
-    <color name="green6">#7094FFE6</color>
+    <color name="green3">#80008577</color>
+    <color name="green4">#803DC08C</color>
+    <color name="green5">#8070FFA0</color>
+    <color name="green6">#8094FFE6</color>
 
     <color name="white">#FFFFFF</color>
     <color name="gray">#2494a199</color>
     <color name="varygray">#8394A199</color>
     <color name="varygray2">#333333</color>
+    <color name="varygray3">#E7E9EB</color>
     <color name="bule">#03A9F4</color>
     <color name="varybule">#037DFF</color>
     <color name="huaqin">#cc99ff</color>
@@ -26,5 +27,4 @@
     <color name="lineChart3">#999999</color>
 
     <color name="red">#FF0000</color>
-    <!--<color name="name1">#0xff</color>-->
 </resources>

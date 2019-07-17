@@ -14,7 +14,7 @@
         android:layout_height="42dp"
         android:layout_weight="1"
         android:background="@drawable/abb_calendar_month"
-        android:text="7月"
+        android:text="8月"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -33,6 +33,7 @@
 
 
         <Button
+            android:id="@+id/mode2WeekButton0"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_weight="1"
@@ -41,6 +42,7 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/mode2WeekButton1"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_weight="1"
@@ -49,6 +51,7 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/mode2WeekButton2"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_weight="1"
@@ -57,6 +60,7 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/mode2WeekButton3"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_weight="1"
@@ -65,6 +69,7 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/mode2WeekButton4"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_weight="1"
@@ -73,6 +78,7 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/mode2WeekButton5"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_weight="1"
@@ -81,6 +87,7 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/mode2WeekButton6"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_weight="1"
@@ -90,80 +97,87 @@
 
     </LinearLayout>
 
-        <ListView
-            android:id="@+id/calendar2ListView"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/calendar2LinearLayout1" />
 
     <ScrollView
-        android:layout_width="0dp"
+        android:id="@+id/mode2ScrollView"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/calendar2ListView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/calendar2LinearLayout1">
 
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
             android:orientation="horizontal">
 
-            <ListView
-                android:id="@+id/calendar2ListView1"
+            <com.schedule.record.app.customlayout.ListViewForScrollView
+                android:id="@+id/calendar2ListView"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:divider="@color/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/calendar2LinearLayout1" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:orientation="horizontal">
 
-            <ListView
-                android:id="@+id/calendar2ListView2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                <com.schedule.record.app.customlayout.ListViewForScrollView
+                    android:id="@+id/calendar2ListView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:layout_weight="1" />
 
-            <ListView
-                android:id="@+id/calendar2ListView3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                <com.schedule.record.app.customlayout.ListViewForScrollView
+                    android:id="@+id/calendar2ListView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:layout_weight="1" />
 
-            <ListView
-                android:id="@+id/calendar2ListView4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                <com.schedule.record.app.customlayout.ListViewForScrollView
+                    android:id="@+id/calendar2ListView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:layout_weight="1" />
 
-            <ListView
-                android:id="@+id/calendar2ListView5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                <com.schedule.record.app.customlayout.ListViewForScrollView
+                    android:id="@+id/calendar2ListView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:layout_weight="1" />
 
-            <ListView
-                android:id="@+id/calendar2ListView6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                <com.schedule.record.app.customlayout.ListViewForScrollView
+                    android:id="@+id/calendar2ListView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:layout_weight="1" />
 
-            <ListView
-                android:id="@+id/calendar2ListView7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                <com.schedule.record.app.customlayout.ListViewForScrollView
+                    android:id="@+id/calendar2ListView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:layout_weight="1" />
 
+                <com.schedule.record.app.customlayout.ListViewForScrollView
+                    android:id="@+id/calendar2ListView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 
-    <!--<GridView-->
-        <!--android:id="@+id/calendar2ListView"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="300dp"-->
-        <!--android:numColumns="7"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/calendar2LinearLayout2"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/calendar2LinearLayout1" />-->
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

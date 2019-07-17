@@ -48,7 +48,6 @@ public class CalenderDayAdapter extends BaseAdapter {
         this.list = list;
         inflater=LayoutInflater.from(context);
         this.mode1ProgressBar = mode1ProgressBar;
-//        CalenderDayAdapter.this.notifyDataSetChanged();
     }
     @Override
     public int getCount() {
@@ -96,14 +95,8 @@ public class CalenderDayAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     pb.setCheckbox(true);
-//                    CalenderDayAdapter.this.notifyDataSetInvalidated();
-//                    Toast.makeText(context,"点击checkBox:"+pb.isCheckbox(),Toast.LENGTH_SHORT).show();
-//                    CalenderDayAdapter.this.notifyDataSetChanged();
-//                    dao.updateAll(pb);
                 }else{
                     pb.setCheckbox(false);
-//                    Toast.makeText(context,"点击checkBox:"+pb.isCheckbox(),Toast.LENGTH_SHORT).show();
-//                    CalenderDayAdapter.this.notifyDataSetChanged();
                 }
                 helper=new DaySQLite(context,DBName,null,version);
                 helper.getReadableDatabase();
@@ -111,7 +104,6 @@ public class CalenderDayAdapter extends BaseAdapter {
                 Toast.makeText(context,"Day"+pb.isCheckbox()+pb.getDayid(),Toast.LENGTH_SHORT).show();
                 dao.updateAll(pb);
                 new Mode1ProgressBar(dao.CountBar(),dao.CountAllBar(),mode1ProgressBar);
-//                CalenderDayAdapter.this.notifyDataSetInvalidated();
             }
         });
 
