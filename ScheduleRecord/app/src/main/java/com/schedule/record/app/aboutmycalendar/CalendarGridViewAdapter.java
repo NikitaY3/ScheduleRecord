@@ -3,6 +3,7 @@ package com.schedule.record.app.aboutmycalendar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,62 +78,61 @@ public class CalendarGridViewAdapter  extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // 整个Item
-        LinearLayout itemLayout = new LinearLayout(mContext);
-        itemLayout.setId(position + DEFAULT_ID);
-        itemLayout.setGravity(Gravity.CENTER);
-        itemLayout.setOrientation(1);
-        itemLayout.setBackgroundColor(Color.WHITE);
+            // 整个Item
+            LinearLayout itemLayout = new LinearLayout(mContext);
+            itemLayout.setId(position + DEFAULT_ID);
+            itemLayout.setGravity(Gravity.CENTER);
+            itemLayout.setOrientation(1);
+            itemLayout.setBackgroundColor(Color.WHITE);
 
-        Date myDate = (Date) getItem(position);
-        itemLayout.setTag(myDate);
-        Calendar calCalendar = Calendar.getInstance();
-        calCalendar.setTime(myDate);
+            Date myDate = (Date) getItem(position);
+            itemLayout.setTag(myDate);
+            Calendar calCalendar = Calendar.getInstance();
+            calCalendar.setTime(myDate);
 
-        // 显示日期day
-        TextView textDay = new TextView(mContext);// 日期
-        LinearLayout.LayoutParams text_params = new LinearLayout.LayoutParams( WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        textDay.setGravity(Gravity.CENTER_VERTICAL);
-        textDay.setTextColor(Color.argb(0xff, 0x00, 0x85, 0x77));
-        textDay.setTextSize(20);
-        textDay.setPadding(15,3,0,0);
-        int day = myDate.getDate(); // 日期
-        textDay.setText(String.valueOf(day));
-        textDay.setId(position + DEFAULT_ID);
-        itemLayout.addView(textDay, text_params);
+            // 显示日期day
+            TextView textDay = new TextView(mContext);// 日期
+            LinearLayout.LayoutParams text_params = new LinearLayout.LayoutParams( WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            textDay.setGravity(Gravity.CENTER_VERTICAL);
+            textDay.setTextColor(Color.argb(0xff, 0x00, 0x85, 0x77));
+            textDay.setTextSize(20);
+            textDay.setPadding(15,3,0,0);
+            int day = myDate.getDate(); // 日期
+            textDay.setText(String.valueOf(day));
+            textDay.setId(position + DEFAULT_ID);
+            itemLayout.addView(textDay, text_params);
 
-        // 自定义显示完成数量
-        TextView finishDay = new TextView(mContext);
-        LinearLayout.LayoutParams finish_params = new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        finishDay.setGravity(Gravity.CENTER_HORIZONTAL);
-        finishDay.setTextSize(9);
-        finishDay.setTextColor(Color.argb(0xff, 0x00, 0x57, 0x4b));
-        String d = new FinishDayUtil(mContext,myDate).toString();
-        finishDay.setText(d);
-        itemLayout.addView(finishDay, finish_params);
-
-
-        if (equalsDate(calToday.getTime(), myDate)) {
-            // 如果是当前日期则显示不同颜色
-            itemLayout.setBackgroundColor(Color.argb(0xff, 0xcc, 0x99, 0xff));
-        }
-        if (equalsDate(calSelected.getTime(), myDate)) {
-            // 选择的
-            itemLayout.setBackgroundColor(Color.argb(0xff, 0xff, 0x00, 0x00));
-        } else if (!CalendarUtil.compare(myDate, calToday.getTime())) {
-            // 这里用于比对是不是比当前日期小，如果比当前日期小则显示浅灰色
-            itemLayout.setBackgroundColor(Color.argb(0xff,0xe7,0xe9,0xeb));
-        }
-        if (markDates != null) {
-            /** 设置标注日期颜色 */
-            final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-            for (Date date : markDates) {
-                if (format.format(myDate).equals(format.format(date))) {
-                    itemLayout.setBackgroundColor(Color.argb(0xff, 0x00, 0x00, 0x00));
-                    break;
+            // 自定义显示完成数量
+            TextView finishDay = new TextView(mContext);
+            LinearLayout.LayoutParams finish_params = new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            finishDay.setGravity(Gravity.CENTER_HORIZONTAL);
+            finishDay.setTextSize(9);
+            finishDay.setTextColor(Color.argb(0xff, 0x00, 0x57, 0x4b));
+            String d = new FinishDayUtil(mContext,myDate).toString();
+            finishDay.setText(d);
+            itemLayout.addView(finishDay, finish_params);
+            if (equalsDate(calToday.getTime(), myDate)) {
+                // 如果是当前日期则显示不同颜色
+                itemLayout.setBackgroundColor(Color.argb(0xff, 0xcc, 0x99, 0xff));
+            }
+            if (equalsDate(calSelected.getTime(), myDate)) {
+                // 选择的
+                itemLayout.setBackgroundColor(Color.argb(0xff, 0xff, 0x00, 0x00));
+            } else if (!CalendarUtil.compare(myDate, calToday.getTime())) {
+                // 这里用于比对是不是比当前日期小，如果比当前日期小则显示浅灰色
+                itemLayout.setBackgroundColor(Color.argb(0xff,0xe7,0xe9,0xeb));
+            }
+            if (markDates != null) {
+                /** 设置标注日期颜色 */
+                final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+                for (Date date : markDates) {
+                    if (format.format(myDate).equals(format.format(date))) {
+                        itemLayout.setBackgroundColor(Color.argb(0xff, 0x00, 0x00, 0x00));
+                        break;
+                    }
                 }
             }
-        }
+
         return itemLayout;
     }
 

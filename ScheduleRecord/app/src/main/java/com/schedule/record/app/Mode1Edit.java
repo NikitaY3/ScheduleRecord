@@ -1,12 +1,10 @@
 package com.schedule.record.app;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,24 +13,20 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.schedule.record.app.fragment.EditWeekChoiceFragment;
 import com.schedule.record.app.function.DaySQLiteUser;
 import com.schedule.record.app.function.DaySQLiteUserDao;
 import com.schedule.record.app.sqlite.DaySQLite;
 
-import java.lang.reflect.Field;
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +36,8 @@ import butterknife.OnClick;
 public
 class Mode1Edit extends AppCompatActivity {
 
+    @BindView(R.id.editTextView1)
+    TextView editTextView1;
     @BindView(R.id.editCheckBox1)
     CheckBox editCheckBox1;
     @BindView(R.id.editEditText0)
@@ -74,6 +70,8 @@ class Mode1Edit extends AppCompatActivity {
     RadioGroup editRadioGroup;
     @BindView(R.id.editLinearLayout3)
     LinearLayout editLinearLayout3;
+    @BindView(R.id.editLinearLayout31)
+    LinearLayout editLinearLayout31;
     @BindView(R.id.editTextView4)
     TextView editTextView4;
     @BindView(R.id.editButton41)
@@ -90,11 +88,8 @@ class Mode1Edit extends AppCompatActivity {
     ImageButton editImageButton3;
     @BindView(R.id.editLinearLayout5)
     LinearLayout editLinearLayout5;
-    @BindView(R.id.editFrameLayout)
-    FrameLayout editFrameLayout;
 
     private FragmentManager fm;
-    private EditWeekChoiceFragment f1;
     int fr;
 
     private DaySQLite helper;
@@ -123,20 +118,39 @@ class Mode1Edit extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.editRadio1:
-                        if (fr == 1) {
-                            getSupportFragmentManager().beginTransaction().remove(f1).commit();
-                        }
+//                        if (fr == 1) {
+//                            getSupportFragmentManager().beginTransaction().remove(f1).commit();
+//                        }
+//                        fr=0;
+//                        TextView textDay = new TextView(Mode1Edit.this);// 日期
+//                        LinearLayout.LayoutParams text_params = new LinearLayout.LayoutParams( WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//                        textDay.setGravity(Gravity.CENTER_VERTICAL);
+//                        textDay.setTextColor(Color.argb(0xff, 0x00, 0x85, 0x77));
+//                        textDay.setTextSize(20);
+//                        textDay.setPadding(15,3,0,0);
+////                        int day = myDate.getDate(); // 日期
+//                        textDay.setText("wbhnjnmkmokov");
+//                        editFrameLayout.addView(textDay);
+//                        editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,0));
                         break;
                     case R.id.editRadio2:
-                        fr = 1;
-                        f1 = new EditWeekChoiceFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.editFrameLayout,f1).commit();
+                        editRadio2.setText("每周");
+//                        fr = 1;
+//                        f1 = new EditWeekChoiceFragment();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.editFrameLayout,f1).commit();
 //                        radio2 = f1.getChoiceWeek();
                         break;
                     case R.id.editRadio3:
-                        if (fr == 1) {
-                            getSupportFragmentManager().beginTransaction().remove(f1).commit();
-                        }
+//                        if (fr == 1) {
+//                            getSupportFragmentManager().beginTransaction().remove(f1).commit();
+//                        }
+                        fr = 0;
+//                        CheckBox weekItemButton1 = new CheckBox(Mode1Edit.this);
+//                        weekItemButton1.setButtonDrawable(R.drawable.abaaaa_edit_week_choice);
+//                        weekItemButton1.set
+//                        editLinearLayout31.addView(weekItemButton1);
+//                        editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
+//                        editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT));
                         radio3 = "每月1日";
                         editRadio3.setText(radio3);
                         break;
@@ -234,9 +248,6 @@ class Mode1Edit extends AppCompatActivity {
             user.setRepeat("everyday");
         }
         if (editRadio2.isChecked()) {
-//            f1 = new EditWeekChoiceFragment();
-//            getSupportFragmentManager().beginTransaction().replace(R.id.editFrameLayout,f1).commit();
-            radio2 = f1.getChoiceWeek();
             user.setRepeat("everywee" + radio2);
         }
         if (editRadio3.isChecked()) {
@@ -288,17 +299,8 @@ class Mode1Edit extends AppCompatActivity {
                 editRadio1.setChecked(true);
                 break;
             case "everywee":
-                fr = 1;
                 String re = repeat.substring(8);
-//                f1 = new EditWeekChoiceFragment();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.editFrameLayout,f1).commit();
-//                while (!re.equals("")){
-//                    q = Integer.parseInt(re.substring(0,1));
-//                    Toast.makeText(Mode1Edit.this,"#########"+q,Toast.LENGTH_SHORT).show();
-//                                f1.setChoiceWeek(q);
-//                    re = re.substring(1);
-//                }
-                editRadio2.setText("每周星期"+re);
+                editRadio2.setText("每周星期" + re);
                 editRadio2.setChecked(true);
                 break;
             case "everymou":
