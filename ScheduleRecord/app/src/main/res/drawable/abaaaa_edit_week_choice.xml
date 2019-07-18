@@ -6,13 +6,13 @@
             <corners
                 android:radius="40dp"/>
             <stroke
-                android:width="4dp"
+                android:width="0dp"
                 android:color="#00FFFFFF"/>
         </shape>
     </item>
 
     <item
         android:state_checked="false"
-        android:drawable="@color/white" />
+        android:drawable="@drawable/abaaaa_edit_week_choice2" />
 
 </selector>

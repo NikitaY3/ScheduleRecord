@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.schedule.record.app.MainMyBoradcastSet;
+import com.schedule.record.app.MainMyEffectivesSch;
+import com.schedule.record.app.MainMyFinishSch;
+import com.schedule.record.app.MainMyInformation;
 import com.schedule.record.app.MainMyLogon;
 import com.schedule.record.app.R;
 
@@ -37,6 +41,8 @@ public class MyFragment extends Fragment {
     Button myButton6;
     @BindView(R.id.myButton7)
     Button myButton7;
+    @BindView(R.id.myButton8)
+    Button myButton8;
     @BindView(R.id.myImageView2)
     ImageView myImageView2;
     Unbinder unbinder;
@@ -56,24 +62,34 @@ public class MyFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.myImageView1, R.id.myButton1, R.id.myButton2, R.id.myButton3, R.id.myButton4, R.id.myButton5, R.id.myButton6, R.id.myButton7, R.id.myImageView2})
+    @OnClick({R.id.myImageView1, R.id.myButton1, R.id.myButton2, R.id.myButton3, R.id.myButton4, R.id.myButton5, R.id.myButton6, R.id.myButton7, R.id.myButton8, R.id.myImageView2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.myImageView1:
                 break;
             case R.id.myButton1:
+                Intent intent1 = new Intent(getActivity(), MainMyInformation.class);
+                startActivity(intent1);
                 break;
             case R.id.myButton2:
+                Intent intent2 = new Intent(getActivity(), MainMyEffectivesSch.class);
+                startActivity(intent2);
                 break;
             case R.id.myButton3:
+                Intent intent3 = new Intent(getActivity(), MainMyFinishSch.class);
+                startActivity(intent3);
                 break;
             case R.id.myButton4:
                 break;
             case R.id.myButton5:
                 break;
             case R.id.myButton6:
+                Intent intent6 = new Intent(getActivity(), MainMyBoradcastSet.class);
+                startActivity(intent6);
                 break;
             case R.id.myButton7:
+                break;
+            case R.id.myButton8:
                 break;
             case R.id.myImageView2:
                 Intent intent = new Intent(getActivity(), MainMyLogon.class);

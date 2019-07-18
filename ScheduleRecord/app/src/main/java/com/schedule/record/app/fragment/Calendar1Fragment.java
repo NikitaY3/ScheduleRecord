@@ -65,9 +65,9 @@ public class Calendar1Fragment extends Fragment{
         helper.getReadableDatabase();
         DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
         dataList = (List<DaySQLiteUser>) dao.quiryAndSetItem();
-        CalenderDayAdapter adapter = new CalenderDayAdapter(getContext(),dataList,mode1ProgressBar);
+        CalenderDayAdapter adapter = new CalenderDayAdapter(getActivity(),dataList,mode1ProgressBar);
         int countBar = dao.CountBar();
-        Toast.makeText(getContext(),"已完成数量为："+countBar,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),"已完成数量为："+countBar,Toast.LENGTH_SHORT).show();
 
         new Mode1ProgressBar(countBar,dataList.size(),mode1ProgressBar);
         calendar1ListView.setAdapter(adapter);

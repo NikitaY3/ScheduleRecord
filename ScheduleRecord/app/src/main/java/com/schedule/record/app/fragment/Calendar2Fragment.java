@@ -193,35 +193,19 @@ public class Calendar2Fragment extends Fragment {
                     dataList.add(i);
                     break;
                 case "everywee":
-                    switch (mydata.getRepeat().substring(12, 13)) {
-                        case "0":
-                            dataList1.add(mydata);
-                            break;
-                        case "1":
-                            dataList2.add(mydata);
-                            break;
-                        case "2":
-                            dataList3.add(mydata);
-                            break;
-                        case "3":
-                            dataList4.add(mydata);
-                            break;
-                        case "4":
-                            dataList5.add(mydata);
-                            break;
-                        case "5":
-                            dataList6.add(mydata);
-                            break;
-                        case "6":
-                            dataList7.add(mydata);
-                            break;
+                    String re = mydata.getRepeat().substring(8);
+                    while (!re.equals("")){
+                        int a = Integer.parseInt(re.substring(0,1));
+                        setChoiceWeek(a);
+                        re = re.substring(1);
                     }
                     dataList.add(i);
                     break;
+                case "everymou":
+                    break;
                 default:
-//                    if (mydata.getRepeat().substring(0,8).equals())
-                    dataList1.add(mydata);
-                    dataList.add(i);
+//                    dataList1.add(mydata);
+//                    dataList.add(i);
                     break;
             }
         }
@@ -238,5 +222,29 @@ public class Calendar2Fragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void setChoiceWeek(int posion) {
+        if (posion == 0) {
+            dataList1.add(mydata);
+        }
+        if (posion == 1) {
+            dataList2.add(mydata);
+        }
+        if (posion == 2) {
+            dataList3.add(mydata);
+        }
+        if (posion == 3) {
+            dataList4.add(mydata);
+        }
+        if (posion == 4) {
+            dataList5.add(mydata);
+        }
+        if (posion == 5) {
+            dataList6.add(mydata);
+        }
+        if (posion == 6) {
+            dataList7.add(mydata);
+        }
     }
 }

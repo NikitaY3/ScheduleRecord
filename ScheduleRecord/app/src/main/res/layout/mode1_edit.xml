@@ -165,7 +165,7 @@
                 android:background="@drawable/abaaa_edit_repat"
                 android:button="@null"
                 android:gravity="center"
-                android:text="每周星期一"
+                android:text="每周"
                 android:textColor="@color/varygray2" />
 
             <RadioButton
@@ -182,6 +182,15 @@
         </RadioGroup>
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/editFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editLinearLayout3">
+
+    </FrameLayout>
+
     <LinearLayout
         android:id="@+id/editLinearLayout4"
         android:layout_width="match_parent"
@@ -191,7 +200,7 @@
         android:paddingVertical="5dp"
         android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editLinearLayout3">
+        app:layout_constraintTop_toBottomOf="@id/editFrameLayout">
 
         <TextView
             android:id="@+id/editTextView4"

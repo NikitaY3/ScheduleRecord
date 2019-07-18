@@ -26,6 +26,10 @@
         <activity android:name=".Mode3CompletionLine"/>
         <activity android:name=".Mode3CompletionScale"/>
         <activity android:name=".Mode3TimeDelayed"/>
+        <activity android:name=".MainMyInformation"/>
+        <activity android:name=".MainMyEffectivesSch"/>
+        <activity android:name=".MainMyFinishSch"/>
+        <activity android:name=".MainMyBoradcastSet"/>
     </application>
 
 </manifest>

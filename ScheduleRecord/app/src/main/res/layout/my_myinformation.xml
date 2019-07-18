@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/informationTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:text="个人信息"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/informationTextView1">
+
+        <Button
+            android:id="@+id/informationButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="头像"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Button
+            android:id="@+id/informationButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="主页背景"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Button
+            android:id="@+id/informationButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="昵称"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Button
+            android:id="@+id/informationButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="性别"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Button
+            android:id="@+id/informationButton5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="生日"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Button
+            android:id="@+id/informationButton6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="地区"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Button
+            android:id="@+id/informationButton7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="实名认证"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Button
+            android:id="@+id/informationButton8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="账号绑定设置"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Button
+            android:id="@+id/informationButton9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="我的注册信息"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

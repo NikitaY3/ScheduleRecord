@@ -19,7 +19,6 @@ import java.util.List;
 public class CalenderWeekAdapter extends BaseAdapter {
     private Context context;
     private List<CalenderWeekItem> list;
-    //布局填充--
     private LayoutInflater inflater;
 
     public CalenderWeekAdapter(Context context, List<CalenderWeekItem> list) {

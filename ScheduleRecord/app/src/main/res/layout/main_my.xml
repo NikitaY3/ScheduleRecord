@@ -51,7 +51,7 @@
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
-                android:text="日程设置"
+                android:text="有效日程"
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
 
@@ -62,7 +62,7 @@
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
-                android:text="播报设置"
+                android:text="结束日程"
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
 
@@ -70,7 +70,6 @@
                 android:id="@+id/myButton4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
@@ -97,12 +96,24 @@
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
-                android:text="版本信息"
+                android:text="播报设置"
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
 
             <Button
                 android:id="@+id/myButton7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ac_my_button1"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:text="版本信息"
+                android:textColor="@drawable/ac_my_button1_text"
+                tools:ignore="RtlSymmetry" />
+
+            <Button
+                android:id="@+id/myButton8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
