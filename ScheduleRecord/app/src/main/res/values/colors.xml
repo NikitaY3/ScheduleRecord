@@ -27,4 +27,5 @@
     <color name="lineChart3">#999999</color>
 
     <color name="red">#FF0000</color>
+    <color name="nullcolor">#00000000</color>
 </resources>

@@ -59,9 +59,8 @@ public class CalenderWeekAdapter extends BaseAdapter {
         }
         //数据
         CalenderWeekItem pb=list.get(position);
-        if (!pb.isCheckbox()) {
-//            holder.btn2.setBackgroundResource(Integer.parseInt(null));
-        }else {
+        holder.btn2.setBackgroundResource(R.color.nullcolor);
+        if (pb.isCheckbox()) {
             holder.btn2.setBackgroundResource(R.drawable.abb_mode2_finish);
         }
 

@@ -2,6 +2,7 @@ package com.schedule.record.app.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.schedule.record.app.MainMyFinishSchNote;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.DaySQLiteUser;
 
@@ -45,7 +47,7 @@ public class MyFinishSchAdapter extends BaseAdapter {
 
     @SuppressLint("InflateParams")
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.my_finishschedules_item, null);
@@ -58,12 +60,34 @@ public class MyFinishSchAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        DaySQLiteUser pb = list.get(position);
+        final DaySQLiteUser pb = list.get(position);
 
         holder.tv1.setText(pb.getTitle());
-        holder.tv2.setText(pb.getTitle());
+        holder.tv2.setText("1 天");
         holder.tv3.setText(pb.getTime());
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainMyFinishSchNote.class);
+                intent.putExtra("dayid",pb.getDayid());
+                context.startActivity(intent);
+            }
+        });
 
+        switch (pb.getImportant()) {
+            case "a":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_em);
+                break;
+            case "b":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_no);
+                break;
+            case "c":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_em);
+                break;
+            case "d":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no);
+                break;
+        }
 
         return convertView;
     }

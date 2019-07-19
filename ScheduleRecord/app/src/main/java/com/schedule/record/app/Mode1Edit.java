@@ -224,10 +224,17 @@ class Mode1Edit extends AppCompatActivity {
                 new DatePickerDialog(Mode1Edit.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        radio3 = year + "年" + (month + 1) + "月" + dayOfMonth + "日";
-                        editButton41.setText(radio3);
-                        user.setRepeat(radio3);
-                        dao.updateAll(user);
+                        String radio;
+                        if ((month+1)<10 && dayOfMonth<10){
+                            radio = year+"-0"+(month+1)+"-0"+dayOfMonth;
+                        }else if ((month+1)<10){
+                            radio = year+"-0"+(month+1)+"-"+dayOfMonth;
+                        }else if (dayOfMonth<10){
+                            radio = year+"-"+(month+1)+"-0"+dayOfMonth;
+                        }else {
+                            radio = year+"-"+(month+1)+"-"+dayOfMonth;
+                        }
+                        editButton41.setText(radio);
                     }
                 }, cale1.get(Calendar.YEAR), cale1.get(Calendar.MONTH), cale1.get(Calendar.DAY_OF_MONTH)).show();
                 break;
@@ -257,6 +264,10 @@ class Mode1Edit extends AppCompatActivity {
         }
         if (editRadio4.isChecked()) {
             user.setRepeat("norepeat");
+            if (!editButton41.getText().equals("0000-00-00"))
+            {
+                user.setIsfinish("future");
+            }
         }
         user.setEndday(editButton41.getText().toString());
         user.setDiary(editEditText2.getText().toString());

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.CalenderWeek2Adapter;
@@ -113,6 +114,7 @@ public class Calendar2Fragment extends Fragment {
         StartSet();
         today = getInternetTime();
         todayint = Integer.parseInt(today.substring(0,4)+ today.substring(5,7)+today.substring(8,10));
+//        Toast.makeText(getActivity(),"结束日期"+todayint,Toast.LENGTH_SHORT).show();
         GetTodayWeek(today);
         PositionDetermine();
     }
@@ -200,14 +202,21 @@ public class Calendar2Fragment extends Fragment {
             mydata = mydData.get(i);
             switch (mydata.getRepeat().substring(0, 8)) {
                 case "everyday":
-                    dataList1.add(mydata);
-                    dataList2.add(mydata);
-                    dataList3.add(mydata);
-                    dataList4.add(mydata);
-                    dataList5.add(mydata);
-                    dataList6.add(mydata);
-                    dataList7.add(mydata);
-                    dataList.add(i);
+                    if (mydata.getEndday().equals("")) {
+                        //当结束日期为空时，创建日期后生成Item
+                        dataList1.add(mydata);
+                        dataList2.add(mydata);
+                        dataList3.add(mydata);
+                        dataList4.add(mydata);
+                        dataList5.add(mydata);
+                        dataList6.add(mydata);
+                        dataList7.add(mydata);
+                        dataList.add(i);
+                        setChoiceWeek(Integer.parseInt(todayweek));
+                    }else{
+                        //当结束日期不为空时，结束日期前，当前星期，创建日期后生成Item
+                        //判断是否为当前周，如果是
+                    }
                     break;
                 case "everywee":
                     String re = mydata.getRepeat().substring(8);
@@ -232,6 +241,7 @@ public class Calendar2Fragment extends Fragment {
                     if (mydata.getEndday().equals("")) {
                         setChoiceWeek(Integer.parseInt(todayweek));
                     }else{
+//                        todayint = Integer.parseInt(today.substring(0,4)+ today.substring(5,7)+today.substring(8,10));
                         int a1 = Integer.parseInt(mydata.getEndday().substring(0,4)+ mydata.getEndday().substring(5,7)+mydata.getEndday().substring(8,10));
                         if(oneWeek(a1)){
                             String c = new CalculationWeek(mydata.getEndday().substring(0, 10)).getWeek();

@@ -31,6 +31,7 @@
         <activity android:name=".MainMyFinishSch"/>
         <activity android:name=".MainMyBoradcastSet"/>
         <activity android:name=".MianMyStatisticsSch"/>
+        <activity android:name=".MainMyFinishSchNote"/>
     </application>
 
 </manifest>

@@ -28,17 +28,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/gray"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/myButton1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:background="@drawable/ac_my_button1"
+                android:drawableStart="@drawable/z_a"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:paddingStart="10dp"
+                android:paddingStart="15dp"
                 android:text="个人信息"
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
@@ -46,7 +48,7 @@
             <Button
                 android:id="@+id/myButton2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
@@ -58,7 +60,7 @@
             <Button
                 android:id="@+id/myButton3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
@@ -69,7 +71,7 @@
             <Button
                 android:id="@+id/myButton4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
@@ -80,7 +82,7 @@
             <Button
                 android:id="@+id/myButton5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
@@ -91,7 +93,7 @@
             <Button
                 android:id="@+id/myButton6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
@@ -103,7 +105,7 @@
             <Button
                 android:id="@+id/myButton7"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
@@ -115,7 +117,7 @@
             <Button
                 android:id="@+id/myButton8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"

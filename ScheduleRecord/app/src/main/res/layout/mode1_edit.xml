@@ -173,7 +173,6 @@
                 android:id="@+id/editRadio3"
                 android:layout_width="35dp"
                 android:layout_height="25dp"
-                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/abaaa_edit_repat"
                 android:button="@null"

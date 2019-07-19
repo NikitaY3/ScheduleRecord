@@ -4,9 +4,9 @@ public class DaySQLiteUser {
 //    dayid varchar(50) primary key, checkbox bit,time datetime,title varchar(150),important char(2),repeat varchar(50),endday date,diary text,picture char(50);
     private String dayid;
     private boolean checkbox,remind;
-    private String time,title,important,repeat,endday,diary,picture;
+    private String time,title,important,repeat,endday,diary,picture,isfinish;
 
-    public DaySQLiteUser(String dayid, boolean checkbox,boolean remind, String time, String title, String important, String repeat, String endday, String diary, String picture) {
+    public DaySQLiteUser(String dayid, boolean checkbox,boolean remind, String time, String title, String important, String repeat, String endday, String diary, String picture,String isfinish) {
         this.dayid = dayid;
         this.checkbox = checkbox;
         this.remind = remind;
@@ -17,6 +17,7 @@ public class DaySQLiteUser {
         this.endday = endday;
         this.diary = diary;
         this.picture = picture;
+        this.isfinish = isfinish;
     }
 
     public String getDayid() {
@@ -99,6 +100,14 @@ public class DaySQLiteUser {
         this.picture = picture;
     }
 
+    public String getIsfinish() {
+        return isfinish;
+    }
+
+    public void setIsfinish(String isfinish) {
+        this.isfinish = isfinish;
+    }
+
     @Override
     public String toString() {
         return "当前日程Dayid为：" + dayid + '\n' +
@@ -109,6 +118,7 @@ public class DaySQLiteUser {
                 "日程截止时间：" + endday + '\n' +
                 "日程详细记录：" + diary + '\n' +
                 "日程图片：" + picture + '\n' +
-                "日程重要程度：" + important + '\n'+'\n';
+                "日程重要程度：" + important + '\n'+
+                "是否标记完成"+isfinish+'\n';
     }
 }

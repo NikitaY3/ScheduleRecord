@@ -63,7 +63,7 @@ public class DayDialog extends Dialog {
     private ProgressBar mode1ProgressBar;
 
 
-    private String important,endday,repeat,diary,picture;
+    private String important,endday,repeat,diary,picture,isfinish;
     private boolean remind = true;
 
     public DayDialog(Context context, ListView calendar1ListView, List<DaySQLiteUser> dataList, ProgressBar mode1ProgressBar) {
@@ -83,6 +83,7 @@ public class DayDialog extends Dialog {
         remind = true;
         diary = "无";
         picture = "picture";
+        isfinish = "today";
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -164,7 +165,16 @@ public class DayDialog extends Dialog {
                 new DatePickerDialog(context,new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String radio = year+"."+(month+1)+"."+dayOfMonth;
+                        String radio;
+                        if ((month+1)<10 && dayOfMonth<10){
+                            radio = year+"-0"+(month+1)+"-0"+dayOfMonth;
+                        }else if ((month+1)<10){
+                            radio = year+"-0"+(month+1)+"-"+dayOfMonth;
+                        }else if (dayOfMonth<10){
+                            radio = year+"-"+(month+1)+"-0"+dayOfMonth;
+                        }else {
+                            radio = year+"-"+(month+1)+"-"+dayOfMonth;
+                        }
                         inputItemButton23.setText(radio);
                         endday = radio;
                     }
@@ -194,7 +204,11 @@ public class DayDialog extends Dialog {
         String time = Dayidbutton.substring(0,11)+inputItemEditText1.getText().toString();
         Toast.makeText(context,"当前时间为："+time,Toast.LENGTH_SHORT).show();
 
-        DaySQLiteUser things = new DaySQLiteUser(Dayidbutton,false,remind,time,dayTitle,important,repeat,endday,diary,picture);
+        if (repeat.equals("norepeat") && !endday.equals("0000-00-00"))
+        {
+            isfinish = "future";
+        }
+        DaySQLiteUser things = new DaySQLiteUser(Dayidbutton,false,remind,time,dayTitle,important,repeat,endday,diary,picture,isfinish);
 
         //数据写入数据库
         helper=new DaySQLite(context,DBName,null,version);
@@ -206,7 +220,7 @@ public class DayDialog extends Dialog {
         dataList = new ArrayList<DaySQLiteUser>();
         helper=new DaySQLite(context,DBName,null,version);
         helper.getReadableDatabase();
-        dataList = (List<DaySQLiteUser>) dao.quiryAndSetItem();
+        dataList = (List<DaySQLiteUser>) dao.quiryTodayAndSetItem();
         final CalenderDayAdapter adapter = new CalenderDayAdapter(context, dataList,mode1ProgressBar);
         new Mode1ProgressBar(dao.CountBar(),dataList.size(),mode1ProgressBar);
         calendar1ListView.setAdapter(adapter);

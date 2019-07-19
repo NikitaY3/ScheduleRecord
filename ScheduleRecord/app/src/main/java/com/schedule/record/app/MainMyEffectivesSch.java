@@ -24,7 +24,8 @@ public class MainMyEffectivesSch extends AppCompatActivity {
     @BindView(R.id.effSchedulesListView)
     ListView effSchedulesListView;
     ;
-    private List<DaySQLiteUser> dataList;
+    private List<DaySQLiteUser> dataList1;
+    private List<DaySQLiteUser> dataList2;
     private DaySQLite helper;
     String DBName = "day_1";
     int version = 1;
@@ -35,12 +36,14 @@ public class MainMyEffectivesSch extends AppCompatActivity {
         setContentView(R.layout.my_effectiveschedules);
         ButterKnife.bind(this);
 
-        dataList = new ArrayList<>();
+//        dataList1 = new ArrayList<>();
         helper = new DaySQLite(MainMyEffectivesSch.this, DBName, null, version);
         helper.getReadableDatabase();
         DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
-        dataList = dao.quiryAndSetItem();
-        MyEffectivesSchAdapter adapter = new MyEffectivesSchAdapter(MainMyEffectivesSch.this,dataList);
+        dataList1 = dao.quiryTodayAndSetItem();
+//        dataList2 = dao.quiryFutureAndSetItem();
+        dataList1.addAll(dao.quiryFutureAndSetItem());
+        MyEffectivesSchAdapter adapter = new MyEffectivesSchAdapter(MainMyEffectivesSch.this,dataList1);
 
         effSchedulesListView.setAdapter(adapter);
     }

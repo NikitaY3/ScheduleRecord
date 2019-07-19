@@ -54,9 +54,23 @@ public class MyEffectivesSchAdapter extends BaseAdapter {
         }
         final DaySQLiteUser pb = list.get(position);
 
-        holder.tv1.setText("");
-        holder.tv2.setText("");
+        holder.tv1.setText(pb.getTitle());
+        holder.tv2.setText("1 天");
 
+        switch (pb.getImportant()) {
+            case "a":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_em);
+                break;
+            case "b":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_no);
+                break;
+            case "c":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_em);
+                break;
+            case "d":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no);
+                break;
+        }
         return convertView;
     }
     static class ViewHolder{

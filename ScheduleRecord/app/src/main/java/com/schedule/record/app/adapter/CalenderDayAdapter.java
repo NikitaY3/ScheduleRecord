@@ -161,7 +161,6 @@ public class CalenderDayAdapter extends BaseAdapter {
         holder.tv3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                DaySQLiteUser pb = list.get(position);
                 //调用弹框函数
                 dayConfirmationDialogs(position,pb.getDayid());
                 Toast.makeText(context,"删除的Dayid为："+ pb.getDayid(),Toast.LENGTH_SHORT).show();
