@@ -36,7 +36,7 @@ public class FinishDayUtil {
         allSchedule = dao.CountAllBar();
         finishSchedule = dao.CountBar();
         int countBar = dao.CountBar();
-        Toast.makeText(context,"已完成数量为："+countBar,Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"计算日程完成情况："+countBar,Toast.LENGTH_SHORT).show();
     }
 
     public int getAllSchedule() {

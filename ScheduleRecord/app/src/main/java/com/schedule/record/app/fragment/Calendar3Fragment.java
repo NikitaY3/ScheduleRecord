@@ -15,9 +15,6 @@ import com.schedule.record.app.Mode3CompletionLine;
 import com.schedule.record.app.Mode3CompletionScale;
 import com.schedule.record.app.Mode3TimeDelayed;
 import com.schedule.record.app.R;
-import com.schedule.record.app.aboutmycalendar.CalendarUtil;
-
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,12 +34,6 @@ public class Calendar3Fragment extends Fragment {
     Button mode3Button3;
     @BindView(R.id.mode3Button4)
     Button mode3Button4;
-    @BindView(R.id.mode3Button5)
-    Button mode3Button5;
-    @BindView(R.id.mode3Button7)
-    Button mode3Button7;
-    @BindView(R.id.mode3Button6)
-    Button mode3Button6;
     Unbinder unbinder;
 
     private View view;
@@ -63,7 +54,7 @@ public class Calendar3Fragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.mode3Button1, R.id.mode3Button2, R.id.mode3Button3, R.id.mode3Button4, R.id.mode3Button5, R.id.mode3Button7, R.id.mode3Button6})
+    @OnClick({R.id.mode3Button1, R.id.mode3Button2, R.id.mode3Button3, R.id.mode3Button4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mode3Button1:
@@ -79,12 +70,8 @@ public class Calendar3Fragment extends Fragment {
                 startActivity(intent3);
                 break;
             case R.id.mode3Button4:
-                break;
-            case R.id.mode3Button5:
-                break;
-            case R.id.mode3Button7:
-                break;
-            case R.id.mode3Button6:
+//                Intent intent4 = new Intent(getActivity(), Mode3TimeDelayed.class);
+//                startActivity(intent4);
                 break;
         }
     }

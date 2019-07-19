@@ -1,5 +1,6 @@
 package com.schedule.record.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
@@ -13,12 +14,12 @@ import com.schedule.record.app.function.DaySQLiteUser;
 
 import java.util.List;
 
-public class MyEffectivesSchAdapter extends BaseAdapter {
-    Context context;
+public class MyStatisticsSchAdapter extends BaseAdapter {
+    private Context context;
     private List<DaySQLiteUser> list;
     private LayoutInflater inflater;
 
-    public MyEffectivesSchAdapter (Context context, List<DaySQLiteUser> list) {
+    public MyStatisticsSchAdapter(Context context, List<DaySQLiteUser> list) {
         this.context = context;
         this.list = list;
         inflater= LayoutInflater.from(context);
@@ -38,24 +39,19 @@ public class MyEffectivesSchAdapter extends BaseAdapter {
         return position;
     }
 
+
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //每一个item调用该方法---视图缓存机制
-        final ViewHolder holder;
+        ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.my_effectiveschedules_item, null);
+            convertView = inflater.inflate(R.layout.my_statisticsschedules_item, null);
             holder = new ViewHolder();
-            holder.tv1 = convertView.findViewById(R.id.effItemEditText2);
-            holder.tv2 = convertView.findViewById(R.id.effItemTView2);
-            holder.linearLayout = convertView.findViewById(R.id.effItemConstraintLayout);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final DaySQLiteUser pb = list.get(position);
-
-        holder.tv1.setText("");
-        holder.tv2.setText("");
+        DaySQLiteUser pb = list.get(position);
 
         return convertView;
     }

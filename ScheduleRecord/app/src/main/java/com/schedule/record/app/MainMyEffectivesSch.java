@@ -34,18 +34,7 @@ public class MainMyEffectivesSch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_effectiveschedules);
         ButterKnife.bind(this);
-    }
 
-    @OnClick(R.id.effSchedulesButton)
-    public void onViewClicked() {
-    }
-
-    @Override
-    public void onResume() {
-        onResume1();
-        super.onResume();
-    }
-    public void onResume1() {
         dataList = new ArrayList<>();
         helper = new DaySQLite(MainMyEffectivesSch.this, DBName, null, version);
         helper.getReadableDatabase();
@@ -55,4 +44,9 @@ public class MainMyEffectivesSch extends AppCompatActivity {
 
         effSchedulesListView.setAdapter(adapter);
     }
+
+    @OnClick(R.id.effSchedulesButton)
+    public void onViewClicked() {
+    }
+
 }

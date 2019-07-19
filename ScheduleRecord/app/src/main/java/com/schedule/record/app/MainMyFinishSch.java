@@ -28,20 +28,15 @@ public class MainMyFinishSch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_finishschedules);
         ButterKnife.bind(this);
-    }
 
-    @Override
-    public void onResume() {
-        onResume1();
-        super.onResume();
-    }
-    public void onResume1() {
         helper = new DaySQLite(MainMyFinishSch.this, DBName, null, version);
         helper.getReadableDatabase();
         DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
         dataList = (List<DaySQLiteUser>) dao.quiryAndSetItem();
+
         MyFinishSchAdapter adapter = new MyFinishSchAdapter(MainMyFinishSch.this, dataList);
 
         finSchedulesListView.setAdapter(adapter);
+
     }
 }

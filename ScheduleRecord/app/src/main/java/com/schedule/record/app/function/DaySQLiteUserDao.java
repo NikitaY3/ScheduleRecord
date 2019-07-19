@@ -134,9 +134,10 @@ public class DaySQLiteUserDao {
             String title = cursor.getString(4);
             String important = cursor.getString(5);
             String repeat = cursor.getString(6);
+            String endday = cursor.getString(7);
             boolean checkbox;
             checkbox = checkbox1 > 0;
-            CalenderWeekItem things = new CalenderWeekItem(dayid,checkbox,time,title,important,repeat);
+            CalenderWeekItem things = new CalenderWeekItem(dayid,checkbox,time,title,important,repeat,endday);
             dataList.add(things);
         }
         db.close();

@@ -1,5 +1,6 @@
 package com.schedule.record.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
@@ -14,7 +15,7 @@ import com.schedule.record.app.function.DaySQLiteUser;
 import java.util.List;
 
 public class MyFinishSchAdapter extends BaseAdapter {
-    Context context;
+    private Context context;
     private List<DaySQLiteUser> list;
     private LayoutInflater inflater;
 
@@ -25,19 +26,24 @@ public class MyFinishSchAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 0;
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return list.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
+
+
+
+
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;

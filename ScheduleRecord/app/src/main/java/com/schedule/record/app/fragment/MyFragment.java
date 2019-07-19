@@ -16,6 +16,7 @@ import com.schedule.record.app.MainMyEffectivesSch;
 import com.schedule.record.app.MainMyFinishSch;
 import com.schedule.record.app.MainMyInformation;
 import com.schedule.record.app.MainMyLogon;
+import com.schedule.record.app.MianMyStatisticsSch;
 import com.schedule.record.app.R;
 
 import butterknife.BindView;
@@ -80,6 +81,8 @@ public class MyFragment extends Fragment {
                 startActivity(intent3);
                 break;
             case R.id.myButton4:
+                Intent intent4 = new Intent(getActivity(), MianMyStatisticsSch.class);
+                startActivity(intent4);
                 break;
             case R.id.myButton5:
                 break;

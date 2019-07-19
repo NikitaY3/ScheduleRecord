@@ -26,9 +26,10 @@ public class Mode3CompletionScale extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //这里调用绘制方法  （也可以直接调用显示的）
-                barChart();
             }
         });
+
+        barChart();
     }
 
     // 初始化柱状图数据（可以根据自己需要插入数据）

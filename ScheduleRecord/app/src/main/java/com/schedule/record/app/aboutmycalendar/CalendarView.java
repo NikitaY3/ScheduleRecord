@@ -16,14 +16,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.TranslateAnimation;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import com.schedule.record.app.adapter.CalendarGridViewAdapter;
 
 /**
  * 日历控件，支持旧历、节气、日期标注、点击操作 （参考网络上的日历控件改写）
@@ -33,7 +32,8 @@ import android.widget.ViewFlipper;
  * update at: Mon, 23 Sep. 2014
  * 新增日期标注和点击操作
  */
-public class CalendarView extends LinearLayout implements OnTouchListener, AnimationListener, OnGestureListener {
+//public class CalendarView extends LinearLayout implements OnTouchListener, AnimationListener, OnGestureListener {
+    public class CalendarView extends LinearLayout implements OnTouchListener, OnGestureListener {
 
     // 点击日历
     public interface OnCalendarViewListener {
@@ -62,18 +62,18 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
     private GestureDetector mGesture = null;
 
     /** 上一月 */
-    private GridView gView1;
+//    private GridView gView1;
     /** 当月 */
     private GridView gView2;
     /** 下一月 */
-    private GridView gView3;
+//    private GridView gView3;
 
     boolean bIsSelection = false;// 是否是选择事件发生
     private Calendar calStartDate = Calendar.getInstance();// 当前显示的日历
     private Calendar calSelected = Calendar.getInstance(); // 选择的日历
     private CalendarGridViewAdapter gAdapter;
-    private CalendarGridViewAdapter gAdapter1;
-    private CalendarGridViewAdapter gAdapter3;
+//    private CalendarGridViewAdapter gAdapter1;
+//    private CalendarGridViewAdapter gAdapter3;
 
     private LinearLayout mMainLayout;
     private TextView mTitle; // 显示年月
@@ -100,23 +100,15 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
         markDates = new ArrayList<Date>();
         init();
     }
-//     初始化相关工作
+
+    public void setViewFinishDay() {
+        gAdapter.setFinishDay();
+    }
+
+    //     初始化相关工作
     protected void init() {
         // 得到屏幕的宽度
         screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-        // 滑动的动画
-        slideLeftIn = new TranslateAnimation(screenWidth, 0, 0, 0);
-        slideLeftIn.setDuration(400);
-        slideLeftIn.setAnimationListener(this);
-        slideLeftOut = new TranslateAnimation(0, -screenWidth, 0, 0);
-        slideLeftOut.setDuration(400);
-        slideLeftOut.setAnimationListener(this);
-        slideRightIn = new TranslateAnimation(-screenWidth, 0, 0, 0);
-        slideRightIn.setDuration(400);
-        slideRightIn.setAnimationListener(this);
-        slideRightOut = new TranslateAnimation(0, screenWidth, 0, 0);
-        slideRightOut.setDuration(400);
-        slideRightOut.setAnimationListener(this);
 
         // 手势操作
         mGesture = new GestureDetector(mContext, this);
@@ -160,9 +152,9 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
         RelativeLayout top = new RelativeLayout(mContext);
         mTitle = new TextView(mContext);
 
-        ImageButton mLeftView = new ImageButton(mContext);
+//        ImageButton mLeftView = new ImageButton(mContext);
 
-        ImageButton mRightView = new ImageButton(mContext);
+//        ImageButton mRightView = new ImageButton(mContext);
     }
 
     /** 生成中间显示week */
@@ -172,41 +164,41 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
 
     /** 生成底部日历 */
     private void generateClaendarGirdView() {
-        Calendar tempSelected1 = Calendar.getInstance(); // 临时
+//        Calendar tempSelected1 = Calendar.getInstance(); // 临时
         Calendar tempSelected2 = Calendar.getInstance(); // 临时
-        Calendar tempSelected3 = Calendar.getInstance(); // 临时
-        tempSelected1.setTime(calStartDate.getTime());
+//        Calendar tempSelected3 = Calendar.getInstance(); // 临时
+//        tempSelected1.setTime(calStartDate.getTime());
         tempSelected2.setTime(calStartDate.getTime());
-        tempSelected3.setTime(calStartDate.getTime());
+//        tempSelected3.setTime(calStartDate.getTime());
 
-        gView1 = new CalendarGridView(mContext);
-        tempSelected1.add(Calendar.MONTH, -1);
-        gAdapter1 = new CalendarGridViewAdapter(mContext, tempSelected1, markDates);
-        gView1.setAdapter(gAdapter1);// 设置菜单Adapter
-        gView1.setId(calLayoutID);
+//        gView1 = new CalendarGridView(mContext);
+//        tempSelected1.add(Calendar.MONTH, -1);
+//        gAdapter1 = new CalendarGridViewAdapter(mContext, tempSelected1, markDates);
+//        gView1.setAdapter(gAdapter1);// 设置菜单Adapter
+//        gView1.setId(calLayoutID);
 
         gView2 = new CalendarGridView(mContext);
         gAdapter = new CalendarGridViewAdapter(mContext, tempSelected2, markDates);
         gView2.setAdapter(gAdapter);// 设置菜单Adapter
         gView2.setId(calLayoutID);
 
-        gView3 = new CalendarGridView(mContext);
-        tempSelected3.add(Calendar.MONTH, 1);
-        gAdapter3 = new CalendarGridViewAdapter(mContext, tempSelected3, markDates);
-        gView3.setAdapter(gAdapter3);// 设置菜单Adapter
-        gView3.setId(calLayoutID);
+//        gView3 = new CalendarGridView(mContext);
+//        tempSelected3.add(Calendar.MONTH, 1);
+//        gAdapter3 = new CalendarGridViewAdapter(mContext, tempSelected3, markDates);
+//        gView3.setAdapter(gAdapter3);// 设置菜单Adapter
+//        gView3.setId(calLayoutID);
 
         gView2.setOnTouchListener(this);
-        gView1.setOnTouchListener(this);
-        gView3.setOnTouchListener(this);
+//        gView1.setOnTouchListener(this);
+//        gView3.setOnTouchListener(this);
 
         if (viewFlipper.getChildCount() != 0) {
             viewFlipper.removeAllViews();
         }
 
         viewFlipper.addView(gView2);
-        viewFlipper.addView(gView3);
-        viewFlipper.addView(gView1);
+//        viewFlipper.addView(gView3);
+//        viewFlipper.addView(gView1);
 
         String title = calStartDate.get(Calendar.YEAR)
                 + "年"
@@ -270,8 +262,8 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
         this.markDates.clear();
         this.markDates.addAll(markDates);
         gAdapter.notifyDataSetChanged();
-        gAdapter1.notifyDataSetChanged();
-        gAdapter3.notifyDataSetChanged();
+//        gAdapter1.notifyDataSetChanged();
+//        gAdapter3.notifyDataSetChanged();
     }
 
     /**
@@ -347,11 +339,11 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
                 gAdapter.setSelectedDate(calSelected);
                 gAdapter.notifyDataSetChanged();
 
-                gAdapter1.setSelectedDate(calSelected);
-                gAdapter1.notifyDataSetChanged();
-
-                gAdapter3.setSelectedDate(calSelected);
-                gAdapter3.notifyDataSetChanged();
+//                gAdapter1.setSelectedDate(calSelected);
+//                gAdapter1.notifyDataSetChanged();
+//
+//                gAdapter3.setSelectedDate(calSelected);
+//                gAdapter3.notifyDataSetChanged();
                 if (mListener != null) {
                     mListener.onCalendarItemClick(this, date);
                 }
@@ -360,16 +352,4 @@ public class CalendarView extends LinearLayout implements OnTouchListener, Anima
         return false;
     }
 
-    @Override
-    public void onAnimationEnd(Animation animation) {
-        generateClaendarGirdView();
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-    }
-
-    @Override
-    public void onAnimationStart(Animation animation) {
-    }
 }

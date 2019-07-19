@@ -3,11 +3,9 @@ package com.schedule.record.app;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.schedule.record.app.fragment.Calendar1Fragment;
 import com.schedule.record.app.fragment.CalendarFragment;

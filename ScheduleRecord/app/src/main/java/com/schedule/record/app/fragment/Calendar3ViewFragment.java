@@ -50,7 +50,7 @@ public class Calendar3ViewFragment extends Fragment {
             @Override
             public void onCalendarItemClick(CalendarView view, Date date) {
                 final SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
-                Toast.makeText(getActivity(), format.format(date) + "\n", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), format.format(date) , Toast.LENGTH_SHORT).show();
 
                 calCalendar = Calendar.getInstance();
                 calCalendar.setTime(date);
@@ -60,6 +60,12 @@ public class Calendar3ViewFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        mode3Calendar.setViewFinishDay();
+        super.onResume();
     }
 
     @Override

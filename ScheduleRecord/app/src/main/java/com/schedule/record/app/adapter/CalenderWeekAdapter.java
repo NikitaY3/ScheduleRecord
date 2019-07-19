@@ -2,7 +2,6 @@ package com.schedule.record.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +59,12 @@ public class CalenderWeekAdapter extends BaseAdapter {
         }
         //数据
         CalenderWeekItem pb=list.get(position);
+        if (!pb.isCheckbox()) {
+//            holder.btn2.setBackgroundResource(Integer.parseInt(null));
+        }else {
+            holder.btn2.setBackgroundResource(R.drawable.abb_mode2_finish);
+        }
+
         holder.tv1.setText((position+1)+"");
         holder.tv2.setText(pb.getTitle());
         holder.btn2.setOnClickListener(new View.OnClickListener() {
@@ -71,9 +76,6 @@ public class CalenderWeekAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        if (pb.isCheckbox()) {
-            holder.btn2.setBackgroundResource(R.drawable.abb_mode2_finish);
-        }
         switch (pb.getImportant()) {
             case "a":
                 holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_em);

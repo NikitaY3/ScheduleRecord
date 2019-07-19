@@ -131,38 +131,6 @@
                 tools:ignore="RtlSymmetry"
                 android:textColor="@drawable/ac_my_button1_text" />
 
-            <Button
-                android:id="@+id/mode3Button5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/abc_calendar_button1"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                tools:ignore="RtlSymmetry"
-                android:textColor="@drawable/ac_my_button1_text"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/mode3Button7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/abc_calendar_button1"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                tools:ignore="RtlSymmetry"
-                android:textColor="@drawable/ac_my_button1_text"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/mode3Button6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/abc_calendar_button1"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                tools:ignore="RtlSymmetry"
-                android:textColor="@drawable/ac_my_button1_text"
-                android:text="Button" />
         </LinearLayout>
     </ScrollView>
 

@@ -5,9 +5,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,7 +15,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -66,6 +65,8 @@ class Mode1Edit extends AppCompatActivity {
     RadioButton editRadio2;
     @BindView(R.id.editRadio3)
     RadioButton editRadio3;
+    @BindView(R.id.editRadio4)
+    RadioButton editRadio4;
     @BindView(R.id.editRadioGroup)
     RadioGroup editRadioGroup;
     @BindView(R.id.editLinearLayout3)
@@ -89,8 +90,21 @@ class Mode1Edit extends AppCompatActivity {
     @BindView(R.id.editLinearLayout5)
     LinearLayout editLinearLayout5;
 
-    private FragmentManager fm;
     int fr;
+    @BindView(R.id.weekItemButton0)
+    CheckBox weekItemButton0;
+    @BindView(R.id.weekItemButton1)
+    CheckBox weekItemButton1;
+    @BindView(R.id.weekItemButton2)
+    CheckBox weekItemButton2;
+    @BindView(R.id.weekItemButton3)
+    CheckBox weekItemButton3;
+    @BindView(R.id.weekItemButton4)
+    CheckBox weekItemButton4;
+    @BindView(R.id.weekItemButton5)
+    CheckBox weekItemButton5;
+    @BindView(R.id.weekItemButton6)
+    CheckBox weekItemButton6;
 
     private DaySQLite helper;
     DaySQLiteUserDao dao;
@@ -100,7 +114,6 @@ class Mode1Edit extends AppCompatActivity {
 
     public String radio2, radio3;
     final Calendar cale1 = Calendar.getInstance();
-    int q;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,41 +131,29 @@ class Mode1Edit extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.editRadio1:
-//                        if (fr == 1) {
-//                            getSupportFragmentManager().beginTransaction().remove(f1).commit();
-//                        }
-//                        fr=0;
-//                        TextView textDay = new TextView(Mode1Edit.this);// 日期
-//                        LinearLayout.LayoutParams text_params = new LinearLayout.LayoutParams( WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//                        textDay.setGravity(Gravity.CENTER_VERTICAL);
-//                        textDay.setTextColor(Color.argb(0xff, 0x00, 0x85, 0x77));
-//                        textDay.setTextSize(20);
-//                        textDay.setPadding(15,3,0,0);
-////                        int day = myDate.getDate(); // 日期
-//                        textDay.setText("wbhnjnmkmokov");
-//                        editFrameLayout.addView(textDay);
-//                        editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,0));
+                        if (fr == 1) {
+                            editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
+                            fr = 0;
+                        }
                         break;
                     case R.id.editRadio2:
                         editRadio2.setText("每周");
-//                        fr = 1;
-//                        f1 = new EditWeekChoiceFragment();
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.editFrameLayout,f1).commit();
-//                        radio2 = f1.getChoiceWeek();
+                        fr = 1;
+                        editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
                         break;
                     case R.id.editRadio3:
-//                        if (fr == 1) {
-//                            getSupportFragmentManager().beginTransaction().remove(f1).commit();
-//                        }
-                        fr = 0;
-//                        CheckBox weekItemButton1 = new CheckBox(Mode1Edit.this);
-//                        weekItemButton1.setButtonDrawable(R.drawable.abaaaa_edit_week_choice);
-//                        weekItemButton1.set
-//                        editLinearLayout31.addView(weekItemButton1);
-//                        editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
-//                        editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT));
+                        if (fr == 1) {
+                            editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
+                            fr = 0;
+                        }
                         radio3 = "每月1日";
                         editRadio3.setText(radio3);
+                        break;
+                    case R.id.editRadio4:
+                        if (fr == 1) {
+                            editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
+                            fr = 0;
+                        }
                         break;
                 }
             }
@@ -248,10 +249,14 @@ class Mode1Edit extends AppCompatActivity {
             user.setRepeat("everyday");
         }
         if (editRadio2.isChecked()) {
-            user.setRepeat("everywee" + radio2);
+            String a = getWeekChoice();
+            user.setRepeat("everywee" + a);
         }
         if (editRadio3.isChecked()) {
-            user.setRepeat("everymou" + editRadio3.getText().toString());
+            user.setRepeat("everymou" + "1");
+        }
+        if (editRadio4.isChecked()) {
+            user.setRepeat("norepeat");
         }
         user.setEndday(editButton41.getText().toString());
         user.setDiary(editEditText2.getText().toString());
@@ -296,20 +301,83 @@ class Mode1Edit extends AppCompatActivity {
         String repeat = d.getRepeat();
         switch (repeat.substring(0, 8)) {
             case "everyday":
+                fr = 0;
+                editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
                 editRadio1.setChecked(true);
                 break;
             case "everywee":
                 String re = repeat.substring(8);
-                editRadio2.setText("每周星期" + re);
+                fr = 1;
+                editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
+                editRadio2.setText("每周");
+                while (!re.equals("")){
+                    int a = Integer.parseInt(re.substring(0,1));
+                    setWeekChoice(a);
+                    re = re.substring(1);
+                }
                 editRadio2.setChecked(true);
                 break;
             case "everymou":
-                editRadio3.setText(repeat.substring(8));
+                fr = 0;
+                editRadio3.setText("每月1日");
                 editRadio3.setChecked(true);
+                break;
+            case "norepeat":
+                fr = 0;
+                editRadio4.setChecked(true);
                 break;
         }
         editButton41.setText(d.getEndday());
         user = d;//获取当前Dayid的数据的内容
     }
 
+    private String getWeekChoice() {
+        String a = "";
+        if (weekItemButton0.isChecked()){
+            a = a+"0";
+        }
+        if (weekItemButton1.isChecked()){
+            a = a+"1";
+        }
+        if (weekItemButton2.isChecked()){
+            a = a+"2";
+        }
+        if (weekItemButton3.isChecked()){
+            a = a+"3";
+        }
+        if (weekItemButton4.isChecked()){
+            a = a+"4";
+        }
+        if (weekItemButton5.isChecked()){
+            a = a+"5";
+        }
+        if (weekItemButton6.isChecked()){
+            a = a+"6";
+        }
+        return a;
+    }
+
+    private void setWeekChoice( int i) {
+        if (i == 0){
+            weekItemButton0.setChecked(true);
+        }
+        if (i == 1){
+            weekItemButton1.setChecked(true);
+        }
+        if (i == 2){
+            weekItemButton2.setChecked(true);
+        }
+        if (i == 3){
+            weekItemButton3.setChecked(true);
+        }
+        if (i == 4){
+            weekItemButton4.setChecked(true);
+        }
+        if (i == 5){
+            weekItemButton5.setChecked(true);
+        }
+        if (i == 6){
+            weekItemButton6.setChecked(true);
+        }
+    }
 }

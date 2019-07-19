@@ -12,9 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.schedule.record.app.MainActivity;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.FragmentCalendarController;
 
@@ -68,6 +66,13 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 //                String s=((TextView)view).getText().toString();
+//                if (s.equals("我的一个月")){
+////                    calenderFrameLayout.showFragment3();
+//                }else if (s.equals("我的一周")){
+//                    calenderFrameLayout.showFragment2();
+//                }else {
+//                    calenderFrameLayout.showFragment(position);
+//                }
                 calenderFrameLayout.showFragment(position);
             }
             @Override

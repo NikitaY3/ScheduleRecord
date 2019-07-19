@@ -88,12 +88,36 @@ public class Calendar2Fragment extends Fragment {
     String DBName = "day_1";
     int version = 1;
 
+    String today;
+    String todayweek;
+    int todayint;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_calendar_mode2, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        onResume1();
+        super.onResume();
+    }
+
+    public void onResume1() {
+        mode2ScrollView.smoothScrollTo(0,0);
+        StartSet();
+        today = getInternetTime();
+        todayint = Integer.parseInt(today.substring(0,4)+ today.substring(5,7)+today.substring(8,10));
+        GetTodayWeek(today);
+        PositionDetermine();
+    }
+
+    private void StartSet() {
         dataList1 = new ArrayList<>();
         dataList2 = new ArrayList<>();
         dataList3 = new ArrayList<>();
@@ -102,10 +126,6 @@ public class Calendar2Fragment extends Fragment {
         dataList6 = new ArrayList<>();
         dataList7 = new ArrayList<>();
         dataList = new ArrayList<>();
-
-        GetTodayWeek();
-
-        PositionDetermine();
 
         //每周的日程——周日
         weekAdapter = new CalenderWeekAdapter(getActivity(), dataList1);
@@ -138,15 +158,11 @@ public class Calendar2Fragment extends Fragment {
         //数量
         week2Adapter = new CalenderWeek2Adapter(getActivity(), dataList);
         calendar2ListView.setAdapter(week2Adapter);
-
-        return view;
     }
 
     @SuppressLint("SetTextI18n")
-    private void GetTodayWeek() {
-        mode2ScrollView.smoothScrollTo(0,0);
-        String today = getInternetTime();
-        String todayweek = new CalculationWeek(today.substring(0, 11)).getWeek();
+    public void GetTodayWeek(String day) {
+        todayweek = new CalculationWeek(day.substring(0, 10)).getWeek();
         switch (todayweek) {
             case "0":
                 mode2WeekButton0.setBackgroundResource(R.drawable.abb_calendar_todayweek);
@@ -179,6 +195,7 @@ public class Calendar2Fragment extends Fragment {
         helper.getReadableDatabase();
         DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
         mydData = dao.quiryAndSetWeekItem();
+
         for (int i = 0; i < mydData.size(); i++) {
             mydata = mydData.get(i);
             switch (mydata.getRepeat().substring(0, 8)) {
@@ -202,13 +219,36 @@ public class Calendar2Fragment extends Fragment {
                     dataList.add(i);
                     break;
                 case "everymou":
+                    String re2 = mydata.getRepeat().substring(8);
+                    int a = Integer.parseInt(re2.substring(0,4)+ re2.substring(5,7)+ re2.substring(8,10));
+                    if(oneWeek(a)) {
+                        String mo = mydata.getRepeat().substring(8, 10);
+                        String mouweek = new CalculationWeek(today.substring(0, 9) + mo).getWeek();
+                        setChoiceWeek(Integer.parseInt(mouweek));
+                        dataList.add(i);
+                    }
                     break;
                 default:
-//                    dataList1.add(mydata);
-//                    dataList.add(i);
+                    if (mydata.getEndday().equals("")) {
+                        setChoiceWeek(Integer.parseInt(todayweek));
+                    }else{
+                        int a1 = Integer.parseInt(mydata.getEndday().substring(0,4)+ mydata.getEndday().substring(5,7)+mydata.getEndday().substring(8,10));
+                        if(oneWeek(a1)){
+                            String c = new CalculationWeek(mydata.getEndday().substring(0, 10)).getWeek();
+                            setChoiceWeek(Integer.parseInt(c));
+                            dataList.add(i);
+                        }
+                    }
                     break;
             }
         }
+    }
+
+    private boolean oneWeek(int x) {
+        int s = 20190106;
+        int m = (todayint - s)/7;
+        int n = (x - s)/7;
+        return n == m;
     }
 
     private String getInternetTime() {

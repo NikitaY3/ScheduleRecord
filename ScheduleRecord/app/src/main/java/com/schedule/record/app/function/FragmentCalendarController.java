@@ -54,6 +54,26 @@ public class FragmentCalendarController {
         ft.commit();
     }
 
+//    public void showFragment1() {
+//        hideFragments();
+//        Fragment fragment = new  Calendar1Fragment();
+//        FragmentTransaction ft = fm.beginTransaction();
+//        ft.show(fragment);
+//        ft.commit();
+//    }
+    public void showFragment2() {
+        Calendar2Fragment fragment = new Calendar2Fragment();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.show(fragment);
+        ft.commit();
+    }
+    public void showFragment3() {
+        Calendar3Fragment fragment = new Calendar3Fragment();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.show(fragment);
+        ft.commit();
+    }
+
     public void hideFragments() {
         FragmentTransaction ft = fm.beginTransaction();
         for(Fragment fragment : fragments) {

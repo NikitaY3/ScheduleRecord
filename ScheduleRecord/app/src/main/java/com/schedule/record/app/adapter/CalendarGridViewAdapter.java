@@ -1,4 +1,4 @@
-package com.schedule.record.app.aboutmycalendar;
+package com.schedule.record.app.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.schedule.record.app.aboutmycalendar.CalendarUtil;
+import com.schedule.record.app.aboutmycalendar.FinishDayUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,14 +32,29 @@ public class CalendarGridViewAdapter  extends BaseAdapter {
     private List<Date> markDates;
 
     private Context mContext;
-
     private Calendar calToday = Calendar.getInstance(); // 今日
     private ArrayList<Date> titles;
+
+    String d;
+    Date myDate;
+
+    public CalendarGridViewAdapter(Context context, Calendar cal, List<Date> dates) {
+        calStartDate = cal;
+        this.mContext = context;
+        titles = getDates();
+        this.markDates = dates;
+
+        setFinishDay();
+    }
+
+    public void setFinishDay() {
+        d = new FinishDayUtil(mContext,myDate).toString();
+        notifyDataSetChanged();
+    }
 
     private ArrayList<java.util.Date> getDates() {
 
         UpdateStartDateForMonth();
-
         ArrayList<java.util.Date> alArrayList = new ArrayList<java.util.Date>();
 
         for (int i = 1; i <= 42; i++) {
@@ -47,12 +65,6 @@ public class CalendarGridViewAdapter  extends BaseAdapter {
         return alArrayList;
     }
 
-    public CalendarGridViewAdapter(Context context, Calendar cal, List<Date> dates) {
-        calStartDate = cal;
-        this.mContext = context;
-        titles = getDates();
-        this.markDates = dates;
-    }
 
     public CalendarGridViewAdapter(Context context) {
         this.mContext = context;
@@ -85,7 +97,7 @@ public class CalendarGridViewAdapter  extends BaseAdapter {
             itemLayout.setOrientation(1);
             itemLayout.setBackgroundColor(Color.WHITE);
 
-            Date myDate = (Date) getItem(position);
+            myDate = (Date) getItem(position);
             itemLayout.setTag(myDate);
             Calendar calCalendar = Calendar.getInstance();
             calCalendar.setTime(myDate);
@@ -108,7 +120,6 @@ public class CalendarGridViewAdapter  extends BaseAdapter {
             finishDay.setGravity(Gravity.CENTER_HORIZONTAL);
             finishDay.setTextSize(9);
             finishDay.setTextColor(Color.argb(0xff, 0x00, 0x57, 0x4b));
-            String d = new FinishDayUtil(mContext,myDate).toString();
             finishDay.setText(d);
             itemLayout.addView(finishDay, finish_params);
             if (equalsDate(calToday.getTime(), myDate)) {

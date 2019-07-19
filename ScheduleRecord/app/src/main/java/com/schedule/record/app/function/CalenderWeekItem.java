@@ -1,16 +1,17 @@
 package com.schedule.record.app.function;
 
 public class CalenderWeekItem {
-    private String dayid,time,title,important,repeat;
+    private String dayid,time,title,important,repeat,endday;
     private boolean checkbox;
 
-    public CalenderWeekItem( String dayid, boolean checkbox, String time, String title,String important,String repeat) {
+    public CalenderWeekItem( String dayid, boolean checkbox, String time, String title,String important,String repeat,String endday) {
         this.dayid = dayid;
         this.checkbox = checkbox;
         this.time = time;
         this.title = title;
         this.important = important;
         this.repeat = repeat;
+        this.endday = endday;
     }
 
     public String getDayid() {
@@ -55,6 +56,14 @@ public class CalenderWeekItem {
 
     public void setRepeat(String repeat) {
         this.repeat = repeat;
+    }
+
+    public String getEndday() {
+        return endday;
+    }
+
+    public void setEndday(String endday) {
+        this.endday = endday;
     }
 
     @Override

@@ -81,7 +81,7 @@ public class DayDialog extends Dialog {
         endday = "0000-00-00";
         repeat = "everyday";
         remind = true;
-        diary = "this is diary";
+        diary = "无";
         picture = "picture";
     }
 
@@ -230,6 +230,7 @@ public class DayDialog extends Dialog {
 
         button22List = new ArrayList<>();
         button22List.add("重复设置");
+        button22List.add("不重复");
         button22List.add("每天");
         button22List.add("每周");
         button22List.add("每月");
@@ -263,6 +264,9 @@ public class DayDialog extends Dialog {
                     case "不提醒":
                         remind = false;
                         break;
+                    case "不重复":
+                        repeat = "norepeat";
+                        break;
                     case "每天":
                         repeat = "everyday";
                         break;
@@ -270,7 +274,7 @@ public class DayDialog extends Dialog {
                         repeat = "everywee"+"1";
                         break;
                     case "每月":
-                        repeat = "everymou"+"每月1日";
+                        repeat = "everymou"+"1";
                         break;
                     case "等级一":
                         important = "a";
