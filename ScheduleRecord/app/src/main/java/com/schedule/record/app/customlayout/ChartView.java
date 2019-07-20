@@ -156,7 +156,7 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
     {
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
-        mPaint.setColor(getResources().getColor(R.color.lineChart1));
+        mPaint.setColor(getResources().getColor(R.color.gray));
         drawAllXLine(canvas);
         mRect = new Rect(bWidth - 3, marginTop - 5 ,
                 bWidth + (canvasWidth - bWidth) / yRawData.size() * (yRawData.size() - 1) + 3, bHeight + marginTop + marginBottom);
@@ -166,7 +166,7 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
 
         mPoints = getPoints();
 
-        mPaint.setColor(getResources().getColor(R.color.lineChart2));
+        mPaint.setColor(getResources().getColor(R.color.my6));
         mPaint.setStrokeWidth(dip2px(2.5f));
         mPaint.setStyle(Paint.Style.STROKE);
         drawLine(canvas);
@@ -229,7 +229,7 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
     {
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setTextSize(dip2px(12));
-        p.setColor(getResources().getColor(R.color.lineChart3));
+        p.setColor(getResources().getColor(R.color.varygray));
         p.setTextAlign(Paint.Align.LEFT);
         canvas.drawText(text , x , y , p);
     }

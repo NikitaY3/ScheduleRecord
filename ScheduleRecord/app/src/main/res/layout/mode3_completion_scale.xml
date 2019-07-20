@@ -18,35 +18,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/comScaleButton1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="开始绘制柱状图"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/comScaleTextView1"
-        tools:layout_editor_absoluteY="200dp" />
-
     <!--柱状图绘制的地方-->
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/comScaleColumn"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="8dp"
         android:background="#00000000"
+        android:gravity="center"
         android:orientation="vertical"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/comScaleButton1">
+        app:layout_constraintTop_toBottomOf="@+id/comScaleTextView1"
+        tools:layout_editor_absoluteX="15dp">
 
-        <LinearLayout
-            android:id="@+id/comScaleColumn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00000000"
-            android:gravity="center"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

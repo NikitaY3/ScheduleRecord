@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/finNoteTextView1"
+        android:id="@+id/finNoteTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
@@ -22,55 +22,106 @@
     <LinearLayout
         android:id="@+id/finNoteLinearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="140dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/finNoteTextView1">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/finNoteTextView">
 
-        <TextView
-            android:id="@+id/finNoteTextView11"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="重复情况" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/finNoteTextView12"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/finNoteTextView1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="重复情况"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/finNoteTextView11"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/varygray2"
+                android:text="######" />
+
+            <TextView
+                android:id="@+id/finNoteTextView2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="建立日期"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/finNoteTextView21"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/varygray2"
+                android:text="######" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="重要程度" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/finNoteLinearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/finNoteLinearLayout1">
+            <TextView
+                android:id="@+id/finNoteTextView3"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="重要程度"
+                android:textSize="30px" />
 
-        <TextView
-            android:id="@+id/finNoteTextView21"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="建立日期" />
+            <TextView
+                android:id="@+id/finNoteTextView31"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/varygray2"
+                android:text="######" />
 
-        <TextView
-            android:id="@+id/finNoteTextView22"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="结束日期" />
+            <TextView
+                android:id="@+id/finNoteTextView4"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="结束日期"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/finNoteTextView41"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/varygray2"
+                android:text="######" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="完成日期"
+        android:layout_marginTop="16dp"
+        android:paddingStart="10dp"
+        android:text="完成日期："
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/finNoteLinearLayout2" />
+        app:layout_constraintTop_toBottomOf="@id/finNoteLinearLayout1" />
 
     <GridView
         android:id="@+id/finNoteListView"
@@ -78,7 +129,7 @@
         android:layout_height="391dp"
         android:layout_marginTop="8dp"
         android:descendantFocusability="blocksDescendants"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@id/textView9"
         tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>

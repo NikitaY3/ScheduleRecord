@@ -32,7 +32,7 @@ public class MainMyFinishSch extends AppCompatActivity {
         helper = new DaySQLite(MainMyFinishSch.this, DBName, null, version);
         helper.getReadableDatabase();
         DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
-        dataList = dao.quiryTodayAndSetItem();
+        dataList = dao.quiryPassAndSetItem();//TodayAndSetItem();
 
         MyFinishSchAdapter adapter = new MyFinishSchAdapter(MainMyFinishSch.this, dataList);
 

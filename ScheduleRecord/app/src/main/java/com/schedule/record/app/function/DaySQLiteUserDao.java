@@ -182,6 +182,76 @@ public class DaySQLiteUserDao {
         return dataList;
     }
 
+    //查询创建日期是否在day前
+    public List<String> quiryPassDayid(int day) {
+        List<String> dataList = new ArrayList<String>();//item的list
+        //查询数据库并初始化日程列表
+        helper.getReadableDatabase();
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important,time");
+        while (cursor.moveToNext()){
+            String dayid = cursor.getString(0);
+            int todayint = Integer.parseInt(dayid.substring(0,4)+ dayid.substring(5,7)+dayid.substring(8,10));
+            if (todayint < day){
+                dataList.add(dayid);
+            }
+        }
+        db.close();
+        return dataList;
+    }
+    //查询适合放在当天Week里面的日程(等待进一步判断每周和每月日程是否在当天生效)
+    public List<CalenderWeekItem> quiryTodayWeek(int day) {
+        List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();
+        helper.getReadableDatabase();
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important,time");
+        while (cursor.moveToNext()){
+            String dayid = cursor.getString(0);
+            int checkbox1 = cursor.getInt(1);
+            String time = cursor.getString(3);
+            String title = cursor.getString(4);
+            String important = cursor.getString(5);
+            String repeat = cursor.getString(6);
+            String endday = cursor.getString(7);
+            String isfinish = cursor.getString(10);
+            boolean checkbox;
+            checkbox = checkbox1 > 0;
+            int end = Integer.parseInt(endday.substring(0,4)+ endday.substring(5,7)+endday.substring(8,10));
+            if ((!repeat.equals("norepeat") && end == 0)||(end >= day)) {
+                CalenderWeekItem things = new CalenderWeekItem(dayid,checkbox,time,title,important,repeat,endday,isfinish);
+                dataList.add(things);
+            }
+        }
+        db.close();
+        return dataList;
+    }
+    //查询适合放在day后当前周的日程（day是当天）(等待进一步判断：每周和每月日程是否在day后生效、不重复日程在哪一天生效)
+//    public List<CalenderWeekItem> quiryFutureWeek(int day) {
+//        List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();
+//        helper.getReadableDatabase();
+//        SQLiteDatabase db=helper.getWritableDatabase();
+//        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"isfinish=?", new String[]{"today"},null,null,"important,time");
+//        while (cursor.moveToNext()){
+//            String dayid = cursor.getString(0);
+//            int checkbox1 = cursor.getInt(1);
+//            String time = cursor.getString(3);
+//            String title = cursor.getString(4);
+//            String important = cursor.getString(5);
+//            String repeat = cursor.getString(6);
+//            String endday = cursor.getString(7);
+//            String isfinish = cursor.getString(10);
+//            boolean checkbox;
+//            checkbox = checkbox1 > 0;
+//            int end = Integer.parseInt(endday.substring(0,4)+ endday.substring(5,7)+endday.substring(8,10));
+//            if (end > day) {
+//                CalenderWeekItem things = new CalenderWeekItem(dayid,checkbox,time,title,important,repeat,endday,isfinish);
+//                dataList.add(things);
+//            }
+//        }
+//        db.close();
+//        return dataList;
+//    }
+
     public List<CalenderWeekItem> quiryAndSetWeekItem() {
         List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();
         helper.getReadableDatabase();

@@ -20,9 +20,9 @@
             android:id="@+id/mainRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/white"
+            android:background="@color/colorPrimary"
             android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/varygray"
+            android:backgroundTint="@color/colorPrimary"
             android:orientation="horizontal"
             tools:targetApi="lollipop">
 
@@ -31,31 +31,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/a_main_button"
+                android:background="@drawable/a_main_button_a"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="设备" />
+                android:layout_marginHorizontal="45dp"/>
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/a_main_button"
+                android:background="@drawable/a_main_button_b"
                 android:button="@null"
                 android:gravity="center"
-                android:text="日历" />
+                android:layout_marginHorizontal="45dp"/>
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/a_main_button"
+                android:background="@drawable/a_main_button_c"
                 android:button="@null"
                 android:gravity="center"
-                android:text="我的" />
+                android:layout_marginHorizontal="45dp"/>
         </RadioGroup>
 
 </RelativeLayout>

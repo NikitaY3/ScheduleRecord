@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.CalenderWeek2Adapter;
@@ -21,9 +20,12 @@ import com.schedule.record.app.function.CalenderWeekItem;
 import com.schedule.record.app.function.DaySQLiteUserDao;
 import com.schedule.record.app.sqlite.DaySQLite;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -89,9 +91,9 @@ public class Calendar2Fragment extends Fragment {
     String DBName = "day_1";
     int version = 1;
 
-    String today;
+    String today1;
     String todayweek;
-    int todayint;
+    int todayint1;
 
     @Nullable
     @Override
@@ -102,21 +104,15 @@ public class Calendar2Fragment extends Fragment {
         return view;
     }
 
-
-    @Override
-    public void onResume() {
-        onResume1();
-        super.onResume();
-    }
-
     public void onResume1() {
         mode2ScrollView.smoothScrollTo(0,0);
         StartSet();
-        today = getInternetTime();
-        todayint = Integer.parseInt(today.substring(0,4)+ today.substring(5,7)+today.substring(8,10));
+        today1 = getInternetTime();
+        todayint1 = Integer.parseInt(today1.substring(0,4)+ today1.substring(5,7)+today1.substring(8,10));
+
 //        Toast.makeText(getActivity(),"结束日期"+todayint,Toast.LENGTH_SHORT).show();
-        GetTodayWeek(today);
-        PositionDetermine();
+        GetTodayWeek(today1);
+        PositionDetermine(today1,todayint1);
     }
 
     private void StartSet() {
@@ -162,70 +158,195 @@ public class Calendar2Fragment extends Fragment {
         calendar2ListView.setAdapter(week2Adapter);
     }
 
-    @SuppressLint("SetTextI18n")
+    //查询当天日期，并将布局标记好
+    @SuppressLint({"SetTextI18n", "WrongConstant"})
     public void GetTodayWeek(String day) {
         todayweek = new CalculationWeek(day.substring(0, 10)).getWeek();
+        Calendar calendar = new GregorianCalendar();
+        try {
+            calendar.setTime(ConverToDate(today1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Date d;
+        String c;
+        int todayint;
+
         switch (todayweek) {
             case "0":
                 mode2WeekButton0.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+
+                calendar.add(Calendar.DATE,1);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,2);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,3);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,4);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,5);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,6);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
                 break;
             case "1":
+
+                calendar.add(Calendar.DATE,1);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,2);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,3);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,4);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,5);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
                 mode2WeekButton1.setBackgroundResource(R.drawable.abb_calendar_todayweek);
                 break;
             case "2":
+
+                calendar.add(Calendar.DATE,1);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,2);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,3);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,4);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
                 mode2WeekButton2.setBackgroundResource(R.drawable.abb_calendar_todayweek);
                 break;
             case "3":
+
+                calendar.add(Calendar.DATE,1);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,2);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,3);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
                 mode2WeekButton3.setBackgroundResource(R.drawable.abb_calendar_todayweek);
                 break;
             case "4":
+
+                calendar.add(Calendar.DATE,1);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
+
+                calendar.add(Calendar.DATE,2);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
                 mode2WeekButton4.setBackgroundResource(R.drawable.abb_calendar_todayweek);
                 break;
             case "5":
+
+                calendar.add(Calendar.DATE,1);
+                d = calendar.getTime();
+                c = ConverToString(d);
+                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                PositionDetermine(c,todayint);
                 mode2WeekButton5.setBackgroundResource(R.drawable.abb_calendar_todayweek);
                 break;
             case "6":
                 mode2WeekButton6.setBackgroundResource(R.drawable.abb_calendar_todayweek);
                 break;
         }
-        int dd = Integer.parseInt(today.substring(5,7));
+        int dd = Integer.parseInt(today1.substring(5,7));
         calendar2Button.setText(dd+"月");
     }
 
-    private void PositionDetermine() {
+    //判断today,todayint当天显示哪些日程
+    private void PositionDetermine(String today,int todayint) {
         helper = new DaySQLite(getActivity(), DBName, null, version);
         helper.getReadableDatabase();
         DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
-        mydData = dao.quiryAndSetWeekItem();
+
+        //当天日期显示日程
+        mydData = dao.quiryTodayWeek(todayint);
 
         for (int i = 0; i < mydData.size(); i++) {
             mydata = mydData.get(i);
             switch (mydata.getRepeat().substring(0, 8)) {
-                case "everyday":
-                    if (mydata.getEndday().equals("")) {
-                        //当结束日期为空时，创建日期后生成Item
-                        dataList1.add(mydata);
-                        dataList2.add(mydata);
-                        dataList3.add(mydata);
-                        dataList4.add(mydata);
-                        dataList5.add(mydata);
-                        dataList6.add(mydata);
-                        dataList7.add(mydata);
-                        dataList.add(i);
-                        setChoiceWeek(Integer.parseInt(todayweek));
-                    }else{
-                        //当结束日期不为空时，结束日期前，当前星期，创建日期后生成Item
-                        //判断是否为当前周，如果是
-                    }
-                    break;
                 case "everywee":
                     String re = mydata.getRepeat().substring(8);
                     while (!re.equals("")){
-                        int a = Integer.parseInt(re.substring(0,1));
-                        setChoiceWeek(a);
+                        if (re.substring(0, 1).equals(todayweek)) {
+                            setChoiceWeek(Integer.parseInt(todayweek));
+                        }
                         re = re.substring(1);
                     }
-                    dataList.add(i);
                     break;
                 case "everymou":
                     String re2 = mydata.getRepeat().substring(8);
@@ -233,47 +354,54 @@ public class Calendar2Fragment extends Fragment {
                     if(oneWeek(a)) {
                         String mo = mydata.getRepeat().substring(8, 10);
                         String mouweek = new CalculationWeek(today.substring(0, 9) + mo).getWeek();
-                        setChoiceWeek(Integer.parseInt(mouweek));
-                        dataList.add(i);
-                    }
-                    break;
-                default:
-                    if (mydata.getEndday().equals("")) {
-                        setChoiceWeek(Integer.parseInt(todayweek));
-                    }else{
-//                        todayint = Integer.parseInt(today.substring(0,4)+ today.substring(5,7)+today.substring(8,10));
-                        int a1 = Integer.parseInt(mydata.getEndday().substring(0,4)+ mydata.getEndday().substring(5,7)+mydata.getEndday().substring(8,10));
-                        if(oneWeek(a1)){
-                            String c = new CalculationWeek(mydata.getEndday().substring(0, 10)).getWeek();
-                            setChoiceWeek(Integer.parseInt(c));
+                        if (todayweek.equals(mouweek)){
+                            setChoiceWeek(Integer.parseInt(mouweek));
                             dataList.add(i);
                         }
                     }
                     break;
+                default:
+                    setChoiceWeek(Integer.parseInt(todayweek));
+                    dataList.add(i);
+                    break;
             }
         }
+
+//        List<String> dayidList = dao.quiryPassDayid(todayint);
+
     }
 
+    //判断某一天是否和今天在同一周
     private boolean oneWeek(int x) {
         int s = 20190106;
-        int m = (todayint - s)/7;
+        int m = (todayint1 - s)/7;
         int n = (x - s)/7;
         return n == m;
     }
 
+    //联网获取当前时间yyyy-MM-dd HH:mm:ss
     private String getInternetTime() {
-        //联网获取当前时间
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd");
         timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         return timesimple.format(new Date());
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    //把字符串转为日期
+    public static Date ConverToDate(String strDate) throws Exception
+    {
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.parse(strDate);
     }
 
+    //把日期转为字符串
+    public static String ConverToString(Date date)
+    {
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        return df.format(date);
+    }
+
+    //根据0123456设置日程显示在哪一天
     public void setChoiceWeek(int posion) {
         if (posion == 0) {
             dataList1.add(mydata);
@@ -296,5 +424,16 @@ public class Calendar2Fragment extends Fragment {
         if (posion == 6) {
             dataList7.add(mydata);
         }
+    }
+
+    @Override
+    public void onResume() {
+        onResume1();
+        super.onResume();
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

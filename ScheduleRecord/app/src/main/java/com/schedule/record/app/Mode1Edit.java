@@ -81,14 +81,6 @@ class Mode1Edit extends AppCompatActivity {
     LinearLayout editLinearLayout4;
     @BindView(R.id.editEditText2)
     EditText editEditText2;
-    @BindView(R.id.editImageButton1)
-    ImageButton editImageButton1;
-    @BindView(R.id.editImageButton2)
-    ImageButton editImageButton2;
-    @BindView(R.id.editImageButton3)
-    ImageButton editImageButton3;
-    @BindView(R.id.editLinearLayout5)
-    LinearLayout editLinearLayout5;
 
     int fr;
     @BindView(R.id.weekItemButton0)
@@ -176,7 +168,7 @@ class Mode1Edit extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.editEditText0, R.id.editEditText1, R.id.editButton21, R.id.editButton22, R.id.editButton23, R.id.editButton24, R.id.editButton41, R.id.editEditText2, R.id.editImageButton1, R.id.editImageButton2, R.id.editImageButton3})
+    @OnClick({R.id.editEditText0, R.id.editEditText1, R.id.editButton21, R.id.editButton22, R.id.editButton23, R.id.editButton24, R.id.editButton41, R.id.editEditText2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.editEditText0:
@@ -239,12 +231,6 @@ class Mode1Edit extends AppCompatActivity {
                 }, cale1.get(Calendar.YEAR), cale1.get(Calendar.MONTH), cale1.get(Calendar.DAY_OF_MONTH)).show();
                 break;
             case R.id.editEditText2:
-                break;
-            case R.id.editImageButton1:
-                break;
-            case R.id.editImageButton2:
-                break;
-            case R.id.editImageButton3:
                 break;
         }
     }

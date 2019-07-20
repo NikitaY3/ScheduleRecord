@@ -14,20 +14,13 @@ import java.util.List;
 
 @SuppressLint("Registered")
 public class Mode3CompletionScale extends AppCompatActivity {
-    private Button comScaleButton1;//开始绘制
+
     private LinearLayout comScaleColumn;//柱状图绘制的地方
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mode3_completion_scale);
-        comScaleButton1 = findViewById(R.id.comScaleButton1);
         comScaleColumn = findViewById(R.id.comScaleColumn);
-        comScaleButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //这里调用绘制方法  （也可以直接调用显示的）
-            }
-        });
 
         barChart();
     }
