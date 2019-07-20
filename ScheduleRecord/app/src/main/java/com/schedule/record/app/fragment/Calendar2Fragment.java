@@ -366,9 +366,6 @@ public class Calendar2Fragment extends Fragment {
                     break;
             }
         }
-
-//        List<String> dayidList = dao.quiryPassDayid(todayint);
-
     }
 
     //判断某一天是否和今天在同一周

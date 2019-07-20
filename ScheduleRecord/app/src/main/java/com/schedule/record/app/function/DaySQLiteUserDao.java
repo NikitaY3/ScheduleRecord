@@ -217,7 +217,8 @@ public class DaySQLiteUserDao {
             boolean checkbox;
             checkbox = checkbox1 > 0;
             int end = Integer.parseInt(endday.substring(0,4)+ endday.substring(5,7)+endday.substring(8,10));
-            if ((!repeat.equals("norepeat") && end == 0)||(end >= day)) {
+            int end1 = Integer.parseInt(dayid.substring(0,4)+ dayid.substring(5,7)+dayid.substring(8,10));
+            if ((end1==day && repeat.substring(0,8).equals("norepeat") && endday.equals("0000-00-00"))||(end >= day)||(!repeat.substring(0,8).equals("norepeat"))) {
                 CalenderWeekItem things = new CalenderWeekItem(dayid,checkbox,time,title,important,repeat,endday,isfinish);
                 dataList.add(things);
             }

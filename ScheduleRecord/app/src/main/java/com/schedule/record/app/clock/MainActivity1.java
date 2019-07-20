@@ -28,10 +28,32 @@ public class MainActivity1 extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_test);
+
+        Button startButton = findViewById(R.id.start);
+        Button stopButton = findViewById(R.id.stop);
+        final Intent serviceIntent = new Intent(this,AlarmService.class);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(serviceIntent);
+            }
+        });
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopService(serviceIntent);
+            }
+        });
+
+//        old();
+    }
+
+    private void old() {
         calendar = Calendar.getInstance();
         mTextView = (TextView)this.findViewById(R.id.mText);
         msetButton = (Button)this.findViewById(R.id.setTimeButton);
         mcancelButton = (Button)findViewById(R.id.cancelButton);
+
         msetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +100,7 @@ public class MainActivity1 extends AppCompatActivity {
             }
         });
     }
+
     private String format(int x) {
         String s = ""+x;
         if(s.length() == 1)

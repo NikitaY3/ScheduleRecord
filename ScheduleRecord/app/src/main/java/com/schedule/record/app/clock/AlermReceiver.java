@@ -31,8 +31,10 @@ public class AlermReceiver  extends BroadcastReceiver {
         serviceIntent.putExtras(bundle);
         if(bundle != null) {
             Log.i("CTO", String.valueOf(bundle.getBoolean("music")));
-            if(bundle.getBoolean("music"))
+            if(bundle.getBoolean("music")) {
+                playAlarmRing();
                 context.startService(serviceIntent);
+            }
             else
                 context.stopService(serviceIntent);
         }

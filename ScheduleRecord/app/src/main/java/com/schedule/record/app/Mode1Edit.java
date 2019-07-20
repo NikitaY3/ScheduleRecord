@@ -13,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -316,11 +315,13 @@ class Mode1Edit extends AppCompatActivity {
                 break;
             case "everymou":
                 fr = 0;
+                editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
                 editRadio3.setText("每月1日");
                 editRadio3.setChecked(true);
                 break;
             case "norepeat":
                 fr = 0;
+                editLinearLayout31.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
                 editRadio4.setChecked(true);
                 break;
         }

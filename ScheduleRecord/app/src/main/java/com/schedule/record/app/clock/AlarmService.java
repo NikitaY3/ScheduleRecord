@@ -9,6 +9,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -23,13 +24,11 @@ public class AlarmService extends Service {
     }
     @Override
     public void onCreate() {
-        // TODO Auto-generated method stub
         super.onCreate();
         playMusic();
     }
     @Override
     public void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
         if (player != null) {
             player.stop();
@@ -40,24 +39,25 @@ public class AlarmService extends Service {
     public void onStart(Intent intent, int startId) {
         // TODO Auto-generated method stub
         super.onStart(intent, startId);
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                if(bundle.getBoolean("music"))
-                    playMusic();
-                else
-                    stopMusic();
-            }
-        }
+        playMusic();
+//        if (intent != null) {
+//            Bundle bundle = intent.getExtras();
+//            if (bundle != null) {
+//                if(bundle.getBoolean("music"))
+//                    playMusic();
+//                else
+//                    stopMusic();
+//            }
+//        }
     }
     public void playMusic() {
         if(player == null) {
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             try {
+                Toast.makeText(AlarmService.this, "xxxxxxxxxxxx", Toast.LENGTH_SHORT).show();
                 player = new MediaPlayer();
                 player.setDataSource(this, uri);
-                final AudioManager audioManager = (AudioManager)this
-                        .getSystemService(Context.AUDIO_SERVICE);
+                final AudioManager audioManager = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
                 if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
                     player.setAudioStreamType(AudioManager.STREAM_ALARM);
                     player.setLooping(true);

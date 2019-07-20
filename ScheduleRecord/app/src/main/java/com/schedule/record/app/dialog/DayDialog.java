@@ -101,6 +101,17 @@ public class DayDialog extends Dialog {
         inputItemButton23 = findViewById(R.id.inputItemButton23);
         inputItemButton24 = findViewById(R.id.inputItemButton24);
 
+        //软键盘的弹出和焦点获取
+        inputItemEditText2.requestFocus();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert imm != null;
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        },50);
+
         inputItemEditText1.setText("XX:XX");
         inputItemEditText1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,16 +133,6 @@ public class DayDialog extends Dialog {
                 },cale1.get(Calendar.HOUR),cale1.get(Calendar.MINUTE),true).show();
             }
         });
-        //软键盘的弹出和焦点获取
-        inputItemEditText2.requestFocus();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                assert imm != null;
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-        },50);
 
         inputItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,8 +176,17 @@ public class DayDialog extends Dialog {
                         }else {
                             radio = year+"-"+(month+1)+"-"+dayOfMonth;
                         }
-                        inputItemButton23.setText(radio);
-                        endday = radio;
+                        String c = getInternetTime();
+                        int todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
+                        int todayint2 = Integer.parseInt(radio.substring(0,4)+ radio.substring(5,7)+radio.substring(8,10));
+                        if (todayint2<todayint){
+                            Toast.makeText(context,"截止日期无效",Toast.LENGTH_SHORT).show();
+                            inputItemButton23.setText("0000-00-00");
+                        }
+                        else {
+                            inputItemButton23.setText(radio);
+                            endday = radio;
+                        }
                     }
                 },cale1.get(Calendar.YEAR),cale1.get(Calendar.MONTH),cale1.get(Calendar.DAY_OF_MONTH)).show();
             }

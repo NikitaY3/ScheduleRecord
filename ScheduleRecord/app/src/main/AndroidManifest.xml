@@ -14,14 +14,14 @@
         android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.MAIN"/>
+        <!--<activity android:name=".MainActivity">-->
+            <!--<intent-filter>-->
+                <!--<action-->
+                    <!--android:name="android.intent.action.MAIN"/>-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity android:name=".MainMyLogon"/>
         <activity android:name=".MainMyLogonPhone"/>
         <activity android:name=".Mode1Edit"/>
@@ -35,20 +35,20 @@
         <activity android:name=".MianMyStatisticsSch"/>
         <activity android:name=".MainMyFinishSchNote"/>
 
-        <!--<activity android:name=".clock.MainActivity1"-->
-            <!--android:label="@string/app_name">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
-        <!--<service android:name=".clock.AlarmService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="chief_musicService"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
-        <!--<receiver android:name=".clock.AlermReceiver" android:process=":remote"/>-->
+        <activity android:name=".clock.MainActivity1"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".clock.AlarmService">
+            <intent-filter>
+                <action android:name="chief_musicService"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+        <receiver android:name=".clock.AlermReceiver" android:process=":remote"/>
     </application>
-    <!--<uses-permission android:name="android.permission.MOUT_UNMOUNT_FILESYSTEMS"/>-->
+    <uses-permission android:name="android.permission.MOUT_UNMOUNT_FILESYSTEMS"/>
 </manifest>

@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ac_my_logon_button2" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="480dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/logonTextView1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingHorizontal="20dp">
 
         <Button
             android:id="@+id/logonButton1"
@@ -61,21 +55,18 @@
         android:id="@+id/logonTextView1"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_marginBottom="100dp"
         android:gravity="center"
         android:text="— 其它方式登录 —"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
-        android:paddingBottom="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logonTextView1">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingBottom="2dp">
 
         <Button
             android:id="@+id/logonButton4"
@@ -83,7 +74,8 @@
             android:layout_height="38dp"
             android:layout_marginHorizontal="40dp"
             android:background="@drawable/ac_my_logon_button3"
-            android:text="X" />
+            android:text="X"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/logonButton5"
@@ -91,7 +83,8 @@
             android:layout_height="38dp"
             android:background="@drawable/ac_my_logon_button3"
             android:gravity="center"
-            android:text="X" />
+            android:text="X"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/logonButton6"
@@ -99,7 +92,8 @@
             android:layout_height="38dp"
             android:layout_marginHorizontal="40dp"
             android:background="@drawable/ac_my_logon_button3"
-            android:text="X" />
+            android:text="X"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <LinearLayout
@@ -107,8 +101,7 @@
         android:layout_height="20dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -141,4 +134,4 @@
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
