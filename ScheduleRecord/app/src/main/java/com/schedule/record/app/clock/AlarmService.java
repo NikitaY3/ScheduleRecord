@@ -1,13 +1,20 @@
 package com.schedule.record.app.clock;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+//import android.app.Service;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
+//import android.content.DialogInterface;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -16,30 +23,38 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.SystemClock;
-import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AlertDialog;
+//import android.view.WindowManager;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.CalenderDayAdapter;
+import com.schedule.record.app.dialog.DayDialog;
+import com.schedule.record.app.dialog.ServiceDialog;
 import com.schedule.record.app.function.AlarmDTT;
 import com.schedule.record.app.function.DaySQLiteUser;
 import com.schedule.record.app.function.DaySQLiteUserDao;
 import com.schedule.record.app.sqlite.DaySQLite;
 
 import java.io.IOException;
+import java.security.Provider;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
+
+import static com.schedule.record.app.R.style.Theme_AppCompat_Light_Dialog;
 
 public class AlarmService extends Service {
 
     private final IBinder mBinder = new LocalBinder();
 
-    AlertDialog.Builder frame1;
     private DaySQLite helper;
     private String DBName="day_1";
     private int version=1;
@@ -51,6 +66,14 @@ public class AlarmService extends Service {
         AlarmService getService(){
             return AlarmService.this;
         }
+    }
+
+
+    @SuppressLint("WrongConstant")
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        flags = START_STICKY;
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
@@ -84,12 +107,26 @@ public class AlarmService extends Service {
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
-        playMusic();
+
+
+//        playMusic();
 
         String dayid = intent.getStringExtra("music");
+        if (dayid!=null){
+            playMusic();
+        }
 
         DaySQLiteUser a = timeFromSet(dayid);
-        dayConfirmationDialogs(a.getTitle(),a);
+//        dayConfirmationDialogs(a.getTitle(),a);
+//        showCXBRunning();
+//        showDialog();
+        showDialog2();
+    }
+    //传入notifycation对象的作用是，当将服务设为前台服务后，会在状态栏显示一条通知
+    public void showCXBRunning() {
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification builder = new Notification.Builder(this).setTicker("xxx").setSmallIcon(R.drawable.abaa_item_im_em).build();
+        startForeground(1, builder);
     }
 
     public void playMusic() {
@@ -128,15 +165,15 @@ public class AlarmService extends Service {
 
     private DaySQLiteUser timeFromSet(String dayid){
 
-        DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
         helper=new DaySQLite(getBaseContext(),DBName,null,version);
+        DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
         helper.getReadableDatabase();
         return dao.queryBydayid(dayid);
     }
 
     private void dayConfirmationDialogs(String title, final DaySQLiteUser aa) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, Theme_AppCompat_Light_Dialog);
         builder.setTitle("提示");
         builder.setMessage(title);
         builder.setNegativeButton("日程延后", new DialogInterface.OnClickListener() {
@@ -168,22 +205,57 @@ public class AlarmService extends Service {
         });
         final AlertDialog dialog = builder.create();
         //在dialog  show方法之前添加如下代码，表示该dialog是一个系统的dialog**
-        dialog.getWindow().setType((WindowManager.LayoutParams.TYPE_SYSTEM_ALERT));
+        Objects.requireNonNull(dialog.getWindow()).setType((WindowManager.LayoutParams.TYPE_SYSTEM_ALERT));
 
-        dialog.show();
+//        dialog.show();
 
-//        new Thread(){
-//            public void run() {
-//                SystemClock.sleep(4000);
-//                hanlder.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        dialog.show();
-//                    }
-//                });
-//            };
-//        }.start();
+//        Looper.prepare();
+        new Thread(){
+            public void run() {
+                SystemClock.sleep(4000);
+//                dialog.show();
+                Looper.prepare();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.show();
+                    }
+                },100);
+        Looper.loop();
+            };
+        }.start();
 
     }
 
+    private void showDialog() {
+
+//        ServiceDialog one = new ServiceDialog(getBaseContext());
+//        one.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AlarmService.this,R.style.Theme_AppCompat_Light_Dialog );
+                builder.setTitle("title");
+                builder.setMessage("这是一个由service弹出的对话框");
+                builder.setCancelable(false);
+                builder.setPositiveButton("button confirm", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                dialog.show();
+            }
+        }, 3 * 1000);
+
+    }
+    private void showDialog2() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(), ATestA.class);
+                startActivity(intent);
+            }
+        }, 3 * 1000);
+    }
 }

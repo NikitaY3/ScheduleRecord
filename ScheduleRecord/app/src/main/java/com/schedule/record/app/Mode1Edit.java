@@ -184,8 +184,6 @@ class Mode1Edit extends AppCompatActivity {
                             radio2 = hourOfDay + ":" + minute;
                         }
                         editEditText0.setText(radio2);
-                        user.setTime(user.getTime().substring(0, 11) + radio2);
-                        dao.updateAll(user);
                     }
                 }, cale1.get(Calendar.HOUR), cale1.get(Calendar.MINUTE), true).show();
                 break;
@@ -254,6 +252,7 @@ class Mode1Edit extends AppCompatActivity {
                 user.setIsfinish("future");
             }
         }
+        user.setTime(editEditText0.getText().toString());
         user.setEndday(editButton41.getText().toString());
         user.setDiary(editEditText2.getText().toString());
         dao.updateAll(user);
@@ -277,7 +276,7 @@ class Mode1Edit extends AppCompatActivity {
         } else {
             editCheckBox1.setChecked(false);
         }
-        editEditText0.setText(d.getTime().substring(11, 16));
+        editEditText0.setText(d.getTime());
         editEditText1.setText(d.getTitle());
         editEditText2.setText(d.getDiary());
         switch (d.getImportant()) {

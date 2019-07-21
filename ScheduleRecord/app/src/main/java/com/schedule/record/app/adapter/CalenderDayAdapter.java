@@ -87,7 +87,7 @@ public class CalenderDayAdapter extends BaseAdapter {
         }else{
             holder.tv1.setChecked(false);
         }
-        holder.tv2.setText(pb.getTime().substring(11,16));//设置时间
+        holder.tv2.setText(pb.getTime());//设置时间
         holder.tv3.setText(pb.getTitle());
 
         holder.tv1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

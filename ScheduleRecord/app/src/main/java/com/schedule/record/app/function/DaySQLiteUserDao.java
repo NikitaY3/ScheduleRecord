@@ -262,13 +262,11 @@ public class DaySQLiteUserDao {
 //        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null," checkbox =1 and isfinish=?", new String[]{"today"},null,null,"afield limit 1,1");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
-            int checkbox1 = cursor.getInt(1);
-            int remind1 = cursor.getInt(2);
             String time = cursor.getString(3);
             String title = cursor.getString(4);
 
 
-            if (!time.substring(11, 13).equals("XX")) {
+            if (!time.substring(0, 2).equals("XX")) {
                 AlarmDTT things = new AlarmDTT(dayid, time, title);
                 dataList.add(things);
             }

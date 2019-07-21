@@ -119,18 +119,18 @@ public class DayDialog extends Dialog {
                 new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if (minute<9 && hourOfDay<9){
+                        if (minute<10 && hourOfDay<10){
                             radio2 = "0"+hourOfDay + ":0" + minute;
-                        }else if(minute<9) {
+                        }else if(minute<10) {
                             radio2 = hourOfDay + ":0" + minute;
-                        }else if(hourOfDay<9) {
+                        }else if(hourOfDay<10) {
                             radio2 = "0"+hourOfDay + ":" + minute;
                         }else {
                             radio2 = hourOfDay+":"+minute ;
                         }
                         inputItemEditText1.setText(radio2);
                     }
-                },cale1.get(Calendar.HOUR),cale1.get(Calendar.MINUTE),true).show();
+                },cale1.get(Calendar.HOUR_OF_DAY),cale1.get(Calendar.MINUTE),true).show();
             }
         });
 
@@ -211,8 +211,7 @@ public class DayDialog extends Dialog {
 
         //Item适配器的调用及Item的生成
         String dayTitle = inputItemEditText2.getText().toString();
-        String time = Dayidbutton.substring(0,11)+inputItemEditText1.getText().toString();
-        Toast.makeText(context,"当前时间为："+time,Toast.LENGTH_SHORT).show();
+        String time = inputItemEditText1.getText().toString();
 
         if (repeat.equals("norepeat") && !endday.equals("0000-00-00"))
         {

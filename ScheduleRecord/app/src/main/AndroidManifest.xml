@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="Android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
 
     <application
         android:allowBackup="true"
@@ -37,6 +38,8 @@
         <activity android:name=".MainMyBoradcastSet"/>
         <activity android:name=".MianMyStatisticsSch"/>
         <activity android:name=".MainMyFinishSchNote"/>
+        <activity android:name=".clock.ATestA"
+            android:theme="@style/Base.V7.Theme.AppCompat.Light.Dialog"/>
 
         <!--<activity android:name=".clock.MainActivity1"-->
             <!--android:label="@string/app_name">-->
@@ -45,7 +48,8 @@
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         <!--</activity>-->
-        <service android:name=".clock.AlarmService">
+        <service android:name=".clock.AlarmService"
+            android:permission="Android.permission.SYSTEM_ALERT_WINDOW">
             <intent-filter>
                 <action android:name="chief_musicService"/>
                 <category android:name="android.intent.category.DEFAULT"/>
