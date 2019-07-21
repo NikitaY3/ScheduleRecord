@@ -228,7 +228,6 @@ public class DayDialog extends Dialog {
 
         //刷新所有Item
         dataList = new ArrayList<DaySQLiteUser>();
-        helper=new DaySQLite(context,DBName,null,version);
         helper.getReadableDatabase();
         dataList = (List<DaySQLiteUser>) dao.quiryTodayAndSetItem();
         final CalenderDayAdapter adapter = new CalenderDayAdapter(context, dataList,mode1ProgressBar);

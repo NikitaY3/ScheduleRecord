@@ -202,7 +202,7 @@ public class DaySQLiteUserDao {
     //查询适合放在当天Week里面的日程(等待进一步判断每周和每月日程是否在当天生效)
     public List<CalenderWeekItem> quiryTodayWeek(int day) {
         List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();
-        helper.getReadableDatabase();
+//        helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important,time");
         while (cursor.moveToNext()){
@@ -252,6 +252,30 @@ public class DaySQLiteUserDao {
 //        db.close();
 //        return dataList;
 //    }
+
+
+    //用于闹钟设置时间的查询
+    public List<AlarmDTT> quiryTodayTime() {
+        List<AlarmDTT> dataList = new ArrayList<AlarmDTT>();
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select * from day_1 where checkbox =0 and isfinish =? ", new String[]{"today"});
+//        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null," checkbox =1 and isfinish=?", new String[]{"today"},null,null,"afield limit 1,1");
+        while (cursor.moveToNext()){
+            String dayid = cursor.getString(0);
+            int checkbox1 = cursor.getInt(1);
+            int remind1 = cursor.getInt(2);
+            String time = cursor.getString(3);
+            String title = cursor.getString(4);
+
+
+            if (!time.substring(11, 13).equals("XX")) {
+                AlarmDTT things = new AlarmDTT(dayid, time, title);
+                dataList.add(things);
+            }
+        }
+        db.close();
+        return dataList;
+    }
 
     public List<CalenderWeekItem> quiryAndSetWeekItem() {
         List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();

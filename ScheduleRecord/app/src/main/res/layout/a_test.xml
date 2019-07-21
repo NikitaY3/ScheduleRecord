@@ -34,4 +34,10 @@
         android:layout_height="wrap_content"
         android:text="stop"
         />
+
+    <Button
+        android:id="@+id/unbind"
+        android:layout_width="392dp"
+        android:layout_height="wrap_content"
+        android:text="unbind" />
 </LinearLayout>
