@@ -10,16 +10,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.function.DaySQLiteUser;
+import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 
 import java.util.List;
 
 public class MyStatisticsSchAdapter extends BaseAdapter {
     private Context context;
-    private List<DaySQLiteUser> list;
+    private List<FinishSQLiteUser> list;
     private LayoutInflater inflater;
 
-    public MyStatisticsSchAdapter(Context context, List<DaySQLiteUser> list) {
+    public MyStatisticsSchAdapter(Context context, List<FinishSQLiteUser> list) {
         this.context = context;
         this.list = list;
         inflater= LayoutInflater.from(context);
@@ -51,7 +51,7 @@ public class MyStatisticsSchAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        DaySQLiteUser pb = list.get(position);
+        FinishSQLiteUser pb = list.get(position);
 
         return convertView;
     }

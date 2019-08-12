@@ -1,23 +1,20 @@
-package com.schedule.record.app.function;
+package com.schedule.record.app.sqlite.user;
 
-public class DaySQLiteUser {
-//    dayid varchar(50) primary key, checkbox bit,time datetime,title varchar(150),important char(2),repeat varchar(50),endday date,diary text,picture char(50);
+public class TodaySQLiteUser {
+
     private String dayid;
     private boolean checkbox,remind;
-    private String time,title,important,repeat,endday,diary,picture,isfinish;
+    private String time,title,important,diary,nameid;
 
-    public DaySQLiteUser(String dayid, boolean checkbox,boolean remind, String time, String title, String important, String repeat, String endday, String diary, String picture,String isfinish) {
+    public TodaySQLiteUser(String dayid, boolean checkbox, boolean remind, String time, String title, String important, String diary, String nameid) {
         this.dayid = dayid;
         this.checkbox = checkbox;
         this.remind = remind;
         this.time = time;
         this.title = title;
         this.important = important;
-        this.repeat = repeat;
-        this.endday = endday;
         this.diary = diary;
-        this.picture = picture;
-        this.isfinish = isfinish;
+        this.nameid = nameid;
     }
 
     public String getDayid() {
@@ -40,7 +37,7 @@ public class DaySQLiteUser {
         return remind;
     }
 
-    public void setRemind(boolean checkbox) {
+    public void setRemind(boolean remind) {
         this.remind = remind;
     }
 
@@ -68,22 +65,6 @@ public class DaySQLiteUser {
         this.important = important;
     }
 
-    public String getRepeat() {
-        return repeat;
-    }
-
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
-    }
-
-    public String getEndday() {
-        return endday;
-    }
-
-    public void setEndday(String endday) {
-        this.endday = endday;
-    }
-
     public String getDiary() {
         return diary;
     }
@@ -92,20 +73,12 @@ public class DaySQLiteUser {
         this.diary = diary;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getNameid() {
+        return nameid;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public String getIsfinish() {
-        return isfinish;
-    }
-
-    public void setIsfinish(String isfinish) {
-        this.isfinish = isfinish;
+    public void setNameid(String nameid) {
+        this.nameid = nameid;
     }
 
     @Override
@@ -114,11 +87,8 @@ public class DaySQLiteUser {
                 "是否已经完成：" + checkbox + '\n' +
                 "日程创建时间：" + time + '\n' +
                 "日程标题：" + title + '\n' +
-                "日程重复" + repeat + '\n' +
-                "日程截止时间：" + endday + '\n' +
                 "日程详细记录：" + diary + '\n' +
-                "日程图片：" + picture + '\n' +
                 "日程重要程度：" + important + '\n'+
-                "是否标记完成"+isfinish+'\n';
+                "当前用户手机号"+nameid+'\n';
     }
 }

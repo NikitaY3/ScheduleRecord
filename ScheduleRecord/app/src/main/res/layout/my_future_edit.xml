@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/mfEditTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:text="编辑日程"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/mfEditLinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:background="@drawable/abaa_item_im_em"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mfEditTextView1">
+
+        <CheckBox
+            android:id="@+id/mfEditCheckBox1"
+            android:layout_width="30dp"
+            android:layout_height="100dp"/>
+
+        <EditText
+            android:id="@+id/mfEditEditText0"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/abaa_item_edittext"
+            android:gravity="center_vertical"
+            android:text="XX:XX"
+            android:editable="false"
+            android:textColor="#000"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/mfEditEditText1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/abaa_item_edittext"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mfEditLinearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mfEditLinearLayout1">
+
+        <TextView
+            android:id="@+id/mfEditTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:gravity="center_vertical"
+            android:text="重要程度:" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="5dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/mfEditButton21"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaa_item_im_em" />
+
+            <Button
+                android:id="@+id/mfEditButton22"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaa_item_im_no" />
+
+            <Button
+                android:id="@+id/mfEditButton23"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaa_item_no_em" />
+
+            <Button
+                android:id="@+id/mfEditButton24"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaa_item_no_no" />
+
+            <Button
+                android:id="@+id/mfEditButton25"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaa_item_no_no_1" />
+
+            <Button
+                android:id="@+id/mfEditButton26"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaa_item_no_no_2" />
+
+            <Button
+                android:id="@+id/mfEditButton27"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaa_item_no_no_3" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mfEditLinearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mfEditLinearLayout2">
+
+        <TextView
+            android:id="@+id/mfEditTextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="提醒设置:"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/mfEditRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp">
+
+            <RadioButton
+                android:id="@+id/mfEditRadio1"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaaa_edit_repat"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="需要提醒"
+                android:textColor="@color/varygray2" />
+
+            <RadioButton
+                android:id="@+id/mfEditRadio2"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaaa_edit_repat"
+                android:button="@null"
+                android:gravity="center"
+                android:text="不需提醒"
+                android:textColor="@color/varygray2" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mfEditLinearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mfEditLinearLayout3">
+
+        <TextView
+            android:id="@+id/mfEditTextView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:text="重复设置:" />
+
+        <RadioGroup
+            android:id="@+id/mfEditRadioGroup4"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="5dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/mfEditRadio41"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:textColor="@color/varygray2"
+                android:background="@drawable/abaaa_edit_repat"
+                android:gravity="center"
+                android:text="每天" />
+
+            <RadioButton
+                android:id="@+id/mfEditRadio42"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaaa_edit_repat"
+                android:button="@null"
+                android:gravity="center"
+                android:text="每周"
+                android:textColor="@color/varygray2" />
+
+            <RadioButton
+                android:id="@+id/mfEditRadio43"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaaa_edit_repat"
+                android:button="@null"
+                android:gravity="center"
+                android:text="每月1日"
+                android:textColor="@color/varygray2" />
+
+            <RadioButton
+                android:id="@+id/mfEditRadio44"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/abaaa_edit_repat"
+                android:button="@null"
+                android:gravity="center"
+                android:text="不重复"
+                android:textColor="@color/varygray2" />
+        </RadioGroup>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/mfEditLinearLayout41"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mfEditLinearLayout3">
+
+        <CheckBox
+            android:id="@+id/mfEditweekItemButton0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/abaaaa_edit_week_choice"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="星期日"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <CheckBox
+            android:id="@+id/mfEditweekItemButton1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/abaaaa_edit_week_choice"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="星期一"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <CheckBox
+            android:id="@+id/mfEditweekItemButton2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/abaaaa_edit_week_choice"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="星期二"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <CheckBox
+            android:id="@+id/mfEditweekItemButton3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/abaaaa_edit_week_choice"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="星期三"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <CheckBox
+            android:id="@+id/mfEditweekItemButton4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/abaaaa_edit_week_choice"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="星期四"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <CheckBox
+            android:id="@+id/mfEditweekItemButton5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/abaaaa_edit_week_choice"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="星期五"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <CheckBox
+            android:id="@+id/mfEditweekItemButton6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/abaaaa_edit_week_choice"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="星期六"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mfEditLinearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mfEditLinearLayout41">
+
+        <TextView
+            android:id="@+id/mfEditTextView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:text="截止日期:" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/mfEditButton51"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:textColor="@color/varygray2"
+                android:background="@drawable/abaaa_edit_deadline"
+                android:layout_margin="10dp"
+                android:text="**年**月**日" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mfEditLinearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mfEditLinearLayout5">
+
+        <TextView
+            android:id="@+id/mfEditTextView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="日程注解:"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/mfEditEditText2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="5dp"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:gravity="top"
+            android:hint="写下你的记录吧！"
+            android:inputType="textMultiLine"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

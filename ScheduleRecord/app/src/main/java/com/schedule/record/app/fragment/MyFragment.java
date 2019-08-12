@@ -15,7 +15,7 @@ import com.schedule.record.app.MainMyBoradcastSet;
 import com.schedule.record.app.MainMyEffectivesSch;
 import com.schedule.record.app.MainMyFinishSch;
 import com.schedule.record.app.MainMyInformation;
-import com.schedule.record.app.MainMyLogon;
+import com.schedule.record.app.MainMyLogonPhone;
 import com.schedule.record.app.MianMyStatisticsSch;
 import com.schedule.record.app.R;
 
@@ -95,7 +95,7 @@ public class MyFragment extends Fragment {
             case R.id.myButton8:
                 break;
             case R.id.myImageView2:
-                Intent intent = new Intent(getActivity(), MainMyLogon.class);
+                Intent intent = new Intent(getActivity(), MainMyLogonPhone.class);
                 startActivity(intent);
                 break;
         }

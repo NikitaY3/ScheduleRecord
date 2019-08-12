@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.schedule.record.app.adapter.MyFinishSchAdapter;
-import com.schedule.record.app.function.DaySQLiteUser;
-import com.schedule.record.app.function.DaySQLiteUserDao;
-import com.schedule.record.app.sqlite.DaySQLite;
+import com.schedule.record.app.sqlite.PassSQLite;
+import com.schedule.record.app.sqlite.dao.PassSQLiteUserDao;
+import com.schedule.record.app.sqlite.user.PassSQLiteUser;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ public class MainMyFinishSch extends AppCompatActivity {
 
     @BindView(R.id.finSchedulesListView)
     ListView finSchedulesListView;
-    private List<DaySQLiteUser> dataList;
-    private DaySQLite helper;
+    private List<PassSQLiteUser> dataList;
+    private PassSQLite helper;
     String DBName = "day_1";
     int version = 1;
 
@@ -29,14 +29,15 @@ public class MainMyFinishSch extends AppCompatActivity {
         setContentView(R.layout.my_finishschedules);
         ButterKnife.bind(this);
 
-        helper = new DaySQLite(MainMyFinishSch.this, DBName, null, version);
+        helper = new PassSQLite(MainMyFinishSch.this, DBName, null, version);
         helper.getReadableDatabase();
-        DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
-        dataList = dao.quiryPassAndSetItem();//TodayAndSetItem();
+        PassSQLiteUserDao dao = new PassSQLiteUserDao(helper);
 
-        MyFinishSchAdapter adapter = new MyFinishSchAdapter(MainMyFinishSch.this, dataList);
+//        dataList = dao.quiryPassAndSetItem();//TodayAndSetItem();
 
-        finSchedulesListView.setAdapter(adapter);
+//        MyFinishSchAdapter adapter = new MyFinishSchAdapter(MainMyFinishSch.this, dataList);
+
+//        finSchedulesListView.setAdapter(adapter);
 
     }
 }

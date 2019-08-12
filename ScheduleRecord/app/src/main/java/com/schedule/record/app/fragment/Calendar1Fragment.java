@@ -10,15 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.schedule.record.app.R;
+import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.adapter.CalenderDayAdapter;
-import com.schedule.record.app.dialog.DayDialog;
-import com.schedule.record.app.function.DaySQLiteUser;
-import com.schedule.record.app.function.DaySQLiteUserDao;
+import com.schedule.record.app.dialog.TodayDialog;
 import com.schedule.record.app.function.Mode1ProgressBar;
-import com.schedule.record.app.sqlite.DaySQLite;
+import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
+import com.schedule.record.app.sqlite.TodaySQLite;
 
 import java.util.List;
 
@@ -37,10 +36,10 @@ public class Calendar1Fragment extends Fragment{
 
     private View view;
     private ListView calendar1ListView;
-    private List<DaySQLiteUser> dataList;
+    private List<TodaySQLiteUser> dataList;
 
-    private DaySQLite helper;
-    String DBName = "day_1";
+    private TodaySQLite helper;
+    String DBName = "today";
     int version = 1;
 
     @Nullable
@@ -61,10 +60,10 @@ public class Calendar1Fragment extends Fragment{
     }
 
     public void onResume1() {
-        helper = new DaySQLite(getActivity(), DBName, null, version);
+        helper = new TodaySQLite(getActivity(), DBName, null, version);
         helper.getReadableDatabase();
-        DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
-        dataList = (List<DaySQLiteUser>) dao.quiryTodayAndSetItem();
+        TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper);
+        dataList = dao.quiryAndSetItem();
         CalenderDayAdapter adapter = new CalenderDayAdapter(getActivity(),dataList,mode1ProgressBar);
         int countBar = dao.CountBar();
 //        Toast.makeText(getActivity(),"已完成数量为："+countBar,Toast.LENGTH_SHORT).show();
@@ -83,7 +82,7 @@ public class Calendar1Fragment extends Fragment{
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.calendar1Button2:
-                DayDialog one = new DayDialog(getActivity(), calendar1ListView, dataList,mode1ProgressBar);
+                TodayDialog one = new TodayDialog(getActivity(), calendar1ListView, dataList,mode1ProgressBar);
                 one.show();
                 break;
         }

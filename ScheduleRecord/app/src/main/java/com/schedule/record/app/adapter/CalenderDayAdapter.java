@@ -18,10 +18,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.schedule.record.app.Mode1Edit;
-import com.schedule.record.app.function.DaySQLiteUser;
-import com.schedule.record.app.function.DaySQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.function.Mode1ProgressBar;
-import com.schedule.record.app.sqlite.DaySQLite;
+import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
+import com.schedule.record.app.sqlite.TodaySQLite;
 
 import java.util.Calendar;
 import java.util.List;
@@ -30,20 +30,20 @@ import static com.schedule.record.app.R.*;
 
 public class CalenderDayAdapter extends BaseAdapter {
     private Context context;
-    private List<DaySQLiteUser> list;
+    private List<TodaySQLiteUser> list;
     //布局填充--
     private LayoutInflater inflater;
 
     AlertDialog.Builder frame1;
-    private DaySQLite helper;
-    String DBName="day_1";
+    private TodaySQLite helper;
+    String DBName="today";
     int version = 1;
 
     public String radio2;
     final Calendar cale1 = Calendar.getInstance();
     private ProgressBar mode1ProgressBar;
 
-    public CalenderDayAdapter(Context context, List<DaySQLiteUser> list, ProgressBar mode1ProgressBar) {
+    public CalenderDayAdapter(Context context, List<TodaySQLiteUser> list, ProgressBar mode1ProgressBar) {
         this.context = context;
         this.list = list;
         inflater=LayoutInflater.from(context);
@@ -80,7 +80,7 @@ public class CalenderDayAdapter extends BaseAdapter {
         else{
             holder = (ViewHolder) convertView.getTag();
         }
-        final DaySQLiteUser pb = list.get(position);
+        final TodaySQLiteUser pb = list.get(position);
         holder.tv1.setOnCheckedChangeListener(null);
         if(pb.isCheckbox()){
             holder.tv1.setChecked(true);
@@ -98,9 +98,9 @@ public class CalenderDayAdapter extends BaseAdapter {
                 }else{
                     pb.setCheckbox(false);
                 }
-                helper=new DaySQLite(context,DBName,null,version);
+                helper=new TodaySQLite(context,DBName,null,version);
                 helper.getReadableDatabase();
-                DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+                TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
                 Toast.makeText(context,"Day"+pb.isCheckbox()+pb.getDayid(),Toast.LENGTH_SHORT).show();
                 dao.updateAll(pb);
                 new Mode1ProgressBar(dao.CountBar(),dao.CountAllBar(),mode1ProgressBar);
@@ -125,9 +125,9 @@ public class CalenderDayAdapter extends BaseAdapter {
                         }
                         holder.tv2.setText(radio2);
                         pb.setTime(radio2);
-                        helper=new DaySQLite(context,DBName,null,version);
+                        helper=new TodaySQLite(context,DBName,null,version);
                         helper.getReadableDatabase();
-                        DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+                        TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
                         CalenderDayAdapter.this.notifyDataSetChanged();
                         dao.updateAll(pb);
                     }
@@ -147,12 +147,21 @@ public class CalenderDayAdapter extends BaseAdapter {
                 case "d":
                     holder.linearLayout.setBackgroundResource(drawable.abaa_item_no_no);
                     break;
+                case "e":
+                    holder.linearLayout.setBackgroundResource(drawable.abaa_item_no_no_1);
+                    break;
+                case "f":
+                    holder.linearLayout.setBackgroundResource(drawable.abaa_item_no_no_2);
+                    break;
+                case "g":
+                    holder.linearLayout.setBackgroundResource(drawable.abaa_item_no_no_3);
+                    break;
             }
 
         holder.tv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DaySQLiteUser pb = list.get(position);
+                TodaySQLiteUser pb = list.get(position);
                 Intent intent= new Intent(context, Mode1Edit.class);
                 intent.putExtra("dayid",pb.getDayid());
                 context.startActivity(intent);
@@ -185,9 +194,9 @@ public class CalenderDayAdapter extends BaseAdapter {
                 list.remove(position);
                 CalenderDayAdapter.this.notifyDataSetChanged();
                 //删除Item对应的数据库
-                helper=new DaySQLite(context,DBName,null,version);
+                helper=new TodaySQLite(context,DBName,null,version);
                 helper.getReadableDatabase();
-                DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+                TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
                 dao.deleteByDayid(time);
             }
         });

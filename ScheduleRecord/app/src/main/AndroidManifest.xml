@@ -26,9 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainMyLogon"/>
         <activity android:name=".MainMyLogonPhone"/>
         <activity android:name=".Mode1Edit"/>
+        <activity android:name=".Mode2FinishEdit"/>
         <activity android:name=".Mode3CompletionLine"/>
         <activity android:name=".Mode3CompletionScale"/>
         <activity android:name=".Mode3TimeDelayed"/>

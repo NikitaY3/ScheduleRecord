@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/fEditTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:text="编辑日程"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/fEditLinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:background="@drawable/abaa_item_im_em"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fEditTextView1">
+
+        <CheckBox
+            android:id="@+id/fEditCheckBox1"
+            android:layout_width="30dp"
+            android:layout_height="100dp"/>
+
+        <EditText
+            android:id="@+id/fEditEditText0"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/abaa_item_edittext"
+            android:gravity="center_vertical"
+            android:text="XX:XX"
+            android:editable="false"
+            android:textColor="#000"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/fEditEditText1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/abaa_item_edittext"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fEditLinearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fEditLinearLayout1">
+
+        <TextView
+            android:id="@+id/fEditTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="完成日期:"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp">
+
+            <TextView
+                android:id="@+id/fEditButton21"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/abaaa_edit_deadline"
+                android:gravity="center"
+                android:text="**年**月**日"
+                android:textColor="@color/varygray2" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fEditLinearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fEditLinearLayout2">
+
+        <TextView
+            android:id="@+id/fEditTextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="日程注解:"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/fEditEditText2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="5dp"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:gravity="top"
+            android:hint="写下你的记录吧！"
+            android:inputType="textMultiLine"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

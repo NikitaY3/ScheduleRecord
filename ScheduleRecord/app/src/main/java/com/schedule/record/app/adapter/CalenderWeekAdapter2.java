@@ -15,12 +15,12 @@ import com.schedule.record.app.function.CalenderWeekItem;
 
 import java.util.List;
 
-public class CalenderWeekAdapter extends BaseAdapter {
+public class CalenderWeekAdapter2 extends BaseAdapter {
     private Context context;
     private List<CalenderWeekItem> list;
     private LayoutInflater inflater;
 
-    public CalenderWeekAdapter(Context context, List<CalenderWeekItem> list) {
+    public CalenderWeekAdapter2(Context context, List<CalenderWeekItem> list) {
         this.context = context;
         this.list = list;
         inflater=LayoutInflater.from(context);

@@ -13,19 +13,19 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.schedule.record.app.R;
+import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.adapter.CalenderWeek2Adapter;
-import com.schedule.record.app.adapter.CalenderWeekAdapter;
+import com.schedule.record.app.adapter.CalenderWeekAdapter1;
+import com.schedule.record.app.adapter.CalenderWeekAdapter2;
+import com.schedule.record.app.adapter.CalenderWeekAdapter3;
 import com.schedule.record.app.function.CalculationWeek;
 import com.schedule.record.app.function.CalenderWeekItem;
-import com.schedule.record.app.function.DaySQLiteUserDao;
-import com.schedule.record.app.sqlite.DaySQLite;
+import com.schedule.record.app.sqlite.TodaySQLite;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -83,11 +83,13 @@ public class Calendar2Fragment extends Fragment {
     private List<CalenderWeekItem> dataList7;
     private List<Integer> dataList;
 
-    private CalenderWeekAdapter weekAdapter;
+    private CalenderWeekAdapter1 weekAdapter1;
+    private CalenderWeekAdapter2 weekAdapter2;
+    private CalenderWeekAdapter3 weekAdapter3;
     private CalenderWeek2Adapter week2Adapter;
 
     private List<CalenderWeekItem> mydData;
-    private DaySQLite helper;
+    private TodaySQLite helper;
     String DBName = "day_1";
     int version = 1;
 
@@ -101,21 +103,121 @@ public class Calendar2Fragment extends Fragment {
         view = inflater.inflate(R.layout.main_calendar_mode2, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        onResume1();
+
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     public void onResume1() {
-        mode2ScrollView.smoothScrollTo(0,0);
-        StartSet();
-        today1 = getInternetTime();
-        todayint1 = Integer.parseInt(today1.substring(0,4)+ today1.substring(5,7)+today1.substring(8,10));
 
-//        Toast.makeText(getActivity(),"结束日期"+todayint,Toast.LENGTH_SHORT).show();
-        GetTodayWeek(today1);
-        PositionDetermine(today1,todayint1);
+        //0、初始化
+        StartSet();
+        //1、获取当前日期
+        today1 = getInternetTime();
+        int dd = Integer.parseInt(today1.substring(5,7));
+        calendar2Button.setText(dd+"月");
+        //2、判断今天星期
+        todayweek = new CalculationWeek(today1.substring(0, 10)).getWeek();
+        int week = Integer.parseInt(todayweek);//0-6
+//        GetTodayWeek(today1);
+
+        //3、判断星期日
+        if (0<week){
+            weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList1);
+            calendar2ListView1.setAdapter(weekAdapter1);
+        }else{
+            weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList1);
+            calendar2ListView1.setAdapter(weekAdapter2);
+            mode2WeekButton0.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+        }
+
+        //4、判断星期一
+        if (1<week){
+            weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList2);
+            calendar2ListView2.setAdapter(weekAdapter1);
+        }else if (1==week){
+            weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList2);
+            calendar2ListView2.setAdapter(weekAdapter2);
+            mode2WeekButton1.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+        }else {
+            weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList2);
+            calendar2ListView2.setAdapter(weekAdapter3);
+        }
+
+        //5、判断星期二
+
+        if (2<week){
+            weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList3);
+            calendar2ListView3.setAdapter(weekAdapter1);
+        }else if (2==week){
+            weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList3);
+            calendar2ListView3.setAdapter(weekAdapter2);
+            mode2WeekButton2.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+        }else {
+            weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList3);
+            calendar2ListView3.setAdapter(weekAdapter3);
+        }
+
+        //6、判断星期三
+        if (3<week){
+            weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList4);
+            calendar2ListView4.setAdapter(weekAdapter1);
+        }else if (3==week){
+            weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList4);
+            calendar2ListView4.setAdapter(weekAdapter2);
+            mode2WeekButton3.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+        }else {
+            weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList4);
+            calendar2ListView4.setAdapter(weekAdapter3);
+        }
+
+        //7、判断星期四
+        if (4<week){
+            weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList5);
+            calendar2ListView5.setAdapter(weekAdapter1);
+        }else if (4==week){
+            weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList5);
+            calendar2ListView5.setAdapter(weekAdapter2);
+            mode2WeekButton4.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+        }else {
+            weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList5);
+            calendar2ListView5.setAdapter(weekAdapter3);
+        }
+
+        //8、判断星期五
+        if (5<week){
+            weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList6);
+            calendar2ListView6.setAdapter(weekAdapter1);
+        }else if (5==week){
+            weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList6);
+            calendar2ListView6.setAdapter(weekAdapter2);
+            mode2WeekButton5.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+        }else {
+            weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList6);
+            calendar2ListView6.setAdapter(weekAdapter3);
+        }
+
+        //9、判断星期六
+        if (6==week){
+            weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList7);
+            calendar2ListView7.setAdapter(weekAdapter2);
+            mode2WeekButton6.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+        }else {
+            weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList7);
+            calendar2ListView7.setAdapter(weekAdapter3);
+        }
+
+
+//        todayint1 = Integer.parseInt(today1.substring(0,4)+ today1.substring(5,7)+today1.substring(8,10));
+
+//        PositionDetermine(today1,todayint1);
     }
 
     private void StartSet() {
+
+        mode2ScrollView.smoothScrollTo(0,0);
+
         dataList1 = new ArrayList<>();
         dataList2 = new ArrayList<>();
         dataList3 = new ArrayList<>();
@@ -125,246 +227,64 @@ public class Calendar2Fragment extends Fragment {
         dataList7 = new ArrayList<>();
         dataList = new ArrayList<>();
 
-        //每周的日程——周日
-        weekAdapter = new CalenderWeekAdapter(getActivity(), dataList1);
-        calendar2ListView1.setAdapter(weekAdapter);
-
-        //每周的日程——周一
-        weekAdapter = new CalenderWeekAdapter(getActivity(), dataList2);
-        calendar2ListView2.setAdapter(weekAdapter);
-
-        //每周的日程——周二
-        weekAdapter = new CalenderWeekAdapter(getActivity(), dataList3);
-        calendar2ListView3.setAdapter(weekAdapter);
-
-        //每周的日程——周三
-        weekAdapter = new CalenderWeekAdapter(getActivity(), dataList4);
-        calendar2ListView4.setAdapter(weekAdapter);
-
-        //每周的日程——周四
-        weekAdapter = new CalenderWeekAdapter(getActivity(), dataList5);
-        calendar2ListView5.setAdapter(weekAdapter);
-
-        //每周的日程——周五
-        weekAdapter = new CalenderWeekAdapter(getActivity(), dataList6);
-        calendar2ListView6.setAdapter(weekAdapter);
-
-        //每周的日程——周六
-        weekAdapter = new CalenderWeekAdapter(getActivity(), dataList7);
-        calendar2ListView7.setAdapter(weekAdapter);
-
         //数量
         week2Adapter = new CalenderWeek2Adapter(getActivity(), dataList);
         calendar2ListView.setAdapter(week2Adapter);
     }
 
-    //查询当天日期，并将布局标记好
-    @SuppressLint({"SetTextI18n", "WrongConstant"})
-    public void GetTodayWeek(String day) {
-        todayweek = new CalculationWeek(day.substring(0, 10)).getWeek();
-        Calendar calendar = new GregorianCalendar();
-        try {
-            calendar.setTime(ConverToDate(today1));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Date d;
-        String c;
-        int todayint;
+//    //查询当天日期，并将布局标记好
+//    @SuppressLint({"SetTextI18n", "WrongConstant"})
+//    public String GetTodayWeek(String day) {
+//        todayweek = new CalculationWeek(day.substring(0, 10)).getWeek();
+//        Calendar calendar = new GregorianCalendar();
+//        try {
+//            calendar.setTime(ConverToDate(today1));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        switch (todayweek) {
+//            case "0":
+//                mode2WeekButton0.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+//                break;
+//            case "1":
+//                mode2WeekButton1.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+//                break;
+//            case "2":
+//                mode2WeekButton2.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+//                break;
+//            case "3":
+//                mode2WeekButton3.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+//                break;
+//            case "4":
+//                mode2WeekButton4.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+//                break;
+//            case "5":
+//                mode2WeekButton5.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+//                break;
+//            case "6":
+//                mode2WeekButton6.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+//                break;
+//        }
+//        int dd = Integer.parseInt(today1.substring(5,7));
+//        calendar2Button.setText(dd+"月");
+//
+//        return todayweek;
+//    }
 
-        switch (todayweek) {
-            case "0":
-                mode2WeekButton0.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-
-                calendar.add(Calendar.DATE,1);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,2);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,3);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,4);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,5);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,6);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                break;
-            case "1":
-
-                calendar.add(Calendar.DATE,1);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,2);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,3);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,4);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,5);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                mode2WeekButton1.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-                break;
-            case "2":
-
-                calendar.add(Calendar.DATE,1);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,2);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,3);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,4);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-                mode2WeekButton2.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-                break;
-            case "3":
-
-                calendar.add(Calendar.DATE,1);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,2);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,3);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-                mode2WeekButton3.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-                break;
-            case "4":
-
-                calendar.add(Calendar.DATE,1);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-
-                calendar.add(Calendar.DATE,2);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-                mode2WeekButton4.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-                break;
-            case "5":
-
-                calendar.add(Calendar.DATE,1);
-                d = calendar.getTime();
-                c = ConverToString(d);
-                todayint = Integer.parseInt(c.substring(0,4)+ c.substring(5,7)+c.substring(8,10));
-                PositionDetermine(c,todayint);
-                mode2WeekButton5.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-                break;
-            case "6":
-                mode2WeekButton6.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-                break;
-        }
-        int dd = Integer.parseInt(today1.substring(5,7));
-        calendar2Button.setText(dd+"月");
-    }
-
-    //判断today,todayint当天显示哪些日程
+    //判断当天显示哪些日程
     private void PositionDetermine(String today,int todayint) {
-        helper = new DaySQLite(getActivity(), DBName, null, version);
+        helper = new TodaySQLite(getActivity(), DBName, null, version);
         helper.getReadableDatabase();
-        DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
+        TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper);
 
         //当天日期显示日程
-        mydData = dao.quiryTodayWeek(todayint);
+        mydData = dao.quiryAndSetWeekItem();
 
         for (int i = 0; i < mydData.size(); i++) {
             mydata = mydData.get(i);
-            switch (mydata.getRepeat().substring(0, 8)) {
-                case "everywee":
-                    String re = mydata.getRepeat().substring(8);
-                    while (!re.equals("")){
-                        if (re.substring(0, 1).equals(todayweek)) {
-                            setChoiceWeek(Integer.parseInt(todayweek));
-                        }
-                        re = re.substring(1);
-                    }
-                    break;
-                case "everymou":
-                    String re2 = mydata.getRepeat().substring(8);
-                    int a = Integer.parseInt(re2.substring(0,4)+ re2.substring(5,7)+ re2.substring(8,10));
-                    if(oneWeek(a)) {
-                        String mo = mydata.getRepeat().substring(8, 10);
-                        String mouweek = new CalculationWeek(today.substring(0, 9) + mo).getWeek();
-                        if (todayweek.equals(mouweek)){
-                            setChoiceWeek(Integer.parseInt(mouweek));
-                            dataList.add(i);
-                        }
-                    }
-                    break;
-                default:
-                    setChoiceWeek(Integer.parseInt(todayweek));
-                    dataList.add(i);
-                    break;
-            }
+            setChoiceWeek(Integer.parseInt(todayweek));
+            dataList.add(i);
         }
     }
 
@@ -423,11 +343,6 @@ public class Calendar2Fragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        onResume1();
-        super.onResume();
-    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

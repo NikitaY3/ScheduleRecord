@@ -6,11 +6,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.schedule.record.app.adapter.MyEffectivesSchAdapter;
-import com.schedule.record.app.function.DaySQLiteUser;
-import com.schedule.record.app.function.DaySQLiteUserDao;
-import com.schedule.record.app.sqlite.DaySQLite;
+import com.schedule.record.app.sqlite.FutureSQLite;
+import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
+import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,10 +23,10 @@ public class MainMyEffectivesSch extends AppCompatActivity {
     @BindView(R.id.effSchedulesListView)
     ListView effSchedulesListView;
     ;
-    private List<DaySQLiteUser> dataList1;
-    private List<DaySQLiteUser> dataList2;
-    private DaySQLite helper;
-    String DBName = "day_1";
+    private List<FutureSQLiteUser> dataList1;
+    private List<FutureSQLiteUser> dataList2;
+    private FutureSQLite helper;
+    String DBName = "future";
     int version = 1;
 
     @Override
@@ -37,12 +36,12 @@ public class MainMyEffectivesSch extends AppCompatActivity {
         ButterKnife.bind(this);
 
 //        dataList1 = new ArrayList<>();
-        helper = new DaySQLite(MainMyEffectivesSch.this, DBName, null, version);
+        helper = new FutureSQLite(MainMyEffectivesSch.this, DBName, null, version);
         helper.getReadableDatabase();
-        DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
-        dataList1 = dao.quiryTodayAndSetItem();
+        FutureSQLiteUserDao dao = new FutureSQLiteUserDao(helper);
+        dataList1 = dao.quiryAndSetItem();
 //        dataList2 = dao.quiryFutureAndSetItem();
-        dataList1.addAll(dao.quiryFutureAndSetItem());
+        dataList1.addAll(dao.quiryAndSetItem());
         MyEffectivesSchAdapter adapter = new MyEffectivesSchAdapter(MainMyEffectivesSch.this,dataList1);
 
         effSchedulesListView.setAdapter(adapter);

@@ -9,16 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.function.DaySQLiteUser;
+import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
 
 import java.util.List;
 
 public class MyEffectivesSchAdapter extends BaseAdapter {
     Context context;
-    private List<DaySQLiteUser> list;
+    private List<FutureSQLiteUser> list;
     private LayoutInflater inflater;
 
-    public MyEffectivesSchAdapter (Context context, List<DaySQLiteUser> list) {
+    public MyEffectivesSchAdapter (Context context, List<FutureSQLiteUser> list) {
         this.context = context;
         this.list = list;
         inflater= LayoutInflater.from(context);
@@ -52,7 +52,7 @@ public class MyEffectivesSchAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final DaySQLiteUser pb = list.get(position);
+        final FutureSQLiteUser pb = list.get(position);
 
         holder.tv1.setText(pb.getTitle());
         holder.tv2.setText("1 天");
@@ -69,6 +69,15 @@ public class MyEffectivesSchAdapter extends BaseAdapter {
                 break;
             case "d":
                 holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no);
+                break;
+            case "e":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+                break;
+            case "f":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+                break;
+            case "g":
+                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                 break;
         }
         return convertView;

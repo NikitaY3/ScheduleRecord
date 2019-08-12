@@ -1,11 +1,10 @@
 package com.schedule.record.app.aboutmycalendar;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.schedule.record.app.function.DaySQLiteUser;
-import com.schedule.record.app.function.DaySQLiteUserDao;
-import com.schedule.record.app.sqlite.DaySQLite;
+import com.schedule.record.app.sqlite.FinishSQLite;
+import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
+import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 
 import java.util.Date;
 import java.util.List;
@@ -14,12 +13,12 @@ public class FinishDayUtil {
 
     private int allSchedule,finishSchedule;
     private Date date;
-    private DaySQLite helper;
+    private FinishSQLite helper;
     private static final String DBName = "day_1";
     private int version = 1;
     private Context context;
 
-    private List<DaySQLiteUser> dataList;
+    private List<FinishSQLiteUser> dataList;
 
     public FinishDayUtil(Context context, java.util.Date date) {
         this.context = context;
@@ -30,12 +29,15 @@ public class FinishDayUtil {
     }
 
     private void CountFinish(Context context) {
-        helper = new DaySQLite(context, DBName, null, version);
+        helper = new FinishSQLite(context, DBName, null, version);
         helper.getReadableDatabase();
-        DaySQLiteUserDao dao = new DaySQLiteUserDao(helper);
-        allSchedule = dao.CountAllBar();
-        finishSchedule = dao.CountBar();
-        int countBar = dao.CountBar();
+        FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper);
+//        allSchedule = dao.Count();
+//        finishSchedule = dao.CountBar();
+//        int countBar = dao.CountBar();
+        allSchedule = 1;
+        finishSchedule = 2;
+        int countBar = 2;
 //        Toast.makeText(context,"计算日程完成情况："+countBar,Toast.LENGTH_SHORT).show();
     }
 

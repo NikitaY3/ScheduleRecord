@@ -4,10 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class FinishSQLite extends SQLiteOpenHelper {
+public class PassSQLite extends SQLiteOpenHelper {
 
-    String CREAT_TABLE="create table finish(finishid varchar(32) primary key, dayid varchar(32), checkbox bit,remind bit,time datetime,title varchar(128),important char(2), diary text, nameid char(12))";
-    public FinishSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    String CREAT_TABLE="create table pass(dayid varchar(32) primary key,title varchar(128), passday date, completion int, important char(2), nameid char(12))";
+    public PassSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
     @Override

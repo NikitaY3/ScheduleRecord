@@ -10,16 +10,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.function.DaySQLiteUser;
+import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 
 import java.util.List;
 
 public class MyFinishSchNoteAdapter extends BaseAdapter {
     private Context context;
-    private List<DaySQLiteUser> list;
+    private List<FinishSQLiteUser> list;
     private LayoutInflater inflater;
 
-    public MyFinishSchNoteAdapter(Context context, List<DaySQLiteUser> list) {
+    public MyFinishSchNoteAdapter(Context context, List<FinishSQLiteUser> list) {
         this.context = context;
         this.list = list;
         inflater= LayoutInflater.from(context);
@@ -55,7 +55,7 @@ public class MyFinishSchNoteAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        DaySQLiteUser pb = list.get(position);
+        FinishSQLiteUser pb = list.get(position);
 
 
 

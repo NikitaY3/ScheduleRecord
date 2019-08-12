@@ -26,11 +26,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.schedule.record.app.R;
+import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.adapter.CalenderDayAdapter;
-import com.schedule.record.app.function.DaySQLiteUser;
-import com.schedule.record.app.function.DaySQLiteUserDao;
 import com.schedule.record.app.function.Mode1ProgressBar;
-import com.schedule.record.app.sqlite.DaySQLite;
+import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
+import com.schedule.record.app.sqlite.TodaySQLite;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,14 +41,14 @@ import java.util.Objects;
 import java.util.TimeZone;
 
 
-public class DayDialog extends Dialog {
+public class FutureDialog extends Dialog {
     private Context context;
     private LinearLayout inputItemLinearLayout1;
     private ListView calendar1ListView;
     private ArrayAdapter<String> arrayAdapter;
-    private List<DaySQLiteUser> dataList;
+    private List<TodaySQLiteUser> dataList;
 
-    private DaySQLite helper;
+    private TodaySQLite helper;
     private String DBName="day_1";
     private int version=1;
     private String Dayid,Dayidbutton;
@@ -62,11 +62,10 @@ public class DayDialog extends Dialog {
     private final Calendar cale1 = Calendar.getInstance();
     private ProgressBar mode1ProgressBar;
 
-
     private String important,endday,repeat,diary,picture,isfinish;
     private boolean remind = true;
 
-    public DayDialog(Context context, ListView calendar1ListView, List<DaySQLiteUser> dataList, ProgressBar mode1ProgressBar) {
+    public FutureDialog(Context context, ListView calendar1ListView, List<TodaySQLiteUser> dataList, ProgressBar mode1ProgressBar) {
         super(context, R.style.MyDialog);
         this.context = context;
         this.calendar1ListView = calendar1ListView;
@@ -217,18 +216,20 @@ public class DayDialog extends Dialog {
         {
             isfinish = "future";
         }
-        DaySQLiteUser things = new DaySQLiteUser(Dayidbutton,false,remind,time,dayTitle,important,repeat,endday,diary,picture,isfinish);
+        //TODO
+        String nameid = "13348445362";
+        TodaySQLiteUser things = new TodaySQLiteUser(Dayidbutton,false,remind,time,dayTitle,important,diary,nameid);
 
         //数据写入数据库
-        helper=new DaySQLite(context,DBName,null,version);
+        helper=new TodaySQLite(context,DBName,null,version);
         helper.getReadableDatabase();
-        DaySQLiteUserDao dao=new DaySQLiteUserDao(helper);
+        TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
         dao.insert(things);
 
         //刷新所有Item
-        dataList = new ArrayList<DaySQLiteUser>();
+        dataList = new ArrayList<TodaySQLiteUser>();
         helper.getReadableDatabase();
-        dataList = (List<DaySQLiteUser>) dao.quiryTodayAndSetItem();
+        dataList = (List<TodaySQLiteUser>) dao.quiryAndSetItem();
         final CalenderDayAdapter adapter = new CalenderDayAdapter(context, dataList,mode1ProgressBar);
         new Mode1ProgressBar(dao.CountBar(),dataList.size(),mode1ProgressBar);
         calendar1ListView.setAdapter(adapter);
@@ -263,6 +264,9 @@ public class DayDialog extends Dialog {
         button24List.add("等级二");
         button24List.add("等级三");
         button24List.add("等级四");
+        button24List.add("等级五");
+        button24List.add("等级六");
+        button24List.add("等级七");
 
         MySpinner(button21List,inputItemButton21);
         MySpinner(button22List,inputItemButton22);
@@ -313,6 +317,18 @@ public class DayDialog extends Dialog {
                     case "等级四":
                         important = "d";
                         inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+                        break;
+                    case "等级五":
+                        important = "e";
+                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+                        break;
+                    case "等级六":
+                        important = "f";
+                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+                        break;
+                    case "等级七":
+                        important = "g";
+                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                         break;
                 }
             }
