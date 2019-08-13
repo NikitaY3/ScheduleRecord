@@ -170,6 +170,7 @@ public class CalenderDayAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 //调用弹框函数
+                dayConfirmationDialogs(position,pb.getDayid());
                 Toast.makeText(context,"删除的Dayid为："+ pb.getDayid(),Toast.LENGTH_SHORT).show();
                 return true;
             }

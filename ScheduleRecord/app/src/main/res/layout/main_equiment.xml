@@ -22,6 +22,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="刷新"
+        android:textColor="@drawable/ac_my_button1_text"
         android:background="@color/my7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
