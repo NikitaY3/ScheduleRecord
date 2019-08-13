@@ -73,7 +73,7 @@ public class FinishSQLiteUserDao {
         return user;
     }
 
-    public  FinishSQLiteUser queryFinishid(String Finishid){
+    public  FinishSQLiteUser queryByFinishid(String Finishid){
         SQLiteDatabase db = helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "finishid=?", new String[]{Finishid}, null, null, null);
         FinishSQLiteUser user = null;
@@ -97,13 +97,38 @@ public class FinishSQLiteUserDao {
         return user;
     }
 
-    //查询Week
-    public List<CalenderWeekItem> quiryAndSetWeekItem() {
+    public  List<FinishSQLiteUser> quiryAndSetItem(){
+        List<FinishSQLiteUser> dataList = new ArrayList<FinishSQLiteUser>();//item的list
+        SQLiteDatabase db = helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, null, null, null, null, "finishid");
+        while (cursor.moveToNext()) {
+            String finishid = cursor.getString(0);
+            String dayid = cursor.getString(1);
+            int checkbox1 = cursor.getInt(2);
+            int remind1 = cursor.getInt(3);
+            String time = cursor.getString(4);
+            String title = cursor.getString(5);
+            String important = cursor.getString(6);
+            String dairy = cursor.getString(7);
+            String nameid = cursor.getString(8);
+            boolean checkbox;
+            checkbox = checkbox1 > 0;
+            boolean remind;
+            remind = remind1 > 0;
+            FinishSQLiteUser things = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,dairy,nameid);
+            dataList.add(things);
+        }
+        db.close();
+        return dataList;
+    }
+
+    //查询Week,根据日期查询
+    public List<CalenderWeekItem> quiryAndSetWeekItem(String day) {
         List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();//item的list
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"isfinish=?", new String[]{"today"},null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"dayid like ?", new String[]{"%"+day+"%"},null,null,"important,time");
         while (cursor.moveToNext()){
             String finishid = cursor.getString(0);
             int checkbox1 = cursor.getInt(2);

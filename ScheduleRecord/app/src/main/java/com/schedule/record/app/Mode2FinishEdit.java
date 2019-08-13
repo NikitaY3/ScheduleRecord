@@ -39,7 +39,7 @@ class Mode2FinishEdit extends AppCompatActivity {
     private FinishSQLite helper;
     FinishSQLiteUserDao dao;
     FinishSQLiteUser user;
-    String DBName = "day_1";
+    String DBName = "finish";
     int version = 1;
 
 
@@ -59,9 +59,9 @@ class Mode2FinishEdit extends AppCompatActivity {
         helper.getReadableDatabase();
         dao = new FinishSQLiteUserDao(helper);
         Intent intent = getIntent();
-        String dayid = intent.getStringExtra("dayid");
+        String finishid = intent.getStringExtra("finishid");
         //查询Dayid对应数据
-        FinishSQLiteUser d = dao.queryBydayid(dayid);
+        FinishSQLiteUser d = dao.queryByFinishid(finishid);
         //设置当前布局填充
         if (d.getCheckbox()) {
             fEditCheckBox1.setChecked(true);

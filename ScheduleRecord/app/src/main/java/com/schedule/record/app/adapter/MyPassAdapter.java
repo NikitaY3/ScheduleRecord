@@ -2,7 +2,6 @@ package com.schedule.record.app.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +9,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.schedule.record.app.MainMyFinishSchNote;
 import com.schedule.record.app.R;
-import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
+import com.schedule.record.app.sqlite.user.PassSQLiteUser;
 
 import java.util.List;
 
-public class MyFinishSchAdapter extends BaseAdapter {
+public class MyPassAdapter extends BaseAdapter {
     private Context context;
-    private List<FinishSQLiteUser> list;
+    private List<PassSQLiteUser> list;
     private LayoutInflater inflater;
 
-    public MyFinishSchAdapter(Context context, List<FinishSQLiteUser> list) {
+    public MyPassAdapter(Context context, List<PassSQLiteUser> list) {
         this.context = context;
         this.list = list;
         inflater= LayoutInflater.from(context);
@@ -50,29 +48,30 @@ public class MyFinishSchAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.my_finishschedules_item, null);
+            convertView = inflater.inflate(R.layout.my_3pass_item, null);
             holder = new ViewHolder();
-            holder.tv1 = convertView.findViewById(R.id.finItemEditText2);
-            holder.tv2 = convertView.findViewById(R.id.finTextView2);
-            holder.tv3 = convertView.findViewById(R.id.finTextView3);
-            holder.linearLayout = convertView.findViewById(R.id.finItemConstraintLayout);
+            holder.tv1 = convertView.findViewById(R.id.passItemEditText2);
+            holder.tv2 = convertView.findViewById(R.id.passTextView2);
+            holder.tv3 = convertView.findViewById(R.id.passTextView3);
+            holder.linearLayout = convertView.findViewById(R.id.passItemConstraintLayout);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final FinishSQLiteUser pb = list.get(position);
+        final PassSQLiteUser pb = list.get(position);
 
         holder.tv1.setText(pb.getTitle());
         holder.tv2.setText("1 天");
-        holder.tv3.setText(pb.getTime());
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MainMyFinishSchNote.class);
-                intent.putExtra("dayid",pb.getDayid());
-                context.startActivity(intent);
-            }
-        });
+        holder.tv3.setText("失效日期："+pb.getPassday());
+
+//        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, MainMy2FinishSchNote.class);
+//                intent.putExtra("dayid",pb.getDayid());
+//                context.startActivity(intent);
+//            }
+//        });
 
         switch (pb.getImportant()) {
             case "a":

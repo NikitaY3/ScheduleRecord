@@ -88,6 +88,15 @@ public class CalenderWeekAdapter2 extends BaseAdapter {
             case "d":
                 holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_no);
                 break;
+            case "e":
+                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+                break;
+            case "f":
+                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+                break;
+            case "g":
+                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+                break;
         }
         return convertView;
     }

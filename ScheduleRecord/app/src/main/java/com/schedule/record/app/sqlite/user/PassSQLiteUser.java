@@ -1,13 +1,15 @@
 package com.schedule.record.app.sqlite.user;
 
 public class PassSQLiteUser {
-
-    private String dayid,passday;
+//    create table pass(dayid varchar(32) primary key,title varchar(128)
+// , passday date, completion int, important char(2), nameid char(12))
+    private String dayid,title,passday;
     private int completion;
     private String important,nameid;
 
-    public PassSQLiteUser(String dayid, String passday, int completion, String important, String nameid) {
+    public PassSQLiteUser(String dayid, String title, String passday, int completion, String important, String nameid) {
         this.dayid = dayid;
+        this.title = title;
         this.passday = passday;
         this.completion = completion;
         this.important = important;
@@ -18,46 +20,31 @@ public class PassSQLiteUser {
         return dayid;
     }
 
-    public void setDayid(String dayid) {
-        this.dayid = dayid;
+    public String getTitle() {
+        return title;
     }
 
     public String getPassday() {
         return passday;
     }
 
-    public void setPassday(String passday) {
-        this.passday = passday;
-    }
-
     public int getCompletion() {
         return completion;
-    }
-
-    public void setCompletion(int completion) {
-        this.completion = completion;
     }
 
     public String getImportant() {
         return important;
     }
 
-    public void setImportant(String important) {
-        this.important = important;
-    }
-
     public String getNameid() {
         return nameid;
-    }
-
-    public void setNameid(String nameid) {
-        this.nameid = nameid;
     }
 
     @Override
     public String toString() {
         return "PassSQLiteUser{" +
                 "dayid='" + dayid + '\'' +
+                ", title='" + title + '\'' +
                 ", passday='" + passday + '\'' +
                 ", completion=" + completion +
                 ", important='" + important + '\'' +

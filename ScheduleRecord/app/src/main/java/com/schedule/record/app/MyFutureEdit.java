@@ -102,7 +102,7 @@ class MyFutureEdit extends AppCompatActivity {
     private FutureSQLite helper;
     FutureSQLiteUserDao dao;
     FutureSQLiteUser user;
-    String DBName = "day_1";
+    String DBName = "future";
     int version = 1;
 
     public String radio2, radio3;
@@ -111,7 +111,7 @@ class MyFutureEdit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_future_edit);
+        setContentView(R.layout.my_1future_edit);
         ButterKnife.bind(this);
         layoutFilling();
         onRadioGroupChecked();
@@ -194,17 +194,17 @@ class MyFutureEdit extends AppCompatActivity {
                 mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
                 break;
             case R.id.mfEditButton25:
-                user.setImportant("d");
+                user.setImportant("e");
                 dao.updateAll(user);
                 mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
                 break;
             case R.id.mfEditButton26:
-                user.setImportant("d");
+                user.setImportant("f");
                 dao.updateAll(user);
                 mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
                 break;
             case R.id.mfEditButton27:
-                user.setImportant("d");
+                user.setImportant("g");
                 dao.updateAll(user);
                 mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                 break;

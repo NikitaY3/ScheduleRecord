@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/inputItemLinearLayout1"
+        android:id="@+id/myFInputLinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginHorizontal="8dp"
@@ -20,7 +20,7 @@
         tools:ignore="UnusedAttribute,UselessParent">
 
         <EditText
-            android:id="@+id/inputItemEditText1"
+            android:id="@+id/myFInputEditText1"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:background="@drawable/abaa_item_edittext"
@@ -32,7 +32,7 @@
             android:textSize="30sp" />
 
         <EditText
-            android:id="@+id/inputItemEditText2"
+            android:id="@+id/myFInputEditText2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/inputItemButton"
+        android:id="@+id/myFInputButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="9dp"
@@ -56,12 +56,12 @@
         android:layout_marginBottom="9dp"
         android:background="@color/colorPrimary"
         android:text="T"
-        app:layout_constraintBottom_toTopOf="@+id/inputItemLinearLayout2"
+        app:layout_constraintBottom_toTopOf="@id/myFInputLinearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/inputItemLinearLayout2"
+        android:id="@+id/myFInputLinearLayout2"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center_vertical"
@@ -69,10 +69,10 @@
         android:paddingHorizontal="10dp"
         android:paddingVertical="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputItemLinearLayout1">
+        app:layout_constraintTop_toBottomOf="@id/myFInputLinearLayout1">
 
         <Spinner
-            android:id="@+id/inputItemButton21"
+            android:id="@+id/myFInputButton21"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_margin="5dp"
@@ -82,7 +82,7 @@
             android:textColor="@drawable/ac_my_button1_text"/>
 
         <Spinner
-            android:id="@+id/inputItemButton22"
+            android:id="@+id/myFInputButton22"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_margin="5dp"
@@ -93,7 +93,7 @@
 
 
         <Button
-            android:id="@+id/inputItemButton23"
+            android:id="@+id/myFInputButton23"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_margin="5dp"
@@ -105,7 +105,7 @@
             android:textColor="@color/colorPrimary"/>
 
         <Spinner
-            android:id="@+id/inputItemButton24"
+            android:id="@+id/myFInputButton24"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_margin="5dp"

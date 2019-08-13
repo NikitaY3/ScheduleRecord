@@ -45,7 +45,7 @@ public class MyStatisticsSchAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.my_statisticsschedules_item, null);
+            convertView = inflater.inflate(R.layout.my_l1doc_item, null);
             holder = new ViewHolder();
             convertView.setTag(holder);
         } else {

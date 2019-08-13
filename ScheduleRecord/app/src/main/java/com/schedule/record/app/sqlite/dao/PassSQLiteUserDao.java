@@ -25,6 +25,7 @@ public class PassSQLiteUserDao {
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
         content.put("dayid",user.getDayid());
+        content.put("title",user.getTitle());
         content.put("passday",user.getPassday());
         content.put("completion",user.getCompletion());
         content.put("important",user.getImportant());
@@ -39,30 +40,29 @@ public class PassSQLiteUserDao {
         PassSQLiteUser user = null;
         while (cursor.moveToNext()) {
             String dayid = cursor.getString(0);
-            String passday = cursor.getString(1);
-            int completion = cursor.getInt(2);
-            String important = cursor.getString(3);
-            String nameid = cursor.getString(4);
-            user = new PassSQLiteUser(dayid,passday,completion,important,nameid);
+            String title = cursor.getString(1);
+            String passday = cursor.getString(2);
+            int completion = cursor.getInt(3);
+            String important = cursor.getString(4);
+            String nameid = cursor.getString(5);
+            user = new PassSQLiteUser(dayid,title,passday,completion,important,nameid);
         }
         db.close();
         return user;
     }
 
-    //    private String dayid,passday;
-//    private int completion;
-//    private String important,nameid;
     public String queryAllString(){
         SQLiteDatabase db=helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null,null,null,null,null);
         StringBuilder sb=new StringBuilder();
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
-            String passday = cursor.getString(1);
-            int completion = cursor.getInt(2);
-            String important = cursor.getString(3);
-            String nameid = cursor.getString(4);
-            PassSQLiteUser user = new PassSQLiteUser(dayid,passday,completion,important,nameid);
+            String title = cursor.getString(1);
+            String passday = cursor.getString(2);
+            int completion = cursor.getInt(3);
+            String important = cursor.getString(4);
+            String nameid = cursor.getString(5);
+            PassSQLiteUser user = new PassSQLiteUser(dayid,title,passday,completion,important,nameid);
             sb.append(user.toString()).append("\n");
         }
         db.close();
@@ -74,14 +74,15 @@ public class PassSQLiteUserDao {
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"isfinish=?", new String[]{"today"},null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
-            String passday = cursor.getString(1);
-            int completion = cursor.getInt(2);
-            String important = cursor.getString(3);
-            String nameid = cursor.getString(4);
-            PassSQLiteUser things = new PassSQLiteUser(dayid,passday,completion,important,nameid);
+            String title = cursor.getString(1);
+            String passday = cursor.getString(2);
+            int completion = cursor.getInt(3);
+            String important = cursor.getString(4);
+            String nameid = cursor.getString(5);
+            PassSQLiteUser things = new PassSQLiteUser(dayid,title,passday,completion,important,nameid);
             dataList.add(things);
         }
         db.close();
@@ -104,6 +105,7 @@ public class PassSQLiteUserDao {
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
         content.put("dayid",user.getDayid());
+        content.put("title",user.getTitle());
         content.put("passday",user.getPassday());
         content.put("completion",user.getCompletion());
         content.put("important",user.getImportant());

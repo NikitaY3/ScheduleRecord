@@ -1,6 +1,5 @@
 package com.schedule.record.app.dialog;
 
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -19,18 +18,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
-import com.schedule.record.app.adapter.CalenderDayAdapter;
-import com.schedule.record.app.function.Mode1ProgressBar;
-import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
-import com.schedule.record.app.sqlite.TodaySQLite;
+import com.schedule.record.app.adapter.MyFutureAdapter;
+import com.schedule.record.app.sqlite.FutureSQLite;
+import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
+import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,37 +37,34 @@ import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
 
-
 public class FutureDialog extends Dialog {
     private Context context;
-    private LinearLayout inputItemLinearLayout1;
+    private LinearLayout myFInputLinearLayout1;
     private ListView calendar1ListView;
     private ArrayAdapter<String> arrayAdapter;
-    private List<TodaySQLiteUser> dataList;
+    private List<FutureSQLiteUser> dataList;
 
-    private TodaySQLite helper;
-    private String DBName="day_1";
+    private FutureSQLite helper;
+    private String DBName="future";
     private int version=1;
     private String Dayid,Dayidbutton;
 
-    private EditText inputItemEditText1,inputItemEditText2;
-    private Button inputItemButton,inputItemButton23;
-    private Spinner inputItemButton21,inputItemButton22,inputItemButton24;
+    private EditText myFInputEditText1,myFInputEditText2;
+    private Button myFInputButton,myFInputButton23;
+    private Spinner myFInputButton21,myFInputButton22,myFInputButton24;
     private List<String> button21List,button22List,button24List;
 
     public String radio2;
     private final Calendar cale1 = Calendar.getInstance();
-    private ProgressBar mode1ProgressBar;
 
-    private String important,endday,repeat,diary,picture,isfinish;
+    private String important,endday,repeat,diary;
     private boolean remind = true;
 
-    public FutureDialog(Context context, ListView calendar1ListView, List<TodaySQLiteUser> dataList, ProgressBar mode1ProgressBar) {
+    public FutureDialog(Context context, ListView calendar1ListView, List<FutureSQLiteUser> dataList) {
         super(context, R.style.MyDialog);
         this.context = context;
         this.calendar1ListView = calendar1ListView;
         this.dataList = dataList;
-        this.mode1ProgressBar = mode1ProgressBar;
 
         updateDiaLog();
     }
@@ -81,27 +75,25 @@ public class FutureDialog extends Dialog {
         repeat = "everyday";
         remind = true;
         diary = "无";
-        picture = "picture";
-        isfinish = "today";
     }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_calendar_mode1_inputitem);
+        setContentView(R.layout.main_my_future_inputitem);
 
-        inputItemLinearLayout1 = findViewById(R.id.inputItemLinearLayout1);
-        inputItemEditText1 = findViewById(R.id.inputItemEditText1);
-        inputItemEditText2 = findViewById(R.id.inputItemEditText2);
-        inputItemButton = findViewById(R.id.inputItemButton);
-        inputItemButton21 = findViewById(R.id.inputItemButton21);
-        inputItemButton22 = findViewById(R.id.inputItemButton22);
-        inputItemButton23 = findViewById(R.id.inputItemButton23);
-        inputItemButton24 = findViewById(R.id.inputItemButton24);
+        myFInputLinearLayout1 = findViewById(R.id.myFInputLinearLayout1);
+        myFInputEditText1 = findViewById(R.id.myFInputEditText1);
+        myFInputEditText2 = findViewById(R.id.myFInputEditText2);
+        myFInputButton = findViewById(R.id.myFInputButton);
+        myFInputButton21 = findViewById(R.id.myFInputButton21);
+        myFInputButton22 = findViewById(R.id.myFInputButton22);
+        myFInputButton23 = findViewById(R.id.myFInputButton23);
+        myFInputButton24 = findViewById(R.id.myFInputButton24);
 
         //软键盘的弹出和焦点获取
-        inputItemEditText2.requestFocus();
+        myFInputEditText2.requestFocus();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -111,8 +103,8 @@ public class FutureDialog extends Dialog {
             }
         },50);
 
-        inputItemEditText1.setText("XX:XX");
-        inputItemEditText1.setOnClickListener(new View.OnClickListener() {
+        myFInputEditText1.setText("XX:XX");
+        myFInputEditText1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
@@ -127,13 +119,13 @@ public class FutureDialog extends Dialog {
                         }else {
                             radio2 = hourOfDay+":"+minute ;
                         }
-                        inputItemEditText1.setText(radio2);
+                        myFInputEditText1.setText(radio2);
                     }
                 },cale1.get(Calendar.HOUR_OF_DAY),cale1.get(Calendar.MINUTE),true).show();
             }
         });
 
-        inputItemButton.setOnClickListener(new View.OnClickListener() {
+        myFInputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //延时函数
@@ -147,19 +139,19 @@ public class FutureDialog extends Dialog {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                        inputItemEditText1.setText("XX:XX");
-                        inputItemEditText2.setText("");
+                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+                        myFInputEditText1.setText("XX:XX");
+                        myFInputEditText2.setText("");
                         updateDiaLog();
-                        inputItemButton21.setSelection(0);
-                        inputItemButton22.setSelection(0);
-                        inputItemButton23.setText("截止日期");
-                        inputItemButton24.setSelection(0);
+                        myFInputButton21.setSelection(0);
+                        myFInputButton22.setSelection(0);
+                        myFInputButton23.setText("截止日期");
+                        myFInputButton24.setSelection(0);
                     }
                 },100);
             }
         });
-        inputItemButton23.setOnClickListener(new View.OnClickListener() {
+        myFInputButton23.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(context,new DatePickerDialog.OnDateSetListener() {
@@ -180,10 +172,10 @@ public class FutureDialog extends Dialog {
                         int todayint2 = Integer.parseInt(radio.substring(0,4)+ radio.substring(5,7)+radio.substring(8,10));
                         if (todayint2<todayint){
                             Toast.makeText(context,"截止日期无效",Toast.LENGTH_SHORT).show();
-                            inputItemButton23.setText("0000-00-00");
+                            myFInputButton23.setText("0000-00-00");
                         }
                         else {
-                            inputItemButton23.setText(radio);
+                            myFInputButton23.setText(radio);
                             endday = radio;
                         }
                     }
@@ -209,29 +201,29 @@ public class FutureDialog extends Dialog {
         Dayidbutton = getInternetTime();
 
         //Item适配器的调用及Item的生成
-        String dayTitle = inputItemEditText2.getText().toString();
-        String time = inputItemEditText1.getText().toString();
+        String dayTitle = myFInputEditText2.getText().toString();
+        String time = myFInputEditText1.getText().toString();
 
-        if (repeat.equals("norepeat") && !endday.equals("0000-00-00"))
-        {
-            isfinish = "future";
-        }
+//        if (repeat.equals("norepeat") && !endday.equals("0000-00-00"))
+//        {
+//            isfinish = "future";
+//        }
         //TODO
         String nameid = "13348445362";
-        TodaySQLiteUser things = new TodaySQLiteUser(Dayidbutton,false,remind,time,dayTitle,important,diary,nameid);
+        FutureSQLiteUser things = new FutureSQLiteUser(Dayidbutton,repeat,endday,remind,time,dayTitle,important,diary,nameid);
 
         //数据写入数据库
-        helper=new TodaySQLite(context,DBName,null,version);
+        helper=new FutureSQLite(context,DBName,null,version);
         helper.getReadableDatabase();
-        TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
+        FutureSQLiteUserDao dao=new FutureSQLiteUserDao(helper);
         dao.insert(things);
 
         //刷新所有Item
-        dataList = new ArrayList<TodaySQLiteUser>();
+        dataList = new ArrayList<FutureSQLiteUser>();
         helper.getReadableDatabase();
-        dataList = (List<TodaySQLiteUser>) dao.quiryAndSetItem();
-        final CalenderDayAdapter adapter = new CalenderDayAdapter(context, dataList,mode1ProgressBar);
-        new Mode1ProgressBar(dao.CountBar(),dataList.size(),mode1ProgressBar);
+        dataList = (List<FutureSQLiteUser>) dao.quiryAndSetItem();
+        final MyFutureAdapter adapter = new MyFutureAdapter(context, dataList);
+//        new Mode1ProgressBar(dao.CountAll(),dataList.size(),mode1ProgressBar);
         calendar1ListView.setAdapter(adapter);
 
     }
@@ -268,9 +260,9 @@ public class FutureDialog extends Dialog {
         button24List.add("等级六");
         button24List.add("等级七");
 
-        MySpinner(button21List,inputItemButton21);
-        MySpinner(button22List,inputItemButton22);
-        MySpinner(button24List,inputItemButton24);
+        MySpinner(button21List,myFInputButton21);
+        MySpinner(button22List,myFInputButton22);
+        MySpinner(button24List,myFInputButton24);
     }
 
     private void MySpinner(List<String> teamList,Spinner spinner) {
@@ -304,31 +296,31 @@ public class FutureDialog extends Dialog {
                         break;
                     case "等级一":
                         important = "a";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
                         break;
                     case "等级二":
                         important = "b";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
                         break;
                     case "等级三":
                         important = "c";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
                         break;
                     case "等级四":
                         important = "d";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
                         break;
                     case "等级五":
                         important = "e";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
                         break;
                     case "等级六":
                         important = "f";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
                         break;
                     case "等级七":
                         important = "g";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                         break;
                 }
             }

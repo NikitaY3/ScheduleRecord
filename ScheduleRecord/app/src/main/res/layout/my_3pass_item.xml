@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +8,7 @@
 
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/effItemConstraintLayout"
+        android:id="@+id/passItemConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
@@ -19,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <CheckBox
-            android:id="@+id/effItemCheckBox"
+            android:id="@+id/passItemCheckBox"
             android:layout_width="30dp"
             android:layout_height="100dp"
             android:clickable="false"
@@ -27,10 +26,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/effItemEditText2"
+            android:id="@+id/passItemEditText2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="5dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/abaa_item_edittext"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -40,12 +40,23 @@
             android:textColor="#000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/efflinearLayout1"
-            app:layout_constraintStart_toEndOf="@+id/effItemCheckBox"
+            app:layout_constraintEnd_toStartOf="@id/passLinearLayout1"
+            app:layout_constraintStart_toEndOf="@id/passItemCheckBox"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/passTextView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="失效日期：2019年7月18日"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/passItemEditText2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passItemConstraintLayout" />
+
         <LinearLayout
-            android:id="@+id/efflinearLayout1"
+            android:id="@+id/passLinearLayout1"
             android:layout_width="100dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -55,22 +66,21 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/effItemTextView1"
+                android:id="@+id/passTextView1"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="共计持续" />
 
             <TextView
-                android:id="@+id/effItemTView2"
+                android:id="@+id/passTextView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="*天"
                 android:textSize="20sp" />
         </LinearLayout>
-
-
     </android.support.constraint.ConstraintLayout>
+
 
 </LinearLayout>

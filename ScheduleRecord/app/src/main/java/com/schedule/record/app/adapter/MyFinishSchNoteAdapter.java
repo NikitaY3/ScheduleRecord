@@ -48,7 +48,7 @@ public class MyFinishSchNoteAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.my_finishschedules_note_item, null);
+            convertView = inflater.inflate(R.layout.my_2finish_note_item, null);
             holder = new ViewHolder();
 
             convertView.setTag(holder);

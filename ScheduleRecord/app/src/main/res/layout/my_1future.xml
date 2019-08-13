@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:text="有效日程"
+        android:text="未来日程"
         android:textColor="@color/white"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"

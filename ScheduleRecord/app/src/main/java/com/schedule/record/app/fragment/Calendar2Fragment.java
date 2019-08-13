@@ -13,6 +13,10 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.schedule.record.app.R;
+import com.schedule.record.app.sqlite.FinishSQLite;
+import com.schedule.record.app.sqlite.FutureSQLite;
+import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.adapter.CalenderWeek2Adapter;
 import com.schedule.record.app.adapter.CalenderWeekAdapter1;
@@ -23,8 +27,10 @@ import com.schedule.record.app.function.CalenderWeekItem;
 import com.schedule.record.app.sqlite.TodaySQLite;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -88,14 +94,23 @@ public class Calendar2Fragment extends Fragment {
     private CalenderWeekAdapter3 weekAdapter3;
     private CalenderWeek2Adapter week2Adapter;
 
-    private List<CalenderWeekItem> mydData;
-    private TodaySQLite helper;
-    String DBName = "day_1";
     int version = 1;
+    private List<CalenderWeekItem> finishData;
+    private FinishSQLite helper1;
+    String DBName1 = "finish";
+
+    private List<CalenderWeekItem> todayData;
+    private TodaySQLite helper2;
+    String DBName2 = "today";
+
+
+    private List<CalenderWeekItem> futureData;
+    private FutureSQLite helper3;
+    String DBName3 = "future";
 
     String today1;
     String todayweek;
-    int todayint1;
+    int todayint1, week;
 
     @Nullable
     @Override
@@ -119,30 +134,37 @@ public class Calendar2Fragment extends Fragment {
         calendar2Button.setText(dd+"月");
         //2、判断今天星期
         todayweek = new CalculationWeek(today1.substring(0, 10)).getWeek();
-        int week = Integer.parseInt(todayweek);//0-6
-//        GetTodayWeek(today1);
+        week = Integer.parseInt(todayweek);//0-6
 
         //3、判断星期日
         if (0<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList1);
             calendar2ListView1.setAdapter(weekAdapter1);
+            String finday = getDay(0-week);
+            setFinishItem(finday);
         }else{
             weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList1);
             calendar2ListView1.setAdapter(weekAdapter2);
             mode2WeekButton0.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+            setTodayItem();
         }
 
         //4、判断星期一
         if (1<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList2);
             calendar2ListView2.setAdapter(weekAdapter1);
+            String finday = getDay(1-week);
+            setFinishItem(finday);
         }else if (1==week){
             weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList2);
             calendar2ListView2.setAdapter(weekAdapter2);
             mode2WeekButton1.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+            setTodayItem();
         }else {
             weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList2);
             calendar2ListView2.setAdapter(weekAdapter3);
+            String futday = getDay(1-week);
+            setFutureItem(futday);
         }
 
         //5、判断星期二
@@ -150,52 +172,72 @@ public class Calendar2Fragment extends Fragment {
         if (2<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList3);
             calendar2ListView3.setAdapter(weekAdapter1);
+            String finday = getDay(2-week);
+            setFinishItem(finday);
         }else if (2==week){
             weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList3);
             calendar2ListView3.setAdapter(weekAdapter2);
             mode2WeekButton2.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+            setTodayItem();
         }else {
             weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList3);
             calendar2ListView3.setAdapter(weekAdapter3);
+            String futday = getDay(2-week);
+            setFutureItem(futday);
         }
 
         //6、判断星期三
         if (3<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList4);
             calendar2ListView4.setAdapter(weekAdapter1);
+            String finday = getDay(3-week);
+            setFinishItem(finday);
         }else if (3==week){
             weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList4);
             calendar2ListView4.setAdapter(weekAdapter2);
             mode2WeekButton3.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+            setTodayItem();
         }else {
             weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList4);
             calendar2ListView4.setAdapter(weekAdapter3);
+            String futday = getDay(3-week);
+            setFutureItem(futday);
         }
 
         //7、判断星期四
         if (4<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList5);
             calendar2ListView5.setAdapter(weekAdapter1);
+            String finday = getDay(4-week);
+            setFinishItem(finday);
         }else if (4==week){
             weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList5);
             calendar2ListView5.setAdapter(weekAdapter2);
             mode2WeekButton4.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+            setTodayItem();
         }else {
             weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList5);
             calendar2ListView5.setAdapter(weekAdapter3);
+            String futday = getDay(4-week);
+            setFutureItem(futday);
         }
 
         //8、判断星期五
         if (5<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList6);
             calendar2ListView6.setAdapter(weekAdapter1);
+            String finday = getDay(5-week);
+            setFinishItem(finday);
         }else if (5==week){
             weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList6);
             calendar2ListView6.setAdapter(weekAdapter2);
             mode2WeekButton5.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+            setTodayItem();
         }else {
             weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList6);
             calendar2ListView6.setAdapter(weekAdapter3);
+            String futday = getDay(5-week);
+            setFutureItem(futday);
         }
 
         //9、判断星期六
@@ -203,9 +245,12 @@ public class Calendar2Fragment extends Fragment {
             weekAdapter2 = new CalenderWeekAdapter2(getActivity(), dataList7);
             calendar2ListView7.setAdapter(weekAdapter2);
             mode2WeekButton6.setBackgroundResource(R.drawable.abb_calendar_todayweek);
+            setTodayItem();
         }else {
             weekAdapter3 = new CalenderWeekAdapter3(getActivity(), dataList7);
             calendar2ListView7.setAdapter(weekAdapter3);
+            String futday = getDay(6-week);
+            setFutureItem(futday);
         }
 
 
@@ -272,19 +317,50 @@ public class Calendar2Fragment extends Fragment {
 //        return todayweek;
 //    }
 
+    //判断以前显示哪些日程
+    private void setFinishItem(String day) {
+        helper1 = new FinishSQLite(getActivity(), DBName1, null, version);
+        helper1.getReadableDatabase();
+        FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper1);
+
+        //判断星期
+        String finishweek = new CalculationWeek(day).getWeek();
+        int fweek = Integer.parseInt(finishweek);
+
+        finishData = dao.quiryAndSetWeekItem(day);
+        for (int i = 0; i < finishData.size(); i++) {
+            mydata = finishData.get(i);
+            setChoiceWeek(fweek,mydata);
+        }
+    }
+
     //判断当天显示哪些日程
-    private void PositionDetermine(String today,int todayint) {
-        helper = new TodaySQLite(getActivity(), DBName, null, version);
-        helper.getReadableDatabase();
-        TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper);
+    private void setTodayItem() {
+        helper2 = new TodaySQLite(getActivity(), DBName2, null, version);
+        helper2.getReadableDatabase();
+        TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper2);
 
-        //当天日期显示日程
-        mydData = dao.quiryAndSetWeekItem();
-
-        for (int i = 0; i < mydData.size(); i++) {
-            mydata = mydData.get(i);
-            setChoiceWeek(Integer.parseInt(todayweek));
+        todayData = dao.quiryAndSetWeekItem();
+        for (int i = 0; i < todayData.size(); i++) {
+            mydata = todayData.get(i);
+            setChoiceWeek(week,mydata);
             dataList.add(i);
+        }
+    }
+    //判断以后显示哪些日程
+    private void setFutureItem(String day) {
+        helper3 = new FutureSQLite(getActivity(), DBName3, null, version);
+        helper3.getReadableDatabase();
+        FutureSQLiteUserDao dao = new FutureSQLiteUserDao(helper3);
+
+        //判断星期
+        String futureweek = new CalculationWeek(day).getWeek();
+        int f1week = Integer.parseInt(futureweek);
+
+        futureData = dao.quiryAndSetWeekItem(day);
+        for (int i = 0; i < futureData.size(); i++) {
+            mydata = futureData.get(i);
+            setChoiceWeek(f1week,mydata);
         }
     }
 
@@ -319,29 +395,50 @@ public class Calendar2Fragment extends Fragment {
     }
 
     //根据0123456设置日程显示在哪一天
-    public void setChoiceWeek(int posion) {
+    public void setChoiceWeek(int posion, CalenderWeekItem data) {
         if (posion == 0) {
-            dataList1.add(mydata);
+            dataList1.add(data);
         }
         if (posion == 1) {
-            dataList2.add(mydata);
+            dataList2.add(data);
         }
         if (posion == 2) {
-            dataList3.add(mydata);
+            dataList3.add(data);
         }
         if (posion == 3) {
-            dataList4.add(mydata);
+            dataList4.add(data);
         }
         if (posion == 4) {
-            dataList5.add(mydata);
+            dataList5.add(data);
         }
         if (posion == 5) {
-            dataList6.add(mydata);
+            dataList6.add(data);
         }
         if (posion == 6) {
-            dataList7.add(mydata);
+            dataList7.add(data);
         }
     }
+
+
+    //获取当前天的前后日期
+    @SuppressLint("SimpleDateFormat")
+    public String getDay(int i) {
+        Calendar c = Calendar.getInstance();
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yy-MM-dd").parse(today1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.setTime(date);
+        int day1 = c.get(Calendar.DATE);
+        c.set(Calendar.DATE, day1 + i);
+
+        String dayAfter = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+//        System.out.println(dayAfter);
+        return dayAfter;
+    }
+
 
     @Override
     public void onDestroyView() {

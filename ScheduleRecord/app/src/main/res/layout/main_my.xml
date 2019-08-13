@@ -11,8 +11,33 @@
         android:id="@+id/myImageView1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#8BC34A"
+        android:background="#494949"
         android:contentDescription="@string/app_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/myTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="55dp"
+        android:text="盈十里秋色"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/myTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="85dp"
+        android:text="账号：18065856713"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
@@ -32,16 +57,68 @@
             android:background="@color/gray"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/ac_my_button1"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <Button
+                    android:id="@+id/myTopButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ac_my_button1"
+                    android:drawableTop="@drawable/z_b"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
+                    android:text="未来日程"
+                    android:textColor="@drawable/ac_my_button1_text" />
+
+                <Button
+                    android:id="@+id/myTopButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ac_my_button1"
+                    android:drawableTop="@drawable/z_b"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
+                    android:text="完成情况"
+                    android:textColor="@drawable/ac_my_button1_text" />
+
+                <Button
+                    android:id="@+id/myTopButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ac_my_button1"
+                    android:drawableTop="@drawable/z_b"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
+                    android:text="结束日程"
+                    android:textColor="@drawable/ac_my_button1_text" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/myButton1"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/ac_my_button1"
                 android:drawableStart="@drawable/z_a"
                 android:drawablePadding="10dp"
-                android:paddingStart="15dp"
                 android:gravity="center_vertical"
-                android:text="个人信息"
+                android:paddingStart="15dp"
+                android:text="日程文档"
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
 
@@ -53,9 +130,9 @@
                 android:background="@drawable/ac_my_button1"
                 android:drawableStart="@drawable/z_b"
                 android:drawablePadding="10dp"
-                android:paddingStart="15dp"
                 android:gravity="center_vertical"
-                android:text="有效日程"
+                android:paddingStart="15dp"
+                android:text="可指派用户"
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
 
@@ -64,11 +141,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/ac_my_button1"
-                android:gravity="center_vertical"
                 android:drawableStart="@drawable/z_c"
                 android:drawablePadding="10dp"
+                android:gravity="center_vertical"
                 android:paddingStart="15dp"
-                android:text="结束日程"
+                android:text="我的管理者"
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
 
@@ -76,69 +153,123 @@
                 android:id="@+id/myButton4"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:layout_marginVertical="10dp"
                 android:background="@drawable/ac_my_button1"
-                android:gravity="center_vertical"
                 android:drawableStart="@drawable/z_d"
                 android:drawablePadding="10dp"
-                android:paddingStart="15dp"
-                android:text="日程统计"
-                android:textColor="@drawable/ac_my_button1_text"
-                tools:ignore="RtlSymmetry" />
-
-            <Button
-                android:id="@+id/myButton5"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ac_my_button1"
                 android:gravity="center_vertical"
-                android:drawableStart="@drawable/z_e"
-                android:drawablePadding="10dp"
-                android:paddingStart="15dp"
-                android:text="习惯记录"
-                android:textColor="@drawable/ac_my_button1_text"
-                tools:ignore="RtlSymmetry" />
-
-            <Button
-                android:id="@+id/myButton6"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ac_my_button1"
-                android:gravity="center_vertical"
-                android:drawableStart="@drawable/z_f"
-                android:drawablePadding="10dp"
                 android:paddingStart="15dp"
                 android:text="播报设置"
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
 
-            <Button
-                android:id="@+id/myButton7"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ac_my_button1"
-                android:gravity="center_vertical"
-                android:drawableStart="@drawable/z_g"
-                android:drawablePadding="10dp"
-                android:paddingStart="15dp"
-                android:text="版本信息"
-                android:textColor="@drawable/ac_my_button1_text"
-                tools:ignore="RtlSymmetry" />
+            <!--<Button-->
+            <!--android:id="@+id/myButton1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:background="@drawable/ac_my_button1"-->
+            <!--android:drawableStart="@drawable/z_a"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingStart="15dp"-->
+            <!--android:text="个人信息"-->
+            <!--android:textColor="@drawable/ac_my_button1_text"-->
+            <!--tools:ignore="RtlSymmetry" />-->
 
-            <Button
-                android:id="@+id/myButton8"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ac_my_button1"
-                android:gravity="center_vertical"
-                android:drawableStart="@drawable/z_h"
-                android:drawablePadding="10dp"
-                android:paddingStart="15dp"
-                android:text="待定"
-                android:textColor="@drawable/ac_my_button1_text"
-                tools:ignore="RtlSymmetry" />
+            <!--<Button-->
+            <!--android:id="@+id/myButton2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/ac_my_button1"-->
+            <!--android:drawableStart="@drawable/z_b"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingStart="15dp"-->
+            <!--android:text="有效日程"-->
+            <!--android:textColor="@drawable/ac_my_button1_text"-->
+            <!--tools:ignore="RtlSymmetry" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/myButton3"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:background="@drawable/ac_my_button1"-->
+            <!--android:drawableStart="@drawable/z_c"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingStart="15dp"-->
+            <!--android:text="结束日程"-->
+            <!--android:textColor="@drawable/ac_my_button1_text"-->
+            <!--tools:ignore="RtlSymmetry" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/myButton4"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:background="@drawable/ac_my_button1"-->
+            <!--android:drawableStart="@drawable/z_d"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingStart="15dp"-->
+            <!--android:text="日程统计"-->
+            <!--android:textColor="@drawable/ac_my_button1_text"-->
+            <!--tools:ignore="RtlSymmetry" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/myButton5"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:background="@drawable/ac_my_button1"-->
+            <!--android:drawableStart="@drawable/z_e"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingStart="15dp"-->
+            <!--android:text="习惯记录"-->
+            <!--android:textColor="@drawable/ac_my_button1_text"-->
+            <!--tools:ignore="RtlSymmetry" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/myButton6"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/ac_my_button1"-->
+            <!--android:drawableStart="@drawable/z_f"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingStart="15dp"-->
+            <!--android:text="播报设置"-->
+            <!--android:textColor="@drawable/ac_my_button1_text"-->
+            <!--tools:ignore="RtlSymmetry" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/myButton7"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/ac_my_button1"-->
+            <!--android:drawableStart="@drawable/z_g"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingStart="15dp"-->
+            <!--android:text="版本信息"-->
+            <!--android:textColor="@drawable/ac_my_button1_text"-->
+            <!--tools:ignore="RtlSymmetry" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/myButton8"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/ac_my_button1"-->
+            <!--android:drawableStart="@drawable/z_h"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingStart="15dp"-->
+            <!--android:text="待定"-->
+            <!--android:textColor="@drawable/ac_my_button1_text"-->
+            <!--tools:ignore="RtlSymmetry" />-->
 
         </LinearLayout>
 

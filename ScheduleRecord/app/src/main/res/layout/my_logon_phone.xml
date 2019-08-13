@@ -7,11 +7,15 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <ImageView
+    <TextView
         android:id="@+id/phoneImageView1"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:src="@color/colorPrimary"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button

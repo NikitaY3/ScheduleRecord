@@ -1,24 +1,29 @@
 package com.schedule.record.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.schedule.record.app.Mode2FinishEdit;
 import com.schedule.record.app.R;
-import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
+import com.schedule.record.app.mainmy.MainMy2FinishSchNote;
+import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 
 import java.util.List;
 
-public class MyEffectivesSchAdapter extends BaseAdapter {
-    Context context;
-    private List<FutureSQLiteUser> list;
+public class MyFinishAdapter extends BaseAdapter {
+    private Context context;
+    private List<FinishSQLiteUser> list;
     private LayoutInflater inflater;
 
-    public MyEffectivesSchAdapter (Context context, List<FutureSQLiteUser> list) {
+    public MyFinishAdapter(Context context, List<FinishSQLiteUser> list) {
         this.context = context;
         this.list = list;
         inflater= LayoutInflater.from(context);
@@ -38,24 +43,38 @@ public class MyEffectivesSchAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        //每一个item调用该方法---视图缓存机制
-        final ViewHolder holder;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.my_effectiveschedules_item, null);
+            convertView = inflater.inflate(R.layout.my_2finish_item, null);
             holder = new ViewHolder();
-            holder.tv1 = convertView.findViewById(R.id.effItemEditText2);
-            holder.tv2 = convertView.findViewById(R.id.effItemTView2);
-            holder.linearLayout = convertView.findViewById(R.id.effItemConstraintLayout);
+            holder.tv1 = convertView.findViewById(R.id.finItemCheckBox);
+            holder.tv2 = convertView.findViewById(R.id.finItemEditText1);
+            holder.tv3 = convertView.findViewById(R.id.finItemEditText2);
+            holder.linearLayout = convertView.findViewById(R.id.finItemConstraintLayout);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final FutureSQLiteUser pb = list.get(position);
+        final FinishSQLiteUser pb = list.get(position);
 
-        holder.tv1.setText(pb.getTitle());
-        holder.tv2.setText("1 天");
+        if(pb.getCheckbox()){
+            holder.tv1.setChecked(true);
+        }else{
+            holder.tv1.setChecked(false);
+        }
+        holder.tv2.setText(pb.getTime());
+        holder.tv3.setText(pb.getTitle());
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Mode2FinishEdit.class);
+                intent.putExtra("finishid",pb.getFinishid());
+                context.startActivity(intent);
+            }
+        });
 
         switch (pb.getImportant()) {
             case "a":
@@ -80,11 +99,13 @@ public class MyEffectivesSchAdapter extends BaseAdapter {
                 holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                 break;
         }
+
         return convertView;
     }
     static class ViewHolder{
-        TextView tv1,tv2,tv3;
-        ConstraintLayout linearLayout;
+        CheckBox tv1;
+        TextView tv2,tv3;
+        LinearLayout linearLayout;
     }
 }
 

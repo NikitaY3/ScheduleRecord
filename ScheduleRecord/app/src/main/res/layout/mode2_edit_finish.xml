@@ -33,6 +33,7 @@
         <CheckBox
             android:id="@+id/fEditCheckBox1"
             android:layout_width="30dp"
+            android:editable="false"
             android:layout_height="100dp"/>
 
         <EditText
@@ -50,6 +51,7 @@
             android:id="@+id/fEditEditText1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:editable="false"
             android:background="@drawable/abaa_item_edittext"/>
 
     </LinearLayout>
@@ -123,7 +125,8 @@
             android:layout_weight="1"
             android:background="@color/gray"
             android:gravity="top"
-            android:hint="写下你的记录吧！"
+            android:editable="false"
+            android:hint="无记录！"
             android:inputType="textMultiLine"
             android:padding="5dp" />
 

@@ -37,7 +37,6 @@ public class FutureSQLiteUserDao {
         db.close();
     }
 
-
     public  FutureSQLiteUser queryBydayid(String Dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "dayid=?", new String[]{Dayid}, null, null, null);
@@ -59,7 +58,6 @@ public class FutureSQLiteUserDao {
         db.close();
         return user;
     }
-
 
     public List<FutureSQLiteUser> quiryAndSetItem() {
         List<FutureSQLiteUser> dataList = new ArrayList<FutureSQLiteUser>();//item的list
@@ -86,13 +84,13 @@ public class FutureSQLiteUserDao {
         return dataList;
     }
 
-    //查询Week
-    public List<CalenderWeekItem> quiryAndSetWeekItem() {
+    //查询Week,根据日期查询
+    public List<CalenderWeekItem> quiryAndSetWeekItem(String day) {
         List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();//item的list
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"isfinish=?", new String[]{"today"},null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"dayid like ?", new String[]{"%"+day+"%"},null,null,"important,time");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             String title = cursor.getString(5);
@@ -103,7 +101,6 @@ public class FutureSQLiteUserDao {
         db.close();
         return dataList;
     }
-
 
     public void deleteAll(){
         SQLiteDatabase db=helper.getWritableDatabase();
@@ -134,8 +131,7 @@ public class FutureSQLiteUserDao {
         db.close();
     }
 
-
-    public int CountAllBar(){
+    public int CountAll(){
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select count(*) from finish",null);
         cursor.moveToFirst();
