@@ -118,8 +118,6 @@ public class Calendar2Fragment extends Fragment {
         view = inflater.inflate(R.layout.main_calendar_mode2, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        onResume1();
-
         return view;
     }
 
@@ -277,46 +275,6 @@ public class Calendar2Fragment extends Fragment {
         calendar2ListView.setAdapter(week2Adapter);
     }
 
-//    //查询当天日期，并将布局标记好
-//    @SuppressLint({"SetTextI18n", "WrongConstant"})
-//    public String GetTodayWeek(String day) {
-//        todayweek = new CalculationWeek(day.substring(0, 10)).getWeek();
-//        Calendar calendar = new GregorianCalendar();
-//        try {
-//            calendar.setTime(ConverToDate(today1));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        switch (todayweek) {
-//            case "0":
-//                mode2WeekButton0.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-//                break;
-//            case "1":
-//                mode2WeekButton1.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-//                break;
-//            case "2":
-//                mode2WeekButton2.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-//                break;
-//            case "3":
-//                mode2WeekButton3.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-//                break;
-//            case "4":
-//                mode2WeekButton4.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-//                break;
-//            case "5":
-//                mode2WeekButton5.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-//                break;
-//            case "6":
-//                mode2WeekButton6.setBackgroundResource(R.drawable.abb_calendar_todayweek);
-//                break;
-//        }
-//        int dd = Integer.parseInt(today1.substring(5,7));
-//        calendar2Button.setText(dd+"月");
-//
-//        return todayweek;
-//    }
-
     //判断以前显示哪些日程
     private void setFinishItem(String day) {
         helper1 = new FinishSQLite(getActivity(), DBName1, null, version);
@@ -357,7 +315,11 @@ public class Calendar2Fragment extends Fragment {
         String futureweek = new CalculationWeek(day).getWeek();
         int f1week = Integer.parseInt(futureweek);
 
-        futureData = dao.quiryAndSetWeekItem(day);
+        int dayint = Integer.parseInt((day.substring(0, 4) + day.substring(5, 7) + day.substring(8, 10)));
+        int m = Integer.parseInt(day.substring(9,10));
+
+        futureData = dao.quiryAndSetWeekItem(dayint,m,futureweek,day);
+
         for (int i = 0; i < futureData.size(); i++) {
             mydata = futureData.get(i);
             setChoiceWeek(f1week,mydata);
@@ -439,6 +401,12 @@ public class Calendar2Fragment extends Fragment {
         return dayAfter;
     }
 
+
+    @Override
+    public void onResume() {
+        onResume1();
+        super.onResume();
+    }
 
     @Override
     public void onDestroyView() {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/specialTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="我的管理者"
+        android:textColor="@color/white"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/specialEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorPrimary"
+            android:hint="点击写入用户ID"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/specialButton1"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/abaa_item_im_em"
+            android:textColor="@drawable/ac_my_button1_text"
+            android:text="插入" />
+
+        <Button
+            android:id="@+id/specialButton2"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/abaa_item_im_em"
+            android:textColor="@drawable/ac_my_button1_text"
+            android:text="删除" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ac_my_button1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/specialTextView3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#00000000"
+            android:drawableStart="@drawable/z_c"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:text="我的管理者"
+            android:textColor="@drawable/ac_my_button1_text"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/specialTextView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/diary"
+            android:padding="10dp"
+            android:text="TextView" />
+    </LinearLayout>
+
+</LinearLayout>

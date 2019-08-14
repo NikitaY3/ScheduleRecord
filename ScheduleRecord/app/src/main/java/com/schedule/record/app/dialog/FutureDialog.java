@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -36,6 +37,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FutureDialog extends Dialog {
     private Context context;
@@ -204,13 +207,13 @@ public class FutureDialog extends Dialog {
         String dayTitle = myFInputEditText2.getText().toString();
         String time = myFInputEditText1.getText().toString();
 
-//        if (repeat.equals("norepeat") && !endday.equals("0000-00-00"))
-//        {
-//            isfinish = "future";
-//        }
-        //TODO
-        String nameid = "13348445362";
-        FutureSQLiteUser things = new FutureSQLiteUser(Dayidbutton,repeat,endday,remind,time,dayTitle,important,diary,nameid);
+        //取得登录用户的ID
+        SharedPreferences sharedPreferences;
+        sharedPreferences = context.getSharedPreferences("myuser",MODE_PRIVATE);
+        String nameid = sharedPreferences.getString("nameid","");
+        String dayid = nameid+Dayidbutton;
+
+        FutureSQLiteUser things = new FutureSQLiteUser(dayid,repeat,endday,remind,time,dayTitle,important,diary);
 
         //数据写入数据库
         helper=new FutureSQLite(context,DBName,null,version);
@@ -223,7 +226,6 @@ public class FutureDialog extends Dialog {
         helper.getReadableDatabase();
         dataList = (List<FutureSQLiteUser>) dao.quiryAndSetItem();
         final MyFutureAdapter adapter = new MyFutureAdapter(context, dataList);
-//        new Mode1ProgressBar(dao.CountAll(),dataList.size(),mode1ProgressBar);
         calendar1ListView.setAdapter(adapter);
 
     }

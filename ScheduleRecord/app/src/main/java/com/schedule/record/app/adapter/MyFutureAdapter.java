@@ -1,8 +1,10 @@
 package com.schedule.record.app.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 
 import com.schedule.record.app.MyFutureEdit;
 import com.schedule.record.app.R;
+import com.schedule.record.app.sqlite.FutureSQLite;
+import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
 
 import java.util.List;
@@ -20,6 +24,11 @@ public class MyFutureAdapter extends BaseAdapter {
     Context context;
     private List<FutureSQLiteUser> list;
     private LayoutInflater inflater;
+
+    private AlertDialog.Builder frame1;
+    private FutureSQLite helper;
+    private String DBName="future";
+    private int version = 1;
 
     public MyFutureAdapter (Context context, List<FutureSQLiteUser> list) {
         this.context = context;
@@ -42,7 +51,7 @@ public class MyFutureAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         //每一个item调用该方法---视图缓存机制
         final ViewHolder holder;
         if (convertView == null) {
@@ -66,6 +75,14 @@ public class MyFutureAdapter extends BaseAdapter {
                 Intent intent= new Intent(context, MyFutureEdit.class);
                 intent.putExtra("dayid",pb.getDayid());
                 context.startActivity(intent);
+            }
+        });
+        holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //调用弹框函数
+                dayConfirmationDialogs(position,pb.getDayid());
+                return true;
             }
         });
 
@@ -97,6 +114,33 @@ public class MyFutureAdapter extends BaseAdapter {
     static class ViewHolder{
         TextView tv1,tv2;
         LinearLayout linearLayout;
+    }
+
+    //弹框函数
+    private void dayConfirmationDialogs(final int position, final String time) {
+        frame1 = new AlertDialog.Builder(context);
+        frame1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //删除Item
+                list.remove(position);
+                MyFutureAdapter.this.notifyDataSetChanged();
+                //删除Item对应的数据库
+                helper=new FutureSQLite(context,DBName,null,version);
+                helper.getReadableDatabase();
+                FutureSQLiteUserDao dao=new FutureSQLiteUserDao(helper);
+                dao.deleteByDayid(time);
+            }
+        });
+        frame1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        frame1.setMessage("确认删除当前日程？");
+        frame1.setTitle("提示");
+        frame1.show();
     }
 }
 

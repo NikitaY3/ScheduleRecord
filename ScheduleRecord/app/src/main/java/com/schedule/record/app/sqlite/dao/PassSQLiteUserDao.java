@@ -29,7 +29,6 @@ public class PassSQLiteUserDao {
         content.put("passday",user.getPassday());
         content.put("completion",user.getCompletion());
         content.put("important",user.getImportant());
-        content.put("nameid",user.getNameid());
         db.insert(TABLE,null,content);
         db.close();
     }
@@ -44,8 +43,7 @@ public class PassSQLiteUserDao {
             String passday = cursor.getString(2);
             int completion = cursor.getInt(3);
             String important = cursor.getString(4);
-            String nameid = cursor.getString(5);
-            user = new PassSQLiteUser(dayid,title,passday,completion,important,nameid);
+            user = new PassSQLiteUser(dayid,title,passday,completion,important);
         }
         db.close();
         return user;
@@ -61,8 +59,7 @@ public class PassSQLiteUserDao {
             String passday = cursor.getString(2);
             int completion = cursor.getInt(3);
             String important = cursor.getString(4);
-            String nameid = cursor.getString(5);
-            PassSQLiteUser user = new PassSQLiteUser(dayid,title,passday,completion,important,nameid);
+            PassSQLiteUser user = new PassSQLiteUser(dayid,title,passday,completion,important);
             sb.append(user.toString()).append("\n");
         }
         db.close();
@@ -81,8 +78,7 @@ public class PassSQLiteUserDao {
             String passday = cursor.getString(2);
             int completion = cursor.getInt(3);
             String important = cursor.getString(4);
-            String nameid = cursor.getString(5);
-            PassSQLiteUser things = new PassSQLiteUser(dayid,title,passday,completion,important,nameid);
+            PassSQLiteUser things = new PassSQLiteUser(dayid,title,passday,completion,important);
             dataList.add(things);
         }
         db.close();
@@ -109,7 +105,6 @@ public class PassSQLiteUserDao {
         content.put("passday",user.getPassday());
         content.put("completion",user.getCompletion());
         content.put("important",user.getImportant());
-        content.put("nameid",user.getNameid());
         db.update(TABLE,content,"dayid=?",new String[]{user.getDayid()});
         db.close();
     }

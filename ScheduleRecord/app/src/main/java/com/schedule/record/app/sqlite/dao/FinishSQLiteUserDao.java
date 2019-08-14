@@ -32,7 +32,6 @@ public class FinishSQLiteUserDao {
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
         content.put("dairy",user.getDiary());
-        content.put("nameid",user.getNameid());
         db.insert(TABLE,null,content);
         db.close();
     }
@@ -62,12 +61,11 @@ public class FinishSQLiteUserDao {
             String title = cursor.getString(5);
             String important = cursor.getString(6);
             String dairy = cursor.getString(7);
-            String nameid = cursor.getString(8);
             boolean checkbox;
             checkbox = checkbox1 > 0;
             boolean remind;
             remind = remind1 > 0;
-            user = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,dairy,nameid);
+            user = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,dairy);
         }
         db.close();
         return user;
@@ -86,12 +84,11 @@ public class FinishSQLiteUserDao {
             String title = cursor.getString(5);
             String important = cursor.getString(6);
             String dairy = cursor.getString(7);
-            String nameid = cursor.getString(8);
             boolean checkbox;
             checkbox = checkbox1 > 0;
             boolean remind;
             remind = remind1 > 0;
-            user = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,dairy,nameid);
+            user = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,dairy);
         }
         db.close();
         return user;
@@ -110,12 +107,11 @@ public class FinishSQLiteUserDao {
             String title = cursor.getString(5);
             String important = cursor.getString(6);
             String dairy = cursor.getString(7);
-            String nameid = cursor.getString(8);
             boolean checkbox;
             checkbox = checkbox1 > 0;
             boolean remind;
             remind = remind1 > 0;
-            FinishSQLiteUser things = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,dairy,nameid);
+            FinishSQLiteUser things = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,dairy);
             dataList.add(things);
         }
         db.close();
@@ -128,7 +124,7 @@ public class FinishSQLiteUserDao {
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"dayid like ?", new String[]{"%"+day+"%"},null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"Finishid like ?", new String[]{"%"+day+"%"},null,null,"important,time");
         while (cursor.moveToNext()){
             String finishid = cursor.getString(0);
             int checkbox1 = cursor.getInt(2);
@@ -141,6 +137,31 @@ public class FinishSQLiteUserDao {
         }
         db.close();
         return dataList;
+    }
+
+
+    public String queryAllString(){
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null,null,null,null,null);
+        StringBuilder sb=new StringBuilder();
+        while (cursor.moveToNext()){
+            String finishid = cursor.getString(0);
+            String dayid = cursor.getString(1);
+            int checkbox1 = cursor.getInt(2);
+            int remind1 = cursor.getInt(3);
+            String time = cursor.getString(4);
+            String title = cursor.getString(5);
+            String important = cursor.getString(6);
+            String dairy = cursor.getString(7);
+            boolean checkbox;
+            checkbox = checkbox1 > 0;
+            boolean remind;
+            remind = remind1 > 0;
+            FinishSQLiteUser user = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,dairy);
+            sb.append(user.toString()).append("\n");
+        }
+        db.close();
+        return sb.toString();
     }
 
     public int CountFinish(String dayid){

@@ -1,6 +1,9 @@
 package com.schedule.record.app.fragment;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,12 +19,24 @@ import com.schedule.record.app.R;
 import com.schedule.record.app.mainmy.MainMy1FutureSch;
 import com.schedule.record.app.mainmy.MainMy2FinishSch;
 import com.schedule.record.app.mainmy.MainMy3PassSch;
+import com.schedule.record.app.mainmy.MainMyL1Doc;
+import com.schedule.record.app.mainmy.MainMyL2General;
+import com.schedule.record.app.mainmy.MainMyL3Special;
+import com.schedule.record.app.mainmy.MainMyL4BoradcastSet;
 import com.schedule.record.app.mainmy.MainMyLogonPhone;
+import com.schedule.record.app.sqlite.GeneralUserSQLite;
+import com.schedule.record.app.sqlite.dao.GeneralSQLiteUserDao;
+import com.schedule.record.app.sqlite.user.GeneralSQLiteUser;
+
+import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class MyFragment extends Fragment {
 
@@ -48,14 +63,36 @@ public class MyFragment extends Fragment {
     @BindView(R.id.myImageView2)
     ImageView myImageView2;
     Unbinder unbinder;
+
     private View view;
 
+    private GeneralUserSQLite helper;
+    private String DBName = "general";
+    private int version = 1;
+
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_my, container, false);
 
         unbinder = ButterKnife.bind(this, view);
+
+        //取得登录用户的ID
+        SharedPreferences sharedPreferences;
+        int MODE = Context.MODE_WORLD_READABLE+Context.MODE_WORLD_WRITEABLE;
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("myuser", MODE_PRIVATE);
+        String nameid = sharedPreferences.getString("nameid","");
+        myTextView2.setText("账号："+nameid);
+
+        //取得用户昵称
+        helper=new GeneralUserSQLite(getActivity(),DBName,null,version);
+        GeneralSQLiteUserDao dao=new GeneralSQLiteUserDao(helper);
+        if (dao.queryByNameid(nameid)!=null) {
+            String name = dao.queryByNameid(nameid).getName();
+            myTextView1.setText(name);
+        }
+
         return view;
     }
 
@@ -81,12 +118,20 @@ public class MyFragment extends Fragment {
                 startActivity(intent3);
                 break;
             case R.id.myButton1:
+                Intent intent4 = new Intent(getActivity(), MainMyL1Doc.class);
+                startActivity(intent4);
                 break;
             case R.id.myButton2:
+                Intent intent5 = new Intent(getActivity(), MainMyL2General.class);
+                startActivity(intent5);
                 break;
             case R.id.myButton3:
+                Intent intent6 = new Intent(getActivity(), MainMyL3Special.class);
+                startActivity(intent6);
                 break;
             case R.id.myButton4:
+                Intent intent7 = new Intent(getActivity(), MainMyL4BoradcastSet.class);
+                startActivity(intent7);
                 break;
             case R.id.myImageView2:
                 Intent intent = new Intent(getActivity(), MainMyLogonPhone.class);
@@ -94,43 +139,4 @@ public class MyFragment extends Fragment {
                 break;
         }
     }
-
-
-//    @OnClick({R.id.myImageView1, R.id.myButton1, R.id.myButton2, R.id.myButton3, R.id.myButton4, R.id.myButton5, R.id.myButton6, R.id.myButton7, R.id.myButton8, R.id.myImageView2})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
-//            case R.id.myImageView1:
-//                break;
-//            case R.id.myButton1:
-//                Intent intent1 = new Intent(getActivity(), MainMyInformation.class);
-//                startActivity(intent1);
-//                break;
-//            case R.id.myButton2:
-//                Intent intent2 = new Intent(getActivity(), MainMyEffectivesSch.class);
-//                startActivity(intent2);
-//                break;
-//            case R.id.myButton3:
-//                Intent intent3 = new Intent(getActivity(), MainMyFinishSch.class);
-//                startActivity(intent3);
-//                break;
-//            case R.id.myButton4:
-//                Intent intent4 = new Intent(getActivity(), MianMyStatisticsSch.class);
-//                startActivity(intent4);
-//                break;
-//            case R.id.myButton5:
-//                break;
-//            case R.id.myButton6:
-//                Intent intent6 = new Intent(getActivity(), MainMyBoradcastSet.class);
-//                startActivity(intent6);
-//                break;
-//            case R.id.myButton7:
-//                break;
-//            case R.id.myButton8:
-//                break;
-//            case R.id.myImageView2:
-//                Intent intent = new Intent(getActivity(), MainMyLogonPhone.class);
-//                startActivity(intent);
-//                break;
-//        }
-//    }
 }

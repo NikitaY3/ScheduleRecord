@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -37,6 +38,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class TodayDialog extends Dialog {
     private Context context;
@@ -55,7 +58,7 @@ public class TodayDialog extends Dialog {
     private Spinner inputItemButton21,inputItemButton22,inputItemButton24;
     private List<String> button21List,button22List,button24List;
 
-    public String radio2;
+    private String radio2;
     private final Calendar cale1 = Calendar.getInstance();
     private ProgressBar mode1ProgressBar;
 
@@ -90,7 +93,7 @@ public class TodayDialog extends Dialog {
         inputItemEditText2 = findViewById(R.id.inputItemEditText2);
         inputItemButton = findViewById(R.id.inputItemButton);
         inputItemButton21 = findViewById(R.id.inputItemButton21);
-        inputItemButton22 = findViewById(R.id.inputItemButton22);
+//        inputItemButton22 = findViewById(R.id.inputItemButton22);
         inputItemButton24 = findViewById(R.id.inputItemButton24);
 
         //软键盘的弹出和焦点获取
@@ -145,7 +148,7 @@ public class TodayDialog extends Dialog {
                         inputItemEditText2.setText("");
                         updateDiaLog();
                         inputItemButton21.setSelection(0);
-                        inputItemButton22.setSelection(0);
+//                        inputItemButton22.setSelection(0);
                         inputItemButton24.setSelection(0);
                     }
                 },100);
@@ -174,9 +177,13 @@ public class TodayDialog extends Dialog {
         String dayTitle = inputItemEditText2.getText().toString();
         String time = inputItemEditText1.getText().toString();
 
-        //TODO
-        String nameid = "13348445362";
-        TodaySQLiteUser things = new TodaySQLiteUser(Dayidbutton,false,remind,time,dayTitle,important,diary,nameid);
+        //取得登录用户的ID
+        SharedPreferences sharedPreferences;
+        sharedPreferences = context.getSharedPreferences("myuser",MODE_PRIVATE);
+        String nameid = sharedPreferences.getString("nameid","");
+        String dayid = nameid+Dayidbutton;
+
+        TodaySQLiteUser things = new TodaySQLiteUser(dayid,false,remind,time,dayTitle,important,diary,Dayidbutton.substring(0,10));
 
         //数据写入数据库
         helper=new TodaySQLite(context,DBName,null,version);
@@ -209,9 +216,8 @@ public class TodayDialog extends Dialog {
         button21List.add("提醒");
         button21List.add("不提醒");
 
-        button22List = new ArrayList<>();
-        button22List.add("不重复");
-//        button22List.add("每天重复");
+//        button22List = new ArrayList<>();
+//        button22List.add("不重复");
 
         button24List = new ArrayList<>();
         button24List.add("重要程度");
@@ -224,7 +230,7 @@ public class TodayDialog extends Dialog {
         button24List.add("等级七");
 
         MySpinner(button21List,inputItemButton21);
-        MySpinner(button22List,inputItemButton22);
+//        MySpinner(button22List,inputItemButton22);
         MySpinner(button24List,inputItemButton24);
     }
 

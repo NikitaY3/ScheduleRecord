@@ -18,12 +18,12 @@
     <Button
         android:id="@+id/equButton"
         android:layout_width="50dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="刷新"
-        android:textColor="@drawable/ac_my_button1_text"
-        android:background="@color/my7"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:padding="12dp"
+        android:drawableTop="@drawable/z_h"
+        android:background="@drawable/aa_refresh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

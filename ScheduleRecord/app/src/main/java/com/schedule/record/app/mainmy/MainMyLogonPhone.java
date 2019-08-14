@@ -1,6 +1,7 @@
 package com.schedule.record.app.mainmy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -31,10 +32,11 @@ public class MainMyLogonPhone extends AppCompatActivity {
     @BindView(R.id.phoneButton1)
     Button phoneButton1;
 
-    private List<GeneralSQLiteUser> dataList;
     private GeneralUserSQLite helper;
-    String DBName = "general";
-    int version = 1;
+    private String DBName = "general";
+    private int version = 1;
+
+    private SharedPreferences sharedPreferences;
 
 
     @Override
@@ -42,6 +44,10 @@ public class MainMyLogonPhone extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_logon_phone);
         ButterKnife.bind(this);
+
+        sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
+        phoneEditText1.setText(sharedPreferences.getString("nameid",""));
+        phoneEditText2.setText(sharedPreferences.getString("password",""));
     }
 
     @OnClick({R.id.phoneButton2, R.id.phoneButton1})
@@ -52,18 +58,30 @@ public class MainMyLogonPhone extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.phoneButton1:
-                if (!(phoneEditText1.getText().toString().length()==11)) {
+                String nameid = phoneEditText1.getText().toString();
+                String password = phoneEditText2.getText().toString();
+                if (!(nameid.length()==11)) {
                     Toast.makeText(this,"您输入的手机号有误",Toast.LENGTH_SHORT).show();
                     phoneEditText1.setText("");
                 } else {
-                    GeneralSQLiteUser things = new GeneralSQLiteUser(phoneEditText1.getText().toString(),null,phoneEditText2.getText().toString(),null,null,null);
+                    SharedPreferences.Editor myuser = sharedPreferences.edit();
+                    myuser.putString("nameid",nameid);
+                    myuser.putString("password",password);
+                    myuser.apply();
+
+                    GeneralSQLiteUser things = new GeneralSQLiteUser(nameid,null,password,null,null,null);
                     helper=new GeneralUserSQLite(MainMyLogonPhone.this,DBName,null,version);
-                    helper.getReadableDatabase();
                     GeneralSQLiteUserDao dao=new GeneralSQLiteUserDao(helper);
                     dao.deleteAll();
                     dao.insert(things);
-                    phoneEditText1.setText("");
-                    phoneEditText2.setText("");
+
+                    SharedPreferences sharedPreferences1 = null;
+                    sharedPreferences1 = this.getSharedPreferences("delaytime",MODE_PRIVATE);
+                    SharedPreferences.Editor delaytime = sharedPreferences1.edit();
+                    delaytime.putString("time","30分钟");
+                    delaytime.putString("boxcolock","true");
+                    delaytime.putString("mobilecolock","true");
+                    delaytime.apply();
 
                     Intent intent2 = new Intent(this, MainActivity.class);
                     startActivity(intent2);

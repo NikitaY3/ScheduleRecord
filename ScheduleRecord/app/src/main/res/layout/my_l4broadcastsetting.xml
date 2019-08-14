@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/finSchedulesTextView1"
+        android:id="@+id/bSetTextView1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
@@ -17,7 +17,7 @@
         android:textSize="15sp" />
 
     <Switch
-        android:id="@+id/bcSettingSwitch1"
+        android:id="@+id/bSetSwitch1"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/ac_my_button1"
@@ -26,8 +26,9 @@
         android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         android:text="手机闹钟提醒" />
+
     <Switch
-        android:id="@+id/bcSettingSwitch2"
+        android:id="@+id/bSetSwitch2"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/ac_my_button1"
@@ -35,9 +36,36 @@
         android:paddingStart="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical"
-        android:text="闹钟播报"/>
+        android:text="闹钟音箱播报"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/bSetSwitch3"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="日程默认延后时长"
+            android:textColor="@drawable/ac_my_button1_text" />
+
+        <Spinner
+            android:id="@+id/bSetSpinner"
+            android:layout_width="180dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ac_my_button1"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
     <Switch
-        android:id="@+id/bcSettingSwitch3"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/ac_my_button1"
@@ -48,7 +76,6 @@
         android:gravity="center_vertical"/>
 
     <Switch
-        android:id="@+id/bcSettingSwitch4"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/ac_my_button1"
@@ -58,44 +85,17 @@
         android:text="允许他人插入日程"
         android:gravity="center_vertical" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/bcSettingText1"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ac_my_button1"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:text="日程默认延后时长"
-            android:textColor="@drawable/ac_my_button1_text" />
-    </LinearLayout>
-
     <TextView
-        android:id="@+id/bcSettingTextView"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:text="闹钟播报设置" />
-
-    <TextView
-        android:id="@+id/bcSettingTextView1"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/ac_my_button1"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
+        android:layout_marginTop="10dp"
         android:text="播放铃声"
         android:textColor="@drawable/ac_my_button1_text" />
 
     <TextView
-        android:id="@+id/bcSettingTextView2"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/ac_my_button1"
@@ -105,7 +105,6 @@
         android:textColor="@drawable/ac_my_button1_text" />
 
     <TextView
-        android:id="@+id/bcSettingTextView3"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/ac_my_button1"

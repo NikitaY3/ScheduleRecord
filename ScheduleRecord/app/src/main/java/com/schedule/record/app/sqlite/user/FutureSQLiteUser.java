@@ -4,9 +4,9 @@ public class FutureSQLiteUser {
 
     private String dayid,repeat,endday;
     private boolean remind;
-    private String time,title,important,diary,nameid;
+    private String time,title,important,diary;
 
-    public FutureSQLiteUser(String dayid, String repeat, String endday, boolean remind, String time, String title, String important, String diary, String nameid) {
+    public FutureSQLiteUser(String dayid, String repeat, String endday, boolean remind, String time, String title, String important, String diary) {
         this.dayid = dayid;
         this.repeat = repeat;
         this.endday = endday;
@@ -15,7 +15,6 @@ public class FutureSQLiteUser {
         this.title = title;
         this.important = important;
         this.diary = diary;
-        this.nameid = nameid;
     }
 
     public String getDayid() {
@@ -82,14 +81,6 @@ public class FutureSQLiteUser {
         this.diary = diary;
     }
 
-    public String getNameid() {
-        return nameid;
-    }
-
-    public void setNameid(String nameid) {
-        this.nameid = nameid;
-    }
-
     @Override
     public String toString() {
         return "当前日程Dayid为：" + dayid + '\n' +
@@ -99,7 +90,6 @@ public class FutureSQLiteUser {
                 "日程创建时间：" + time + '\n' +
                 "日程标题：" + title + '\n' +
                 "日程详细记录：" + diary + '\n' +
-                "日程重要程度：" + important + '\n'+
-                "当前用户手机号"+nameid+'\n';
+                "日程重要程度：" + important + '\n';
     }
 }

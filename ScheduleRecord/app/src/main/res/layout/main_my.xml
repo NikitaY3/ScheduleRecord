@@ -19,26 +19,26 @@
         android:id="@+id/myTextView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
         android:text="盈十里秋色"
-        android:textSize="15sp"
         android:textColor="@color/white"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/myImageView2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/myTextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
         android:text="账号：18065856713"
-        android:textSize="12sp"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/myImageView2"
+        app:layout_constraintTop_toBottomOf="@+id/myTextView1" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -55,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gray"
+            android:paddingBottom="10dp"
             android:orientation="vertical">
 
 
@@ -72,7 +73,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/ac_my_button1"
-                    android:drawableTop="@drawable/z_b"
+                    android:drawableTop="@drawable/z_d"
                     android:drawablePadding="5dp"
                     android:gravity="center_horizontal"
                     android:paddingTop="10dp"
@@ -86,7 +87,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/ac_my_button1"
-                    android:drawableTop="@drawable/z_b"
+                    android:drawableTop="@drawable/z_d"
                     android:drawablePadding="5dp"
                     android:gravity="center_horizontal"
                     android:paddingTop="10dp"
@@ -100,7 +101,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/ac_my_button1"
-                    android:drawableTop="@drawable/z_b"
+                    android:drawableTop="@drawable/z_d"
                     android:drawablePadding="5dp"
                     android:gravity="center_horizontal"
                     android:paddingTop="10dp"
@@ -114,7 +115,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ac_my_button1"
-                android:drawableStart="@drawable/z_a"
+                android:drawableStart="@drawable/z_e"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingStart="15dp"
@@ -155,7 +156,7 @@
                 android:layout_height="48dp"
                 android:layout_marginVertical="10dp"
                 android:background="@drawable/ac_my_button1"
-                android:drawableStart="@drawable/z_d"
+                android:drawableStart="@drawable/z_f"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingStart="15dp"
@@ -163,18 +164,18 @@
                 android:textColor="@drawable/ac_my_button1_text"
                 tools:ignore="RtlSymmetry" />
 
-            <!--<Button-->
-            <!--android:id="@+id/myButton1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="48dp"-->
-            <!--android:background="@drawable/ac_my_button1"-->
-            <!--android:drawableStart="@drawable/z_a"-->
-            <!--android:drawablePadding="10dp"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:paddingStart="15dp"-->
-            <!--android:text="个人信息"-->
-            <!--android:textColor="@drawable/ac_my_button1_text"-->
-            <!--tools:ignore="RtlSymmetry" />-->
+            <Button
+            android:id="@+id/myButton5"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ac_my_button1"
+            android:drawableStart="@drawable/z_a"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:text="个人信息"
+            android:textColor="@drawable/ac_my_button1_text"
+            tools:ignore="RtlSymmetry" />
 
             <!--<Button-->
             <!--android:id="@+id/myButton2"-->

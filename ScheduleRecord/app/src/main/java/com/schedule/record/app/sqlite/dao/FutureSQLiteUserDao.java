@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.schedule.record.app.function.CalenderWeekItem;
 import com.schedule.record.app.sqlite.TodaySQLite;
@@ -35,7 +36,6 @@ public class FutureSQLiteUserDao {
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
         content.put("diary",user.getDiary());
-        content.put("nameid",user.getNameid());
         db.insert(TABLE,null,content);
         db.close();
     }
@@ -53,10 +53,9 @@ public class FutureSQLiteUserDao {
             String title = cursor.getString(5);
             String important = cursor.getString(6);
             String diary = cursor.getString(7);
-            String nameid = cursor.getString(8);
             boolean remind;
             remind = remind1 > 0;
-            user = new FutureSQLiteUser(dayid,repeat,endday,remind,time,title,important,diary,nameid);
+            user = new FutureSQLiteUser(dayid,repeat,endday,remind,time,title,important,diary);
         }
         db.close();
         return user;
@@ -77,10 +76,9 @@ public class FutureSQLiteUserDao {
             String title = cursor.getString(5);
             String important = cursor.getString(6);
             String diary = cursor.getString(7);
-            String nameid = cursor.getString(8);
             boolean remind;
             remind = remind1 > 0;
-            FutureSQLiteUser things = new FutureSQLiteUser(dayid,repeat,endday,remind,time,title,important,diary,nameid);
+            FutureSQLiteUser things = new FutureSQLiteUser(dayid,repeat,endday,remind,time,title,important,diary);
             dataList.add(things);
         }
         db.close();
@@ -88,17 +86,39 @@ public class FutureSQLiteUserDao {
     }
 
     //查询Week,根据日期查询
-    public List<CalenderWeekItem> quiryAndSetWeekItem(String day) {
+    public List<CalenderWeekItem> quiryAndSetWeekItem(int today, int m, String week, String thisday) {
         List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();//item的list
         //查询数据库并初始化日程列表
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"dayid like ?", new String[]{"%"+day+"%"},null,null,"important,time");
-        while (cursor.moveToNext()){
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important,time");
+        while (cursor.moveToNext()) {
             String dayid = cursor.getString(0);
+            String repeat = cursor.getString(1);
+            String endday = cursor.getString(2);
             String title = cursor.getString(5);
             String important = cursor.getString(6);
-            CalenderWeekItem things = new CalenderWeekItem(dayid,title,important,false);
-            dataList.add(things);
+            CalenderWeekItem things = new CalenderWeekItem(dayid, title, important, false);
+
+            int end = Integer.parseInt((endday.substring(0, 4) + endday.substring(5, 7) + endday.substring(8, 10)));
+            if (end >= today || end == 0) {
+
+                String repeat1 = repeat.substring(0, 8);
+
+                if (repeat1.equals("everywee")) {
+                    String re = repeat.substring(8);
+                    while (!re.equals("")) {
+                        String a = re.substring(0, 1);
+                        if (a.equals(week)) {
+                            dataList.add(things);
+                        }
+                        re = re.substring(1);
+                    }
+                } else if (repeat1.equals("everyday") || (repeat1.equals("everymou") && m == 1)) {
+                    dataList.add(things);
+                } else if (repeat1.equals("norepeat") && endday.equals(thisday)){
+                    dataList.add(things);
+                }
+            }
         }
         db.close();
         return dataList;
@@ -127,7 +147,6 @@ public class FutureSQLiteUserDao {
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
         content.put("diary",user.getDiary());
-        content.put("nameid",user.getNameid());
 
         db.update(TABLE,content,"dayid=?",new String[]{user.getDayid()});
         db.close();
@@ -144,7 +163,7 @@ public class FutureSQLiteUserDao {
     }
 
     //将Future插入Today的函数
-    public void FutureToToday(Context context, int today, int m, String week){
+    public void FutureToToday(Context context, int today, int m, String week, String thisday){
 
         TodaySQLite helper1;
         String DBName="today";
@@ -162,36 +181,36 @@ public class FutureSQLiteUserDao {
             String title = cursor.getString(5);
             String important = cursor.getString(6);
             String diary = cursor.getString(7);
-            String nameid = cursor.getString(8);
             boolean remind;
             remind = remind1 > 0;
+
+
             int end = Integer.parseInt((endday.substring(0,4)+endday.substring(5,7)+endday.substring(8,10)));
             if (end >= today||end == 0) {
+
                 String repeat1 = repeat.substring(0, 8);
-                if (repeat1 == "everywee") {
+
+                //数据写入数据库
+                TodaySQLiteUser things = new TodaySQLiteUser(dayid, false, remind, time, title, important, diary, thisday);
+                helper1 = new TodaySQLite(context, DBName, null, version);
+                TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper1);
+
+                if (repeat1.equals("everywee")) {
                     String re = repeat.substring(8);
                     while (!re.equals("")) {
                         String a = re.substring(0, 1);
-                        if (a == week) {
-                            TodaySQLiteUser things = new TodaySQLiteUser(dayid, false, remind, time, title, important, diary, nameid);
-                            //数据写入数据库
-                            helper1 = new TodaySQLite(context, DBName, null, version);
-                            helper1.getReadableDatabase();
-                            TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper1);
+                        if (a.equals(week)) {
                             dao.insert(things);
                         }
                         re = re.substring(1);
                     }
-                } else if ((repeat1 == "everyday") || ((repeat1 == "everymou") && (m == 1))) {
-                    TodaySQLiteUser things = new TodaySQLiteUser(dayid, false, remind, time, title, important, diary, nameid);
-                    //数据写入数据库
-                    helper1 = new TodaySQLite(context, DBName, null, version);
-                    helper1.getReadableDatabase();
-                    TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper1);
+                } else if (repeat1.equals("everyday") || (repeat1.equals("everymou") && m == 1)) {
+                    dao.insert(things);
+                } else if (end == today && repeat1.equals("norepeat")){
                     dao.insert(things);
                 }
             }
-            if (end == today){
+            if (end <= today){
                 deleteByDayid(dayid);
             }
         }

@@ -20,9 +20,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="@color/gray"
         android:orientation="vertical"
+        android:paddingBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/informationTextView1">
 
@@ -30,10 +30,11 @@
             android:id="@+id/informationButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@drawable/ac_my_button1"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
-            android:text="头像"
+            android:text="昵称"
             android:textColor="@drawable/ac_my_button1_text" />
 
         <Button
@@ -43,7 +44,7 @@
             android:background="@drawable/ac_my_button1"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
-            android:text="主页背景"
+            android:text="头像"
             android:textColor="@drawable/ac_my_button1_text" />
 
         <Button
@@ -53,7 +54,7 @@
             android:background="@drawable/ac_my_button1"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
-            android:text="昵称"
+            android:text="主页背景"
             android:textColor="@drawable/ac_my_button1_text" />
 
         <Button
@@ -77,46 +78,46 @@
             android:text="生日"
             android:textColor="@drawable/ac_my_button1_text" />
 
-        <Button
-            android:id="@+id/informationButton6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ac_my_button1"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:text="地区"
-            android:textColor="@drawable/ac_my_button1_text" />
+        <!--<Button-->
+        <!--android:id="@+id/informationButton6"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:text="地区"-->
+        <!--android:textColor="@drawable/ac_my_button1_text" />-->
 
-        <Button
-            android:id="@+id/informationButton7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ac_my_button1"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:text="实名认证"
-            android:textColor="@drawable/ac_my_button1_text" />
+        <!--<Button-->
+        <!--android:id="@+id/informationButton7"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:text="实名认证"-->
+        <!--android:textColor="@drawable/ac_my_button1_text" />-->
 
-        <Button
-            android:id="@+id/informationButton8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ac_my_button1"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:text="账号绑定设置"
-            android:textColor="@drawable/ac_my_button1_text" />
+        <!--<Button-->
+        <!--android:id="@+id/informationButton8"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:text="账号绑定设置"-->
+        <!--android:textColor="@drawable/ac_my_button1_text" />-->
 
-        <Button
-            android:id="@+id/informationButton9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ac_my_button1"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:text="我的注册信息"
-            android:textColor="@drawable/ac_my_button1_text" />
+        <!--<Button-->
+        <!--android:id="@+id/informationButton9"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:text="我的注册信息"-->
+        <!--android:textColor="@drawable/ac_my_button1_text" />-->
 
     </LinearLayout>
 

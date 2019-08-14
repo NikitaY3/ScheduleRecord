@@ -443,7 +443,7 @@
             android:layout_height="match_parent"
             android:layout_marginVertical="5dp"
             android:layout_weight="1"
-            android:background="@color/gray"
+            android:background="@drawable/diary"
             android:gravity="top"
             android:hint="写下你的记录吧！"
             android:inputType="textMultiLine"

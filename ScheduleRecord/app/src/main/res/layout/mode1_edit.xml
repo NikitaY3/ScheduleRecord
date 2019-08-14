@@ -219,8 +219,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="@color/gray"
             android:gravity="top"
+            android:background="@drawable/diary"
             android:hint="写下你的记录吧！"
             android:inputType="textMultiLine"
             android:padding="5dp" />

@@ -60,6 +60,30 @@ public class SpecialSQLiteUserDao {
         return sb.toString();
     }
 
+    public String querySpecial(String myid){
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"gnameid =?", new String[]{myid},null,null,null);
+        StringBuilder sb=new StringBuilder();
+        while (cursor.moveToNext()){
+            String snameid = cursor.getString(2);
+            sb.append(snameid).append("\n");
+        }
+        db.close();
+        return sb.toString();
+    }
+
+    public String queryGeneral(String myid){
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"snameid =?", new String[]{myid},null,null,null);
+        StringBuilder sb=new StringBuilder();
+        while (cursor.moveToNext()){
+            String gnameid = cursor.getString(1);
+            sb.append(gnameid).append("\n");
+        }
+        db.close();
+        return sb.toString();
+    }
+
     public List<SpecialSQLiteUser> quiryAll() {
         List<SpecialSQLiteUser> dataList = new ArrayList<SpecialSQLiteUser>();
         helper.getReadableDatabase();

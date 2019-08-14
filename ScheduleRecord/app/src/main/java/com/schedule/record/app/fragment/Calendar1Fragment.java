@@ -49,6 +49,7 @@ public class Calendar1Fragment extends Fragment{
         unbinder = ButterKnife.bind(this, view);
 
         calendar1ListView = view.findViewById(R.id.calendar1ListView);
+        onResume1();
 
         return view;
     }
@@ -61,7 +62,7 @@ public class Calendar1Fragment extends Fragment{
 
     public void onResume1() {
         helper = new TodaySQLite(getActivity(), DBName, null, version);
-        helper.getReadableDatabase();
+//        helper.getReadableDatabase();
         TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper);
         dataList = dao.quiryAndSetItem();
         CalenderDayAdapter adapter = new CalenderDayAdapter(getActivity(),dataList,mode1ProgressBar);

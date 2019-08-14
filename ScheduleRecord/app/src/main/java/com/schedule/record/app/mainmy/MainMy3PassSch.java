@@ -30,6 +30,8 @@ public class MainMy3PassSch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_3pass);
         ButterKnife.bind(this);
+
+        onResume1();
     }
 
     public void onResume1() {

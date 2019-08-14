@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class PassSQLite extends SQLiteOpenHelper {
 
-    String CREAT_TABLE="create table pass(dayid varchar(32) primary key,title varchar(128), passday date, completion int, important char(2), nameid char(12))";
+    String CREAT_TABLE="create table pass(dayid varchar(32) primary key,title varchar(128), passday date, completion int, important char(2))";
     public PassSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

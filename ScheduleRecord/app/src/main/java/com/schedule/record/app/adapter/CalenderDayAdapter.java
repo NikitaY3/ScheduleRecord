@@ -34,13 +34,13 @@ public class CalenderDayAdapter extends BaseAdapter {
     //布局填充--
     private LayoutInflater inflater;
 
-    AlertDialog.Builder frame1;
+    private AlertDialog.Builder frame1;
     private TodaySQLite helper;
-    String DBName="today";
-    int version = 1;
+    private String DBName="today";
+    private int version = 1;
 
-    public String radio2;
-    final Calendar cale1 = Calendar.getInstance();
+    private String radio2;
+    private final Calendar cale1 = Calendar.getInstance();
     private ProgressBar mode1ProgressBar;
 
     public CalenderDayAdapter(Context context, List<TodaySQLiteUser> list, ProgressBar mode1ProgressBar) {

@@ -123,7 +123,7 @@
             android:layout_height="match_parent"
             android:layout_marginVertical="5dp"
             android:layout_weight="1"
-            android:background="@color/gray"
+            android:background="@drawable/diary"
             android:gravity="top"
             android:editable="false"
             android:hint="无记录！"

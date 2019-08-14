@@ -4,9 +4,9 @@ public class TodaySQLiteUser {
 
     private String dayid;
     private boolean checkbox,remind;
-    private String time,title,important,diary,nameid;
+    private String time,title,important,diary,thisday;
 
-    public TodaySQLiteUser(String dayid, boolean checkbox, boolean remind, String time, String title, String important, String diary, String nameid) {
+    public TodaySQLiteUser(String dayid, boolean checkbox, boolean remind, String time, String title, String important, String diary, String thisday) {
         this.dayid = dayid;
         this.checkbox = checkbox;
         this.remind = remind;
@@ -14,7 +14,7 @@ public class TodaySQLiteUser {
         this.title = title;
         this.important = important;
         this.diary = diary;
-        this.nameid = nameid;
+        this.thisday = thisday;
     }
 
     public String getDayid() {
@@ -73,22 +73,23 @@ public class TodaySQLiteUser {
         this.diary = diary;
     }
 
-    public String getNameid() {
-        return nameid;
+    public String getThisday() {
+        return thisday;
     }
 
-    public void setNameid(String nameid) {
-        this.nameid = nameid;
+    public void setThisday(String thisday) {
+        this.thisday = thisday;
     }
 
     @Override
     public String toString() {
         return "当前日程Dayid为：" + dayid + '\n' +
                 "是否已经完成：" + checkbox + '\n' +
-                "日程创建时间：" + time + '\n' +
+                "是否提醒：" + remind + '\n' +
+                "日程开始时间：" + time + '\n' +
                 "日程标题：" + title + '\n' +
                 "日程详细记录：" + diary + '\n' +
                 "日程重要程度：" + important + '\n'+
-                "当前用户手机号"+nameid+'\n';
+                "当前日期"+thisday+'\n';
     }
 }

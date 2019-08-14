@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.CalculationWeek;
@@ -17,6 +18,7 @@ import com.schedule.record.app.sqlite.FinishSQLite;
 import com.schedule.record.app.sqlite.FutureSQLite;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
 
 import java.text.SimpleDateFormat;
@@ -36,9 +38,9 @@ public class EquimentFragment extends Fragment {
     Unbinder unbinder;
 
     int version = 1;
-    private List<CalenderWeekItem> finishData;
-    private FinishSQLite helper1;
-    String DBName1 = "finish";
+//    private List<CalenderWeekItem> finishData;
+//    private FinishSQLite helper1;
+//    String DBName1 = "finish";
 
     private List<CalenderWeekItem> todayData;
     private TodaySQLite helper2;
@@ -59,17 +61,23 @@ public class EquimentFragment extends Fragment {
 
     @OnClick(R.id.equButton)
     public void onViewClicked() {
-        //1.判断Future日程是否应该插入到Today
-        helper3 = new FutureSQLite(getActivity(), DBName3, null, version);
-        FutureSQLiteUserDao dao3 = new FutureSQLiteUserDao(helper3);
+
         String today = getInternetTime();
         int todayint = Integer.parseInt((today.substring(0,4)+today.substring(5,7)+today.substring(8,10)));
         String week = new CalculationWeek(today).getWeek();
-        dao3.FutureToToday(getActivity(),todayint, Integer.parseInt(today.substring(9,10)),week);
 
-        //2.判断将Today日程插入到Finish日程
+        //1.判断Future日程是否应该插入到Today
+        helper3 = new FutureSQLite(getActivity(), DBName3, null, version);
+        FutureSQLiteUserDao dao3 = new FutureSQLiteUserDao(helper3);
+        dao3.FutureToToday(getActivity(),todayint, Integer.parseInt(today.substring(9,10)),week,today);
 
-        //3.判断Today日程是否Pass
+        //2.判断将Today日程插入到Finish日程,判断Today日程是否Pass
+        helper2 = new TodaySQLite(getActivity(), DBName2, null, version);
+        TodaySQLiteUserDao dao2 = new TodaySQLiteUserDao(helper2);
+        dao2.TodayToFinishPass(getActivity(),today,todayint);
+
+        //刷新Today的列表
+
     }
 
     //联网获取当前时间yyyy-MM-dd

@@ -14,7 +14,7 @@ public class FinishDayUtil {
     private int allSchedule,finishSchedule;
     private Date date;
     private FinishSQLite helper;
-    private static final String DBName = "day_1";
+    private static final String DBName = "today";
     private int version = 1;
     private Context context;
 
