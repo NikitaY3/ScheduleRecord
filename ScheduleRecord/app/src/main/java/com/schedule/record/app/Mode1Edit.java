@@ -15,19 +15,22 @@ import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 @SuppressLint("Registered")
-public
-class Mode1Edit extends AppCompatActivity {
+public class Mode1Edit extends AppCompatActivity {
 
     @BindView(R.id.editCheckBox1)
     CheckBox editCheckBox1;
@@ -65,13 +68,17 @@ class Mode1Edit extends AppCompatActivity {
     EditText editEditText2;
 
     private TodaySQLite helper;
-    TodaySQLiteUserDao dao;
-    TodaySQLiteUser user;
-    String DBName = "today";
-    int version = 1;
+    private TodaySQLiteUserDao dao;
+    private TodaySQLiteUser user;
+    private String DBName = "today";
+    private int version = 1;
 
-    public String radio2, radio3;
-    final Calendar cale1 = Calendar.getInstance();
+    private String radio2;
+    private final Calendar cale1 = Calendar.getInstance();
+
+    private boolean remind;
+    private String dayid;
+    private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +105,15 @@ class Mode1Edit extends AppCompatActivity {
                             radio2 = hourOfDay + ":" + minute;
                         }
                         editEditText0.setText(radio2);
+                        //设置闹钟
+                        if (!editEditText0.getText().toString().equals("XX:XX") && remind) {
+                            int t = hourOfDay + minute;
+                            String dayid1 = getInternetTime();
+                            int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
+                            if (t > t1) {
+                                new AlarmSet(Mode1Edit.this, hourOfDay, minute, dayid, i).myAlarmSet();
+                            }
+                        }
                     }
                 }, cale1.get(Calendar.HOUR), cale1.get(Calendar.MINUTE), true).show();
                 break;
@@ -142,13 +158,41 @@ class Mode1Edit extends AppCompatActivity {
     @Override
     public void onPause() {
         user.setTitle(editEditText1.getText().toString());
+        String time = editEditText0.getText().toString();
+        user.setTime(time);
         if (editRadio1.isChecked()) {
             user.setRemind(true);
+            //删除Item对应的闹钟
+            new AlarmSet(this,dayid,i).myAlarmCancel();
         }
         if (editRadio2.isChecked()) {
             user.setRemind(false);
+            //设置闹钟
+            if (!time.equals("XX:XX") && remind) {
+                int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
+                String dayid1 = getInternetTime();
+                int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
+                if (t > t1) {
+                    new AlarmSet(this, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
+                }
+            }
         }
-        user.setTime(editEditText0.getText().toString());
+        if (editCheckBox1.isChecked()) {
+            user.setCheckbox(true);
+            //删除Item对应的闹钟
+            new AlarmSet(this,dayid,i).myAlarmCancel();
+        }else {
+            user.setCheckbox(false);
+            //设置闹钟
+            if (!time.equals("XX:XX") && remind) {
+                int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
+                String dayid1 = getInternetTime();
+                int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
+                if (t > t1) {
+                    new AlarmSet(this, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
+                }
+            }
+        }
         user.setDiary(editEditText2.getText().toString());
         dao.updateAll(user);
         Toast.makeText(Mode1Edit.this, "已保存数据", Toast.LENGTH_SHORT).show();
@@ -159,10 +203,10 @@ class Mode1Edit extends AppCompatActivity {
     private void layoutFilling() {
         //获取DayItem传递的Dayid
         helper = new TodaySQLite(this, DBName, null, version);
-        helper.getReadableDatabase();
         dao = new TodaySQLiteUserDao(helper);
         Intent intent = getIntent();
-        String dayid = intent.getStringExtra("dayid");
+        dayid = intent.getStringExtra("dayid");
+        i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
         //查询Dayid对应数据
         TodaySQLiteUser d = dao.queryBydayid(dayid);
         //设置当前布局填充
@@ -197,12 +241,21 @@ class Mode1Edit extends AppCompatActivity {
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                 break;
         }
-        boolean remind = d.isRemind();
+        remind = d.isRemind();
         if (remind) {
             editRadio1.setChecked(true);
         }else {
             editRadio2.setChecked(true);
         }
         user = d;//获取当前Dayid的数据的内容
+    }
+
+
+    //联网获取当前时间
+    private String getInternetTime() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("HH:mm:ss");
+        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        String Dayid = timesimple.format(new Date());
+        return Dayid;
     }
 }

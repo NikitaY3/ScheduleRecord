@@ -1,7 +1,9 @@
 package com.schedule.record.app;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -9,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.schedule.record.app.function.FragmentController;
+import com.schedule.record.app.mainmy.MainMyLogonPhone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup mainRadioGroup;
 
     private FragmentController controller;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +39,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-        controller = FragmentController.getInstance(this, R.id.mainFrameLayout);
-        controller.showFragment(0);
+        controller = FragmentController.getInstance(MainActivity.this, R.id.mainFrameLayout);
+        if (controller != null) {
+            controller.showFragment(0);
+        }
 
         mainRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -55,5 +60,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
+        String a = sharedPreferences.getString("nameid","");
+        if (a.equals("")){
+
+            Intent intent2 = new Intent(MainActivity.this, MainMyLogonPhone.class);
+            intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent2);
+
+            MainActivity.this.onDestroy();
+        }
     }
 }

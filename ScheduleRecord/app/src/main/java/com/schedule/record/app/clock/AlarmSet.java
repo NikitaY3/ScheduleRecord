@@ -7,6 +7,8 @@ import android.content.Intent;
 
 import java.util.Calendar;
 
+import static android.content.Context.ALARM_SERVICE;
+
 public class AlarmSet {
 
     private Context context;
@@ -21,11 +23,16 @@ public class AlarmSet {
         this.dayid = dayid;
         this.i = i;
 
-        myAlarmSet();
+    }
+
+    public AlarmSet(Context context, String dayid, int i) {
+        this.context = context;
+        this.dayid = dayid;
+        this.i = i;
 
     }
 
-    private void myAlarmSet() {
+    public void myAlarmSet() {
         Calendar calendar = Calendar.getInstance();         //获取日期对象
         calendar.setTimeInMillis(System.currentTimeMillis());           //设置Calendar对象
         calendar.set(Calendar.HOUR_OF_DAY, myhour);          //设置闹钟小时数
@@ -39,17 +46,31 @@ public class AlarmSet {
         intentService.putExtra("music", dayid);
 
 //        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        PendingIntent pendingIntent2 = PendingIntent.getService(context,i,intentService,0);
+//        PendingIntent pendingIntent2 = PendingIntent.getService(context,i,intentService,0);
+        PendingIntent pendingIntent2 = PendingIntent.getService(context,i,intentService,PendingIntent.FLAG_CANCEL_CURRENT);
 
         //获取系统进程
-        AlarmManager am1= (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager am1= (AlarmManager)context.getSystemService(ALARM_SERVICE);
 
         //设置一次性闹钟，第一个参数表示闹钟类型，第二个参数表示闹钟执行时间，第三个参数表示闹钟响应动作
 
-        if (calendar.getTimeInMillis()< System.currentTimeMillis()) {
-            am1.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent2);
-        }
+//        if (calendar.getTimeInMillis()< System.currentTimeMillis()) {
+        am1.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent2);
+//        }
 
 //        am1.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent2);
+    }
+
+    public void myAlarmCancel() {
+
+        Intent intent = new Intent(context, AlarmService.class);
+        intent.putExtra("music", dayid);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, i, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager am;
+
+        //获取系统进程
+        am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+        am.cancel(pendingIntent);
     }
 }

@@ -78,17 +78,18 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:background="@drawable/abaa_item_im_em"
+            android:background="@drawable/abaa_item_im_no"
             android:textColor="@drawable/ac_my_button1_text"/>
 
-        <Spinner
+        <TextView
             android:id="@+id/inputItemButton22"
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:textAlignment="center"
-            android:background="@drawable/abaa_item_im_no"
+            android:text="仅当天有效"
+            android:gravity="center"
+            android:background="@drawable/abaa_item_no_no"
             android:textColor="@color/colorPrimary" />
 
 
@@ -99,7 +100,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:background="@drawable/abaa_item_no_no"
+            android:background="@drawable/abaa_item_no_no_1"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>

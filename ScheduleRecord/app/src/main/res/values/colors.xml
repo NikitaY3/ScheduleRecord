@@ -9,31 +9,30 @@
     <color name="green2">#8F008577</color>
 
     <color name="green3">#80008577</color>
-    <color name="green4">#8086E3CE</color>
-    <color name="green5">#80D0E6A5</color>
-    <color name="green6">#80FFDD94</color>
-    <color name="green7">#80FFB4A7</color>
+    <color name="green4">#8080E6B6</color>
+    <color name="green5">#80B8F393</color>
+    <color name="green6">#80FFDFA3</color>
+    <color name="green7">#80FFC6BB</color>
     <color name="green8">#80CC99FF</color>
-    <color name="green9">#80DB4EE0</color>
+    <color name="green9">#80B75CFF</color>
+
+    <color name="green51">#80D1F1C5</color>
 
     <color name="my1">#008577</color>
-    <color name="my2">#86E3CE</color>
-    <color name="my3">#D0E6A5</color>
-    <color name="my4">#FFDD94</color>
-    <color name="my5">#FA8978</color>
-    <color name="my51">#FFB4A7</color>
-    <color name="my6">#CCABD8</color>
-    <color name="my7">#CC99FF</color>
-    <color name="my8">#DB4EE0</color>
+    <color name="my2">#80E6B6</color>
+    <color name="my3">#B8F393</color>
+    <color name="my4">#FFDFA3</color>
+    <color name="my5">#FFC6BB</color>
+    <color name="my6">#CC99FF</color>
+    <color name="my7">#B75CFF</color>
 
+    <color name="my8">#FA8978</color>
+
+    <color name="nullcolor">#00000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="varygray3">#E7E9EB</color>
     <color name="gray">#2494A199</color>
     <color name="varygray">#8394A199</color>
     <color name="varygray2">#333333</color>
-    <color name="varygray3">#E7E9EB</color>
-    <color name="nullcolor">#00000000</color>
-
-    <color name="bule">#03A9F4</color>
-    <color name="varybule">#037DFF</color>
 
 </resources>

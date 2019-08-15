@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.schedule.record.app.MainActivity;
 import com.schedule.record.app.R;
 import com.schedule.record.app.mainmy.MainMy1FutureSch;
 import com.schedule.record.app.mainmy.MainMy2FinishSch;
@@ -23,6 +24,7 @@ import com.schedule.record.app.mainmy.MainMyL1Doc;
 import com.schedule.record.app.mainmy.MainMyL2General;
 import com.schedule.record.app.mainmy.MainMyL3Special;
 import com.schedule.record.app.mainmy.MainMyL4BoradcastSet;
+import com.schedule.record.app.mainmy.MainMyL5Information;
 import com.schedule.record.app.mainmy.MainMyLogonPhone;
 import com.schedule.record.app.sqlite.GeneralUserSQLite;
 import com.schedule.record.app.sqlite.dao.GeneralSQLiteUserDao;
@@ -60,6 +62,9 @@ public class MyFragment extends Fragment {
     Button myButton3;
     @BindView(R.id.myButton4)
     Button myButton4;
+    @BindView(R.id.myButton5)
+    Button myButton5;
+
     @BindView(R.id.myImageView2)
     ImageView myImageView2;
     Unbinder unbinder;
@@ -80,7 +85,6 @@ public class MyFragment extends Fragment {
 
         //取得登录用户的ID
         SharedPreferences sharedPreferences;
-        int MODE = Context.MODE_WORLD_READABLE+Context.MODE_WORLD_WRITEABLE;
         sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("myuser", MODE_PRIVATE);
         String nameid = sharedPreferences.getString("nameid","");
         myTextView2.setText("账号："+nameid);
@@ -102,7 +106,7 @@ public class MyFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.myTopButton1, R.id.myTopButton2, R.id.myTopButton3, R.id.myButton1, R.id.myButton2, R.id.myButton3, R.id.myButton4, R.id.myImageView2})
+    @OnClick({R.id.myTopButton1, R.id.myTopButton2, R.id.myTopButton3, R.id.myButton1, R.id.myButton2, R.id.myButton3, R.id.myButton4, R.id.myButton5, R.id.myImageView2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.myTopButton1:
@@ -133,9 +137,14 @@ public class MyFragment extends Fragment {
                 Intent intent7 = new Intent(getActivity(), MainMyL4BoradcastSet.class);
                 startActivity(intent7);
                 break;
+            case R.id.myButton5:
+                Intent intent8 = new Intent(getActivity(), MainMyL5Information.class);
+                startActivity(intent8);
+                break;
             case R.id.myImageView2:
                 Intent intent = new Intent(getActivity(), MainMyLogonPhone.class);
                 startActivity(intent);
+                getActivity().finish();
                 break;
         }
     }

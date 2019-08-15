@@ -1,5 +1,6 @@
 package com.schedule.record.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,13 +19,17 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.schedule.record.app.Mode1Edit;
+import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.function.Mode1ProgressBar;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 import com.schedule.record.app.sqlite.TodaySQLite;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import static com.schedule.record.app.R.*;
 
@@ -80,14 +85,19 @@ public class CalenderDayAdapter extends BaseAdapter {
         else{
             holder = (ViewHolder) convertView.getTag();
         }
+        //获取数据
         final TodaySQLiteUser pb = list.get(position);
+        final String dayid = pb.getDayid();
+        final String time = pb.getTime();
+        final int i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
+
         holder.tv1.setOnCheckedChangeListener(null);
         if(pb.isCheckbox()){
             holder.tv1.setChecked(true);
         }else{
             holder.tv1.setChecked(false);
         }
-        holder.tv2.setText(pb.getTime());//设置时间
+        holder.tv2.setText(time);//设置时间
         holder.tv3.setText(pb.getTitle());
 
         holder.tv1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -95,13 +105,22 @@ public class CalenderDayAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     pb.setCheckbox(true);
+                    //删除Item对应的闹钟
+                    new AlarmSet(context,dayid,i).myAlarmCancel();
                 }else{
                     pb.setCheckbox(false);
+                    //设置闹钟
+                    if (!time.equals("XX:XX") && pb.isRemind()) {
+                        int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
+                        String dayid1 = getInternetTime();
+                        int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
+                        if (t > t1) {
+                            new AlarmSet(context, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
+                        }
+                    }
                 }
                 helper=new TodaySQLite(context,DBName,null,version);
-                helper.getReadableDatabase();
                 TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
-                Toast.makeText(context,"Day"+pb.isCheckbox()+pb.getDayid(),Toast.LENGTH_SHORT).show();
                 dao.updateAll(pb);
                 new Mode1ProgressBar(dao.CountBar(),dao.CountAllBar(),mode1ProgressBar);
             }
@@ -111,7 +130,6 @@ public class CalenderDayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if (minute<9 && hourOfDay<9){
@@ -125,8 +143,18 @@ public class CalenderDayAdapter extends BaseAdapter {
                         }
                         holder.tv2.setText(radio2);
                         pb.setTime(radio2);
+
+                        //设置闹钟
+                        if (!time.equals("XX:XX") && pb.isRemind()) {
+                            int t = hourOfDay + minute;
+                            String dayid1 = getInternetTime();
+                            int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
+                            if (t > t1) {
+                                new AlarmSet(context, hourOfDay, minute, dayid, i).myAlarmSet();
+                            }
+                        }
+                        //更新数据库
                         helper=new TodaySQLite(context,DBName,null,version);
-                        helper.getReadableDatabase();
                         TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
                         CalenderDayAdapter.this.notifyDataSetChanged();
                         dao.updateAll(pb);
@@ -162,7 +190,7 @@ public class CalenderDayAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(context, Mode1Edit.class);
-                intent.putExtra("dayid",pb.getDayid());
+                intent.putExtra("dayid",dayid);
                 context.startActivity(intent);
             }
         });
@@ -170,8 +198,8 @@ public class CalenderDayAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 //调用弹框函数
-                dayConfirmationDialogs(position,pb.getDayid());
-                Toast.makeText(context,"删除的Dayid为："+ pb.getDayid(),Toast.LENGTH_SHORT).show();
+                dayConfirmationDialogs(position,dayid);
+                Toast.makeText(context,"删除的Dayid为："+ dayid,Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -189,14 +217,16 @@ public class CalenderDayAdapter extends BaseAdapter {
         frame1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //删除Item对应的数据库
+                helper=new TodaySQLite(context,DBName,null,version);
+                TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
+                dao.deleteByDayid(time);
+                //删除Item对应的闹钟
+                int i = Integer.parseInt(time.substring(22,24)+time.substring(25,27)+time.substring(28,30));
+                new AlarmSet(context,time,i).myAlarmCancel();
                 //删除Item
                 list.remove(position);
                 CalenderDayAdapter.this.notifyDataSetChanged();
-                //删除Item对应的数据库
-                helper=new TodaySQLite(context,DBName,null,version);
-                helper.getReadableDatabase();
-                TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
-                dao.deleteByDayid(time);
             }
         });
         frame1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -210,4 +240,12 @@ public class CalenderDayAdapter extends BaseAdapter {
         frame1.show();
     }
 
+
+    //联网获取当前时间
+    private String getInternetTime() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("HH:mm:ss");
+        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        String Dayid = timesimple.format(new Date());
+        return Dayid;
+    }
 }

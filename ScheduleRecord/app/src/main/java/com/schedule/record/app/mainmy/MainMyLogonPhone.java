@@ -3,6 +3,7 @@ package com.schedule.record.app.mainmy;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -83,7 +84,10 @@ public class MainMyLogonPhone extends AppCompatActivity {
                     delaytime.putString("mobilecolock","true");
                     delaytime.apply();
 
-                    Intent intent2 = new Intent(this, MainActivity.class);
+                    Intent intent2 = new Intent(MainMyLogonPhone.this, MainActivity.class);
+//                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    intent2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                    intent2.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent2);
                 }
                 break;

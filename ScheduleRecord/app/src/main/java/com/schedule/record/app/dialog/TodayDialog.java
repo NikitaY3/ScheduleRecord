@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.schedule.record.app.R;
+import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.adapter.CalenderDayAdapter;
 import com.schedule.record.app.function.Mode1ProgressBar;
@@ -55,15 +56,14 @@ public class TodayDialog extends Dialog {
 
     private EditText inputItemEditText1,inputItemEditText2;
     private Button inputItemButton;
-    private Spinner inputItemButton21,inputItemButton22,inputItemButton24;
-    private List<String> button21List,button22List,button24List;
+    private Spinner inputItemButton21,inputItemButton24;
+    private List<String> button21List,button24List;
 
     private String radio2;
     private final Calendar cale1 = Calendar.getInstance();
     private ProgressBar mode1ProgressBar;
 
-
-    private String important,diary,nameid;
+    private String important,diary;
     private boolean remind = true;
 
     public TodayDialog(Context context, ListView calendar1ListView, List<TodaySQLiteUser> dataList, ProgressBar mode1ProgressBar) {
@@ -93,7 +93,6 @@ public class TodayDialog extends Dialog {
         inputItemEditText2 = findViewById(R.id.inputItemEditText2);
         inputItemButton = findViewById(R.id.inputItemButton);
         inputItemButton21 = findViewById(R.id.inputItemButton21);
-//        inputItemButton22 = findViewById(R.id.inputItemButton22);
         inputItemButton24 = findViewById(R.id.inputItemButton24);
 
         //软键盘的弹出和焦点获取
@@ -148,7 +147,6 @@ public class TodayDialog extends Dialog {
                         inputItemEditText2.setText("");
                         updateDiaLog();
                         inputItemButton21.setSelection(0);
-//                        inputItemButton22.setSelection(0);
                         inputItemButton24.setSelection(0);
                     }
                 },100);
@@ -191,9 +189,18 @@ public class TodayDialog extends Dialog {
         TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
         dao.insert(things);
 
+        //设置闹钟
+        if (!time.equals("XX:XX") && remind) {
+            int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
+            int t1 = Integer.parseInt(Dayidbutton.substring(11, 13) + Dayidbutton.substring(14, 16));
+            if (t > t1) {
+                int i = Integer.parseInt(Dayidbutton.substring(11, 13) + Dayidbutton.substring(14, 16) + Dayidbutton.substring(17, 19));
+                new AlarmSet(context, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
+            }
+        }
+
         //刷新所有Item
         dataList = new ArrayList<TodaySQLiteUser>();
-        helper.getReadableDatabase();
         dataList = dao.quiryAndSetItem();
         final CalenderDayAdapter adapter = new CalenderDayAdapter(context, dataList,mode1ProgressBar);
         new Mode1ProgressBar(dao.CountBar(),dataList.size(),mode1ProgressBar);
@@ -212,12 +219,8 @@ public class TodayDialog extends Dialog {
     //设置下拉框的列表内容
     private void SpinnerList() {
         button21List = new ArrayList<>();
-        button21List.add("是否提醒");
         button21List.add("提醒");
         button21List.add("不提醒");
-
-//        button22List = new ArrayList<>();
-//        button22List.add("不重复");
 
         button24List = new ArrayList<>();
         button24List.add("重要程度");
@@ -230,7 +233,6 @@ public class TodayDialog extends Dialog {
         button24List.add("等级七");
 
         MySpinner(button21List,inputItemButton21);
-//        MySpinner(button22List,inputItemButton22);
         MySpinner(button24List,inputItemButton24);
     }
 

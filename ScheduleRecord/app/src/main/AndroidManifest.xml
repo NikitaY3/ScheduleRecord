@@ -19,18 +19,16 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".MainActivity">
-            <!--<intent-filter>-->
-                <!--<action-->
-                    <!--android:name="android.intent.action.MAIN"/>-->
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.MAIN"/>
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Mode1Edit"/>
         <activity android:name=".Mode2FinishEdit"/>
-        <activity android:name=".Mode3CompletionLine"/>
         <activity android:name=".Mode3CompletionScale"/>
-        <activity android:name=".Mode3TimeDelayed"/>
         <activity android:name=".mainmy.MainMy1FutureSch"/>
         <activity android:name=".mainmy.MainMy2FinishSch"/>
         <activity android:name=".mainmy.MainMy2FinishSchNote"/>
@@ -39,15 +37,9 @@
         <activity android:name=".mainmy.MainMyL2General"/>
         <activity android:name=".mainmy.MainMyL3Special"/>
         <activity android:name=".mainmy.MainMyL4BoradcastSet"/>
+        <activity android:name=".mainmy.MainMyL5Information"/>
         <activity android:name=".mainmy.MyFogetPassword"/>
-        <activity android:name=".mainmy.MainMyLogonPhone">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".mainmy.MainMyLogonPhone"/>
         <activity android:name=".MyFutureEdit"/>
         <activity android:name=".clock.ATestA"
             android:theme="@style/Base.V7.Theme.AppCompat.Light.Dialog"/>

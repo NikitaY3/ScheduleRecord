@@ -18,6 +18,7 @@ import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 import com.schedule.record.app.sqlite.TodaySQLite;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TodaySQLiteUserDao {
@@ -230,7 +231,9 @@ public class TodaySQLiteUserDao {
             boolean remind;
             remind = remind1 > 0;
 
-            if (!thisday.equals(today)) {
+            int thisday1 = Integer.parseInt(thisday.substring(0,4)+thisday.substring(5,7)+thisday.substring(9,10));
+
+            if (thisday1<day) {
                 //数据写入数据库
                 FinishSQLiteUser things = new FinishSQLiteUser(finishid, dayid, checkbox, remind, time, title, important, diary);
                 helper1 = new FinishSQLite(context, DBName1, null, version1);
@@ -245,8 +248,8 @@ public class TodaySQLiteUserDao {
 
                 helper3 = new FutureSQLite(context, DBName3, null, version1);
                 FutureSQLiteUserDao daof = new FutureSQLiteUserDao(helper3);
-                String endday = daof.queryBydayid(dayid).getEndday();
-                if (endday != null) {
+                if (daof.queryBydayid(dayid) != null && daof.queryBydayid(dayid).getEndday() != null) {
+                    String endday = daof.queryBydayid(dayid).getEndday();
                     int end = Integer.parseInt((endday.substring(0, 4) + endday.substring(5, 7) + endday.substring(8, 10)));
                     if (end < day) {
                         //数据写入数据库
@@ -254,8 +257,6 @@ public class TodaySQLiteUserDao {
                         helper2 = new PassSQLite(context, DBName2, null, version1);
                         PassSQLiteUserDao dao1 = new PassSQLiteUserDao(helper2);
                         dao1.insert(things1);
-
-
                     }
                 } else {
                     //数据写入数据库
