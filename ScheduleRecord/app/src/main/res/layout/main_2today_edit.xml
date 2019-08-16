@@ -199,8 +199,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp"
+        android:padding="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editLinearLayout3">
 
@@ -220,10 +219,12 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="top"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:textColor="@color/varygray2"
             android:background="@drawable/diary"
             android:hint="写下你的记录吧！"
-            android:inputType="textMultiLine"
-            android:padding="5dp" />
+            android:inputType="textMultiLine" />
 
     </LinearLayout>
 

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.function.AlarmDTT;
 import com.schedule.record.app.function.CalenderWeekItem;
 import com.schedule.record.app.sqlite.FinishSQLite;
@@ -17,9 +18,11 @@ import com.schedule.record.app.sqlite.user.PassSQLiteUser;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 import com.schedule.record.app.sqlite.TodaySQLite;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class TodaySQLiteUserDao {
 
@@ -30,18 +33,36 @@ public class TodaySQLiteUserDao {
         this.helper = helper;
     }
 
-    public void insert(TodaySQLiteUser user){
+    public void insert(TodaySQLiteUser user,Context context){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("dayid",user.getDayid());
+
+        String time = user.getTime();
+        boolean remind = user.isRemind();
+        String dayid = user.getDayid();
+
+        content.put("dayid",dayid);
         content.put("checkbox",user.isCheckbox());
-        content.put("remind",user.isRemind());
-        content.put("time",user.getTime());
+        content.put("remind",remind);
+        content.put("time",time);
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
         content.put("diary",user.getDiary());
         content.put("thisday",user.getThisday());
+
         db.insert(TABLE,null,content);
+
+        //设置闹钟,当前时间小于闹钟时间
+        if (!time.equals("XX:XX") && remind) {
+            String nowTime = getInternetTime();
+            int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
+            int t1 = Integer.parseInt(nowTime.substring(11, 13) + nowTime.substring(14, 16));
+            if (t1 < t ) {
+                int i = Integer.parseInt(dayid.substring(22, 24) + dayid.substring(25, 27) + dayid.substring(28, 30));
+                new AlarmSet(context, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
+            }
+        }
+
         db.close();
     }
 
@@ -139,49 +160,61 @@ public class TodaySQLiteUserDao {
         return dataList;
     }
 
-    //用于闹钟设置时间的查询
-    public List<AlarmDTT> quiryTodayTime() {
-        List<AlarmDTT> dataList = new ArrayList<AlarmDTT>();
-        SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select * from today where checkbox =0 ", null);
-        while (cursor.moveToNext()){
-            String dayid = cursor.getString(0);
-            String time = cursor.getString(3);
-            String title = cursor.getString(4);
-
-            if (!time.substring(0, 2).equals("XX")) {
-                AlarmDTT things = new AlarmDTT(dayid, time, title);
-                dataList.add(things);
-            }
-        }
-        db.close();
-        return dataList;
-    }
-
     public void deleteAll(){
         SQLiteDatabase db=helper.getWritableDatabase();
         db.delete(TABLE,null,null);
         db.close();
     }
 
-    public void deleteByDayid(String dayid){
+    public void deleteByDayid(String dayid, Context context){
         SQLiteDatabase db=helper.getWritableDatabase();
         db.delete(TABLE,"dayid=?",new String[]{dayid});
+
+        //删除dayid对应的闹钟
+        int i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
+        new AlarmSet(context,dayid,i).myAlarmCancel();
+
         db.close();
     }
 
-    public void updateAll(TodaySQLiteUser user){
+    public void updateAll(TodaySQLiteUser user,Context context){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("dayid",user.getDayid());
+        String time = user.getTime();
+        boolean remind = user.isRemind();
+        String dayid = user.getDayid();
+        boolean checkbox = user.isCheckbox();
+
+        content.put("dayid",dayid);
         content.put("checkbox",user.isCheckbox());
-        content.put("remind",user.isRemind());
-        content.put("time",user.getTime());
+        content.put("remind",remind);
+        content.put("time",time);
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
         content.put("diary",user.getDiary());
         content.put("thisday",user.getThisday());
+
         db.update(TABLE,content,"dayid=?",new String[]{user.getDayid()});
+
+        //设置闹钟,当前时间小于闹钟时间
+        if (!time.equals("XX:XX") && remind && !checkbox) {
+            String nowTime = getInternetTime();
+            int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
+            int t1 = Integer.parseInt(nowTime.substring(11, 13) + nowTime.substring(14, 16));
+            if (t1 < t ) {
+                int i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
+                new AlarmSet(context, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
+            }else {
+                //删除dayid对应的闹钟
+                int i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
+                new AlarmSet(context,dayid,i).myAlarmCancel();
+            }
+        }else {
+            //删除dayid对应的闹钟
+            int i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
+            new AlarmSet(context,dayid,i).myAlarmCancel();
+        }
+
         db.close();
     }
 
@@ -231,7 +264,7 @@ public class TodaySQLiteUserDao {
             boolean remind;
             remind = remind1 > 0;
 
-            int thisday1 = Integer.parseInt(thisday.substring(0,4)+thisday.substring(5,7)+thisday.substring(9,10));
+            int thisday1 = Integer.parseInt(thisday.substring(0,4)+thisday.substring(5,7)+thisday.substring(8,10));
 
             if (thisday1<day) {
                 //数据写入数据库
@@ -265,9 +298,20 @@ public class TodaySQLiteUserDao {
                     PassSQLiteUserDao dao1 = new PassSQLiteUserDao(helper2);
                     dao1.insert(things1);
                 }
-                deleteByDayid(dayid);
+                //从数据库删除
+                deleteByDayid(dayid,context);
             }
         }
         db.close();
     }
+
+
+    //联网获取当前时间
+    private String getInternetTime() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        String Dayid = timesimple.format(new Date());
+        return Dayid;
+    }
+
 }

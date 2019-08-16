@@ -9,6 +9,10 @@ public class SpecialSQLiteUser {
         this.gnameid = gnameid;
         this.snameid = snameid;
     }
+    public SpecialSQLiteUser(String gnameid, String snameid) {
+        this.gnameid = gnameid;
+        this.snameid = snameid;
+    }
 
     public String getAuthorization() {
         return authorization;

@@ -80,7 +80,8 @@
             android:layout_weight="1"
             android:background="@drawable/diary"
             android:padding="10dp"
-            android:text="TextView" />
+            android:textSize="18sp" />
+
     </LinearLayout>
 
 </LinearLayout>

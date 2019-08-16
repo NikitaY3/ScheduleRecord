@@ -24,7 +24,6 @@ public class SpecialSQLiteUserDao {
     public void insert(SpecialSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("authorization",user.getAuthorization());
         content.put("gnameid",user.getGnameid());
         content.put("snameid",user.getSnameid());
         db.insert(TABLE,null,content);
@@ -106,21 +105,21 @@ public class SpecialSQLiteUserDao {
         db.close();
     }
 
-    public void deleteByGNameid(String gnameid, String myid){
+    public void deleteByGNameid(String gnameid, String insert){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"gnameid=? and snameid=?",new String[]{gnameid,myid});
+        db.delete(TABLE,"gnameid=? and snameid=?",new String[]{gnameid,insert});
         db.close();
     }
 
-    public void deleteBySNameid(String snameid, String myid){
+    public void deleteBySNameid(String snameid, String insert){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"snameid=? and gnameid=?",new String[]{snameid, myid});
+        db.delete(TABLE,"snameid=? and gnameid=?",new String[]{snameid, insert});
         db.close();
     }
 
     public int CountAll(){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from pass ",null);
+        Cursor cursor = db.rawQuery("select count(*) from special ",null);
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();

@@ -40,6 +40,7 @@
         <activity android:name=".mainmy.MainMyL5Information"/>
         <activity android:name=".mainmy.MyFogetPassword"/>
         <activity android:name=".mainmy.MainMyLogonPhone"/>
+        <activity android:name=".mainmy.MyL5NameSet"/>
         <activity android:name=".MyFutureEdit"/>
         <activity android:name=".clock.ATestA"
             android:theme="@style/Base.V7.Theme.AppCompat.Light.Dialog"/>

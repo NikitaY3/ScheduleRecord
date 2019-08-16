@@ -32,10 +32,12 @@ public class MainMyL3Special extends AppCompatActivity {
     @BindView(R.id.specialTextView2)
     TextView specialTextView2;
 
-    private List<SpecialSQLiteUser> dataList;
+    private SpecialSQLiteUser user;
     private SpecialUserSQLite helper;
     String DBName = "special";
     int version = 1;
+    private SpecialSQLiteUserDao dao;
+    private String nameid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,12 @@ public class MainMyL3Special extends AppCompatActivity {
         //取得登录用户的ID
         SharedPreferences sharedPreferences;
         sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
-        String nameid = sharedPreferences.getString("nameid","");
+        nameid = sharedPreferences.getString("nameid","");
+        user = new SpecialSQLiteUser(nameid,null);
 
+        //普通用户是我，特殊用户是编辑框里面的
         helper = new SpecialUserSQLite(MainMyL3Special.this, DBName, null, version);
-        SpecialSQLiteUserDao dao = new SpecialSQLiteUserDao(helper);
+        dao = new SpecialSQLiteUserDao(helper);
         specialTextView2.setText(dao.querySpecial(nameid));
     }
 
@@ -57,8 +61,13 @@ public class MainMyL3Special extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.specialButton1:
+                user.setSnameid(specialEditText.getText().toString());
+                dao.insert(user);
+                specialTextView2.setText(dao.querySpecial(nameid));
                 break;
             case R.id.specialButton2:
+                dao.deleteByGNameid(nameid,specialEditText.getText().toString());
+                specialTextView2.setText(dao.querySpecial(nameid));
                 break;
         }
     }

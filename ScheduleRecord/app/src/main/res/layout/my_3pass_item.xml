@@ -7,80 +7,86 @@
     android:orientation="vertical">
 
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/passItemConstraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="4dp"
         android:background="@drawable/abaa_item_im_em"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/passItemCheckBox"
-            android:layout_width="30dp"
-            android:layout_height="100dp"
-            android:clickable="false"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/passItemEditText2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="5dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/abaa_item_edittext"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:hint="点击写入日程"
-            android:maxLines="3"
-            android:paddingHorizontal="3dp"
-            android:textColor="#000"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/passLinearLayout1"
-            app:layout_constraintStart_toEndOf="@id/passItemCheckBox"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/passTextView3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="失效日期：2019年7月18日"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/passItemEditText2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/passItemConstraintLayout" />
-
-        <LinearLayout
-            android:id="@+id/passLinearLayout1"
-            android:layout_width="100dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/passTextView1"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="共计持续" />
+            <CheckBox
+                android:id="@+id/passItemCheckBox"
+                android:layout_width="30dp"
+                android:layout_height="100dp"
+                android:clickable="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/passTextView2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/passItemEditText2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/abaa_item_edittext"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="点击写入日程"
+                android:maxLines="3"
+                android:paddingHorizontal="3dp"
+                android:textColor="#000"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/passLinearLayout1"
+                app:layout_constraintStart_toEndOf="@id/passItemCheckBox"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/passTextView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="*天"
-                android:textSize="20sp" />
-        </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
+                android:text="失效日期：2019年7月18日"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/passItemEditText2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/passItemConstraintLayout" />
+
+            <LinearLayout
+                android:id="@+id/passLinearLayout1"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/passTextView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="共计持续" />
+
+                <TextView
+                    android:id="@+id/passTextView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="*天"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

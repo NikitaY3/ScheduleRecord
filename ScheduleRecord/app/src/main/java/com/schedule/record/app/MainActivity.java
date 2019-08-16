@@ -1,5 +1,6 @@
 package com.schedule.record.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,12 +33,16 @@ public class MainActivity extends AppCompatActivity {
     private FragmentController controller;
     private SharedPreferences sharedPreferences;
 
+    public static Activity mainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mainActivity = this;
 
         controller = FragmentController.getInstance(MainActivity.this, R.id.mainFrameLayout);
         if (controller != null) {
@@ -71,5 +76,22 @@ public class MainActivity extends AppCompatActivity {
 
             MainActivity.this.onDestroy();
         }
+    }
+
+//    @Override
+//    protected void onResume() {
+//        controller = FragmentController.getInstance(MainActivity.this, R.id.mainFrameLayout);
+//        if (controller != null) {
+//            controller.showFragment(0);
+//        }
+//        super.onResume();
+//    }
+
+    @Override
+    public void finish() {
+
+        MainActivity.this.onDestroy();
+
+        super.finish();
     }
 }

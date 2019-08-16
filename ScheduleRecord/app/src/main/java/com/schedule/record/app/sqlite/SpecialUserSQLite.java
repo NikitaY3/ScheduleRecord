@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SpecialUserSQLite extends SQLiteOpenHelper {
 
-    String CREAT_TABLE="create table special(authorization char(12) primary key,gnameid varchar(12),snameid varchar(12))";
+    String CREAT_TABLE="create table special(authorization integer primary key autoincrement,gnameid varchar(12),snameid varchar(12))";
     public SpecialUserSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

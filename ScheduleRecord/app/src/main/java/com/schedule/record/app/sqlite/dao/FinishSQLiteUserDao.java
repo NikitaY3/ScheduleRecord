@@ -164,9 +164,9 @@ public class FinishSQLiteUserDao {
         return sb.toString();
     }
 
-    public int CountFinish(String dayid){
+    public int CountFinishByDayid(String dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox =1 and dayid =? ", new String[]{dayid});
+        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox = 1 and dayid =? ", new String[]{dayid});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();

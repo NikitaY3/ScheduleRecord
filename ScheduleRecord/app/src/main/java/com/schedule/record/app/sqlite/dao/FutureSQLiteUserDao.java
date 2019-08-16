@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.function.CalenderWeekItem;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
@@ -200,14 +201,14 @@ public class FutureSQLiteUserDao {
                     while (!re.equals("")) {
                         String a = re.substring(0, 1);
                         if (a.equals(week)) {
-                            dao.insert(things);
+                            dao.insert(things,context);
                         }
                         re = re.substring(1);
                     }
                 } else if (repeat1.equals("everyday") || (repeat1.equals("everymou") && m == 1)) {
-                    dao.insert(things);
+                    dao.insert(things,context);
                 } else if (end == today && repeat1.equals("norepeat")){
-                    dao.insert(things);
+                    dao.insert(things,context);
                 }
             }
             if (end <= today){

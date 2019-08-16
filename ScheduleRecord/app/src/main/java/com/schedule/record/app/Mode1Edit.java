@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.schedule.record.app.clock.AlarmSet;
+import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
@@ -83,7 +84,7 @@ public class Mode1Edit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mode1_edit);
+        setContentView(R.layout.main_2today_edit);
         ButterKnife.bind(this);
         layoutFilling();
     }
@@ -119,37 +120,37 @@ public class Mode1Edit extends AppCompatActivity {
                 break;
             case R.id.editButton21:
                 user.setImportant("a");
-                dao.updateAll(user);
+                dao.updateAll(user,Mode1Edit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
                 break;
             case R.id.editButton22:
                 user.setImportant("b");
-                dao.updateAll(user);
+                dao.updateAll(user,Mode1Edit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
                 break;
             case R.id.editButton23:
                 user.setImportant("c");
-                dao.updateAll(user);
+                dao.updateAll(user,Mode1Edit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
                 break;
             case R.id.editButton24:
                 user.setImportant("d");
-                dao.updateAll(user);
+                dao.updateAll(user,Mode1Edit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
                 break;
             case R.id.editButton25:
                 user.setImportant("e");
-                dao.updateAll(user);
+                dao.updateAll(user,Mode1Edit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
                 break;
             case R.id.editButton26:
                 user.setImportant("f");
-                dao.updateAll(user);
+                dao.updateAll(user,Mode1Edit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
                 break;
             case R.id.editButton27:
                 user.setImportant("g");
-                dao.updateAll(user);
+                dao.updateAll(user,Mode1Edit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                 break;
         }
@@ -183,18 +184,18 @@ public class Mode1Edit extends AppCompatActivity {
             new AlarmSet(this,dayid,i).myAlarmCancel();
         }else {
             user.setCheckbox(false);
-            //设置闹钟
-            if (!time.equals("XX:XX") && remind) {
-                int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
-                String dayid1 = getInternetTime();
-                int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
-                if (t > t1) {
-                    new AlarmSet(this, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
-                }
-            }
+//            //设置闹钟
+//            if (!time.equals("XX:XX") && remind) {
+//                int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
+//                String dayid1 = getInternetTime();
+//                int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
+//                if (t > t1) {
+//                    new AlarmSet(this, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
+//                }
+//            }
         }
         user.setDiary(editEditText2.getText().toString());
-        dao.updateAll(user);
+        dao.updateAll(user,Mode1Edit.this);
         Toast.makeText(Mode1Edit.this, "已保存数据", Toast.LENGTH_SHORT).show();
         super.onPause();
     }
@@ -218,29 +219,33 @@ public class Mode1Edit extends AppCompatActivity {
         editEditText0.setText(d.getTime());
         editEditText1.setText(d.getTitle());
         editEditText2.setText(d.getDiary());
-        switch (d.getImportant()) {
-            case "a":
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                break;
-            case "b":
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-                break;
-            case "c":
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-                break;
-            case "d":
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-                break;
-            case "e":
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-                break;
-            case "f":
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-                break;
-            case "g":
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-                break;
-        }
+
+//        switch (d.getImportant()) {
+//            case "a":
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+//                break;
+//            case "b":
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+//                break;
+//            case "c":
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+//                break;
+//            case "d":
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+//                break;
+//            case "e":
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+//                break;
+//            case "f":
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+//                break;
+//            case "g":
+//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+//                break;
+//        }
+
+        new ColorImportant(d.getImportant(),editLinearLayout1).LinearLayoutSet();
+
         remind = d.isRemind();
         if (remind) {
             editRadio1.setChecked(true);

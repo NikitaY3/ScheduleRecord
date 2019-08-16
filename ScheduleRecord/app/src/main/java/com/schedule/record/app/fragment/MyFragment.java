@@ -5,15 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.schedule.record.app.MainActivity;
 import com.schedule.record.app.R;
@@ -144,7 +148,9 @@ public class MyFragment extends Fragment {
             case R.id.myImageView2:
                 Intent intent = new Intent(getActivity(), MainMyLogonPhone.class);
                 startActivity(intent);
+
                 getActivity().finish();
+
                 break;
         }
     }

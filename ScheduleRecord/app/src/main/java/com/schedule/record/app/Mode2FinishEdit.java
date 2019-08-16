@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.FinishSQLite;
 import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
@@ -46,7 +47,7 @@ class Mode2FinishEdit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mode2_edit_finish);
+        setContentView(R.layout.main_3finish_edit);
         ButterKnife.bind(this);
         layoutFilling();
 
@@ -71,29 +72,31 @@ class Mode2FinishEdit extends AppCompatActivity {
         fEditEditText0.setText(d.getTime());
         fEditEditText1.setText(d.getTitle());
         fEditEditText2.setText(d.getDiary());
-        switch (d.getImportant()) {
-            case "a":
-                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                break;
-            case "b":
-                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-                break;
-            case "c":
-                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-                break;
-            case "d":
-                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-                break;
-            case "e":
-                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-                break;
-            case "f":
-                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-                break;
-            case "g":
-                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-                break;
-        }
+
+        new ColorImportant(d.getImportant(),fEditLinearLayout1).LinearLayoutSet();
+//        switch (d.getImportant()) {
+//            case "a":
+//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+//                break;
+//            case "b":
+//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+//                break;
+//            case "c":
+//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+//                break;
+//            case "d":
+//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+//                break;
+//            case "e":
+//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+//                break;
+//            case "f":
+//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+//                break;
+//            case "g":
+//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+//                break;
+//        }
         user = d;//获取当前Dayid的数据的内容
     }
 }

@@ -1,10 +1,12 @@
 package com.schedule.record.app.mainmy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.schedule.record.app.MainActivity;
 import com.schedule.record.app.R;
 
 import butterknife.BindView;
@@ -35,6 +37,12 @@ public class MainMyL5Information extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.informationButton1:
+                Intent intent = new Intent(MainMyL5Information.this, MyL5NameSet.class);
+                startActivity(intent);
+
+//                finishActivity(MainActivity.class);
+//                MainActivity.class.getClass().onDestroy();
+//                MainActivity.class.finish();
                 break;
             case R.id.informationButton2:
                 break;

@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.MyFutureAdapter;
+import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.FutureSQLite;
 import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
@@ -277,6 +278,7 @@ public class FutureDialog extends Dialog {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String s=((TextView)view).getText().toString();
+                important = new ColorImportant(s,myFInputLinearLayout1).ImportantSet();
                 switch (s) {
                     case "提醒":
                         remind = true;
@@ -296,34 +298,34 @@ public class FutureDialog extends Dialog {
                     case "每月":
                         repeat = "everymou"+"1";
                         break;
-                    case "等级一":
-                        important = "a";
-                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                        break;
-                    case "等级二":
-                        important = "b";
-                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-                        break;
-                    case "等级三":
-                        important = "c";
-                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-                        break;
-                    case "等级四":
-                        important = "d";
-                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-                        break;
-                    case "等级五":
-                        important = "e";
-                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-                        break;
-                    case "等级六":
-                        important = "f";
-                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-                        break;
-                    case "等级七":
-                        important = "g";
-                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-                        break;
+//                    case "等级一":
+//                        important = "a";
+//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+//                        break;
+//                    case "等级二":
+//                        important = "b";
+//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+//                        break;
+//                    case "等级三":
+//                        important = "c";
+//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+//                        break;
+//                    case "等级四":
+//                        important = "d";
+//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+//                        break;
+//                    case "等级五":
+//                        important = "e";
+//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+//                        break;
+//                    case "等级六":
+//                        important = "f";
+//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+//                        break;
+//                    case "等级七":
+//                        important = "g";
+//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+//                        break;
                 }
             }
             @Override

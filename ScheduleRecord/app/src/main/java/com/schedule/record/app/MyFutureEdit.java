@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.FutureSQLite;
 import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
@@ -111,7 +112,7 @@ class MyFutureEdit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_1future_edit);
+        setContentView(R.layout.main_1future_edit);
         ButterKnife.bind(this);
         layoutFilling();
         onRadioGroupChecked();
@@ -267,29 +268,30 @@ class MyFutureEdit extends AppCompatActivity {
         mfEditEditText0.setText(d.getTime());
         mfEditEditText1.setText(d.getTitle());
         mfEditEditText2.setText(d.getDiary());
-        switch (d.getImportant()) {
-            case "a":
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                break;
-            case "b":
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-                break;
-            case "c":
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-                break;
-            case "d":
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-                break;
-            case "e":
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-                break;
-            case "f":
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-                break;
-            case "g":
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-                break;
-        }
+//        switch (d.getImportant()) {
+//            case "a":
+//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+//                break;
+//            case "b":
+//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+//                break;
+//            case "c":
+//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+//                break;
+//            case "d":
+//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+//                break;
+//            case "e":
+//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+//                break;
+//            case "f":
+//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+//                break;
+//            case "g":
+//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+//                break;
+//        }
+        new ColorImportant(d.getImportant(),mfEditLinearLayout1).LinearLayoutSet();
         String repeat = d.getRepeat();
         switch (repeat.substring(0, 8)) {
             case "everyday":

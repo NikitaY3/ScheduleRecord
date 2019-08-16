@@ -22,9 +22,11 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.clock.AlarmSet;
+import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.adapter.CalenderDayAdapter;
 import com.schedule.record.app.function.Mode1ProgressBar;
@@ -135,7 +137,11 @@ public class TodayDialog extends Dialog {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        insertDataBase();
+                        if (inputItemEditText2.getText().toString()!=null) {
+                            insertDataBase();
+                        } else {
+                            Toast.makeText(context,"请输入日程标题",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 },10);
                 //延时函数
@@ -167,11 +173,9 @@ public class TodayDialog extends Dialog {
         getWindow().setAttributes(layoutParams);
     }
 
+    //确认添加按钮点击后创建Item及将数据写入数据库
     private void insertDataBase() {
-        //确认添加按钮点击后创建Item及将数据写入数据库
         Dayidbutton = getInternetTime();
-
-        //Item适配器的调用及Item的生成
         String dayTitle = inputItemEditText2.getText().toString();
         String time = inputItemEditText1.getText().toString();
 
@@ -187,17 +191,7 @@ public class TodayDialog extends Dialog {
         helper=new TodaySQLite(context,DBName,null,version);
         helper.getReadableDatabase();
         TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
-        dao.insert(things);
-
-        //设置闹钟
-        if (!time.equals("XX:XX") && remind) {
-            int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
-            int t1 = Integer.parseInt(Dayidbutton.substring(11, 13) + Dayidbutton.substring(14, 16));
-            if (t > t1) {
-                int i = Integer.parseInt(Dayidbutton.substring(11, 13) + Dayidbutton.substring(14, 16) + Dayidbutton.substring(17, 19));
-                new AlarmSet(context, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
-            }
-        }
+        dao.insert(things,context);
 
         //刷新所有Item
         dataList = new ArrayList<TodaySQLiteUser>();
@@ -246,6 +240,7 @@ public class TodayDialog extends Dialog {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String s=((TextView)view).getText().toString();
+                important = new ColorImportant(s,inputItemLinearLayout1).ImportantSet();
                 switch (s) {
                     case "提醒":
                         remind = true;
@@ -253,34 +248,34 @@ public class TodayDialog extends Dialog {
                     case "不提醒":
                         remind = false;
                         break;
-                    case "等级一":
-                        important = "a";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                        break;
-                    case "等级二":
-                        important = "b";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-                        break;
-                    case "等级三":
-                        important = "c";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-                        break;
-                    case "等级四":
-                        important = "d";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-                        break;
-                    case "等级五":
-                        important = "e";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-                        break;
-                    case "等级六":
-                        important = "f";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-                        break;
-                    case "等级七":
-                        important = "g";
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-                        break;
+//                    case "等级一":
+//                        important = "a";
+//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+//                        break;
+//                    case "等级二":
+//                        important = "b";
+//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+//                        break;
+//                    case "等级三":
+//                        important = "c";
+//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+//                        break;
+//                    case "等级四":
+//                        important = "d";
+//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+//                        break;
+//                    case "等级五":
+//                        important = "e";
+//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+//                        break;
+//                    case "等级六":
+//                        important = "f";
+//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+//                        break;
+//                    case "等级七":
+//                        important = "g";
+//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+//                        break;
                 }
             }
             @Override

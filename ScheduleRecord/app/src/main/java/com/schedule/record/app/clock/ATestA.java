@@ -42,6 +42,7 @@ public class ATestA extends AppCompatActivity {
 
     private String dayid;
     private int i;
+    private TodaySQLiteUserDao dao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,21 +53,24 @@ public class ATestA extends AppCompatActivity {
         dayid = getIntent().getStringExtra("dayid");
         i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
 
+        helper = new TodaySQLite(this, DBName, null, version);
+        dao = new TodaySQLiteUserDao(helper);
+        user = dao.queryBydayid(dayid);
+
+        mAlaTextView2.setText(user.getTitle());
+
         playMusic();
     }
 
     @OnClick({R.id.mAlaButton1, R.id.mAlaButton2})
     public void onViewClicked(View view) {
 
-        helper = new TodaySQLite(this, DBName, null, version);
-        TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper);
-        user = dao.queryBydayid(dayid);
 
         switch (view.getId()) {
             case R.id.mAlaButton1:
                 stopMusic();
                 user.setCheckbox(true);
-                dao.updateAll(user);
+                dao.updateAll(user,ATestA.this);
                 finish();
                 break;
             case R.id.mAlaButton2:
@@ -78,7 +82,7 @@ public class ATestA extends AppCompatActivity {
 
                 gettime(user.getTime(),min);
 
-                dao.updateAll(user);
+                dao.updateAll(user,ATestA.this);
 
                 finish();
                 break;
@@ -109,8 +113,9 @@ public class ATestA extends AppCompatActivity {
     }
 
     public void stopMusic() {
-        //取消闹钟
-        new AlarmSet(this,dayid,i).myAlarmCancel();
+
+//        //取消闹钟
+//        new AlarmSet(this,dayid,i).myAlarmCancel();
 
         if (player != null) {
             player.stop();
@@ -160,8 +165,8 @@ public class ATestA extends AppCompatActivity {
             user.setThisday(thisday3);
         }
 
-        //设置闹钟
-        new AlarmSet(this,minH,minM,dayid,i).myAlarmSet();
+//        //设置闹钟
+//        new AlarmSet(this,minH,minM,dayid,i).myAlarmSet();
 
         //计算闹钟时间
         if (minM < 10 && minH < 10) {

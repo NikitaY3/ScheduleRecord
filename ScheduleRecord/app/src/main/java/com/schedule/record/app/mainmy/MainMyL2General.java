@@ -33,10 +33,12 @@ public class MainMyL2General extends AppCompatActivity {
     @BindView(R.id.generalTextView2)
     TextView generalTextView2;
 
-    private List<SpecialSQLiteUser> dataList;
+    private SpecialSQLiteUser user;
     private SpecialUserSQLite helper;
-    String DBName = "special";
-    int version = 1;
+    private String DBName = "special";
+    private int version = 1;
+    private SpecialSQLiteUserDao dao;
+    private String nameid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,13 @@ public class MainMyL2General extends AppCompatActivity {
         //取得登录用户的ID
         SharedPreferences sharedPreferences;
         sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
-        String nameid = sharedPreferences.getString("nameid","");
+        nameid = sharedPreferences.getString("nameid","");
+        user = new SpecialSQLiteUser(null, nameid);
+//        user.setSnameid(nameid);
 
+        //特殊用户是我，普通用户是编辑框里面的
         helper = new SpecialUserSQLite(MainMyL2General.this, DBName, null, version);
-        SpecialSQLiteUserDao dao = new SpecialSQLiteUserDao(helper);
+        dao = new SpecialSQLiteUserDao(helper);
         generalTextView2.setText(dao.queryGeneral(nameid));
     }
 
@@ -58,8 +63,13 @@ public class MainMyL2General extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.generalButton1:
+                user.setGnameid(generalEditText.getText().toString());
+                dao.insert(user);
+                generalTextView2.setText(dao.queryGeneral(nameid));
                 break;
             case R.id.generalButton2:
+                dao.deleteBySNameid(nameid,generalEditText.getText().toString());
+                generalTextView2.setText(dao.queryGeneral(nameid));
                 break;
         }
     }

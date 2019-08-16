@@ -23,7 +23,7 @@
         android:id="@+id/calendar2LinearLayout1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/ac_my_head"
+        android:background="@drawable/abb_my_head"
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"

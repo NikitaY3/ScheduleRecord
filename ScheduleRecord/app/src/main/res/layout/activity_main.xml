@@ -31,31 +31,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/a_main_button_a"
+                android:layout_marginHorizontal="20dp"
+                android:text="设 备"
+                android:textSize="10dp"
+                android:padding="3dp"
+                android:textColor="@color/white"
+                android:drawableTop="@drawable/a_main_button_a"
                 android:button="@null"
                 android:checked="true"
-                android:gravity="center"
-                android:layout_marginHorizontal="45dp"/>
+                android:gravity="center"/>
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/a_main_button_b"
+                android:layout_marginHorizontal="20dp"
+                android:text="日 程"
+                android:textSize="10dp"
+                android:padding="3dp"
+                android:textColor="@color/white"
+                android:drawableTop="@drawable/a_main_button_b"
                 android:button="@null"
-                android:gravity="center"
-                android:layout_marginHorizontal="45dp"/>
+                android:gravity="center"/>
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/a_main_button_c"
+                android:layout_marginHorizontal="20dp"
+                android:text="我 的"
+                android:textSize="10dp"
+                android:padding="3dp"
+                android:textColor="@color/white"
+                android:drawableTop="@drawable/a_main_button_c"
                 android:button="@null"
-                android:gravity="center"
-                android:layout_marginHorizontal="45dp"/>
+                android:gravity="center"/>
         </RadioGroup>
 
 </RelativeLayout>

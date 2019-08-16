@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.schedule.record.app.MyFutureEdit;
 import com.schedule.record.app.R;
+import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.FutureSQLite;
 import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
@@ -86,29 +87,30 @@ public class MyFutureAdapter extends BaseAdapter {
             }
         });
 
-        switch (pb.getImportant()) {
-            case "a":
-                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_em);
-                break;
-            case "b":
-                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_no);
-                break;
-            case "c":
-                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_em);
-                break;
-            case "d":
-                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no);
-                break;
-            case "e":
-                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-                break;
-            case "f":
-                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-                break;
-            case "g":
-                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-                break;
-        }
+        new ColorImportant(pb.getImportant(),holder.linearLayout).LinearLayoutSet();
+//        switch (pb.getImportant()) {
+//            case "a":
+//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_em);
+//                break;
+//            case "b":
+//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_no);
+//                break;
+//            case "c":
+//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_em);
+//                break;
+//            case "d":
+//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no);
+//                break;
+//            case "e":
+//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+//                break;
+//            case "f":
+//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+//                break;
+//            case "g":
+//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+//                break;
+//        }
         return convertView;
     }
     static class ViewHolder{

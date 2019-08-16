@@ -1,5 +1,6 @@
 package com.schedule.record.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.schedule.record.app.Mode2FinishEdit;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.CalenderWeekItem;
+import com.schedule.record.app.function.ColorImportant;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class CalenderWeekAdapter1 extends BaseAdapter {
     }
 
     //每一个item调用该方法---视图缓存机制
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -75,20 +78,21 @@ public class CalenderWeekAdapter1 extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        switch (pb.getImportant()) {
-            case "a":
-                holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                break;
-            case "b":
-                holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_no);
-                break;
-            case "c":
-                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_em);
-                break;
-            case "d":
-                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_no);
-                break;
-        }
+        new ColorImportant(pb.getImportant(),holder.btn1).LinearLayoutSet();
+//        switch (pb.getImportant()) {
+//            case "a":
+//                holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_em);
+//                break;
+//            case "b":
+//                holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_no);
+//                break;
+//            case "c":
+//                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_em);
+//                break;
+//            case "d":
+//                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_no);
+//                break;
+//        }
         return convertView;
     }
 

@@ -11,8 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
+        android:textColor="@color/colorPrimary"
         android:text="this is title"
-        android:textSize="18sp" />
+        android:textSize="23sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/nullcolor"
+            android:textColor="@drawable/ac_my_button1_text"
             android:text="标记完成" />
 
         <Button
@@ -31,6 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/nullcolor"
+            android:textColor="@drawable/ac_my_button1_text"
             android:text="日程延后" />
     </LinearLayout>
 

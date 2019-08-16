@@ -46,9 +46,9 @@
         <TextView
             android:id="@+id/bSetSwitch3"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:background="@drawable/ac_my_button1"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
@@ -65,52 +65,52 @@
             android:textAlignment="center"/>
     </LinearLayout>
 
-    <Switch
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/ac_my_button1"
-        android:textColor="@drawable/ac_my_button1_text"
-        android:paddingStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="播报是否循环等待用户确认"
-        android:gravity="center_vertical"/>
+    <!--<Switch-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:textColor="@drawable/ac_my_button1_text"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="播报是否循环等待用户确认"-->
+        <!--android:gravity="center_vertical"/>-->
 
-    <Switch
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/ac_my_button1"
-        android:textColor="@drawable/ac_my_button1_text"
-        android:paddingStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="允许他人插入日程"
-        android:gravity="center_vertical" />
+    <!--<Switch-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:textColor="@drawable/ac_my_button1_text"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="允许他人插入日程"-->
+        <!--android:gravity="center_vertical" />-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/ac_my_button1"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="播放铃声"
-        android:textColor="@drawable/ac_my_button1_text" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="播放铃声"-->
+        <!--android:textColor="@drawable/ac_my_button1_text" />-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/ac_my_button1"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:text="按键录入"
-        android:textColor="@drawable/ac_my_button1_text" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:text="按键录入"-->
+        <!--android:textColor="@drawable/ac_my_button1_text" />-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/ac_my_button1"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:text="设置不被打扰时间"
-        android:textColor="@drawable/ac_my_button1_text" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:background="@drawable/ac_my_button1"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingStart="10dp"-->
+        <!--android:text="设置不被打扰时间"-->
+        <!--android:textColor="@drawable/ac_my_button1_text" />-->
 
 </LinearLayout>

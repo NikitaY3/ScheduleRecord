@@ -445,9 +445,11 @@
             android:layout_weight="1"
             android:background="@drawable/diary"
             android:gravity="top"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:textColor="@color/varygray2"
             android:hint="写下你的记录吧！"
-            android:inputType="textMultiLine"
-            android:padding="5dp" />
+            android:inputType="textMultiLine" />
 
     </LinearLayout>
 

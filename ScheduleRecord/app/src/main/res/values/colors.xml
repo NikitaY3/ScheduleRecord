@@ -6,7 +6,6 @@
     <color name="colorAccent">#00574B</color>
 
     <color name="green">#90008577</color>
-    <color name="green2">#8F008577</color>
 
     <color name="green3">#80008577</color>
     <color name="green4">#8080E6B6</color>
@@ -27,6 +26,25 @@
     <color name="my7">#B75CFF</color>
 
     <color name="my8">#FA8978</color>
+
+
+    <color name="rainbow1">#FF0000</color>
+    <color name="rainbow2">#FF7F00</color>
+    <color name="rainbow3">#FFFF00</color>
+    <color name="rainbow4">#00FF00</color>
+    <color name="rainbow5">#00FFFF</color>
+    <color name="rainbow6">#0000FF</color>
+    <color name="rainbow7">#8B00FF</color>
+
+    <color name="rain1">#70FF0000</color>
+    <color name="rain2">#70FF7F00</color>
+    <color name="rain3">#70FFFF00</color>
+    <color name="rain4">#7000FF00</color>
+    <color name="rain5">#7000FFFF</color>
+    <color name="rain6">#700000FF</color>
+    <color name="rain7">#708B00FF</color>
+
+
 
     <color name="nullcolor">#00000000</color>
     <color name="white">#FFFFFF</color>
