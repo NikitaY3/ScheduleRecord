@@ -79,9 +79,9 @@ public class ATestA extends AppCompatActivity {
                 SharedPreferences sharedPreferences;
                 sharedPreferences = this.getSharedPreferences("delaytime",MODE_PRIVATE);
                 String min = sharedPreferences.getString("time","");
-
+                //计算延时后的时间，获取并设置延时日程
                 gettime(user.getTime(),min);
-
+                //更新数据库
                 dao.updateAll(user,ATestA.this);
 
                 finish();
@@ -113,10 +113,6 @@ public class ATestA extends AppCompatActivity {
     }
 
     public void stopMusic() {
-
-//        //取消闹钟
-//        new AlarmSet(this,dayid,i).myAlarmCancel();
-
         if (player != null) {
             player.stop();
             try {
@@ -164,9 +160,6 @@ public class ATestA extends AppCompatActivity {
             String thisday3 = thisday.substring(0, 8) + thisday2;
             user.setThisday(thisday3);
         }
-
-//        //设置闹钟
-//        new AlarmSet(this,minH,minM,dayid,i).myAlarmSet();
 
         //计算闹钟时间
         if (minM < 10 && minH < 10) {

@@ -1,17 +1,17 @@
 package com.schedule.record.app.sqlite.user;
 
-public class SpecialSQLiteUser {
+public class AuthoritySQLiteUser {
 //    authorization char(12) primary key,gnameid varchar(12),snameid varchar(12)
-    private String authorization,gnameid,snameid;
+    private String authorization,gnameId,snameId;
 
-    public SpecialSQLiteUser(String authorization, String gnameid, String snameid) {
+    public AuthoritySQLiteUser(String authorization, String gnameid, String snameid) {
         this.authorization = authorization;
-        this.gnameid = gnameid;
-        this.snameid = snameid;
+        this.gnameId = gnameid;
+        this.snameId = snameid;
     }
-    public SpecialSQLiteUser(String gnameid, String snameid) {
-        this.gnameid = gnameid;
-        this.snameid = snameid;
+    public AuthoritySQLiteUser(String gnameid, String snameid) {
+        this.gnameId = gnameid;
+        this.snameId = snameid;
     }
 
     public String getAuthorization() {
@@ -23,18 +23,18 @@ public class SpecialSQLiteUser {
     }
 
     public String getGnameid() {
-        return gnameid;
+        return gnameId;
     }
 
     public void setGnameid(String gnameid) {
-        this.gnameid = gnameid;
+        this.gnameId = gnameid;
     }
 
     public String getSnameid() {
-        return snameid;
+        return snameId;
     }
 
     public void setSnameid(String snameid) {
-        this.snameid = snameid;
+        this.snameId = snameid;
     }
 }

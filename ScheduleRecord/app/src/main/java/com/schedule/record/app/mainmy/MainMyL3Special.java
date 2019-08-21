@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.sqlite.SpecialUserSQLite;
-import com.schedule.record.app.sqlite.dao.SpecialSQLiteUserDao;
-import com.schedule.record.app.sqlite.user.SpecialSQLiteUser;
+import com.schedule.record.app.sqlite.AuthoritySQLite;
+import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
+import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
 
 import java.util.List;
 
@@ -32,11 +32,11 @@ public class MainMyL3Special extends AppCompatActivity {
     @BindView(R.id.specialTextView2)
     TextView specialTextView2;
 
-    private SpecialSQLiteUser user;
-    private SpecialUserSQLite helper;
-    String DBName = "special";
+    private AuthoritySQLiteUser user;
+    private AuthoritySQLite helper;
+    String DBName = "authority";
     int version = 1;
-    private SpecialSQLiteUserDao dao;
+    private AuthoritySQLiteUserDao dao;
     private String nameid;
 
     @Override
@@ -49,11 +49,11 @@ public class MainMyL3Special extends AppCompatActivity {
         SharedPreferences sharedPreferences;
         sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
         nameid = sharedPreferences.getString("nameid","");
-        user = new SpecialSQLiteUser(nameid,null);
+        user = new AuthoritySQLiteUser(nameid,null);
 
         //普通用户是我，特殊用户是编辑框里面的
-        helper = new SpecialUserSQLite(MainMyL3Special.this, DBName, null, version);
-        dao = new SpecialSQLiteUserDao(helper);
+        helper = new AuthoritySQLite(MainMyL3Special.this, DBName, null, version);
+        dao = new AuthoritySQLiteUserDao(helper);
         specialTextView2.setText(dao.querySpecial(nameid));
     }
 
@@ -66,7 +66,7 @@ public class MainMyL3Special extends AppCompatActivity {
                 specialTextView2.setText(dao.querySpecial(nameid));
                 break;
             case R.id.specialButton2:
-                dao.deleteByGNameid(nameid,specialEditText.getText().toString());
+                dao.deleteByGSNameid(nameid,specialEditText.getText().toString());
                 specialTextView2.setText(dao.querySpecial(nameid));
                 break;
         }

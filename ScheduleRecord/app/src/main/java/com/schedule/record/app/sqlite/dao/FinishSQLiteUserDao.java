@@ -24,8 +24,8 @@ public class FinishSQLiteUserDao {
     public void insert(FinishSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("finishid",user.getFinishid());
-        content.put("dayid",user.getDayid());
+        content.put("finish_id",user.getFinishId());
+        content.put("day_id",user.getDayId());
         content.put("checkbox",user.getCheckbox());
         content.put("remind",user.getRemind());
         content.put("time",user.getTime());
@@ -38,19 +38,19 @@ public class FinishSQLiteUserDao {
 
     public void deleteByDayid(String dayid){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"dayid=?",new String[]{dayid});
+        db.delete(TABLE,"day_id=?",new String[]{dayid});
         db.close();
     }
 
     public void deleteByFinishid(String finishid){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"finishid=?",new String[]{finishid});
+        db.delete(TABLE,"finish_id=?",new String[]{finishid});
         db.close();
     }
 
     public  FinishSQLiteUser queryBydayid(String Dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "dayid=?", new String[]{Dayid}, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "day_id=?", new String[]{Dayid}, null, null, null);
         FinishSQLiteUser user = null;
         while (cursor.moveToNext()) {
             String finishid = cursor.getString(0);
@@ -73,7 +73,7 @@ public class FinishSQLiteUserDao {
 
     public  FinishSQLiteUser queryByFinishid(String Finishid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "finishid=?", new String[]{Finishid}, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "finish_id=?", new String[]{Finishid}, null, null, null);
         FinishSQLiteUser user = null;
         while (cursor.moveToNext()) {
             String finishid = cursor.getString(0);
@@ -97,7 +97,7 @@ public class FinishSQLiteUserDao {
     public  List<FinishSQLiteUser> quiryAndSetItem(){
         List<FinishSQLiteUser> dataList = new ArrayList<FinishSQLiteUser>();//item的list
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, null, null, null, null, "finishid");
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, null, null, null, null, "finish_id");
         while (cursor.moveToNext()) {
             String finishid = cursor.getString(0);
             String dayid = cursor.getString(1);
@@ -124,7 +124,7 @@ public class FinishSQLiteUserDao {
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"Finishid like ?", new String[]{"%"+day+"%"},null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"finish_id like ?", new String[]{"%"+day+"%"},null,null,"important,time");
         while (cursor.moveToNext()){
             String finishid = cursor.getString(0);
             int checkbox1 = cursor.getInt(2);
@@ -138,7 +138,6 @@ public class FinishSQLiteUserDao {
         db.close();
         return dataList;
     }
-
 
     public String queryAllString(){
         SQLiteDatabase db=helper.getWritableDatabase();
@@ -166,7 +165,7 @@ public class FinishSQLiteUserDao {
 
     public int CountFinishByDayid(String dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox = 1 and dayid =? ", new String[]{dayid});
+        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox = 1 and day_id =? ", new String[]{dayid});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();
@@ -176,7 +175,7 @@ public class FinishSQLiteUserDao {
 
     public int CountAllByDayid(String dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from finish where dayid =? ", new String[]{dayid});
+        Cursor cursor = db.rawQuery("select count(*) from finish where day_id =? ", new String[]{dayid});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();

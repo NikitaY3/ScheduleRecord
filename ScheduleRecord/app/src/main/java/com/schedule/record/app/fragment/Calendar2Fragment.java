@@ -123,7 +123,6 @@ public class Calendar2Fragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void onResume1() {
-
         //0、初始化
         StartSet();
         //1、获取当前日期
@@ -133,7 +132,6 @@ public class Calendar2Fragment extends Fragment {
         //2、判断今天星期
         todayweek = new CalculationWeek(today1.substring(0, 10)).getWeek();
         week = Integer.parseInt(todayweek);//0-6
-
         //3、判断星期日
         if (0<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList1);

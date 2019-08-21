@@ -20,13 +20,12 @@ public class PassSQLiteUserDao {
         this.helper = helper;
     }
 
-
     public void insert(PassSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("dayid",user.getDayid());
+        content.put("day_id",user.getDayid());
         content.put("title",user.getTitle());
-        content.put("passday",user.getPassday());
+        content.put("pass_day",user.getPassday());
         content.put("completion",user.getCompletion());
         content.put("important",user.getImportant());
         db.insert(TABLE,null,content);
@@ -35,7 +34,7 @@ public class PassSQLiteUserDao {
 
     public  PassSQLiteUser queryBydayid(String Dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "dayid=?", new String[]{Dayid}, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "day_id=?", new String[]{Dayid}, null, null, null);
         PassSQLiteUser user = null;
         while (cursor.moveToNext()) {
             String dayid = cursor.getString(0);
@@ -93,19 +92,19 @@ public class PassSQLiteUserDao {
 
     public void deleteByDayid(String dayid){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"dayid=?",new String[]{dayid});
+        db.delete(TABLE,"day_id=?",new String[]{dayid});
         db.close();
     }
 
     public void updateAll(PassSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("dayid",user.getDayid());
+        content.put("day_id",user.getDayid());
         content.put("title",user.getTitle());
-        content.put("passday",user.getPassday());
+        content.put("pass_day",user.getPassday());
         content.put("completion",user.getCompletion());
         content.put("important",user.getImportant());
-        db.update(TABLE,content,"dayid=?",new String[]{user.getDayid()});
+        db.update(TABLE,content,"day_id=?",new String[]{user.getDayid()});
         db.close();
     }
 

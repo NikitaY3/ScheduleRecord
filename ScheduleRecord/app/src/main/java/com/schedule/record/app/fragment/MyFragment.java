@@ -75,10 +75,6 @@ public class MyFragment extends Fragment {
 
     private View view;
 
-    private GeneralUserSQLite helper;
-    private String DBName = "general";
-    private int version = 1;
-
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
@@ -87,19 +83,13 @@ public class MyFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        //取得登录用户的ID
+        //取得登录用户的ID和昵称
         SharedPreferences sharedPreferences;
         sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("myuser", MODE_PRIVATE);
         String nameid = sharedPreferences.getString("nameid","");
+        String name = sharedPreferences.getString("name","");
         myTextView2.setText("账号："+nameid);
-
-        //取得用户昵称
-        helper=new GeneralUserSQLite(getActivity(),DBName,null,version);
-        GeneralSQLiteUserDao dao=new GeneralSQLiteUserDao(helper);
-        if (dao.queryByNameid(nameid)!=null) {
-            String name = dao.queryByNameid(nameid).getName();
-            myTextView1.setText(name);
-        }
+        myTextView1.setText(name);
 
         return view;
     }

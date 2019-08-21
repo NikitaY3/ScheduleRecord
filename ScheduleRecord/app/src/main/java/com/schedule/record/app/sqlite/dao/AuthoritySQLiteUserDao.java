@@ -6,42 +6,43 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
-import com.schedule.record.app.sqlite.SpecialUserSQLite;
-import com.schedule.record.app.sqlite.user.SpecialSQLiteUser;
+import com.schedule.record.app.sqlite.AuthoritySQLite;
+import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpecialSQLiteUserDao {
+public class AuthoritySQLiteUserDao {
 
-    private SpecialUserSQLite helper;
-    private static final String TABLE = "special";
+    private AuthoritySQLite helper;
+    private static final String TABLE = "authority";
 
-    public SpecialSQLiteUserDao(SpecialUserSQLite helper) {
+    public AuthoritySQLiteUserDao(AuthoritySQLite helper) {
         this.helper = helper;
     }
 
-    public void insert(SpecialSQLiteUser user){
+    public void insert(AuthoritySQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("gnameid",user.getGnameid());
-        content.put("snameid",user.getSnameid());
+        content.put("gname_id",user.getGnameid());
+        content.put("sname_id",user.getSnameid());
         db.insert(TABLE,null,content);
         db.close();
     }
 
-    public  SpecialSQLiteUser queryByNameid(String Nameid){
+    public  Boolean queryByGSNameid(String gnameid, String snameid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "nameid=?", new String[]{Nameid}, null, null, null);
-        SpecialSQLiteUser user = null;
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "gname_id =? and sname_id =?", new String[]{gnameid,snameid}, null, null, null);
+        AuthoritySQLiteUser user = null;
         while (cursor.moveToNext()) {
             String authorization = cursor.getString(0);
-            String gnameid = cursor.getString(1);
-            String snameid = cursor.getString(2);
-            user = new SpecialSQLiteUser(authorization,gnameid,snameid);
+            String snameid1 = cursor.getString(1);
+            String gnameid1 = cursor.getString(2);
+            user = new AuthoritySQLiteUser(authorization,snameid1,gnameid1);
         }
         db.close();
-        return user;
+
+        return user != null;
     }
 
     public String queryAllString(){
@@ -50,9 +51,9 @@ public class SpecialSQLiteUserDao {
         StringBuilder sb=new StringBuilder();
         while (cursor.moveToNext()){
             String authorization = cursor.getString(0);
-            String gnameid = cursor.getString(1);
-            String snameid = cursor.getString(2);
-            SpecialSQLiteUser user = new SpecialSQLiteUser(authorization,gnameid,snameid);
+            String snameid = cursor.getString(1);
+            String gnameid = cursor.getString(2);
+            AuthoritySQLiteUser user = new AuthoritySQLiteUser(authorization,snameid,gnameid);
             sb.append(user.toString()).append("\n");
         }
         db.close();
@@ -61,10 +62,10 @@ public class SpecialSQLiteUserDao {
 
     public String querySpecial(String myid){
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"gnameid =?", new String[]{myid},null,null,null);
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"gname_id =?", new String[]{myid},null,null,null);
         StringBuilder sb=new StringBuilder();
         while (cursor.moveToNext()){
-            String snameid = cursor.getString(2);
+            String snameid = cursor.getString(1);
             sb.append(snameid).append("\n");
         }
         db.close();
@@ -73,26 +74,26 @@ public class SpecialSQLiteUserDao {
 
     public String queryGeneral(String myid){
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"snameid =?", new String[]{myid},null,null,null);
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"sname_id =?", new String[]{myid},null,null,null);
         StringBuilder sb=new StringBuilder();
         while (cursor.moveToNext()){
-            String gnameid = cursor.getString(1);
+            String gnameid = cursor.getString(2);
             sb.append(gnameid).append("\n");
         }
         db.close();
         return sb.toString();
     }
 
-    public List<SpecialSQLiteUser> quiryAll() {
-        List<SpecialSQLiteUser> dataList = new ArrayList<SpecialSQLiteUser>();
+    public List<AuthoritySQLiteUser> quiryAll() {
+        List<AuthoritySQLiteUser> dataList = new ArrayList<AuthoritySQLiteUser>();
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,null);
         while (cursor.moveToNext()){
             String authorization = cursor.getString(0);
-            String gnameid = cursor.getString(1);
-            String snameid = cursor.getString(2);
-            SpecialSQLiteUser things = new SpecialSQLiteUser(authorization,gnameid,snameid);
+            String snameid = cursor.getString(1);
+            String gnameid = cursor.getString(2);
+            AuthoritySQLiteUser things = new AuthoritySQLiteUser(authorization,snameid,gnameid);
             dataList.add(things);
         }
         db.close();
@@ -105,21 +106,15 @@ public class SpecialSQLiteUserDao {
         db.close();
     }
 
-    public void deleteByGNameid(String gnameid, String insert){
+    public void deleteByGSNameid(String gnameid, String insert){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"gnameid=? and snameid=?",new String[]{gnameid,insert});
-        db.close();
-    }
-
-    public void deleteBySNameid(String snameid, String insert){
-        SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"snameid=? and gnameid=?",new String[]{snameid, insert});
+        db.delete(TABLE,"gname_id=? and sname_id=?",new String[]{gnameid,insert});
         db.close();
     }
 
     public int CountAll(){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from special ",null);
+        Cursor cursor = db.rawQuery("select count(*) from Authority ",null);
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();

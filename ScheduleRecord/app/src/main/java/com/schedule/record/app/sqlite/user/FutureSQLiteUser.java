@@ -2,14 +2,14 @@ package com.schedule.record.app.sqlite.user;
 
 public class FutureSQLiteUser {
 
-    private String dayid,repeat,endday;
+    private String dayId,repeatType,endDay;
     private boolean remind;
     private String time,title,important,diary;
 
     public FutureSQLiteUser(String dayid, String repeat, String endday, boolean remind, String time, String title, String important, String diary) {
-        this.dayid = dayid;
-        this.repeat = repeat;
-        this.endday = endday;
+        this.dayId = dayid;
+        this.repeatType = repeat;
+        this.endDay = endday;
         this.remind = remind;
         this.time = time;
         this.title = title;
@@ -17,28 +17,28 @@ public class FutureSQLiteUser {
         this.diary = diary;
     }
 
-    public String getDayid() {
-        return dayid;
+    public String getDayId() {
+        return dayId;
     }
 
-    public void setDayid(String dayid) {
-        this.dayid = dayid;
+    public void setDayId(String dayId) {
+        this.dayId = dayId;
     }
 
-    public String getRepeat() {
-        return repeat;
+    public String getRepeatType() {
+        return repeatType;
     }
 
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
+    public void setRepeatType(String repeatType) {
+        this.repeatType = repeatType;
     }
 
-    public String getEndday() {
-        return endday;
+    public String getEndDay() {
+        return endDay;
     }
 
-    public void setEndday(String endday) {
-        this.endday = endday;
+    public void setEndDay(String endDay) {
+        this.endDay = endDay;
     }
 
     public boolean isRemind() {
@@ -83,9 +83,9 @@ public class FutureSQLiteUser {
 
     @Override
     public String toString() {
-        return "当前日程Dayid为：" + dayid + '\n' +
-                "重复状况：" + repeat + '\n' +
-                "截止日期：" + endday + '\n' +
+        return "当前日程Dayid为：" + dayId + '\n' +
+                "重复状况：" + repeatType + '\n' +
+                "截止日期：" + endDay + '\n' +
                 "是否提醒：" + remind + '\n' +
                 "日程创建时间：" + time + '\n' +
                 "日程标题：" + title + '\n' +

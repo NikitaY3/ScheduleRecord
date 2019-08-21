@@ -74,7 +74,7 @@ public class MyFutureAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(context, MyFutureEdit.class);
-                intent.putExtra("dayid",pb.getDayid());
+                intent.putExtra("dayid",pb.getDayId());
                 context.startActivity(intent);
             }
         });
@@ -82,35 +82,13 @@ public class MyFutureAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 //调用弹框函数
-                dayConfirmationDialogs(position,pb.getDayid());
+                dayConfirmationDialogs(position,pb.getDayId());
                 return true;
             }
         });
 
         new ColorImportant(pb.getImportant(),holder.linearLayout).LinearLayoutSet();
-//        switch (pb.getImportant()) {
-//            case "a":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_em);
-//                break;
-//            case "b":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_no);
-//                break;
-//            case "c":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_em);
-//                break;
-//            case "d":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no);
-//                break;
-//            case "e":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-//                break;
-//            case "f":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-//                break;
-//            case "g":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-//                break;
-//        }
+
         return convertView;
     }
     static class ViewHolder{

@@ -72,7 +72,7 @@ public class MyFinishAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Mode2FinishEdit.class);
-                intent.putExtra("finishid",pb.getFinishid());
+                intent.putExtra("finishid",pb.getFinishId());
                 context.startActivity(intent);
             }
         });

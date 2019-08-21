@@ -234,20 +234,20 @@ class MyFutureEdit extends AppCompatActivity {
     public void onPause() {
         user.setTitle(mfEditEditText1.getText().toString());
         if (mfEditRadio41.isChecked()) {
-            user.setRepeat("everyday");
+            user.setRepeatType("everyday");
         }
         if (mfEditRadio42.isChecked()) {
             String a = getWeekChoice();
-            user.setRepeat("everywee" + a);
+            user.setRepeatType("everywee" + a);
         }
         if (mfEditRadio43.isChecked()) {
-            user.setRepeat("everymou" + "1");
+            user.setRepeatType("everymou" + "1");
         }
         if (mfEditRadio44.isChecked()) {
-            user.setRepeat("norepeat");
+            user.setRepeatType("norepeat");
         }
         user.setTime(mfEditEditText0.getText().toString());
-        user.setEndday(mfEditButton51.getText().toString());
+        user.setEndDay(mfEditButton51.getText().toString());
         user.setDiary(mfEditEditText2.getText().toString());
         dao.updateAll(user);
         Toast.makeText(MyFutureEdit.this, "已保存数据", Toast.LENGTH_SHORT).show();
@@ -268,31 +268,10 @@ class MyFutureEdit extends AppCompatActivity {
         mfEditEditText0.setText(d.getTime());
         mfEditEditText1.setText(d.getTitle());
         mfEditEditText2.setText(d.getDiary());
-//        switch (d.getImportant()) {
-//            case "a":
-//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-//                break;
-//            case "b":
-//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-//                break;
-//            case "c":
-//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-//                break;
-//            case "d":
-//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-//                break;
-//            case "e":
-//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-//                break;
-//            case "f":
-//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-//                break;
-//            case "g":
-//                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-//                break;
-//        }
+
         new ColorImportant(d.getImportant(),mfEditLinearLayout1).LinearLayoutSet();
-        String repeat = d.getRepeat();
+
+        String repeat = d.getRepeatType();
         switch (repeat.substring(0, 8)) {
             case "everyday":
                 fr = 0;
@@ -323,7 +302,7 @@ class MyFutureEdit extends AppCompatActivity {
                 mfEditRadio44.setChecked(true);
                 break;
         }
-        mfEditButton51.setText(d.getEndday());
+        mfEditButton51.setText(d.getEndDay());
         user = d;//获取当前Dayid的数据的内容
     }
 

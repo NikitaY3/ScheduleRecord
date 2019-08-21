@@ -1,6 +1,5 @@
 package com.schedule.record.app.dialog;
 
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -43,18 +42,15 @@ import java.util.TimeZone;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
 public class TodayDialog extends Dialog {
     private Context context;
     private LinearLayout inputItemLinearLayout1;
     private ListView calendar1ListView;
-    private ArrayAdapter<String> arrayAdapter;
     private List<TodaySQLiteUser> dataList;
 
     private TodaySQLite helper;
     private String DBName="today";
     private int version=1;
-    private String Dayid,Dayidbutton;
 
     private EditText inputItemEditText1,inputItemEditText2;
     private Button inputItemButton;
@@ -84,7 +80,7 @@ public class TodayDialog extends Dialog {
         diary = "无";
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +133,7 @@ public class TodayDialog extends Dialog {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (inputItemEditText2.getText().toString()!=null) {
+                        if (!inputItemEditText2.getText().toString().equals("")) {
                             insertDataBase();
                         } else {
                             Toast.makeText(context,"请输入日程标题",Toast.LENGTH_SHORT).show();
@@ -146,6 +142,7 @@ public class TodayDialog extends Dialog {
                 },10);
                 //延时函数
                 new Handler().postDelayed(new Runnable() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void run() {
                         inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
@@ -175,7 +172,7 @@ public class TodayDialog extends Dialog {
 
     //确认添加按钮点击后创建Item及将数据写入数据库
     private void insertDataBase() {
-        Dayidbutton = getInternetTime();
+        String dayidbutton = getInternetTime();
         String dayTitle = inputItemEditText2.getText().toString();
         String time = inputItemEditText1.getText().toString();
 
@@ -183,11 +180,10 @@ public class TodayDialog extends Dialog {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences("myuser",MODE_PRIVATE);
         String nameid = sharedPreferences.getString("nameid","");
-        String dayid = nameid+Dayidbutton;
-
-        TodaySQLiteUser things = new TodaySQLiteUser(dayid,false,remind,time,dayTitle,important,diary,Dayidbutton.substring(0,10));
+        String dayid = nameid + dayidbutton;
 
         //数据写入数据库
+        TodaySQLiteUser things = new TodaySQLiteUser(dayid,false,remind,time,dayTitle,important,diary, dayidbutton.substring(0,10));
         helper=new TodaySQLite(context,DBName,null,version);
         helper.getReadableDatabase();
         TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
@@ -206,8 +202,8 @@ public class TodayDialog extends Dialog {
     private String getInternetTime() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        Dayid = timesimple.format(new Date());
-        return Dayid;
+        String dayid = timesimple.format(new Date());
+        return dayid;
     }
 
     //设置下拉框的列表内容
@@ -232,7 +228,7 @@ public class TodayDialog extends Dialog {
 
     private void MySpinner(List<String> teamList,Spinner spinner) {
         //下拉列表函数
-        arrayAdapter = new ArrayAdapter<String>(context,R.layout.main_calendar_item,teamList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, R.layout.main_calendar_item, teamList);
         arrayAdapter.setDropDownViewResource(R.layout.main_calendar_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setSelection(0);
@@ -248,34 +244,6 @@ public class TodayDialog extends Dialog {
                     case "不提醒":
                         remind = false;
                         break;
-//                    case "等级一":
-//                        important = "a";
-//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-//                        break;
-//                    case "等级二":
-//                        important = "b";
-//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-//                        break;
-//                    case "等级三":
-//                        important = "c";
-//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-//                        break;
-//                    case "等级四":
-//                        important = "d";
-//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-//                        break;
-//                    case "等级五":
-//                        important = "e";
-//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-//                        break;
-//                    case "等级六":
-//                        important = "f";
-//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-//                        break;
-//                    case "等级七":
-//                        important = "g";
-//                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-//                        break;
                 }
             }
             @Override

@@ -33,6 +33,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/colorPrimary"
             android:hint="点击写入用户ID"
+            android:maxLines="1"
             android:layout_weight="1"/>
 
         <Button
@@ -40,18 +41,22 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_margin="5dp"
-            android:background="@drawable/abaa_item_im_em"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:background="@drawable/abaa_item_no_no_2"
             android:textColor="@drawable/ac_my_button1_text"
-            android:text="插入" />
+            android:text="插入\n日程" />
 
         <Button
             android:id="@+id/generalButton2"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_margin="5dp"
-            android:background="@drawable/abaa_item_im_em"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:background="@drawable/abaa_item_no_no_2"
             android:textColor="@drawable/ac_my_button1_text"
-            android:text="删除" />
+            android:text="刷新" />
     </LinearLayout>
 
 

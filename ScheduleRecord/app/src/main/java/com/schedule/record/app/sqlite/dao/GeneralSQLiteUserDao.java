@@ -14,7 +14,7 @@ import java.util.List;
 public class GeneralSQLiteUserDao {
 
     private GeneralUserSQLite helper;
-    private static final String TABLE = "general";
+    private static final String TABLE = "general_user";
 
     public GeneralSQLiteUserDao(GeneralUserSQLite helper) {
         this.helper = helper;
@@ -23,7 +23,7 @@ public class GeneralSQLiteUserDao {
     public void insert(GeneralSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("nameid",user.getNameid());
+        content.put("name_id",user.getNameid());
         content.put("name",user.getName());
         content.put("password",user.getPassword());
         content.put("sex",user.getSex());
@@ -35,7 +35,7 @@ public class GeneralSQLiteUserDao {
 
     public  GeneralSQLiteUser queryByNameid(String Nameid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "nameid=?", new String[]{Nameid}, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "name_id=?", new String[]{Nameid}, null, null, null);
         GeneralSQLiteUser user = null;
         while (cursor.moveToNext()) {
             String nameid = cursor.getString(0);
@@ -95,26 +95,26 @@ public class GeneralSQLiteUserDao {
 
     public void deleteByNameid(String dayid){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"nameid=?",new String[]{dayid});
+        db.delete(TABLE,"name_id=?",new String[]{dayid});
         db.close();
     }
 
     public void updateAll(GeneralSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("nameid",user.getNameid());
+        content.put("name_id",user.getNameid());
         content.put("name",user.getName());
         content.put("password",user.getPassword());
         content.put("sex",user.getSex());
         content.put("birthday",user.getBirthday());
         content.put("head",user.getHead());
-        db.update(TABLE,content,"nameid=?",new String[]{user.getNameid()});
+        db.update(TABLE,content,"name_id=?",new String[]{user.getNameid()});
         db.close();
     }
 
     public int CountAll(){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from pass ",null);
+        Cursor cursor = db.rawQuery("select count(*) from general_user ",null);
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();

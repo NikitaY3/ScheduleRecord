@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.schedule.record.app">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="Android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -35,10 +37,12 @@
         <activity android:name=".mainmy.MainMy3PassSch"/>
         <activity android:name=".mainmy.MainMyL1Doc"/>
         <activity android:name=".mainmy.MainMyL2General"/>
+        <activity android:name=".mainmy.MainMyL2GInsert"/>
         <activity android:name=".mainmy.MainMyL3Special"/>
         <activity android:name=".mainmy.MainMyL4BoradcastSet"/>
         <activity android:name=".mainmy.MainMyL5Information"/>
-        <activity android:name=".mainmy.MyFogetPassword"/>
+        <activity android:name=".mainmy.MyLogonRegister"/>
+        <activity android:name=".mainmy.MyLogonFoget"/>
         <activity android:name=".mainmy.MainMyLogonPhone"/>
         <activity android:name=".mainmy.MyL5NameSet"/>
         <activity android:name=".MyFutureEdit"/>

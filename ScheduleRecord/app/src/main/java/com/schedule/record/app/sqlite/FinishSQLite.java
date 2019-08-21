@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class FinishSQLite extends SQLiteOpenHelper {
 
-    String CREAT_TABLE="create table finish(finishid varchar(32) primary key, dayid varchar(32), checkbox bit,remind bit,time varchar(8),title varchar(128),important char(2), diary text)";
+    String CREAT_TABLE="create table finish(finish_id varchar(32) primary key, day_id varchar(32), checkbox bit,remind bit,time varchar(8),title varchar(128),important char(2), diary text)";
     public FinishSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

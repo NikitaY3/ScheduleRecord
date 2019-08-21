@@ -1,20 +1,20 @@
 package com.schedule.record.app.sqlite.user;
 
 public class PassSQLiteUser {
-    private String dayid,title,passday;
+    private String dayId,title,passDay;
     private int completion;
     private String important;
 
     public PassSQLiteUser(String dayid, String title, String passday, int completion, String important) {
-        this.dayid = dayid;
+        this.dayId = dayid;
         this.title = title;
-        this.passday = passday;
+        this.passDay = passday;
         this.completion = completion;
         this.important = important;
     }
 
     public String getDayid() {
-        return dayid;
+        return dayId;
     }
 
     public String getTitle() {
@@ -22,7 +22,7 @@ public class PassSQLiteUser {
     }
 
     public String getPassday() {
-        return passday;
+        return passDay;
     }
 
     public int getCompletion() {
@@ -36,9 +36,9 @@ public class PassSQLiteUser {
     @Override
     public String toString() {
         return "PassSQLiteUser{" +
-                "dayid='" + dayid + '\'' +
+                "dayid='" + dayId + '\'' +
                 ", title='" + title + '\'' +
-                ", passday='" + passday + '\'' +
+                ", passday='" + passDay + '\'' +
                 ", completion=" + completion +
                 ", important='" + important + '\'' +
                 '}';

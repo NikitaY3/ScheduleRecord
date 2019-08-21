@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentController controller;
     private SharedPreferences sharedPreferences;
 
-    public static Activity mainActivity;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mainActivity = this;
 
         controller = FragmentController.getInstance(MainActivity.this, R.id.mainFrameLayout);
         if (controller != null) {
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent2);
 
-            MainActivity.this.onDestroy();
+//            MainActivity.this.onDestroy();
         }
     }
 
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void finish() {
 
-        MainActivity.this.onDestroy();
+//        MainActivity.this.onDestroy();
 
         super.finish();
     }

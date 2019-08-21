@@ -2,13 +2,13 @@ package com.schedule.record.app.sqlite.user;
 
 public class FinishSQLiteUser {
 
-    private String finishid,dayid;
+    private String finishId,dayId;
     private Boolean checkbox,remind;
     private String time,title,important,diary;
 
     public FinishSQLiteUser(String finishid, String dayid, Boolean checkbox, Boolean remind, String time, String title, String important, String diary) {
-        this.finishid = finishid;
-        this.dayid = dayid;
+        this.finishId = finishid;
+        this.dayId = dayid;
         this.checkbox = checkbox;
         this.remind = remind;
         this.time = time;
@@ -17,20 +17,20 @@ public class FinishSQLiteUser {
         this.diary = diary;
     }
 
-    public String getFinishid() {
-        return finishid;
+    public String getFinishId() {
+        return finishId;
     }
 
-    public void setFinishid(String finishid) {
-        this.finishid = finishid;
+    public void setFinishId(String finishId) {
+        this.finishId = finishId;
     }
 
-    public String getDayid() {
-        return dayid;
+    public String getDayId() {
+        return dayId;
     }
 
-    public void setDayid(String dayid) {
-        this.dayid = dayid;
+    public void setDayId(String dayId) {
+        this.dayId = dayId;
     }
 
     public Boolean getCheckbox() {
@@ -83,8 +83,8 @@ public class FinishSQLiteUser {
 
     @Override
     public String toString() {
-        return "当前日程Finishid为：" + finishid + '\n' +
-                "当前日程Dayid为：" + dayid + '\n' +
+        return "当前日程Finishid为：" + finishId + '\n' +
+                "当前日程Dayid为：" + dayId + '\n' +
                 "是否已经完成：" + checkbox + '\n' +
                 "是否提醒：" + remind + '\n' +
                 "日程开始时间：" + time + '\n' +

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class SpecialUserSQLite extends SQLiteOpenHelper {
+public class AuthoritySQLite extends SQLiteOpenHelper {
 
-    String CREAT_TABLE="create table special(authorization integer primary key autoincrement,gnameid varchar(12),snameid varchar(12))";
-    public SpecialUserSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    String CREAT_TABLE="create table authority(authorization integer primary key autoincrement,sname_id varchar(12),gname_id varchar(12))";
+    public AuthoritySQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
     @Override

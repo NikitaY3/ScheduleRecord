@@ -29,9 +29,9 @@ public class FutureSQLiteUserDao {
     public void insert(FutureSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("dayid",user.getDayid());
-        content.put("repeat",user.getRepeat());
-        content.put("endday",user.getEndday());
+        content.put("day_id",user.getDayId());
+        content.put("repeat_type",user.getRepeatType());
+        content.put("end_day",user.getEndDay());
         content.put("remind",user.isRemind());
         content.put("time",user.getTime());
         content.put("title",user.getTitle());
@@ -43,7 +43,7 @@ public class FutureSQLiteUserDao {
 
     public  FutureSQLiteUser queryBydayid(String Dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "dayid=?", new String[]{Dayid}, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "day_id=?", new String[]{Dayid}, null, null, null);
         FutureSQLiteUser user = null;
         while (cursor.moveToNext()) {
             String dayid = cursor.getString(0);
@@ -133,23 +133,23 @@ public class FutureSQLiteUserDao {
 
     public void deleteByDayid(String dayid){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"dayid=?",new String[]{dayid});
+        db.delete(TABLE,"day_id=?",new String[]{dayid});
         db.close();
     }
 
     public void updateAll(FutureSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("dayid",user.getDayid());
-        content.put("repeat",user.getRepeat());
-        content.put("endday",user.getEndday());
+        content.put("day_id",user.getDayId());
+        content.put("repeat_type",user.getRepeatType());
+        content.put("end_day",user.getEndDay());
         content.put("remind",user.isRemind());
         content.put("time",user.getTime());
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
         content.put("diary",user.getDiary());
 
-        db.update(TABLE,content,"dayid=?",new String[]{user.getDayid()});
+        db.update(TABLE,content,"day_id=?",new String[]{user.getDayId()});
         db.close();
     }
 

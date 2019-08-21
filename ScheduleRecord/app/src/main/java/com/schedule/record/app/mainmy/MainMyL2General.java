@@ -1,6 +1,7 @@
 package com.schedule.record.app.mainmy;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +11,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.sqlite.SpecialUserSQLite;
-import com.schedule.record.app.sqlite.dao.SpecialSQLiteUserDao;
-import com.schedule.record.app.sqlite.user.SpecialSQLiteUser;
+import com.schedule.record.app.sqlite.AuthoritySQLite;
+import com.schedule.record.app.sqlite.TodaySQLite;
+import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
+import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
+import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,11 +40,15 @@ public class MainMyL2General extends AppCompatActivity {
     @BindView(R.id.generalTextView2)
     TextView generalTextView2;
 
-    private SpecialSQLiteUser user;
-    private SpecialUserSQLite helper;
-    private String DBName = "special";
+    private AuthoritySQLiteUser user;
+    private AuthoritySQLite helper;
+    private String DBName = "authority";
     private int version = 1;
-    private SpecialSQLiteUserDao dao;
+
+    private TodaySQLite helper1;
+    private String DBName1="today";
+
+    private AuthoritySQLiteUserDao dao;
     private String nameid;
 
     @Override
@@ -50,12 +61,12 @@ public class MainMyL2General extends AppCompatActivity {
         SharedPreferences sharedPreferences;
         sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
         nameid = sharedPreferences.getString("nameid","");
-        user = new SpecialSQLiteUser(null, nameid);
+        user = new AuthoritySQLiteUser(null, nameid);
 //        user.setSnameid(nameid);
 
         //特殊用户是我，普通用户是编辑框里面的
-        helper = new SpecialUserSQLite(MainMyL2General.this, DBName, null, version);
-        dao = new SpecialSQLiteUserDao(helper);
+        helper = new AuthoritySQLite(MainMyL2General.this, DBName, null, version);
+        dao = new AuthoritySQLiteUserDao(helper);
         generalTextView2.setText(dao.queryGeneral(nameid));
     }
 
@@ -63,14 +74,42 @@ public class MainMyL2General extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.generalButton1:
-                user.setGnameid(generalEditText.getText().toString());
-                dao.insert(user);
-                generalTextView2.setText(dao.queryGeneral(nameid));
+                Boolean a = dao.queryByGSNameid(generalEditText.getText().toString(), nameid);
+                if (a == true){
+                    //执行对对方的日程指派,跳转到对应于该用户的日程指派页面
+                    Intent intent = new Intent(MainMyL2General.this, MainMyL2GInsert.class);
+                    startActivity(intent);
+
+//                    //数据写入数据库
+//                    String dayidbutton = getInternetTime();
+//                    String dayid = nameid + dayidbutton;
+//                    TodaySQLiteUser things = new TodaySQLiteUser(dayid,false,remind,time,dayTitle,important,diary,Dayidbutton.substring(0,10));
+//                    helper=new TodaySQLite(context,DBName,null,version);
+//                    helper.getReadableDatabase();
+//                    TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
+//                    dao.insert(things,context);
+
+                }else {
+                    //告知不能指派对方
+                }
+//                user.setGnameid(generalEditText.getText().toString());
+//                dao.insert(user);
+//                generalTextView2.setText(dao.queryGeneral(nameid));
                 break;
             case R.id.generalButton2:
-                dao.deleteBySNameid(nameid,generalEditText.getText().toString());
+                //刷新数据
                 generalTextView2.setText(dao.queryGeneral(nameid));
                 break;
         }
     }
+
+
+    //联网获取当前时间
+    private String getInternetTime() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        String time = timesimple.format(new Date());
+        return time;
+    }
+
 }

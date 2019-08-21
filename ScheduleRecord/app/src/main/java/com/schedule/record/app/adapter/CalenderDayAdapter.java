@@ -93,22 +93,14 @@ public class CalenderDayAdapter extends BaseAdapter {
         final int i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
 
         holder.tv1.setOnCheckedChangeListener(null);
-        if(pb.isCheckbox()){
-            holder.tv1.setChecked(true);
-        }else{
-            holder.tv1.setChecked(false);
-        }
+        if(pb.isCheckbox()){ holder.tv1.setChecked(true); }else{ holder.tv1.setChecked(false); }
         holder.tv2.setText(time);//设置时间
         holder.tv3.setText(pb.getTitle());
 
         holder.tv1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    pb.setCheckbox(true);
-                }else{
-                    pb.setCheckbox(false);
-                }
+                if(isChecked){ pb.setCheckbox(true); }else{ pb.setCheckbox(false); }
                 helper=new TodaySQLite(context,DBName,null,version);
                 TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
                 dao.updateAll(pb,context);

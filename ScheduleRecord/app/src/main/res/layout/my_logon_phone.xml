@@ -22,11 +22,20 @@
         android:id="@+id/phoneButton2"
         android:layout_width="80dp"
         android:layout_height="30dp"
-        android:layout_alignRight="@id/phoneImageView1"
-        android:background="#00FFFFFF"
+        android:background="@color/nullcolor"
         android:text="忘记密码？"
         android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phoneImageView1" />
+
+    <Button
+        android:id="@+id/phoneButton3"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:background="@color/nullcolor"
+        android:text="注册账号"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phoneImageView1" />
 
     <LinearLayout
@@ -73,9 +82,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:layout_marginTop="240dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingHorizontal="10dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -86,6 +95,12 @@
             android:background="@drawable/ac_my_logon_button2"
             android:text="登录"
             android:textColor="#FFF" />
+
+        <TextView
+            android:id="@+id/phoneTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="text" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

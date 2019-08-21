@@ -4,10 +4,10 @@ public class GeneralSQLiteUser {
 
 //    (nameid varchar(12) primary key,name vchar(32)
 // ,password vchar(32),sex char(2),birthday date,head vchar(128))
-    private String nameid,name,password,sex,birthday,head;
+    private String nameId,name,password,sex,birthday,head;
 
     public GeneralSQLiteUser(String nameid, String name, String password, String sex, String birthday, String head) {
-        this.nameid = nameid;
+        this.nameId = nameid;
         this.name = name;
         this.password = password;
         this.sex = sex;
@@ -16,11 +16,11 @@ public class GeneralSQLiteUser {
     }
 
     public String getNameid() {
-        return nameid;
+        return nameId;
     }
 
     public void setNameid(String nameid) {
-        this.nameid = nameid;
+        this.nameId = nameid;
     }
 
     public String getName() {
@@ -61,5 +61,17 @@ public class GeneralSQLiteUser {
 
     public void setHead(String head) {
         this.head = head;
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralSQLiteUser{" +
+                "nameid='" + nameId + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", sex='" + sex + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", head='" + head + '\'' +
+                '}';
     }
 }
