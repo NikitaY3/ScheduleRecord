@@ -38,6 +38,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_margin="5dp"
+            android:textSize="14sp"
             android:background="@drawable/abaa_item_im_em"
             android:textColor="@drawable/ac_my_button1_text"
             android:text="插入" />
@@ -47,6 +48,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_margin="5dp"
+            android:textSize="14sp"
             android:background="@drawable/abaa_item_im_em"
             android:textColor="@drawable/ac_my_button1_text"
             android:text="删除" />

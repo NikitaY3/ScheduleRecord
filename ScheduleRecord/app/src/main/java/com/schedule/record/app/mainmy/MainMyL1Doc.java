@@ -21,7 +21,6 @@ public class MainMyL1Doc extends AppCompatActivity {
     @BindView(R.id.finNoteTextView1)
     TextView finNoteTextView1;
 
-
     private List<FinishSQLiteUser> dataList;
     private FinishSQLite helper;
     String DBName = "finish";

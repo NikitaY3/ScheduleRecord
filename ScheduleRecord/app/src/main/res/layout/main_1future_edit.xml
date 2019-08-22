@@ -33,6 +33,7 @@
 
         <CheckBox
             android:id="@+id/mfEditCheckBox1"
+            android:clickable="false"
             android:layout_width="30dp"
             android:layout_height="100dp"/>
 

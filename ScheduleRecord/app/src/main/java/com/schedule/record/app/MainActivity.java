@@ -1,17 +1,15 @@
 package com.schedule.record.app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.schedule.record.app.function.FragmentController;
+import com.schedule.record.app.fragment.FragmentController;
 import com.schedule.record.app.mainmy.MainMyLogonPhone;
 
 import butterknife.BindView;

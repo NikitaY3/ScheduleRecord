@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.sqlite.AuthoritySQLite;
@@ -61,9 +62,15 @@ public class MainMyL3Special extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.specialButton1:
-                user.setSnameid(specialEditText.getText().toString());
-                dao.insert(user);
-                specialTextView2.setText(dao.querySpecial(nameid));
+                String snameid = specialEditText.getText().toString();
+                if (snameid.length() == 11){
+                    user.setSnameid(snameid);
+                    dao.insert(user);
+                    specialTextView2.setText(dao.querySpecial(nameid));
+                }else {
+                    specialEditText.setText("");
+                    Toast.makeText(this,"您输入的ID不正确",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.specialButton2:
                 dao.deleteByGSNameid(nameid,specialEditText.getText().toString());

@@ -187,8 +187,7 @@ public class FutureSQLiteUserDao {
 
 
             int end = Integer.parseInt((endday.substring(0,4)+endday.substring(5,7)+endday.substring(8,10)));
-            if (end >= today||end == 0) {
-
+            if (end >= today || end == 0) {
                 String repeat1 = repeat.substring(0, 8);
 
                 //数据写入数据库
@@ -211,7 +210,7 @@ public class FutureSQLiteUserDao {
                     dao.insert(things,context);
                 }
             }
-            if (end <= today){
+            if (end <= today && end != 0){
                 deleteByDayid(dayid);
             }
         }

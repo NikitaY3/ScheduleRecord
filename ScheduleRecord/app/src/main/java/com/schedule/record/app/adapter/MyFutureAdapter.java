@@ -3,7 +3,6 @@ package com.schedule.record.app.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.schedule.record.app.MyFutureEdit;
+import com.schedule.record.app.FutureEdit;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.FutureSQLite;
@@ -73,7 +72,7 @@ public class MyFutureAdapter extends BaseAdapter {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(context, MyFutureEdit.class);
+                Intent intent= new Intent(context, FutureEdit.class);
                 intent.putExtra("dayid",pb.getDayId());
                 context.startActivity(intent);
             }

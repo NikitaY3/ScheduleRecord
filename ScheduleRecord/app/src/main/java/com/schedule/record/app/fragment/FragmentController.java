@@ -1,13 +1,9 @@
-package com.schedule.record.app.function;
+package com.schedule.record.app.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-
-import com.schedule.record.app.fragment.CalendarFragment;
-import com.schedule.record.app.fragment.EquimentFragment;
-import com.schedule.record.app.fragment.MyFragment;
 
 import java.util.ArrayList;
 

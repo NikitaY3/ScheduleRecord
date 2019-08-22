@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.function.FragmentCalendarController;
 
 import java.util.ArrayList;
 import java.util.List;

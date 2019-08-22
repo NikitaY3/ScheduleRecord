@@ -18,8 +18,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.schedule.record.app.Mode1Edit;
-import com.schedule.record.app.clock.AlarmSet;
+import com.schedule.record.app.TodayEdit;
 import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.function.Mode1ProgressBar;
@@ -141,7 +140,7 @@ public class CalenderDayAdapter extends BaseAdapter {
         holder.tv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(context, Mode1Edit.class);
+                Intent intent= new Intent(context, TodayEdit.class);
                 intent.putExtra("dayid",dayid);
                 context.startActivity(intent);
             }
@@ -190,12 +189,4 @@ public class CalenderDayAdapter extends BaseAdapter {
         frame1.show();
     }
 
-
-    //联网获取当前时间
-    private String getInternetTime() {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("HH:mm:ss");
-        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        String Dayid = timesimple.format(new Date());
-        return Dayid;
-    }
 }

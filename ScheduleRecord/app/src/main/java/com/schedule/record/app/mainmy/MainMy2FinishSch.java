@@ -7,8 +7,11 @@ import android.widget.ListView;
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.MyFinishAdapter;
 import com.schedule.record.app.sqlite.FinishSQLite;
+import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
+import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 
 import java.util.List;
 
@@ -40,6 +43,7 @@ public class MainMy2FinishSch extends AppCompatActivity {
     }
 
     public void onResume1() {
+
         helper = new FinishSQLite(MainMy2FinishSch.this, DBName, null, version);
         FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper);
         dataList = dao.quiryAndSetItem();

@@ -18,8 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 @SuppressLint("Registered")
-public
-class Mode2FinishEdit extends AppCompatActivity {
+public class FinishEdit extends AppCompatActivity {
 
     @BindView(R.id.fEditCheckBox1)
     CheckBox fEditCheckBox1;
@@ -74,29 +73,7 @@ class Mode2FinishEdit extends AppCompatActivity {
         fEditEditText2.setText(d.getDiary());
 
         new ColorImportant(d.getImportant(),fEditLinearLayout1).LinearLayoutSet();
-//        switch (d.getImportant()) {
-//            case "a":
-//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-//                break;
-//            case "b":
-//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-//                break;
-//            case "c":
-//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-//                break;
-//            case "d":
-//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-//                break;
-//            case "e":
-//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-//                break;
-//            case "f":
-//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-//                break;
-//            case "g":
-//                fEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-//                break;
-//        }
+
         user = d;//获取当前Dayid的数据的内容
     }
 }

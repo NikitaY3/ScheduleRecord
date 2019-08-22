@@ -70,7 +70,7 @@ public class PassSQLiteUserDao {
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"passday");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"pass_day");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             String title = cursor.getString(1);

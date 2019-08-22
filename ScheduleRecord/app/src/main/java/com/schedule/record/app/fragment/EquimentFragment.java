@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,16 +39,12 @@ public class EquimentFragment extends Fragment {
     Unbinder unbinder;
 
     int version = 1;
-//    private List<CalenderWeekItem> finishData;
 //    private FinishSQLite helper1;
 //    String DBName1 = "finish";
 
-    private List<CalenderWeekItem> todayData;
     private TodaySQLite helper2;
     String DBName2 = "today";
 
-
-    private List<CalenderWeekItem> futureData;
     private FutureSQLite helper3;
     String DBName3 = "future";
 
@@ -92,4 +89,5 @@ public class EquimentFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

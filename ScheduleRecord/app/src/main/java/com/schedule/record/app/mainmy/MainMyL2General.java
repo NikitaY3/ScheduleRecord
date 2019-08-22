@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.sqlite.AuthoritySQLite;
@@ -74,11 +75,14 @@ public class MainMyL2General extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.generalButton1:
-                Boolean a = dao.queryByGSNameid(generalEditText.getText().toString(), nameid);
-                if (a == true){
-                    //执行对对方的日程指派,跳转到对应于该用户的日程指派页面
-                    Intent intent = new Intent(MainMyL2General.this, MainMyL2GInsert.class);
-                    startActivity(intent);
+
+                String gnameid = generalEditText.getText().toString();
+                if (gnameid.length() == 11){
+                    Boolean a = dao.queryByGSNameid(gnameid, nameid);
+                    if (a){
+                        //执行对对方的日程指派,跳转到对应于该用户的日程指派页面
+                        Intent intent = new Intent(MainMyL2General.this, MainMyL2GInsert.class);
+                        startActivity(intent);
 
 //                    //数据写入数据库
 //                    String dayidbutton = getInternetTime();
@@ -89,12 +93,14 @@ public class MainMyL2General extends AppCompatActivity {
 //                    TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
 //                    dao.insert(things,context);
 
+                    }else {
+                        //告知不能指派对方
+                        Toast.makeText(this,"您未获得对该用户的指派权限",Toast.LENGTH_SHORT).show();
+                    }
                 }else {
-                    //告知不能指派对方
+                    Toast.makeText(this,"您输入的ID不正确",Toast.LENGTH_SHORT).show();
                 }
-//                user.setGnameid(generalEditText.getText().toString());
-//                dao.insert(user);
-//                generalTextView2.setText(dao.queryGeneral(nameid));
+
                 break;
             case R.id.generalButton2:
                 //刷新数据

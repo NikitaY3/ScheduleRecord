@@ -118,7 +118,7 @@ public class TodaySQLiteUserDao {
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"time,important");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);

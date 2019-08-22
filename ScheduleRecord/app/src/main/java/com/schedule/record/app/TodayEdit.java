@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 @SuppressLint("Registered")
-public class Mode1Edit extends AppCompatActivity {
+public class TodayEdit extends AppCompatActivity {
 
     @BindView(R.id.editCheckBox1)
     CheckBox editCheckBox1;
@@ -93,7 +93,7 @@ public class Mode1Edit extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.editEditText0:
-                new TimePickerDialog(Mode1Edit.this, new TimePickerDialog.OnTimeSetListener() {
+                new TimePickerDialog(TodayEdit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if (minute < 10 && hourOfDay < 10) {
@@ -112,7 +112,7 @@ public class Mode1Edit extends AppCompatActivity {
                             String dayid1 = getInternetTime();
                             int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
                             if (t > t1) {
-                                new AlarmSet(Mode1Edit.this, hourOfDay, minute, dayid, i).myAlarmSet();
+                                new AlarmSet(TodayEdit.this, hourOfDay, minute, dayid, i).myAlarmSet();
                             }
                         }
                     }
@@ -120,37 +120,37 @@ public class Mode1Edit extends AppCompatActivity {
                 break;
             case R.id.editButton21:
                 user.setImportant("a");
-                dao.updateAll(user,Mode1Edit.this);
+                dao.updateAll(user,TodayEdit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
                 break;
             case R.id.editButton22:
                 user.setImportant("b");
-                dao.updateAll(user,Mode1Edit.this);
+                dao.updateAll(user,TodayEdit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
                 break;
             case R.id.editButton23:
                 user.setImportant("c");
-                dao.updateAll(user,Mode1Edit.this);
+                dao.updateAll(user,TodayEdit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
                 break;
             case R.id.editButton24:
                 user.setImportant("d");
-                dao.updateAll(user,Mode1Edit.this);
+                dao.updateAll(user,TodayEdit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
                 break;
             case R.id.editButton25:
                 user.setImportant("e");
-                dao.updateAll(user,Mode1Edit.this);
+                dao.updateAll(user,TodayEdit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
                 break;
             case R.id.editButton26:
                 user.setImportant("f");
-                dao.updateAll(user,Mode1Edit.this);
+                dao.updateAll(user,TodayEdit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
                 break;
             case R.id.editButton27:
                 user.setImportant("g");
-                dao.updateAll(user,Mode1Edit.this);
+                dao.updateAll(user,TodayEdit.this);
                 editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                 break;
         }
@@ -195,8 +195,8 @@ public class Mode1Edit extends AppCompatActivity {
 //            }
         }
         user.setDiary(editEditText2.getText().toString());
-        dao.updateAll(user,Mode1Edit.this);
-        Toast.makeText(Mode1Edit.this, "已保存数据", Toast.LENGTH_SHORT).show();
+        dao.updateAll(user,TodayEdit.this);
+        Toast.makeText(TodayEdit.this, "已保存数据", Toast.LENGTH_SHORT).show();
         super.onPause();
     }
 

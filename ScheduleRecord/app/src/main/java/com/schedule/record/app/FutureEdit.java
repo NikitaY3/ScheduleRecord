@@ -32,7 +32,7 @@ import butterknife.OnClick;
 
 @SuppressLint("Registered")
 public
-class MyFutureEdit extends AppCompatActivity {
+class FutureEdit extends AppCompatActivity {
 
     @BindView(R.id.mfEditEditText0)
     EditText mfEditEditText0;
@@ -158,7 +158,7 @@ class MyFutureEdit extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mfEditEditText0:
-                new TimePickerDialog(MyFutureEdit.this, new TimePickerDialog.OnTimeSetListener() {
+                new TimePickerDialog(FutureEdit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if (minute < 10 && hourOfDay < 10) {
@@ -210,7 +210,7 @@ class MyFutureEdit extends AppCompatActivity {
                 mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
                 break;
             case R.id.mfEditButton51:
-                new DatePickerDialog(MyFutureEdit.this, new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(FutureEdit.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String radio;
@@ -250,7 +250,7 @@ class MyFutureEdit extends AppCompatActivity {
         user.setEndDay(mfEditButton51.getText().toString());
         user.setDiary(mfEditEditText2.getText().toString());
         dao.updateAll(user);
-        Toast.makeText(MyFutureEdit.this, "已保存数据", Toast.LENGTH_SHORT).show();
+        Toast.makeText(FutureEdit.this, "已保存数据", Toast.LENGTH_SHORT).show();
         super.onPause();
     }
 

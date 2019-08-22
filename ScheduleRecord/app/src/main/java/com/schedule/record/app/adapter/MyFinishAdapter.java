@@ -11,10 +11,9 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.schedule.record.app.Mode2FinishEdit;
+import com.schedule.record.app.FinishEdit;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.ColorImportant;
-import com.schedule.record.app.mainmy.MainMy2FinishSchNote;
 import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 
 import java.util.List;
@@ -71,7 +70,7 @@ public class MyFinishAdapter extends BaseAdapter {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Mode2FinishEdit.class);
+                Intent intent = new Intent(context, FinishEdit.class);
                 intent.putExtra("finishid",pb.getFinishId());
                 context.startActivity(intent);
             }

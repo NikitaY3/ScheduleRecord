@@ -28,8 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mode1Edit"/>
-        <activity android:name=".Mode2FinishEdit"/>
+        <activity android:name=".TodayEdit"/>
+        <activity android:name=".FinishEdit"/>
+        <activity android:name=".FutureEdit"/>
         <activity android:name=".Mode3CompletionScale"/>
         <activity android:name=".mainmy.MainMy1FutureSch"/>
         <activity android:name=".mainmy.MainMy2FinishSch"/>
@@ -41,11 +42,11 @@
         <activity android:name=".mainmy.MainMyL3Special"/>
         <activity android:name=".mainmy.MainMyL4BoradcastSet"/>
         <activity android:name=".mainmy.MainMyL5Information"/>
+        <activity android:name=".mainmy.MyL5NameSet"/>
+        <activity android:name=".mainmy.MainMyLogonPhone"/>
         <activity android:name=".mainmy.MyLogonRegister"/>
         <activity android:name=".mainmy.MyLogonFoget"/>
-        <activity android:name=".mainmy.MainMyLogonPhone"/>
-        <activity android:name=".mainmy.MyL5NameSet"/>
-        <activity android:name=".MyFutureEdit"/>
+
         <activity android:name=".clock.ATestA"
             android:theme="@style/Base.V7.Theme.AppCompat.Light.Dialog"/>
 

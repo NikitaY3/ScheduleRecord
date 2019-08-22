@@ -10,9 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.schedule.record.app.Mode1Edit;
-import com.schedule.record.app.MyFutureEdit;
 import com.schedule.record.app.R;
+import com.schedule.record.app.TodayEdit;
 import com.schedule.record.app.function.CalenderWeekItem;
 import com.schedule.record.app.function.ColorImportant;
 
@@ -74,26 +73,13 @@ public class CalenderWeekAdapter3 extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 CalenderWeekItem pb=list.get(position);
-                Intent intent= new Intent(context, MyFutureEdit.class);
+                Intent intent= new Intent(context, TodayEdit.class);
                 intent.putExtra("dayid",pb.getDayid());
                 context.startActivity(intent);
             }
         });
         new ColorImportant(pb.getImportant(),holder.btn1).LinearLayoutSet();
-//        switch (pb.getImportant()) {
-//            case "a":
-//                holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_em);
-//                break;
-//            case "b":
-//                holder.btn1.setBackgroundResource(R.drawable.abaa_item_im_no);
-//                break;
-//            case "c":
-//                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_em);
-//                break;
-//            case "d":
-//                holder.btn1.setBackgroundResource(R.drawable.abaa_item_no_no);
-//                break;
-//        }
+
         return convertView;
     }
 

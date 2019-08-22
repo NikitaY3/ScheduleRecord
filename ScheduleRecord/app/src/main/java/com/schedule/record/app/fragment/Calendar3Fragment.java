@@ -21,7 +21,6 @@ import butterknife.Unbinder;
 
 public class Calendar3Fragment extends Fragment {
 
-
     @BindView(R.id.mode3TextView1)
     TextView mode3TextView1;
     @BindView(R.id.mode3Button1)
@@ -55,5 +54,4 @@ public class Calendar3Fragment extends Fragment {
                 break;
         }
     }
-
 }

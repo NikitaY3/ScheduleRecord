@@ -136,7 +136,11 @@ public class FutureDialog extends Dialog {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        insertDataBase();
+                        if (!myFInputEditText2.getText().toString().equals("")) {
+                            insertDataBase();
+                        } else {
+                            Toast.makeText(context,"请输入日程标题",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 },10);
                 //延时函数
@@ -204,7 +208,6 @@ public class FutureDialog extends Dialog {
         //确认添加按钮点击后创建Item及将数据写入数据库
         Dayidbutton = getInternetTime();
 
-        //Item适配器的调用及Item的生成
         String dayTitle = myFInputEditText2.getText().toString();
         String time = myFInputEditText1.getText().toString();
 
@@ -298,34 +301,6 @@ public class FutureDialog extends Dialog {
                     case "每月":
                         repeat = "everymou"+"1";
                         break;
-//                    case "等级一":
-//                        important = "a";
-//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-//                        break;
-//                    case "等级二":
-//                        important = "b";
-//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-//                        break;
-//                    case "等级三":
-//                        important = "c";
-//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-//                        break;
-//                    case "等级四":
-//                        important = "d";
-//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-//                        break;
-//                    case "等级五":
-//                        important = "e";
-//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-//                        break;
-//                    case "等级六":
-//                        important = "f";
-//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-//                        break;
-//                    case "等级七":
-//                        important = "g";
-//                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-//                        break;
                 }
             }
             @Override
