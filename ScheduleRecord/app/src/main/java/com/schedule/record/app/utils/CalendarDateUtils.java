@@ -94,7 +94,7 @@ public class CalendarDateUtils {
     }
 
     /**
-     * 根据传入的年份和月份，判断上一个有多少天
+     * 根据传入的年份和月份，判断上一个月有多少天
      * @param year
      * @param month
      * @return

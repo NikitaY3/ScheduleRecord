@@ -24,6 +24,7 @@ public class FinishSQLiteUserDao {
     public void insert(FinishSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
+
         content.put("finish_id",user.getFinishId());
         content.put("day_id",user.getDayId());
         content.put("checkbox",user.getCheckbox());
@@ -31,7 +32,7 @@ public class FinishSQLiteUserDao {
         content.put("time",user.getTime());
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
-        content.put("dairy",user.getDiary());
+        content.put("diary",user.getDiary());
         db.insert(TABLE,null,content);
         db.close();
     }
@@ -165,7 +166,29 @@ public class FinishSQLiteUserDao {
 
     public int CountFinishByDayid(String dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox = 1 and day_id =? ", new String[]{dayid});
+        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox = 1 and day_id like ? ", new String[]{dayid});
+        cursor.moveToFirst();
+        long count = cursor.getLong(0);
+        cursor.close();
+        db.close();
+        return (int) count;
+    }
+
+    //根据日期查询当天完成日程数量
+    public int CountFinishByDay(String day){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox = 1 and finish_id =? ", new String[]{"%"+day+"%"});
+        cursor.moveToFirst();
+        long count = cursor.getLong(0);
+        cursor.close();
+        db.close();
+        return (int) count;
+    }
+
+    //根据日期查询当天日程总数量
+    public int CountByDay(String day){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from finish where finish_id =? ", new String[]{"%"+day+"%"});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();

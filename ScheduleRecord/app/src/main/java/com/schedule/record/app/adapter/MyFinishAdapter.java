@@ -1,6 +1,5 @@
 package com.schedule.record.app.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -43,7 +42,6 @@ public class MyFinishAdapter extends BaseAdapter {
         return position;
     }
 
-    @SuppressLint("InflateParams")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -71,7 +69,7 @@ public class MyFinishAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FinishEdit.class);
-                intent.putExtra("finishid",pb.getFinishId());
+                intent.putExtra("finish_id",pb.getFinishId());
                 context.startActivity(intent);
             }
         });

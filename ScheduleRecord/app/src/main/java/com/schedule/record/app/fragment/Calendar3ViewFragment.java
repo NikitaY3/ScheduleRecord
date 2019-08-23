@@ -1,158 +1,145 @@
 package com.schedule.record.app.fragment;
 
+import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.CalendarDateAdapter;
 import com.schedule.record.app.utils.CalendarDateUtils;
 
-public class Calendar3ViewFragment extends AppCompatActivity implements View.OnClickListener {
-    private GridView record_gridView;//定义gridView
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
+public class Calendar3ViewFragment extends Fragment {
+
+    @BindView(R.id.record_gridView)
+    GridView recordGridView;
+    @BindView(R.id.record_title)
+    TextView recordTitle;
+    Unbinder unbinder;
+    private View view;
+
     private CalendarDateAdapter dateAdapter;//定义adapter
-    private ImageView record_left;//左箭头
-    private ImageView record_right;//右箭头
-    private TextView record_title;//标题
     private int year;
     private int month;
     private String title;
     private int[][] days = new int[6][7];
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//初始化日期数据
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.main_calendar_mode3_view, container, false);
+
+        //初始化日期数据
         initData();
-//初始化组件
-        initView();
-//组件点击监听事件
-        initEvent();
+
+        unbinder = ButterKnife.bind(this, view);
+
+        return view;
     }
+
 
     private void initData() {
         year = CalendarDateUtils.getYear();
         month = CalendarDateUtils.getMonth();
     }
 
-    private void initEvent() {
-        record_left.setOnClickListener(this);
-        record_right.setOnClickListener(this);
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //初始化组件
+        initView();
+
     }
 
+    @SuppressLint("SetTextI18n")
     private void initView() {
-/**
- * 以下是初始化GridView
- */
-        record_gridView = (GridView) findViewById(R.id.record_gridView);
+
         days = CalendarDateUtils.getDayOfMonthFormat(2016, 8);
-        dateAdapter = new CalendarDateAdapter(this, days, year, month);//传入当前月的年
-        record_gridView.setAdapter(dateAdapter);
-        record_gridView.setVerticalSpacing(60);
-        record_gridView.setEnabled(false);
-/**
- * 以下是初始化其他组件
- */
-        record_left = (ImageView) findViewById(R.id.record_left);
-        record_right = (ImageView) findViewById(R.id.record_right);
-        record_title = (TextView) findViewById(R.id.record_title);
+        dateAdapter = new CalendarDateAdapter(getActivity(), days, year, month);//传入当前月的年
+
+        recordGridView.setAdapter(dateAdapter);
+        recordGridView.setVerticalSpacing(0);
+        recordGridView.setHorizontalSpacing(0);
+        recordGridView.setEnabled(false);
+
+        recordTitle.setText(year + "年" + month + "月");
     }
 
+//    /**
+//     * 下一个月
+//     * @return
+//     */
+//    private int[][] nextMonth() {
+//        if (month == 12) {
+//            month = 1;
+//            year++;
+//        } else {
+//            month++;
+//        }
+//        days = CalendarDateUtils.getDayOfMonthFormat(year, month);
+//        return days;
+//    }
+//
+//    /**
+//     * 上一个月
+//     * @return
+//     */
+//    private int[][] prevMonth() {
+//        if (month == 1) {
+//            month = 12;
+//            year--;
+//        } else {
+//            month--;
+//        }
+//        days = CalendarDateUtils.getDayOfMonthFormat(year, month);
+//        return days;
+//    }
+//
+//    /**
+//     * 设置标题
+//     */
+//    private void setTile() {
+//        title = year + "年" + (month+1) + "月";
+//        recordTitle.setText(title);
+//    }
 
-    /**
-     * 下一个月
-     *
-     * @return
-     */
-    private int[][] nextMonth() {
-        if (month == 12) {
-            month = 1;
-            year++;
-        } else {
-            month++;
-        }
-        days = CalendarDateUtils.getDayOfMonthFormat(year, month);
-        return days;
-    }
-
-    /**
-     * 上一个月
-     *
-     * @return
-     */
-    private int[][] prevMonth() {
-        if (month == 1) {
-            month = 12;
-            year--;
-        } else {
-            month--;
-        }
-        days = CalendarDateUtils.getDayOfMonthFormat(year, month);
-        return days;
-    }
-
-    /**
-     * 设置标题
-     */
-    private void setTile() {
-        title = year + "年" + month + "月";
-        record_title.setText(title);
-    }
+//    @OnClick({R.id.record_left, R.id.record_right})
+//    public void onViewClicked(View view) {
+//        switch (view.getId()) {
+//            case R.id.record_left:
+//                days = prevMonth();
+//                dateAdapter = new CalendarDateAdapter(getActivity(), days, year, month);
+//                recordGridView.setAdapter(dateAdapter);
+//                dateAdapter.notifyDataSetChanged();
+//                setTile();
+//                break;
+//            case R.id.record_right:
+//                days = nextMonth();
+//                dateAdapter = new CalendarDateAdapter(getActivity(), days, year, month);
+//                recordGridView.setAdapter(dateAdapter);
+//                dateAdapter.notifyDataSetChanged();
+//                setTile();
+//                break;
+//        }
+//    }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.record_left:
-                days = prevMonth();
-                dateAdapter = new CalendarDateAdapter(this, days, year, month);
-                record_gridView.setAdapter(dateAdapter);
-                dateAdapter.notifyDataSetChanged();
-                setTile();
-                break;
-            case R.id.record_right:
-                days = nextMonth();
-                dateAdapter = new CalendarDateAdapter(this, days, year, month);
-                record_gridView.setAdapter(dateAdapter);
-                dateAdapter.notifyDataSetChanged();
-                setTile();
-                break;
-        }
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
+
 }
-
-
-
-//extends Fragment {
-//    View view;
-//
-//    @BindView(R.id.mode3TextView1)
-//    TextView mode3TextView1;
-//    Unbinder unbinder;
-//
-//    Calendar calCalendar;
-//
-//
-//    @Nullable
-//    @Override
-//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        view = inflater.inflate(R.layout.main_calendar_mode3_view, container, false);
-//        unbinder = ButterKnife.bind(this, view);
-//
-//        return view;
-//    }
-//
-//    @Override
-//    public void onResume() {
-//
-//        super.onResume();
-//    }
-//
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        unbinder.unbind();
-//    }
-//}

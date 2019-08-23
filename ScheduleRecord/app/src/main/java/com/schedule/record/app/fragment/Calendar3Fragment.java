@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.schedule.record.app.Mode3CompletionScale;
 import com.schedule.record.app.R;
@@ -21,8 +20,6 @@ import butterknife.Unbinder;
 
 public class Calendar3Fragment extends Fragment {
 
-    @BindView(R.id.mode3TextView1)
-    TextView mode3TextView1;
     @BindView(R.id.mode3Button1)
     Button mode3Button1;
     Unbinder unbinder;

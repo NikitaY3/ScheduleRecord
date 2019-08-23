@@ -238,7 +238,7 @@ public class TodaySQLiteUserDao {
         return (int) count;
     }
 
-    //将Today插入Finish的函数
+    //将Today插入Finish和Pass的函数
     public void TodayToFinishPass(Context context, String today, int day){
 
         FinishSQLite helper1;
@@ -267,7 +267,8 @@ public class TodaySQLiteUserDao {
             int thisday1 = Integer.parseInt(thisday.substring(0,4)+thisday.substring(5,7)+thisday.substring(8,10));
 
             if (thisday1<day) {
-                //数据写入数据库
+
+                //数据写入数据库——Finish
                 FinishSQLiteUser things = new FinishSQLiteUser(finishid, dayid, checkbox, remind, time, title, important, diary);
                 helper1 = new FinishSQLite(context, DBName1, null, version1);
                 FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper1);

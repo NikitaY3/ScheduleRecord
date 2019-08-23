@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/m3ItemButton"
-        android:layout_width="55dp"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_rowWeight="1"
-        android:layout_columnWeight="1"
+        android:background="@drawable/abc_calendar_button1"
         android:gravity="start"
-        android:padding="10dp"
+        android:padding="8dp"
         android:text="7"
-        tools:targetApi="lollipop" />
+        android:textColor="@drawable/ac_my_button1_text"
+        android:textSize="18sp"/>
 
 </LinearLayout>

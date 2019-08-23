@@ -59,7 +59,7 @@ public class FinishEdit extends AppCompatActivity {
         helper.getReadableDatabase();
         dao = new FinishSQLiteUserDao(helper);
         Intent intent = getIntent();
-        String finishid = intent.getStringExtra("finishid");
+        String finishid = intent.getStringExtra("finish_id");
         //查询Dayid对应数据
         FinishSQLiteUser d = dao.queryByFinishid(finishid);
         //设置当前布局填充

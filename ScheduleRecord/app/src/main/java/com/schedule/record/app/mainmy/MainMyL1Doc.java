@@ -32,8 +32,18 @@ public class MainMyL1Doc extends AppCompatActivity {
         setContentView(R.layout.my_l1doc);
         ButterKnife.bind(this);
 
+    }
+    @Override
+    protected void onResume() {
+
+        onResume1();
+        super.onResume();
+    }
+
+    private void onResume1() {
         helper = new FinishSQLite(MainMyL1Doc.this, DBName, null, version);
         FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper);
         finNoteTextView1.setText(dao.queryAllString());
     }
+
 }

@@ -22,8 +22,8 @@ public class MainMy3PassSch extends AppCompatActivity {
     ;
     private List<PassSQLiteUser> dataList;
     private PassSQLite helper;
-    String DBName = "pass";
-    int version = 1;
+    private String DBName = "pass";
+    private int version = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class MainMy3PassSch extends AppCompatActivity {
     }
 
     public void onResume1() {
+
         helper = new PassSQLite(MainMy3PassSch.this, DBName, null, version);
         helper.getReadableDatabase();
         PassSQLiteUserDao dao = new PassSQLiteUserDao(helper);
