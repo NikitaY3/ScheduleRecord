@@ -33,7 +33,7 @@
         <CheckBox
             android:id="@+id/fEditCheckBox1"
             android:layout_width="30dp"
-            android:editable="false"
+            android:clickable="false"
             android:layout_height="100dp"/>
 
         <EditText

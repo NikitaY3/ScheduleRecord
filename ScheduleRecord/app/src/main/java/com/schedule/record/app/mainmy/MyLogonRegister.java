@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.schedule.record.app.MainActivity;
 import com.schedule.record.app.R;
+import com.schedule.record.app.function.PostFunctions;
 import com.schedule.record.app.sqlite.GeneralUserSQLite;
 import com.schedule.record.app.sqlite.dao.GeneralSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.GeneralSQLiteUser;
@@ -62,7 +63,33 @@ public class MyLogonRegister extends AppCompatActivity {
             password = registerEditText3.getText().toString();
             name = registerEditText4.getText().toString();
 
-            saveIn();//保存信息
+            saveIn();//保存信息和转跳
+        }
+    }
+
+    private void saveIn() {
+        //1、将账号信息保存到云端
+        PostFunctions postFunctions = null;
+        String res = postFunctions.SaveUserPost(nameid,password,name);
+
+        if (res != null){
+
+            //2、将账号信息保存到本地数据库
+            GeneralSQLiteUser things = new GeneralSQLiteUser(nameid,name,password,"男",null,null);
+            helper = new GeneralUserSQLite(MyLogonRegister.this, DBName, null, version);
+            GeneralSQLiteUserDao dao = new GeneralSQLiteUserDao(helper);
+            dao.deleteAll();//保证本地账号唯一性
+            dao.insert(things);
+
+            //3、保存数据+转跳到登录页面
+            sharedPreferences = this.getSharedPreferences("myuser", MODE_PRIVATE);
+            SharedPreferences.Editor myuser = sharedPreferences.edit();
+            myuser.putString("nameid", nameid);
+            myuser.putString("password", password);
+            myuser.putString("name", name);
+            myuser.apply();
+
+            Toast.makeText(MyLogonRegister.this,"账号注册成功"+res,Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -72,51 +99,10 @@ public class MyLogonRegister extends AppCompatActivity {
                     MyLogonRegister.this.finish();
                 }
             },50);
+
+        }else {
+            Toast.makeText(MyLogonRegister.this,"账号注册失败"+res,Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void saveIn() {
-        //1、将账号信息保存到云端
-        String res = RecSmsToPost();
-        if (res != null){
-            Toast.makeText(MyLogonRegister.this,"账号注册成功"+res,Toast.LENGTH_SHORT).show();
-        }
-
-        //2、将账号信息保存到本地数据库
-        GeneralSQLiteUser things = new GeneralSQLiteUser(nameid,name,password,"男",null,null);
-        helper = new GeneralUserSQLite(MyLogonRegister.this, DBName, null, version);
-        GeneralSQLiteUserDao dao = new GeneralSQLiteUserDao(helper);
-        dao.deleteAll();//保证本地账号唯一性
-        dao.insert(things);
-
-        //3、保存数据+转跳到登录页面
-        sharedPreferences = this.getSharedPreferences("myuser", MODE_PRIVATE);
-        SharedPreferences.Editor myuser = sharedPreferences.edit();
-        myuser.putString("nameid", nameid);
-        myuser.putString("password", password);
-        myuser.putString("name", name);
-        myuser.apply();
-        Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-    }
-
-    //Post
-    private String RecSmsToPost(){
-        //参数
-        final Map<String,String> params = new HashMap<String,String>();
-        params.put("nameid", nameid);
-        params.put("password", password);
-        params.put("name", name);
-
-        final String[] strResult = new String[1];
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                //服务器请求路径
-                String strUrlPath = "http://qm6zzu.natappfree.cc/user/save?";
-                strResult[0] = HttpPostUtils.submitPostData(strUrlPath,params, "utf-8");
-            }
-        }.start();
-        return strResult[0];
-    }
 }

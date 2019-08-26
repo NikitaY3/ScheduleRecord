@@ -22,7 +22,7 @@ public class MyLogonFoget extends AppCompatActivity {
     private EditText cityCode;
     private TextView tv;
 
-    String baseUrl = "http://192.168.56.1:8080/user/findbyid?nameId=13348445363&password=11.html";
+    String baseUrl = "http://120.77.222.242:10024/user/findbyid?nameId=13348445363&password=11.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

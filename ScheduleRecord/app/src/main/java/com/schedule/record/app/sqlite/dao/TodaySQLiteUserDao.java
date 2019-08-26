@@ -17,11 +17,14 @@ import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 import com.schedule.record.app.sqlite.user.PassSQLiteUser;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 import com.schedule.record.app.sqlite.TodaySQLite;
+import com.schedule.record.app.utils.HttpPostUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class TodaySQLiteUserDao {
@@ -87,30 +90,6 @@ public class TodaySQLiteUserDao {
         }
         db.close();
         return user;
-    }
-
-    public String queryAllString(){
-        SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null,null,null,null,null);
-        StringBuilder sb=new StringBuilder();
-        while (cursor.moveToNext()){
-            String dayid = cursor.getString(0);
-            int checkbox1 = cursor.getInt(1);
-            int remind1 = cursor.getInt(2);
-            String time = cursor.getString(3);
-            String title = cursor.getString(4);
-            String important = cursor.getString(5);
-            String diary = cursor.getString(6);
-            String thisday = cursor.getString(7);
-            boolean checkbox;
-            checkbox = checkbox1 > 0;
-            boolean remind;
-            remind = remind1 > 0;
-            TodaySQLiteUser user = new TodaySQLiteUser(dayid,checkbox,remind,time,title,important,diary,thisday);
-            sb.append(user.toString()).append("\n");
-        }
-        db.close();
-        return sb.toString();
     }
 
     public List<TodaySQLiteUser> quiryAndSetItem() {
@@ -266,7 +245,8 @@ public class TodaySQLiteUserDao {
 
             int thisday1 = Integer.parseInt(thisday.substring(0,4)+thisday.substring(5,7)+thisday.substring(8,10));
 
-            if (thisday1<day) {
+            //如果日程的插入日期小于或等于昨天，finish_id就是昨天
+            if (thisday1 <= day) {
 
                 //数据写入数据库——Finish
                 FinishSQLiteUser things = new FinishSQLiteUser(finishid, dayid, checkbox, remind, time, title, important, diary);
@@ -305,7 +285,6 @@ public class TodaySQLiteUserDao {
         }
         db.close();
     }
-
 
     //联网获取当前时间
     private String getInternetTime() {

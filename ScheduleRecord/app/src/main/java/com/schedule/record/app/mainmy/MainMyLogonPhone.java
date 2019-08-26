@@ -46,7 +46,7 @@ public class MainMyLogonPhone extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
-    String baseUrl = "http://qm6zzu.natappfree.cc/user/findbyid?nameId=";
+    String baseUrl = "http://120.77.222.242:10024/user/findbyid?nameId=";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

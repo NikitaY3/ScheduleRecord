@@ -22,14 +22,12 @@ public class AlarmSet {
         this.myminute = myminute;
         this.dayid = dayid;
         this.i = i;
-
     }
 
     public AlarmSet(Context context, String dayid, int i) {
         this.context = context;
         this.dayid = dayid;
         this.i = i;
-
     }
 
     public void myAlarmSet() {
@@ -54,11 +52,7 @@ public class AlarmSet {
 
         //设置一次性闹钟，第一个参数表示闹钟类型，第二个参数表示闹钟执行时间，第三个参数表示闹钟响应动作
 
-//        if (calendar.getTimeInMillis()< System.currentTimeMillis()) {
         am1.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent2);
-//        }
-
-//        am1.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent2);
     }
 
     public void myAlarmCancel() {

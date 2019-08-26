@@ -22,6 +22,9 @@
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:padding="10dp"
+        android:scrollbars="vertical"
+        android:singleLine="false"
+        android:textIsSelectable="true"
         android:background="@drawable/diary"
         android:textSize="18sp"
         android:text="TextView" />

@@ -155,7 +155,7 @@ public class FutureSQLiteUserDao {
 
     public int CountAll(){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from finish",null);
+        Cursor cursor = db.rawQuery("select count(*) from future where repeat_type like ?", new String[]{"everyday%"});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();

@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/m3ItemButton"
+    <LinearLayout
+        android:id="@+id/m3ItemText"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/abc_calendar_button1"
-        android:gravity="start"
-        android:padding="8dp"
-        android:text="7"
-        android:textColor="@drawable/ac_my_button1_text"
-        android:textSize="18sp"/>
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/m3ItemButton"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:background="@color/nullcolor"
+            android:paddingStart="8dp"
+            android:text="7"
+            android:textColor="@drawable/ac_my_button1_text"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/m3ItemText2"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@color/nullcolor"
+            android:textColor="@drawable/ac_my_button1_text"
+            android:text="TextView"
+            android:padding="3dp"
+            android:textSize="10sp" />
+    </LinearLayout>
 
 </LinearLayout>

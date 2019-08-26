@@ -21,16 +21,8 @@ public class FinishSQLiteUser {
         return finishId;
     }
 
-    public void setFinishId(String finishId) {
-        this.finishId = finishId;
-    }
-
     public String getDayId() {
         return dayId;
-    }
-
-    public void setDayId(String dayId) {
-        this.dayId = dayId;
     }
 
     public Boolean getCheckbox() {
@@ -83,6 +75,30 @@ public class FinishSQLiteUser {
 
     @Override
     public String toString() {
+        String checkbox1;
+        if (checkbox){
+            checkbox1 = "已完成";
+        } else {
+           checkbox1 = "未完成";
+        }
+        String remind1;
+        if (remind){
+            remind1 = "是";
+        } else {
+            remind1 = "否";
+        }
+
+        String finishId1 = finishId.substring(11,21);
+        return
+                "日程标题：" + title + '\n' +
+                "是否已经完成：" + checkbox1 + '\n' +
+                "是否提醒：" + remind1 + '\n' +
+                "日程开始时间：" + finishId1 + "日 " + time + '\n' +
+                "日程重要程度：等级" + important + '\n'+
+                "日程详细记录：" + '\n'+ diary + '\n';
+    }
+
+    public String toString1() {
         return "当前日程Finishid为：" + finishId + '\n' +
                 "当前日程Dayid为：" + dayId + '\n' +
                 "是否已经完成：" + checkbox + '\n' +

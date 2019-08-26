@@ -15,11 +15,12 @@
 
     <TextView
         android:id="@+id/forTestText1"
-        android:text="text"
+        android:text="请根据提示找回密码："
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
+        android:layout_marginTop="20dp"
         android:id="@+id/forTestEdit1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -28,6 +29,7 @@
         android:id="@+id/forTestButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:background="@drawable/ac_my_logon_button2"
+        android:text="提交" />
 
 </LinearLayout>

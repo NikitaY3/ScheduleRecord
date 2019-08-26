@@ -38,6 +38,8 @@ public class MainActivity1 extends AppCompatActivity {
 
         Button startButton = findViewById(R.id.start);
         Button stopButton = findViewById(R.id.stop);
+
+
         final Intent serviceIntent = new Intent(this,AlarmService.class);
 
         startButton.setOnClickListener(new View.OnClickListener() {

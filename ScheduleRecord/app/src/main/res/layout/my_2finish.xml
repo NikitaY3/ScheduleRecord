@@ -16,12 +16,6 @@
         android:textColor="@color/white"
         android:textSize="15sp" />
 
-    <Button
-        android:id="@+id/finButton2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
     <ListView
         android:id="@+id/finSchedulesListView"
         android:layout_width="match_parent"

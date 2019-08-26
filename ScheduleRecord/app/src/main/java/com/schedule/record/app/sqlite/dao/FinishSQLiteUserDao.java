@@ -125,7 +125,7 @@ public class FinishSQLiteUserDao {
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"finish_id like ?", new String[]{"%"+day+"%"},null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"time,important");
         while (cursor.moveToNext()){
             String finishid = cursor.getString(0);
             int checkbox1 = cursor.getInt(2);
@@ -133,8 +133,10 @@ public class FinishSQLiteUserDao {
             String important = cursor.getString(6);
             boolean checkbox;
             checkbox = checkbox1 > 0;
-            CalenderWeekItem things = new CalenderWeekItem(finishid,title,important,checkbox);
-            dataList.add(things);
+            if (finishid.substring(11, 21).equals(day)){
+                CalenderWeekItem things = new CalenderWeekItem(finishid,title,important,checkbox);
+                dataList.add(things);
+            }
         }
         db.close();
         return dataList;
@@ -177,7 +179,7 @@ public class FinishSQLiteUserDao {
     //根据日期查询当天完成日程数量
     public int CountFinishByDay(String day){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox = 1 and finish_id =? ", new String[]{"%"+day+"%"});
+        Cursor cursor = db.rawQuery("select count(*) from finish where checkbox = 1 and finish_id like ? ", new String[]{'%'+day+'%'});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();
@@ -188,7 +190,7 @@ public class FinishSQLiteUserDao {
     //根据日期查询当天日程总数量
     public int CountByDay(String day){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from finish where finish_id =? ", new String[]{"%"+day+"%"});
+        Cursor cursor = db.rawQuery("select count(*) from finish where finish_id like ? ", new String[]{'%'+day+'%'});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();

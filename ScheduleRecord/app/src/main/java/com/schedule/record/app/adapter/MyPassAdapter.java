@@ -2,7 +2,9 @@ package com.schedule.record.app.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,9 @@ import android.widget.TextView;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.FinishSQLite;
+import com.schedule.record.app.sqlite.PassSQLite;
 import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.PassSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.PassSQLiteUser;
 
 import java.util.List;
@@ -26,6 +30,10 @@ public class MyPassAdapter extends BaseAdapter {
     private FinishSQLite helperf;
     private String DBName="finish";
     private int version = 1;
+    private AlertDialog.Builder frame1;
+
+    private PassSQLite helper;
+    private String DBName1="pass";
 
     public MyPassAdapter(Context context, List<PassSQLiteUser> list) {
         this.context = context;
@@ -73,6 +81,15 @@ public class MyPassAdapter extends BaseAdapter {
         holder.tv2.setText(countFinish+" 天");
         holder.tv3.setText("失效日期："+pb.getPassday());
 
+        holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //调用弹框函数
+                dayConfirmationDialogs(position,pb.getDayid());
+                return true;
+            }
+        });
+
 //        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -83,35 +100,37 @@ public class MyPassAdapter extends BaseAdapter {
 //        });
 
         new ColorImportant(pb.getImportant(),holder.linearLayout).LinearLayoutSet();
-//        switch (pb.getImportant()) {
-//            case "a":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_em);
-//                break;
-//            case "b":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_im_no);
-//                break;
-//            case "c":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_em);
-//                break;
-//            case "d":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no);
-//                break;
-//            case "e":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-//                break;
-//            case "f":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-//                break;
-//            case "g":
-//                holder.linearLayout.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-//                break;
-//        }
 
         return convertView;
     }
     static class ViewHolder{
         TextView tv1,tv2,tv3;
         LinearLayout linearLayout;
+    }
+    //弹框函数
+    private void dayConfirmationDialogs(final int position, final String time) {
+        frame1 = new AlertDialog.Builder(context);
+        frame1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //删除Item对应的数据库
+                helper = new PassSQLite(context,DBName1,null,version);
+                PassSQLiteUserDao dao=new PassSQLiteUserDao(helper);
+                dao.deleteByDayid(time);
+                //删除Item
+                list.remove(position);
+                MyPassAdapter.this.notifyDataSetChanged();
+            }
+        });
+        frame1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        frame1.setMessage("确认删除当前日程？");
+        frame1.setTitle("提示");
+        frame1.show();
     }
 }
 

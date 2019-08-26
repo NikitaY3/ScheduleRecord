@@ -86,7 +86,9 @@ public class HttpGetUtils {
         return null;
     }
 
-    //解析json数据(user/findbyid的解析)
+
+
+    //解析json数据(user/findbyid的解析)查询用户是否注册
     public static String parseUserJson(String jsonStr, Context context) throws JSONException {
 
         JSONObject jsonObject = new JSONObject(jsonStr);
@@ -115,7 +117,14 @@ public class HttpGetUtils {
 
     }
 
-    //解析json数据(authority/query的解析)
+    //解析json数据(user/delete的解析)请求注销已有用户账号信息（调用各个函数删除数据）
+
+    //解析json数据(user/findbyid的解析)查询用户是否注册
+
+
+
+
+    //解析json数据(authority/query的解析)查询用户的权限
     public static String parseAuthortyJson(String jsonStr, Context context) throws JSONException {
 
         JSONObject jsonObject = new JSONObject(jsonStr);
@@ -147,7 +156,7 @@ public class HttpGetUtils {
         }
     }
 
-    //解析json数据(today/findbyid的解析)
+    //解析json数据(today/findbyid的解析)查询所有当天日程
     public static String parseTodayJson(String jsonStr, Context context) throws JSONException {
 
         JSONObject jsonObject = new JSONObject(jsonStr);

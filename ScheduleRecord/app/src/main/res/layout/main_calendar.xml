@@ -18,7 +18,7 @@ android:layout_height="match_parent">
             android:id="@+id/calenderTextView1"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/aa_head"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

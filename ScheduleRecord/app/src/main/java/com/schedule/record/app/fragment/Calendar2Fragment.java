@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.sqlite.FinishSQLite;
@@ -249,10 +250,6 @@ public class Calendar2Fragment extends Fragment {
             setFutureItem(futday);
         }
 
-
-//        todayint1 = Integer.parseInt(today1.substring(0,4)+ today1.substring(5,7)+today1.substring(8,10));
-
-//        PositionDetermine(today1,todayint1);
     }
 
     private void StartSet() {
@@ -395,7 +392,7 @@ public class Calendar2Fragment extends Fragment {
         c.set(Calendar.DATE, day1 + i);
 
         String dayAfter = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-//        System.out.println(dayAfter);
+
         return dayAfter;
     }
 

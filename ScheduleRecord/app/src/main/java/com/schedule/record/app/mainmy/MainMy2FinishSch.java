@@ -22,8 +22,6 @@ public class MainMy2FinishSch extends AppCompatActivity {
 
     @BindView(R.id.finSchedulesListView)
     ListView finSchedulesListView;
-    @BindView(R.id.finButton2)
-    Button finButton2;
 
     private List<FinishSQLiteUser> dataList;
     private FinishSQLite helper;
@@ -59,21 +57,4 @@ public class MainMy2FinishSch extends AppCompatActivity {
         finSchedulesListView.setAdapter(adapter);
     }
 
-    @OnClick(R.id.finButton2)
-    public void onViewClicked() {
-
-        FinishSQLite helper1;
-        String DBName1 = "finish";
-        int version1 = 1;
-
-        FinishSQLiteUser things = new FinishSQLiteUser("dfffg"+j, "1234555", true,
-                true, "12:00", "只是finish", "d", "没有注解");
-
-        helper1 = new FinishSQLite(this, DBName1, null, version1);
-        FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper1);
-        dao.insert(things);
-
-        j++;
-
-    }
 }
