@@ -108,7 +108,7 @@ public class MyFutureAdapter extends BaseAdapter {
                 helper=new FutureSQLite(context,DBName,null,version);
                 helper.getReadableDatabase();
                 FutureSQLiteUserDao dao=new FutureSQLiteUserDao(helper);
-                dao.deleteByDayid(time);
+                dao.deleteByDayid(time,context);
             }
         });
         frame1.setNegativeButton("取消", new DialogInterface.OnClickListener() {

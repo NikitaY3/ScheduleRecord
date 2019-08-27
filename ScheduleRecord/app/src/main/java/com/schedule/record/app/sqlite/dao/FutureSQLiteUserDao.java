@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.function.CalenderWeekItem;
+import com.schedule.record.app.function.GetFunctions.FutureDeleteTask;
+import com.schedule.record.app.function.PostFunctions;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
 import com.schedule.record.app.sqlite.FutureSQLite;
@@ -39,6 +41,11 @@ public class FutureSQLiteUserDao {
         content.put("diary",user.getDiary());
         db.insert(TABLE,null,content);
         db.close();
+
+//        //数据上传到云端
+//        PostFunctions postFunctions = new PostFunctions();
+//        postFunctions.SaveFuturePost(user);
+//        String r = new PostFunctions().SaveFuturePost(user);
     }
 
     public  FutureSQLiteUser queryBydayid(String Dayid){
@@ -131,11 +138,14 @@ public class FutureSQLiteUserDao {
         db.close();
     }
 
-    public void deleteByDayid(String dayid){
+    public void deleteByDayid(String dayid, Context context){
+        //删除云端
+        new FutureDeleteTask(context).execute("http://120.77.222.242:10024/future/deletebyid?dayId=" + dayid);
+
         SQLiteDatabase db=helper.getWritableDatabase();
         db.delete(TABLE,"day_id=?",new String[]{dayid});
         db.close();
-    }
+}
 
     public void updateAll(FutureSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
@@ -211,7 +221,7 @@ public class FutureSQLiteUserDao {
                 }
             }
             if (end <= today && end != 0){
-                deleteByDayid(dayid);
+                deleteByDayid(dayid,context);
             }
         }
         db.close();

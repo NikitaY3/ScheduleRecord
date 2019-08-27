@@ -1,6 +1,5 @@
 package com.schedule.record.app.sqlite.dao;
 
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -37,6 +36,7 @@ public class FinishSQLiteUserDao {
         db.close();
     }
 
+    //没有云端删除
     public void deleteByDayid(String dayid){
         SQLiteDatabase db=helper.getWritableDatabase();
         db.delete(TABLE,"day_id=?",new String[]{dayid});
@@ -133,6 +133,10 @@ public class FinishSQLiteUserDao {
             String important = cursor.getString(6);
             boolean checkbox;
             checkbox = checkbox1 > 0;
+            //你自己知道这里是什么时候调用的码我知道，都说了是数据手动插入类型和长度都不符合
+            // 等它下载数据太久了，在访问页面后没有刷新，退出会调用这里，退出后再次进入可以刷新
+            // 那刚刚那个错误是没有问题了,刚刚的云端删除没有成功，而且加载还是太慢了，超时是多久？？？
+            // 然后Post还是不行、
             if (finishid.substring(11, 21).equals(day)){
                 CalenderWeekItem things = new CalenderWeekItem(finishid,title,important,checkbox);
                 dataList.add(things);

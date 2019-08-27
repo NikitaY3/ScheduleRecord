@@ -69,10 +69,7 @@ public class MyLogonRegister extends AppCompatActivity {
 
     private void saveIn() {
         //1、将账号信息保存到云端
-        PostFunctions postFunctions = null;
-        String res = postFunctions.SaveUserPost(nameid,password,name);
-
-        if (res != null){
+        String res = new PostFunctions().SaveUserPost(nameid,password,name);
 
             //2、将账号信息保存到本地数据库
             GeneralSQLiteUser things = new GeneralSQLiteUser(nameid,name,password,"男",null,null);
@@ -100,9 +97,8 @@ public class MyLogonRegister extends AppCompatActivity {
                 }
             },50);
 
-        }else {
-            Toast.makeText(MyLogonRegister.this,"账号注册失败"+res,Toast.LENGTH_SHORT).show();
-        }
+//            Toast.makeText(MyLogonRegister.this,"账号注册失败"+res,Toast.LENGTH_SHORT).show();
+
     }
 
 }

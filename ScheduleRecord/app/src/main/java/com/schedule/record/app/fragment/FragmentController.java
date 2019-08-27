@@ -59,6 +59,7 @@ public class FragmentController {
             }
         }
         ft.commit();
+        // commitAllowingStateLoss()
     }
 
     public Fragment getFragment(int position) {

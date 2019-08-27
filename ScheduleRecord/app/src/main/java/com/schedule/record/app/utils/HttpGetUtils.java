@@ -5,13 +5,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.schedule.record.app.sqlite.AuthoritySQLite;
+import com.schedule.record.app.sqlite.FinishSQLite;
+import com.schedule.record.app.sqlite.FutureSQLite;
 import com.schedule.record.app.sqlite.GeneralUserSQLite;
+import com.schedule.record.app.sqlite.PassSQLite;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.GeneralSQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.PassSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
+import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
+import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
 import com.schedule.record.app.sqlite.user.GeneralSQLiteUser;
+import com.schedule.record.app.sqlite.user.PassSQLiteUser;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 
 import org.json.JSONArray;
@@ -30,13 +39,13 @@ public class HttpGetUtils {
     private static AuthoritySQLite helper0;
     private static String DBName0 = "authority";
 
-    private static TodaySQLite helper1;
+    private static FutureSQLite helper1;
     private static String DBName1 = "future";
     private static TodaySQLite helper2;
     private static String DBName2 = "today";
-    private static TodaySQLite helper3;
+    private static FinishSQLite helper3;
     private static String DBName3 = "finish";
-    private static TodaySQLite helper4;
+    private static PassSQLite helper4;
     private static String DBName4 = "pass";
 
     public static Bitmap getImage(String url) throws Exception {
@@ -87,7 +96,6 @@ public class HttpGetUtils {
     }
 
 
-
     //解析json数据(user/findbyid的解析)查询用户是否注册
     public static String parseUserJson(String jsonStr, Context context) throws JSONException {
 
@@ -117,78 +125,172 @@ public class HttpGetUtils {
 
     }
 
-    //解析json数据(user/delete的解析)请求注销已有用户账号信息（调用各个函数删除数据）
-
-    //解析json数据(user/findbyid的解析)查询用户是否注册
-
-
-
-
-    //解析json数据(authority/query的解析)查询用户的权限
-    public static String parseAuthortyJson(String jsonStr, Context context) throws JSONException {
+    //解析json数据(authority/query的解析)查询用户可管理的用户和用户授予他人的权限
+    public static String parseAuthorityQueryJson(String jsonStr, Context context) throws JSONException {
 
         JSONObject jsonObject = new JSONObject(jsonStr);
 
-        if (jsonObject.get("code").toString().equals("111")) {
-
+        if (!jsonObject.getString("data").equals("")){
             JSONArray jsonArray = jsonObject.getJSONArray("data");
-            if (jsonArray.length()>0){
-                String gnameId = null, snameId = null;
+            //先清空本地再插入(不能清空本地)
+            helper0 = new AuthoritySQLite(context, DBName0, null, version);
+            AuthoritySQLiteUserDao dao = new AuthoritySQLiteUserDao(helper0);
+//            dao.deleteAll();
 
-                for (int i = 0; i < jsonArray.length(); i++){
-                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                    gnameId = jsonObject1.getString("gnameId");
-                    snameId = jsonObject1.getString("snameId");
+            //循环取出
+            for (int i = 0; i < jsonArray.length(); i++){
+                JSONObject object = (JSONObject) jsonArray.get(i);
+                String gnameid = object.getString("gnameId");
+                String snameid = object.getString("snameId");
 
-                    //插入本地数据库
-                    AuthoritySQLiteUser things = new AuthoritySQLiteUser(gnameId, snameId);
-                    helper0 = new AuthoritySQLite(context, DBName0, null, version);
-                    AuthoritySQLiteUserDao dao = new AuthoritySQLiteUserDao(helper0);
-                    dao.insert(things);
-                }
-                return "yes";
-            }else {
-                return "no";
+                //插入本地数据库
+                AuthoritySQLiteUser things = new AuthoritySQLiteUser(gnameid,snameid);
+                dao.insert(things);
             }
-
-        }else {
-            return "no";
         }
+        return jsonObject.getString("data");
     }
 
-    //解析json数据(today/findbyid的解析)查询所有当天日程
-    public static String parseTodayJson(String jsonStr, Context context) throws JSONException {
+    //解析json数据(/future/findall的解析)所有未来日程
+    public static String parseFutureFindAllJson(String jsonStr, Context context) throws JSONException {
 
         JSONObject jsonObject = new JSONObject(jsonStr);
 
-        //{"code":111,"message":"操作成功","data":
-        // {"dayId":"18711660142","checkbox":false,"remind":true,"time":null,"title":"test",
-        // "important":null,"diary":"this is test","thisDay":null}}
+        if (!jsonObject.getString("data").equals("")){
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-        //today/findbyid?dayId=18711660142
+            //循环取出{"dayId":"1111","repeatType":null,"remind":null,"time":null,"title":null,
+            // "important":null,"diary":null,"endday":null}
+            for (int i = 0; i < jsonArray.length(); i++){
+                JSONObject object = (JSONObject) jsonArray.get(i);
+                String dayid = object.getString("dayId");
+                String repeatType = object.getString("repeatType");
+                String remind1 = object.getString("remind");
+                String time = object.getString("time");
+                String title = object.getString("title");
+                String important = object.getString("important");
+                String diary = object.getString("diary");
+                String endday = object.getString("endday");
 
-        if ((jsonObject.get("code").toString()).equals("111")) {
+                boolean remind = true;
+                if (!remind1.equals("true")){
+                    remind = false;
+                }
 
-            String dayId = jsonObject.getJSONObject("data").getString("dayId");
-            Boolean checkbox = jsonObject.getJSONObject("data").getBoolean("checkbox");
-            Boolean remind = jsonObject.getJSONObject("data").getBoolean("remind");
-            String time = jsonObject.getJSONObject("data").getString("time");
-            String title = jsonObject.getJSONObject("data").getString("title");
-            String important = jsonObject.getJSONObject("data").getString("important");
-            String diary = jsonObject.getJSONObject("data").getString("diary");
-            String thisDay = jsonObject.getJSONObject("data").getString("thisDay");
-
-            //插入本地数据库
-            TodaySQLiteUser things = new TodaySQLiteUser(dayId,checkbox,remind,time,title,important,diary,thisDay);
-            helper2 = new TodaySQLite(context, DBName2, null, version);
-            TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper2);
-            dao.insert(things,context);
-
-            return "yes";
-
-        }else {
-            return "no";
+                //插入本地数据库
+                FutureSQLiteUser things = new FutureSQLiteUser(dayid,repeatType,endday,remind,time,title,important,diary);
+                helper1 = new FutureSQLite(context, DBName1, null, version);
+                FutureSQLiteUserDao dao = new FutureSQLiteUserDao(helper1);
+                dao.insert(things);
+            }
         }
+        return jsonObject.getString("data");
     }
 
+
+    //解析json数据(today/findall的解析)查询所有当天日程
+    public static String parseTodayFindAllJson(String jsonStr, Context context) throws JSONException {
+
+        JSONObject jsonObject = new JSONObject(jsonStr);
+
+        if (!jsonObject.getString("data").equals("")){
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+            //循环取出[{"dayId":"12248445363222","checkbox":null,"remind":true,"time":null,"title":null,"important":null,"diary":null,"thisDay":null}]}
+            for (int i = 0; i < jsonArray.length(); i++){
+                JSONObject object = (JSONObject) jsonArray.get(i);
+                String dayid = object.getString("dayId");
+                String checkbox1 = object.getString("checkbox");
+                String remind1 = object.getString("remind");
+                String time = object.getString("time");
+                String title = object.getString("title");
+                String important = object.getString("important");
+                String diary = object.getString("diary");
+                String thisday = object.getString("thisDay");
+
+                boolean checkbox = false;
+                if (checkbox1.equals("true")){
+                    checkbox = true;
+                }
+                boolean remind = true;
+                if (!remind1.equals("true")){
+                    remind = false;
+                }
+
+                //插入本地数据库
+                TodaySQLiteUser things = new TodaySQLiteUser(dayid,checkbox,remind,time,title,important,diary,thisday);
+                helper2 = new TodaySQLite(context, DBName2, null, version);
+                TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper2);
+                dao.insert(things,context);
+            }
+        }
+        return jsonObject.getString("data");
+    }
+
+    //解析json数据(finish/findall的解析)查询所有完成日程
+    public static String parseFinishFindAllJson(String jsonStr, Context context) throws JSONException {
+
+        JSONObject jsonObject = new JSONObject(jsonStr);
+
+        if (!jsonObject.getString("data").equals("")){
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+            //循环取出[{"finishId":"12248445363222233","dayId":"12248445363222","checkbox":null,"remind":true,"time":null,"title":null,"important":null,"diary":null}]}
+            for (int i = 0; i < jsonArray.length(); i++){
+                JSONObject object = (JSONObject) jsonArray.get(i);
+                String finishid = object.getString("finishId");
+                String dayid = object.getString("dayId");
+                String checkbox1 = object.getString("checkbox");
+                String remind1 = object.getString("remind");
+                String time = object.getString("time");
+                String title = object.getString("title");
+                String important = object.getString("important");
+                String diary = object.getString("diary");
+
+                boolean checkbox = false;
+                if (checkbox1.equals("true")){
+                    checkbox = true;
+                }
+                boolean remind = true;
+                if (!remind1.equals("true")){
+                    remind = false;
+                }
+
+                //插入本地数据库
+                FinishSQLiteUser things = new FinishSQLiteUser(finishid,dayid,checkbox,remind,time,title,important,diary);
+                helper3 = new FinishSQLite(context, DBName3, null, version);
+                FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper3);
+                dao.insert(things);
+            }
+        }
+        return jsonObject.getString("data");
+    }
+
+    //解析json数据(pass/findall的解析)查询所有失效日程
+    public static String parsePassFindAllJson(String jsonStr, Context context) throws JSONException {
+
+        JSONObject jsonObject = new JSONObject(jsonStr);
+
+        if (!jsonObject.getString("data").equals("")){
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+            //循环取出[{"dayId":"12248445363222","title":null,"passDay":null,"completion":null}]
+            for (int i = 0; i < jsonArray.length(); i++){
+                JSONObject object = (JSONObject) jsonArray.get(i);
+                String dayid = object.getString("dayId");
+                String title = object.getString("title");
+                String passday = object.getString("passDay");
+                String completion1 = object.getString("completion");
+
+                int completion = Integer.parseInt(completion1);
+
+                //插入本地数据库
+                PassSQLiteUser things = new PassSQLiteUser(dayid,title,passday,completion,"a");
+                helper4 = new PassSQLite(context, DBName4, null, version);
+                PassSQLiteUserDao dao = new PassSQLiteUserDao(helper4);
+                dao.insert(things);
+            }
+        }
+        return jsonObject.getString("data");
+    }
 }

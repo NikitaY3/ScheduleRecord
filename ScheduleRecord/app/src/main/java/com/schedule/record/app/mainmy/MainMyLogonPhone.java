@@ -1,9 +1,12 @@
 package com.schedule.record.app.mainmy;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +17,11 @@ import android.widget.Toast;
 
 import com.schedule.record.app.MainActivity;
 import com.schedule.record.app.R;
+import com.schedule.record.app.function.GetFunctions.AuthorityQueryTask;
+import com.schedule.record.app.function.GetFunctions.FinishFindAllTask;
+import com.schedule.record.app.function.GetFunctions.FutureFindAllTask;
+import com.schedule.record.app.function.GetFunctions.PassFindAllTask;
+import com.schedule.record.app.function.GetFunctions.TodayFindAllTask;
 import com.schedule.record.app.sqlite.GeneralUserSQLite;
 import com.schedule.record.app.utils.HttpGetUtils;
 
@@ -36,10 +44,6 @@ public class MainMyLogonPhone extends AppCompatActivity {
     TextView phoneTest;
     @BindView(R.id.phoneButton3)
     Button phoneButton3;
-
-    private GeneralUserSQLite helper;
-    private String DBName = "general_user";
-    private int version = 1;
 
     private String password;
     private String nameid;
@@ -95,8 +99,10 @@ public class MainMyLogonPhone extends AppCompatActivity {
         }
     }
 
-
-//    未连接服务端的操作
+    /**
+     * 找到注册的账号信息后的操作
+     * @param name
+     */
     private void before(String name) {
 
         SharedPreferences.Editor myuser = sharedPreferences.edit();
@@ -120,13 +126,46 @@ public class MainMyLogonPhone extends AppCompatActivity {
 //                    intent2.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     }
 
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        // 覆写这个方法，接收并处理消息。
+        int a = 0;
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    a++;
+                    break;
+                case 2:
+                    a++;
+                    Toast.makeText(MainMyLogonPhone.this,"当前：" + a,Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    a++;
+                    break;
+                case 4:
+                    a++;
+                    break;
+                case 5:
+                    a++;
+                    break;
+                case 6:
+                    a++;
+                    break;
+            }
+            if (a == 6){
+                //1、将账号密码存好
+                before(phoneTest.getText().toString());
+            }
+        }
+    };
 
     class MyTask extends AsyncTask<String,Void,String>{
         //根据URL获取json数据
         @Override
         protected String doInBackground(String... params) {
             try {
-                String res=HttpGetUtils.getJson(params[0]);
+                String res = HttpGetUtils.getJson(params[0]);
                 return  res;
             } catch (Exception e) {
             }
@@ -137,8 +176,29 @@ public class MainMyLogonPhone extends AppCompatActivity {
             try {
                 String res = HttpGetUtils.parseUserJson(s,MainMyLogonPhone.this);
                 if (!res.equals("账号密码不匹配")) {
-                    before(res);
+                    //账号检测成功的执行操作
+
+                    //2、获取用户的各个表的数据13348445363
+                    AuthorityQueryTask authorityQueryTask = new AuthorityQueryTask(MainMyLogonPhone.this, uiHandler);
+                    authorityQueryTask.execute("http://120.77.222.242:10024/authority/query?gnameId=" + nameid);
+
+                    AuthorityQueryTask authorityQueryTask1 = new AuthorityQueryTask(MainMyLogonPhone.this, uiHandler);
+                    authorityQueryTask1.execute("http://120.77.222.242:10024/authority/query?snameId=" + nameid);
+
+                    FutureFindAllTask futureFindAllTask = new FutureFindAllTask(MainMyLogonPhone.this, uiHandler);
+                    futureFindAllTask.execute("http://120.77.222.242:10024/future/findall?dayId=" + nameid);
+
+                    TodayFindAllTask todayFindAllTask = new TodayFindAllTask(MainMyLogonPhone.this, uiHandler);
+                    todayFindAllTask.execute("http://120.77.222.242:10024/today/findall?dayId=" + nameid);
+
+                    FinishFindAllTask finishFindAllTask = new FinishFindAllTask(MainMyLogonPhone.this, uiHandler);
+                    finishFindAllTask.execute("http://120.77.222.242:10024/finish/findall?dayId=" + nameid);
+
+                    PassFindAllTask passFindAllTask = new PassFindAllTask(MainMyLogonPhone.this, uiHandler);
+                    passFindAllTask.execute("http://120.77.222.242:10024/pass/findall?dayId=" + nameid);
+
                 }else {
+                    //未注册账号的执行操作
                     Toast.makeText(MainMyLogonPhone.this,"账号或密码输入错误",Toast.LENGTH_SHORT).show();
                     phoneEditText1.setText("");
                     phoneEditText2.setText("");
@@ -146,8 +206,13 @@ public class MainMyLogonPhone extends AppCompatActivity {
 
                 phoneTest.setText(res);
 
+                Message msg = new Message();
+                msg.what = 1;
+                uiHandler.sendMessage(msg);
+
             } catch (JSONException e) {
             }
         }
     }
+
 }

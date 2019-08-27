@@ -1,5 +1,7 @@
 package com.schedule.record.app.function;
 
+import android.annotation.SuppressLint;
+
 import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
 import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
@@ -8,6 +10,9 @@ import com.schedule.record.app.sqlite.user.PassSQLiteUser;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 import com.schedule.record.app.utils.HttpPostUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,10 +21,10 @@ public class PostFunctions {
     public PostFunctions() {
     }
 
-    //Post（注册用户账号）
+    //Post（注册用户账号）这个是成功的
     public String SaveUserPost(String nameid, String password, String name){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
         params.put("nameid", nameid);
         params.put("password", password);
         params.put("name", name);
@@ -40,7 +45,7 @@ public class PostFunctions {
     //Post（更新用户资料）
     public String UpdateUserPost(GeneralSQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         params.put("nameid",user.getNameid());
         params.put("name",user.getName());
@@ -62,14 +67,13 @@ public class PostFunctions {
         return strResult[0];
     }
 
-
-    //Post(插入用户权限)
+    //Post(插入用户权限)这个曾经成功过，今天没试
     public String SaveAuthorityPost(AuthoritySQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
-        params.put("gname_id",user.getGnameid());
-        params.put("sname_id",user.getSnameid());
+        params.put("gnameId",user.getGnameid());
+        params.put("snameId",user.getSnameid());
 
         final String[] strResult = new String[1];
         new Thread() {
@@ -86,17 +90,25 @@ public class PostFunctions {
 
 
 
-    //Post(插入未来日程)
+    //Post(插入未来日程)这个失败
     public String SaveFuturePost(FutureSQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
-        String remind ;
-        if (user.isRemind()){  remind = "1";  }else {  remind = "0";  }
+        String remind = "1";
+        if (!user.isRemind()) {  remind = "0";  }
 
-        params.put("day_id",user.getDayId());
-        params.put("repeat_type",user.getRepeatType());
-        params.put("end_day",user.getEndDay());
+        //用SimpleDateFormat转换成Date
+        Date endday = null;
+        try {
+            endday = converToDate(user.getEndDay());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        params.put("dayId",user.getDayId());
+        params.put("repeatType",user.getRepeatType());
+        params.put("endday",endday);
         params.put("remind",remind);
         params.put("time",user.getTime());
         params.put("title",user.getTitle());
@@ -109,7 +121,7 @@ public class PostFunctions {
             public void run() {
                 super.run();
                 //服务器请求路径
-                String strUrlPath = "http://120.77.222.242:10024/future/save?";
+                String strUrlPath = "http://120.77.222.242:10024/future/save";
                 strResult[0] = HttpPostUtils.submitPostData(strUrlPath,params, "utf-8");
             }
         }.start();
@@ -119,7 +131,7 @@ public class PostFunctions {
     //Post(更新未来日程)
     public String UpdateFuturePost(FutureSQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         String remind ;
         if (user.isRemind()){  remind = "1";  }else {  remind = "0";  }
@@ -149,7 +161,7 @@ public class PostFunctions {
     //Post(插入当天日程)
     public String SaveTodayPost(TodaySQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         String checkbox,remind ;
         if (user.isCheckbox()){  checkbox = "1";  }else {  checkbox = "0"; }
@@ -180,7 +192,7 @@ public class PostFunctions {
     //Post(更新当天日程)
     public String UpdateTodayPost(TodaySQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         String checkbox,remind ;
         if (user.isCheckbox()){  checkbox = "1";  }else {  checkbox = "0"; }
@@ -211,7 +223,7 @@ public class PostFunctions {
     //Post(插入完成日程)
     public String SaveFinishPost(FinishSQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         String checkbox,remind ;
         if (user.getCheckbox()){  checkbox = "1";  }else {  checkbox = "0"; }
@@ -242,7 +254,7 @@ public class PostFunctions {
     //Post(更新完成日程)
     public String UpdateFinishPost(FinishSQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         String checkbox,remind ;
         if (user.getCheckbox()){  checkbox = "1";  }else {  checkbox = "0"; }
@@ -273,7 +285,7 @@ public class PostFunctions {
     //Post(插入失效日程)
     public String SavePassPost(PassSQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         params.put("day_id",user.getDayid());
         params.put("title",user.getTitle());
@@ -297,7 +309,7 @@ public class PostFunctions {
     //Post(更新失效日程)
     public String UpdatePassPost(PassSQLiteUser user){
         //参数
-        final Map<String,String> params = new HashMap<String,String>();
+        final Map<String,Object> params = new HashMap<String,Object>();
 
         params.put("day_id",user.getDayid());
         params.put("title",user.getTitle());
@@ -318,5 +330,12 @@ public class PostFunctions {
         return strResult[0];
     }
 
+
+    //把字符串转为日期
+    public static Date converToDate(String strDate) throws Exception
+    {
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.parse(strDate);
+    }
 
 }

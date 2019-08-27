@@ -106,9 +106,9 @@ public class AuthoritySQLiteUserDao {
         db.close();
     }
 
-    public void deleteByGSNameid(String gnameid, String insert){
+    public void deleteByNameid(String gnameid, String snameid){
         SQLiteDatabase db=helper.getWritableDatabase();
-        db.delete(TABLE,"gname_id=? and sname_id=?",new String[]{gnameid,insert});
+        db.delete(TABLE,"gname_id=? and sname_id=?",new String[]{gnameid,snameid});
         db.close();
     }
 

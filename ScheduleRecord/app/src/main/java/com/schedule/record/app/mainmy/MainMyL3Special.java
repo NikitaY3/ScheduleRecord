@@ -11,6 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.schedule.record.app.R;
+import com.schedule.record.app.function.GetFunctions.AuthorityDeleteTask;
+import com.schedule.record.app.function.GetFunctions.AuthorityQueryTask;
+import com.schedule.record.app.function.PostFunctions;
 import com.schedule.record.app.sqlite.AuthoritySQLite;
 import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
@@ -60,20 +63,29 @@ public class MainMyL3Special extends AppCompatActivity {
 
     @OnClick({R.id.specialButton1, R.id.specialButton2})
     public void onViewClicked(View view) {
+        String snameid = specialEditText.getText().toString();
         switch (view.getId()) {
             case R.id.specialButton1:
-                String snameid = specialEditText.getText().toString();
                 if (snameid.length() == 11){
                     user.setSnameid(snameid);
-                    dao.insert(user);
-                    specialTextView2.setText(dao.querySpecial(nameid));
+                    PostFunctions postFunctions = null;
+                    String a = postFunctions.SaveAuthorityPost(user);
+                    if (a != null){
+                        dao.insert(user);
+                        specialTextView2.setText(dao.querySpecial(nameid));
+                    }
                 }else {
                     specialEditText.setText("");
                     Toast.makeText(this,"您输入的ID不正确",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.specialButton2:
-                dao.deleteByGSNameid(nameid,specialEditText.getText().toString());
+                //1、删除本地数据库
+                dao.deleteByNameid(nameid,snameid);
+                //2、删除云端数据库
+                //authority/delete?snameId=13348445363&gnameId=11122223333
+                new AuthorityDeleteTask(MainMyL3Special.this).execute("http://120.77.222.242:10024authority/delete?snameId=" + nameid + "&gnameId=" + snameid);
+
                 specialTextView2.setText(dao.querySpecial(nameid));
                 break;
         }

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.schedule.record.app.R;
+import com.schedule.record.app.function.GetFunctions.AuthorityQueryTask;
 import com.schedule.record.app.sqlite.AuthoritySQLite;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
@@ -103,7 +106,10 @@ public class MainMyL2General extends AppCompatActivity {
 
                 break;
             case R.id.generalButton2:
-                //刷新数据
+                //刷新数据，查询云端并更新本地
+                AuthorityQueryTask authorityQueryTask = new AuthorityQueryTask(MainMyL2General.this, uiHandler );
+                authorityQueryTask.execute("http://120.77.222.242:10024/authority/query?gnameId=" + nameid);
+
                 generalTextView2.setText(dao.queryGeneral(nameid));
                 break;
         }
@@ -118,4 +124,22 @@ public class MainMyL2General extends AppCompatActivity {
         return time;
     }
 
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        // 覆写这个方法，接收并处理消息。
+        int a = 0;
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    a++;
+                    break;
+                case 2:
+
+                    generalTextView2.setText(dao.queryGeneral(nameid));
+
+                    break;
+            }
+        }
+    };
 }

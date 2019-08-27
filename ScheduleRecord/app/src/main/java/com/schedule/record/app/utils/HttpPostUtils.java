@@ -1,5 +1,7 @@
 package com.schedule.record.app.utils;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +20,7 @@ public class HttpPostUtils {
      * @param encode:编码格式
      * @return
      */
-    public static String submitPostData(String strUrlPath, Map<String, String> params, String encode) {
+    public static String submitPostData(String strUrlPath, Map<String, Object> params, String encode) {
 
         byte[] data = getRequestData(params, encode).toString().getBytes();//获得请求体
         try {
@@ -61,14 +63,14 @@ public class HttpPostUtils {
      * @param encode:编码格式
      * @return
      */
-    public static StringBuffer getRequestData(Map<String, String> params, String encode) {
+    public static StringBuffer getRequestData(Map<String, Object> params, String encode) {
         //存储封装好的请求体信息
         StringBuffer stringBuffer = new StringBuffer();
         try {
-            for(Map.Entry<String, String> entry : params.entrySet()) {
+            for(Map.Entry<String, Object> entry : params.entrySet()) {
                 stringBuffer.append(entry.getKey())
                         .append("=")
-                        .append(URLEncoder.encode(entry.getValue(), encode))
+                        .append(URLEncoder.encode(String.valueOf(entry.getValue()), encode))
                         .append("&");
             }
             //删除最后的一个"&"
@@ -97,6 +99,7 @@ public class HttpPostUtils {
             e.printStackTrace();
         }
         resultData = new String(byteArrayOutputStream.toByteArray());
+        Log.d("resultData:{}", resultData);
         return resultData;
     }
 

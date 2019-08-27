@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.MyFutureAdapter;
 import com.schedule.record.app.function.ColorImportant;
+import com.schedule.record.app.function.PostFunctions;
 import com.schedule.record.app.sqlite.FutureSQLite;
 import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
@@ -215,32 +216,27 @@ public class FutureDialog extends Dialog {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences("myuser",MODE_PRIVATE);
         String nameid = sharedPreferences.getString("nameid","");
-        String dayid = nameid+Dayidbutton;
+        String dayid = nameid + Dayidbutton;
 
         FutureSQLiteUser things = new FutureSQLiteUser(dayid,repeat,endday,remind,time,dayTitle,important,diary);
 
         //数据写入数据库
         helper=new FutureSQLite(context,DBName,null,version);
-        helper.getReadableDatabase();
         FutureSQLiteUserDao dao=new FutureSQLiteUserDao(helper);
         dao.insert(things);
 
+        //数据上传到云端
+        PostFunctions postFunctions = new PostFunctions();
+        postFunctions.SaveFuturePost(things);
+
         //刷新所有Item
         dataList = new ArrayList<FutureSQLiteUser>();
-        helper.getReadableDatabase();
         dataList = (List<FutureSQLiteUser>) dao.quiryAndSetItem();
         final MyFutureAdapter adapter = new MyFutureAdapter(context, dataList);
         calendar1ListView.setAdapter(adapter);
 
     }
 
-    private String getInternetTime() {
-        //联网获取当前时间
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        Dayid = timesimple.format(new Date());
-        return Dayid;
-    }
 
     private void SpinnerList() {
         //设置下拉框的列表内容
@@ -307,5 +303,13 @@ public class FutureDialog extends Dialog {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+    }
+
+    //联网获取当前时间
+    private String getInternetTime() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        Dayid = timesimple.format(new Date());
+        return Dayid;
     }
 }

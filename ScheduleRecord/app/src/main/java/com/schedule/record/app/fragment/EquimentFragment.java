@@ -73,7 +73,7 @@ public class EquimentFragment extends Fragment {
         dao3.FutureToToday(getActivity(),todayint, Integer.parseInt(today.substring(9,10)),week,today);
 
         //2.判断将Today日程插入到Finish日程,判断Today日程是否Pass
-        String todayb = getDay(1);
+        String todayb = getDay(-1);
         int todaybint = Integer.parseInt((today.substring(0,4)+today.substring(5,7)+today.substring(8,10)));
         helper2 = new TodaySQLite(getActivity(), DBName2, null, version);
         TodaySQLiteUserDao dao2 = new TodaySQLiteUserDao(helper2);
