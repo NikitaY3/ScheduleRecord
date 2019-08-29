@@ -1,7 +1,7 @@
 package com.schedule.record.app.sqlite.user;
 
 public class AuthoritySQLiteUser {
-//    authorization char(12) primary key,gnameid varchar(12),snameid varchar(12)
+
     private String authorization,gnameId,snameId;
 
     public AuthoritySQLiteUser(String authorization, String gnameid, String snameid) {

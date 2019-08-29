@@ -1,29 +1,30 @@
 package com.schedule.record.app.function.GetFunctions;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 
 import com.schedule.record.app.utils.HttpGetUtils;
 
-import org.json.JSONException;
-
 public class AuthorityDeleteTask extends AsyncTask<String,Void,String>{
 
-    @SuppressLint("StaticFieldLeak")
-    private Context context;
+    private Handler uiHandler;
 
-    public AuthorityDeleteTask(Context context) {
-        this.context = context;
+    public AuthorityDeleteTask(Handler uiHandler) {
+        this.uiHandler = uiHandler;
     }
 
     @Override
     protected String doInBackground(String... params) {
         try {
-            String res= HttpGetUtils.getJson(params[0]);
-            return  res;
-        } catch (Exception e) {
+            return HttpGetUtils.getJson(params[0]);
+        } catch (Exception ignored) {
         }
+
+        Message msg = new Message();
+        msg.what = 22;
+        uiHandler.sendMessage(msg);
+
         return null;
     }
 }

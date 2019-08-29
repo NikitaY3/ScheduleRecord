@@ -3,6 +3,8 @@ package com.schedule.record.app.mainmy;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@SuppressLint("Registered")
 public class MainMyL3Special extends AppCompatActivity {
 
     @BindView(R.id.specialEditText)
@@ -37,11 +38,8 @@ public class MainMyL3Special extends AppCompatActivity {
     TextView specialTextView2;
 
     private AuthoritySQLiteUser user;
-    private AuthoritySQLite helper;
-    String DBName = "authority";
-    int version = 1;
     private AuthoritySQLiteUserDao dao;
-    private String nameid;
+    private String nameid, aForPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +53,10 @@ public class MainMyL3Special extends AppCompatActivity {
         nameid = sharedPreferences.getString("nameid","");
         user = new AuthoritySQLiteUser(nameid,null);
 
-        //普通用户是我，特殊用户是编辑框里面的
-        helper = new AuthoritySQLite(MainMyL3Special.this, DBName, null, version);
+        //普通用户是我，特殊用户是编辑框里面的,查询
+        String DBName = "authority";
+        int version = 1;
+        AuthoritySQLite helper = new AuthoritySQLite(MainMyL3Special.this, DBName, null, version);
         dao = new AuthoritySQLiteUserDao(helper);
         specialTextView2.setText(dao.querySpecial(nameid));
     }
@@ -68,12 +68,9 @@ public class MainMyL3Special extends AppCompatActivity {
             case R.id.specialButton1:
                 if (snameid.length() == 11){
                     user.setSnameid(snameid);
+                    //数据发送到云端
                     PostFunctions postFunctions = null;
-                    String a = postFunctions.SaveAuthorityPost(user);
-                    if (a != null){
-                        dao.insert(user);
-                        specialTextView2.setText(dao.querySpecial(nameid));
-                    }
+                    aForPost = postFunctions.SaveAuthorityPost(user,uiHandler);
                 }else {
                     specialEditText.setText("");
                     Toast.makeText(this,"您输入的ID不正确",Toast.LENGTH_SHORT).show();
@@ -83,11 +80,28 @@ public class MainMyL3Special extends AppCompatActivity {
                 //1、删除本地数据库
                 dao.deleteByNameid(nameid,snameid);
                 //2、删除云端数据库
-                //authority/delete?snameId=13348445363&gnameId=11122223333
-                new AuthorityDeleteTask(MainMyL3Special.this).execute("http://120.77.222.242:10024authority/delete?snameId=" + nameid + "&gnameId=" + snameid);
+                new AuthorityDeleteTask(uiHandler).execute("http://120.77.222.242:10024/authority/delete?snameId=" + snameid + "&gnameId=" + nameid);
 
-                specialTextView2.setText(dao.querySpecial(nameid));
                 break;
         }
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 22:
+                    specialTextView2.setText(dao.querySpecial(nameid));
+                    Toast.makeText(MainMyL3Special.this,"删除成功",Toast.LENGTH_SHORT).show();
+                    break;
+                case 21:
+                    if (aForPost != null){
+                        dao.insert(user);
+                        specialTextView2.setText(dao.querySpecial(nameid));
+                    }
+                    break;
+            }
+        }
+    };
 }

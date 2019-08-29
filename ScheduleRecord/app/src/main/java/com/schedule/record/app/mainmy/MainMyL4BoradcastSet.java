@@ -28,8 +28,6 @@ public class MainMyL4BoradcastSet extends AppCompatActivity {
     @BindView(R.id.bSetSpinner)
     Spinner bSetSpinner;
 
-    private ArrayAdapter<String> arrayAdapter;
-    private List<String> bSetSpinnerList;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -41,7 +39,6 @@ public class MainMyL4BoradcastSet extends AppCompatActivity {
         SpinnerList();
 
         StartSet();
-
     }
 
     @OnClick({R.id.bSetSwitch1, R.id.bSetSwitch2})
@@ -106,7 +103,7 @@ public class MainMyL4BoradcastSet extends AppCompatActivity {
 
     //设置下拉框的列表内容
     private void SpinnerList() {
-        bSetSpinnerList = new ArrayList<>();
+        List<String> bSetSpinnerList = new ArrayList<>();
         bSetSpinnerList.add("30分钟");
         bSetSpinnerList.add("1小时");
         bSetSpinnerList.add("2小时");
@@ -116,9 +113,9 @@ public class MainMyL4BoradcastSet extends AppCompatActivity {
         MySpinner(bSetSpinnerList,bSetSpinner);
     }
 
+    //下拉列表函数
     private void MySpinner(List<String> teamList, Spinner spinner) {
-        //下拉列表函数
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.main_calendar_item,teamList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.main_calendar_item, teamList);
         arrayAdapter.setDropDownViewResource(R.layout.main_calendar_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setSelection(0);

@@ -6,12 +6,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class FutureSQLite extends SQLiteOpenHelper {
 
-    String CREAT_TABLE="create table future(day_id varchar(32) primary key,repeat_type varchar(50),end_day date,remind bit,time varchar(8),title varchar(128),important char(2), diary text)";
     public FutureSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String CREAT_TABLE = "create table future(day_id varchar(32) primary key,repeat_type varchar(50),end_day date,remind bit,time varchar(8),title varchar(128),important char(2), diary text)";
         db.execSQL(CREAT_TABLE);
     }
 

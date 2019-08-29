@@ -13,7 +13,7 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="4dp"
         android:gravity="center_vertical"
-        android:background="@drawable/abaa_item_im_em"
+        android:background="@drawable/abaa_item_important1"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -78,7 +78,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:background="@drawable/abaa_item_im_no"
+            android:background="@drawable/abaa_item_important2"
             android:textColor="@drawable/ac_my_button1_text"/>
 
         <TextView
@@ -89,7 +89,7 @@
             android:layout_weight="1"
             android:text="仅当天有效"
             android:gravity="center"
-            android:background="@drawable/abaa_item_no_no"
+            android:background="@drawable/abaa_item_important4"
             android:textColor="@color/colorPrimary" />
 
 
@@ -100,7 +100,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:background="@drawable/abaa_item_no_no_1"
+            android:background="@drawable/abaa_item_important5"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.sqlite.FinishSQLite;
@@ -27,7 +26,6 @@ import com.schedule.record.app.function.CalculationWeek;
 import com.schedule.record.app.function.CalenderWeekItem;
 import com.schedule.record.app.sqlite.TodaySQLite;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -78,8 +76,6 @@ public class Calendar2Fragment extends Fragment {
     ScrollView mode2ScrollView;
     Unbinder unbinder;
 
-
-    private View view;
     private CalenderWeekItem mydata;
     private List<CalenderWeekItem> dataList1;
     private List<CalenderWeekItem> dataList2;
@@ -90,33 +86,26 @@ public class Calendar2Fragment extends Fragment {
     private List<CalenderWeekItem> dataList7;
     private List<Integer> dataList;
 
-    private CalenderWeekAdapter1 weekAdapter1;
-    private CalenderWeekAdapter2 weekAdapter2;
-    private CalenderWeekAdapter3 weekAdapter3;
-    private CalenderWeek2Adapter week2Adapter;
+    public int version = 1;
+    public List<CalenderWeekItem> finishData;
+    public FinishSQLite helper1;
+    public String DBName1 = "finish";
 
-    int version = 1;
-    private List<CalenderWeekItem> finishData;
-    private FinishSQLite helper1;
-    String DBName1 = "finish";
+    public List<CalenderWeekItem> todayData;
+    public TodaySQLite helper2;
+    public String DBName2 = "today";
 
-    private List<CalenderWeekItem> todayData;
-    private TodaySQLite helper2;
-    String DBName2 = "today";
+    public List<CalenderWeekItem> futureData;
+    public FutureSQLite helper3;
+    public String DBName3 = "future";
 
-
-    private List<CalenderWeekItem> futureData;
-    private FutureSQLite helper3;
-    String DBName3 = "future";
-
-    String today1;
-    String todayweek;
-    int todayint1, week;
+    private String today1;
+    private int week;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_calendar_mode2, container, false);
+        View view = inflater.inflate(R.layout.main_calendar_mode2, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         return view;
@@ -131,8 +120,13 @@ public class Calendar2Fragment extends Fragment {
         int dd = Integer.parseInt(today1.substring(5,7));
         calendar2Button.setText(dd+"月");
         //2、判断今天星期
-        todayweek = new CalculationWeek(today1.substring(0, 10)).getWeek();
+        String todayweek = new CalculationWeek(today1.substring(0, 10)).getWeek();
         week = Integer.parseInt(todayweek);//0-6
+
+        CalenderWeekAdapter1 weekAdapter1;
+        CalenderWeekAdapter2 weekAdapter2;
+        CalenderWeekAdapter3 weekAdapter3;
+
         //3、判断星期日
         if (0<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList1);
@@ -165,7 +159,6 @@ public class Calendar2Fragment extends Fragment {
         }
 
         //5、判断星期二
-
         if (2<week){
             weekAdapter1 = new CalenderWeekAdapter1(getActivity(), dataList3);
             calendar2ListView3.setAdapter(weekAdapter1);
@@ -249,7 +242,6 @@ public class Calendar2Fragment extends Fragment {
             String futday = getDay(6-week);
             setFutureItem(futday);
         }
-
     }
 
     private void StartSet() {
@@ -266,7 +258,7 @@ public class Calendar2Fragment extends Fragment {
         dataList = new ArrayList<>();
 
         //数量
-        week2Adapter = new CalenderWeek2Adapter(getActivity(), dataList);
+        CalenderWeek2Adapter week2Adapter = new CalenderWeek2Adapter(getActivity(), dataList);
         calendar2ListView.setAdapter(week2Adapter);
     }
 
@@ -300,6 +292,7 @@ public class Calendar2Fragment extends Fragment {
             dataList.add(i);
         }
     }
+
     //判断以后显示哪些日程
     private void setFutureItem(String day) {
         helper3 = new FutureSQLite(getActivity(), DBName3, null, version);
@@ -321,34 +314,11 @@ public class Calendar2Fragment extends Fragment {
         }
     }
 
-    //判断某一天是否和今天在同一周
-    private boolean oneWeek(int x) {
-        int s = 20190106;
-        int m = (todayint1 - s)/7;
-        int n = (x - s)/7;
-        return n == m;
-    }
-
     //联网获取当前时间yyyy-MM-dd HH:mm:ss
     private String getInternetTime() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd");
         timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         return timesimple.format(new Date());
-    }
-
-    //把字符串转为日期
-    public static Date ConverToDate(String strDate) throws Exception
-    {
-        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        return df.parse(strDate);
-    }
-
-    //把日期转为字符串
-    public static String ConverToString(Date date)
-    {
-        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-        return df.format(date);
     }
 
     //根据0123456设置日程显示在哪一天
@@ -383,7 +353,7 @@ public class Calendar2Fragment extends Fragment {
         Calendar c = Calendar.getInstance();
         Date date = null;
         try {
-            date = new SimpleDateFormat("yy-MM-dd").parse(today1);
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(today1);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -391,9 +361,7 @@ public class Calendar2Fragment extends Fragment {
         int day1 = c.get(Calendar.DATE);
         c.set(Calendar.DATE, day1 + i);
 
-        String dayAfter = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-
-        return dayAfter;
+        return new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
     }
 
 
@@ -408,4 +376,29 @@ public class Calendar2Fragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
+//    //判断某一天是否和今天在同一周
+//    private boolean oneWeek(int x) {
+//        int s = 20190106;
+//        int m = (todayint1 - s)/7;
+//        int n = (x - s)/7;
+//        return n == m;
+//    }
+//
+//    //把字符串转为日期
+//    public static Date ConverToDate(String strDate) throws Exception
+//    {
+//        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//        return df.parse(strDate);
+//    }
+//
+//    //把日期转为字符串
+//    public static String ConverToString(Date date)
+//    {
+//        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        return df.format(date);
+//    }
+
 }

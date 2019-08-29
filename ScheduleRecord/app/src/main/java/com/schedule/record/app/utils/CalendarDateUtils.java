@@ -6,7 +6,7 @@ public class CalendarDateUtils {
 
     /**
      * 获取当前年份
-     * @return
+     * @return 年份
      */
     public static int getYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
@@ -14,7 +14,7 @@ public class CalendarDateUtils {
 
     /**
      * 获取当前月份
-     * @return
+     * @return 月份
      */
     public static int getMonth() {
         return Calendar.getInstance().get(Calendar.MONTH) + 1;
@@ -22,7 +22,7 @@ public class CalendarDateUtils {
 
     /**
      * 获取当前日期是该月的第几天
-     * @return
+     * @return 日期
      */
     public static int getCurrentDayOfMonth() {
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -30,7 +30,7 @@ public class CalendarDateUtils {
 
     /**
      * 获取当前日期是该周的第几天
-     * @return
+     * @return 星期
      */
     public static int getCurrentDayOfWeek() {
         return Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
@@ -38,6 +38,7 @@ public class CalendarDateUtils {
 
     /**
      * 获取当前是几点
+     * @return 小时
      */
     public static int getHour() {
         return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);//二十四小时制
@@ -45,7 +46,7 @@ public class CalendarDateUtils {
 
     /**
      * 获取当前是几分
-     * @return
+     * @return 分钟
      */
     public static int getMinute() {
         return Calendar.getInstance().get(Calendar.MINUTE);
@@ -53,7 +54,7 @@ public class CalendarDateUtils {
 
     /**
      * 获取当前秒
-     * @return
+     * @return 秒
      */
     public static int getSecond() {
         return Calendar.getInstance().get(Calendar.SECOND);
@@ -61,9 +62,9 @@ public class CalendarDateUtils {
 
     /**
      * 根据传入的年份和月份，获取当前月份的日历分布
-     * @param year
-     * @param month
-     * @return
+     * @param year 年
+     * @param month 月
+     * @return 当月日历数组
      */
     public static int[][] getDayOfMonthFormat(int year, int month) {
         Calendar calendar = Calendar.getInstance();
@@ -95,12 +96,11 @@ public class CalendarDateUtils {
 
     /**
      * 根据传入的年份和月份，判断上一个月有多少天
-     * @param year
-     * @param month
-     * @return
+     * @param year 年
+     * @param month 月
      */
-    public static int getLastDaysOfMonth(int year, int month) {
-        int lastDaysOfMonth = 0;
+    private static int getLastDaysOfMonth(int year, int month) {
+        int lastDaysOfMonth;
         if (month == 1) {
             lastDaysOfMonth = getDaysOfMonth(year - 1, 12);
         } else {
@@ -111,11 +111,10 @@ public class CalendarDateUtils {
 
     /**
      * 根据传入的年份和月份，判断当前月有多少天
-     * @param year
-     * @param month
-     * @return
+     * @param year 年
+     * @param month 月
      */
-    public static int getDaysOfMonth(int year, int month) {
+    private static int getDaysOfMonth(int year, int month) {
         switch (month) {
             case 1:
             case 3:
@@ -142,13 +141,10 @@ public class CalendarDateUtils {
 
     /**
      * 判断是否为闰年
-     * @param year
-     * @return
+     * @param year 年
+     * @return 是否
      */
-    public static boolean isLeap(int year) {
-        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
-            return true;
-        }
-        return false;
+    private static boolean isLeap(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
     }
 }

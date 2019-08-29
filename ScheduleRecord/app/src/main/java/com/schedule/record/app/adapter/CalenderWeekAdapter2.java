@@ -42,8 +42,7 @@ public class CalenderWeekAdapter2 extends BaseAdapter {
         return position;
     }
 
-    //每一个item调用该方法---视图缓存机制
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "InflateParams"})
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;

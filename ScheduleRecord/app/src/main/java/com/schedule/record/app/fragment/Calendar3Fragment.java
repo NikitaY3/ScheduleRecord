@@ -22,14 +22,12 @@ public class Calendar3Fragment extends Fragment {
 
     @BindView(R.id.mode3Button1)
     Button mode3Button1;
-    Unbinder unbinder;
-
-    private View view;
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_calendar_mode3, container, false);
+        View view = inflater.inflate(R.layout.main_calendar_mode3, container, false);
         unbinder = ButterKnife.bind(this, view);
 
 

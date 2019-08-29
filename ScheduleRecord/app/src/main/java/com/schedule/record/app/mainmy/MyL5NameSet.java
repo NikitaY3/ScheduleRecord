@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.schedule.record.app.MainActivity;
 import com.schedule.record.app.R;
 import com.schedule.record.app.sqlite.GeneralUserSQLite;
 import com.schedule.record.app.sqlite.dao.GeneralSQLiteUserDao;
@@ -27,9 +26,9 @@ public class MyL5NameSet extends AppCompatActivity {
     @BindView(R.id.nameSetEditText1)
     EditText nameSetEditText1;
 
-    private GeneralUserSQLite helper;
-    private String DBName = "general";
-    private int version = 1;
+    public GeneralUserSQLite helper;
+    public String DBName = "general";
+    public int version = 1;
     private String nameid;
 
     @Override
@@ -55,8 +54,15 @@ public class MyL5NameSet extends AppCompatActivity {
         user.setName(nameSetEditText1.getText().toString());
         dao.updateAll(user);
 
-//        Intent intent = new Intent(MyL5NameSet.this, MainMyL5Information.class);
-//        startActivity(intent);
+        SharedPreferences sharedPreferences ;
+        sharedPreferences = getSharedPreferences("myuser", MODE_PRIVATE);
+        SharedPreferences.Editor myuser = sharedPreferences.edit();
+        myuser.putString("name", user.getName());
+        myuser.apply();
+
+        Intent intent = new Intent(MyL5NameSet.this, MainMyL5Information.class);
+        startActivity(intent);
+
         finish();
     }
 }

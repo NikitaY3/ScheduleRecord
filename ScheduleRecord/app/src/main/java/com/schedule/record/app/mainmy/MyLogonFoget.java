@@ -1,5 +1,6 @@
 package com.schedule.record.app.mainmy;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +23,6 @@ public class MyLogonFoget extends AppCompatActivity {
     private EditText cityCode;
     private TextView tv;
 
-    String baseUrl = "http://120.77.222.242:10024/user/findbyid?nameId=13348445363&password=11.html";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,21 +38,18 @@ public class MyLogonFoget extends AppCompatActivity {
 
     @OnClick(R.id.forTestButton)
     public void onViewClicked() {
+        String baseUrl = "http://120.77.222.242:10024/user/findbyid?nameId=13348445363&password=11.html";
         String params = baseUrl + cityCode.getText().toString() + ".html";
         new MyTask().execute(params);
     }
 
+    @SuppressLint("StaticFieldLeak")
     class MyTask extends AsyncTask<String, Void, String> {
-
-
-        //根据URL获取json数据的天气预报
         @Override
         protected String doInBackground(String... params) {
-
             try {
-                String res = HttpGetUtils.getJson(params[0]);
-                return res;
-            } catch (Exception e) {
+                return HttpGetUtils.getJson(params[0]);
+            } catch (Exception ignored) {
 
             }
             return null;
@@ -64,7 +60,7 @@ public class MyLogonFoget extends AppCompatActivity {
             try {
                 String res = HttpGetUtils.parseUserJson(s,MyLogonFoget.this);
                 tv.setText(res);
-            } catch (JSONException e) {
+            } catch (JSONException ignored) {
 
             }
         }

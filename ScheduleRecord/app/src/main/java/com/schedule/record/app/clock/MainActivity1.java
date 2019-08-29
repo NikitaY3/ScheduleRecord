@@ -1,5 +1,6 @@
 package com.schedule.record.app.clock;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -10,7 +11,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,17 +19,15 @@ import android.widget.TimePicker;
 import com.schedule.record.app.R;
 
 import java.util.Calendar;
+import java.util.Objects;
 
+@SuppressLint("Registered")
 public class MainActivity1 extends AppCompatActivity {
 
-    private Button msetButton;
-    private Button mcancelButton;
     private TextView mTextView;
 
-
-    private AlarmService mathService;
+    public AlarmService mathService;
     private boolean isBound = false;
-    TextView labelView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,8 +55,7 @@ public class MainActivity1 extends AppCompatActivity {
             }
         });
 
-
-        Button unbindButton = (Button)findViewById(R.id.unbind);
+        Button unbindButton = findViewById(R.id.unbind);
 
         unbindButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -70,7 +67,6 @@ public class MainActivity1 extends AppCompatActivity {
                 }
             }
         });
-
 
         old();
     }
@@ -91,8 +87,8 @@ public class MainActivity1 extends AppCompatActivity {
 
     private void old() {
         mTextView = this.findViewById(R.id.mText);
-        msetButton = this.findViewById(R.id.setTimeButton);
-        mcancelButton = findViewById(R.id.cancelButton);
+        Button msetButton = this.findViewById(R.id.setTimeButton);
+        Button mcancelButton = findViewById(R.id.cancelButton);
 
         msetButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,19 +112,20 @@ public class MainActivity1 extends AppCompatActivity {
 
                         Intent intent = new Intent(MainActivity1.this, AlermReceiver.class);
                         intent.putExtra("music", "stop");
-                        Intent intentService = new Intent(MainActivity1.this, AlarmService.class);
+                        //Intent intentService = new Intent(MainActivity1.this, AlarmService.class);
 
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity1.this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                        PendingIntent pendingIntent2 = PendingIntent.getService(MainActivity1.this,0,intentService,0);
-                        AlarmManager am;
+                        //PendingIntent pendingIntent2 = PendingIntent.getService(MainActivity1.this,0,intentService,0);
+
                         //获取系统进程
-                        am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
                         //设置一次性闹钟，第一个参数表示闹钟类型，第二个参数表示闹钟执行时间，第三个参数表示闹钟响应动作。
-                        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        Objects.requireNonNull(am).set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
                         String tmps = "设置闹钟时间为："+format(hourOfDay)+":"+format(minute);
                         mTextView.setText(tmps);
+
                     }
                 },hour,minute,true).show();
             }
@@ -143,7 +140,7 @@ public class MainActivity1 extends AppCompatActivity {
                 //获取系统进程
                 am = (AlarmManager)getSystemService(ALARM_SERVICE);
 
-                am.cancel(pendingIntent);
+                Objects.requireNonNull(am).cancel(pendingIntent);
                 mTextView.setText("取消了！");
             }
         });

@@ -1,6 +1,5 @@
 package com.schedule.record.app;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-@SuppressLint("Registered")
 public class FinishEdit extends AppCompatActivity {
 
     @BindView(R.id.fEditCheckBox1)
@@ -28,40 +26,36 @@ public class FinishEdit extends AppCompatActivity {
     EditText fEditEditText1;
     @BindView(R.id.fEditLinearLayout1)
     LinearLayout fEditLinearLayout1;
-
     @BindView(R.id.fEditButton21)
     TextView fEditButton21;
-
     @BindView(R.id.fEditEditText2)
     EditText fEditEditText2;
 
-
-    private FinishSQLite helper;
-    FinishSQLiteUserDao dao;
-    FinishSQLiteUser user;
-    String DBName = "finish";
-    int version = 1;
-
+    protected  FinishSQLite helper;
+    protected FinishSQLiteUserDao dao;
+    protected FinishSQLiteUser user;
+    protected String DBName = "finish";
+    protected int version = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_3finish_edit);
         ButterKnife.bind(this);
-        layoutFilling();
 
+        layoutFilling();
     }
 
-    @SuppressLint("ResourceType")
     private void layoutFilling() {
-        //获取DayItem传递的Dayid
+
+        //获取DayItem传递的dayId
         helper = new FinishSQLite(this, DBName, null, version);
         helper.getReadableDatabase();
         dao = new FinishSQLiteUserDao(helper);
         Intent intent = getIntent();
         String finishid = intent.getStringExtra("finish_id");
-        //查询Dayid对应数据
         FinishSQLiteUser d = dao.queryByFinishid(finishid);
+
         //设置当前布局填充
         if (d.getCheckbox()) {
             fEditCheckBox1.setChecked(true);
@@ -72,8 +66,11 @@ public class FinishEdit extends AppCompatActivity {
         fEditEditText1.setText(d.getTitle());
         fEditEditText2.setText(d.getDiary());
 
+        fEditButton21.setText(d.getFinishId().substring(11,21));
+
         new ColorImportant(d.getImportant(),fEditLinearLayout1).LinearLayoutSet();
 
-        user = d;//获取当前Dayid的数据的内容
+        //获取当前Dayid的数据的内容
+        user = d;
     }
 }

@@ -8,7 +8,10 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import java.util.List;
-//柱状图
+
+/**
+ * 柱状图
+ */
 public class ColumnView extends View {
 
     private String[] transverse;    //横列的刻度值数组
@@ -17,8 +20,8 @@ public class ColumnView extends View {
     private int[] high;           //柱状图高度数值数组
 
     //整个画布的宽、高
-    private int width;
-    private int height;
+    //private int width;
+    //private int height;
 
     // X,Y轴的单位长度 (类似网格切割)
     private int xScale;
@@ -27,7 +30,7 @@ public class ColumnView extends View {
     // 默认边距
     private int margin = 20;
     // 距离左边偏移量
-    private int marginX = 30;
+    public int marginX = 30;
     // 原点坐标
     private int xPoint;
     private int yPoint;
@@ -84,8 +87,6 @@ public class ColumnView extends View {
         paintRectF.setDither(true);
         paintRectF.setAntiAlias(true);
     }
-
-
 
     // 绘制坐标轴
     private void drawAxesLine(Canvas canvas, Paint paint) {

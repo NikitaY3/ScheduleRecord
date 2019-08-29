@@ -1,8 +1,11 @@
 package com.schedule.record.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +14,12 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.schedule.record.app.FinishEdit;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.ColorImportant;
+import com.schedule.record.app.function.GetFunctions.FinishDeleteTask;
 import com.schedule.record.app.sqlite.FinishSQLite;
 import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
@@ -26,7 +31,6 @@ public class MyFinishAdapter extends BaseAdapter {
     private List<FinishSQLiteUser> list;
     private LayoutInflater inflater;
 
-    private AlertDialog.Builder frame1;
     private FinishSQLite helper;
     private String DBName="finish";
     private int version = 1;
@@ -51,6 +55,7 @@ public class MyFinishAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -65,23 +70,14 @@ public class MyFinishAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final FinishSQLiteUser pb = list.get(position);
 
-        if(pb.getCheckbox()){
-            holder.tv1.setChecked(true);
-        }else{
-            holder.tv1.setChecked(false);
-        }
+        //数据
+        final FinishSQLiteUser pb = list.get(position);
+        if(pb.getCheckbox()){  holder.tv1.setChecked(true); }else{  holder.tv1.setChecked(false); }
         holder.tv2.setText(pb.getTime());
         holder.tv3.setText(pb.getTitle());
-//        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, FinishEdit.class);
-//                intent.putExtra("finish_id",pb.getFinishId());
-//                context.startActivity(intent);
-//            }
-//        });
+        new ColorImportant(pb.getImportant(),holder.linearLayout).LinearLayoutSet();
+
         holder.tv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,8 +86,6 @@ public class MyFinishAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-
-        new ColorImportant(pb.getImportant(),holder.linearLayout).LinearLayoutSet();
 
         holder.tv3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -112,10 +106,11 @@ public class MyFinishAdapter extends BaseAdapter {
 
     //弹框函数
     private void dayConfirmationDialogs(final int position, final String time) {
-        frame1 = new AlertDialog.Builder(context);
+        AlertDialog.Builder frame1 = new AlertDialog.Builder(context);
         frame1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 //删除Item对应的数据库
                 helper=new FinishSQLite(context,DBName,null,version);
                 FinishSQLiteUserDao dao=new FinishSQLiteUserDao(helper);
@@ -123,6 +118,10 @@ public class MyFinishAdapter extends BaseAdapter {
                 //删除Item
                 list.remove(position);
                 MyFinishAdapter.this.notifyDataSetChanged();
+
+                //删除云端
+                new FinishDeleteTask(uiHandler).execute("http://120.77.222.242:10024/finish/deletebyid?finishId=" + time);
+
             }
         });
         frame1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -135,5 +134,17 @@ public class MyFinishAdapter extends BaseAdapter {
         frame1.setTitle("提示");
         frame1.show();
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 55:
+                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 }
 

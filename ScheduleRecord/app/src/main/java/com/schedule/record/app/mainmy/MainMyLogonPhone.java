@@ -22,7 +22,8 @@ import com.schedule.record.app.function.GetFunctions.FinishFindAllTask;
 import com.schedule.record.app.function.GetFunctions.FutureFindAllTask;
 import com.schedule.record.app.function.GetFunctions.PassFindAllTask;
 import com.schedule.record.app.function.GetFunctions.TodayFindAllTask;
-import com.schedule.record.app.sqlite.GeneralUserSQLite;
+import com.schedule.record.app.sqlite.AuthoritySQLite;
+import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
 import com.schedule.record.app.utils.HttpGetUtils;
 
 import org.json.JSONException;
@@ -45,12 +46,12 @@ public class MainMyLogonPhone extends AppCompatActivity {
     @BindView(R.id.phoneButton3)
     Button phoneButton3;
 
-    private String password;
-    private String nameid;
-
+    private String password,nameid;
     private SharedPreferences sharedPreferences;
 
-    String baseUrl = "http://120.77.222.242:10024/user/findbyid?nameId=";
+    public int version = 1;
+    public AuthoritySQLite helper0;
+    public String DBName0 = "authority";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class MainMyLogonPhone extends AppCompatActivity {
                     //2、如果返回正确账号，保存账号信息到本地数据库和SharedPreferences
                     //3、如果返回“账号密码不匹配”，提醒用户
 
+                    String baseUrl = "http://120.77.222.242:10024/user/findbyid?nameId=";
                     String params = baseUrl + nameid + "&password=" + password;
                     new MyTask().execute(params);
 
@@ -101,7 +103,7 @@ public class MainMyLogonPhone extends AppCompatActivity {
 
     /**
      * 找到注册的账号信息后的操作
-     * @param name
+     * @param name 用户昵称
      */
     private void before(String name) {
 
@@ -111,8 +113,7 @@ public class MainMyLogonPhone extends AppCompatActivity {
         myuser.putString("name", name);
         myuser.apply();
 
-        SharedPreferences sharedPreferences1 = null;
-        sharedPreferences1 = this.getSharedPreferences("delaytime", MODE_PRIVATE);
+        SharedPreferences sharedPreferences1 = this.getSharedPreferences("delaytime", MODE_PRIVATE);
         SharedPreferences.Editor delaytime = sharedPreferences1.edit();
         delaytime.putString("time", "30分钟");
         delaytime.putString("boxcolock", "true");
@@ -121,14 +122,11 @@ public class MainMyLogonPhone extends AppCompatActivity {
 
         Intent intent2 = new Intent(MainMyLogonPhone.this, MainActivity.class);
         startActivity(intent2);
-//                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    intent2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                    intent2.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        finish();
     }
 
     @SuppressLint("HandlerLeak")
     private Handler uiHandler = new Handler(){
-        // 覆写这个方法，接收并处理消息。
         int a = 0;
         @Override
         public void handleMessage(Message msg) {
@@ -138,7 +136,6 @@ public class MainMyLogonPhone extends AppCompatActivity {
                     break;
                 case 2:
                     a++;
-                    Toast.makeText(MainMyLogonPhone.this,"当前：" + a,Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
                     a++;
@@ -153,13 +150,14 @@ public class MainMyLogonPhone extends AppCompatActivity {
                     a++;
                     break;
             }
-            if (a == 6){
-                //1、将账号密码存好
+            if (a == 7){
+                //调用函数，将账号密码存好
                 before(phoneTest.getText().toString());
             }
         }
     };
 
+    @SuppressLint("StaticFieldLeak")
     class MyTask extends AsyncTask<String,Void,String>{
         //根据URL获取json数据
         @Override
@@ -167,7 +165,7 @@ public class MainMyLogonPhone extends AppCompatActivity {
             try {
                 String res = HttpGetUtils.getJson(params[0]);
                 return  res;
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             return null;
         }
@@ -177,6 +175,12 @@ public class MainMyLogonPhone extends AppCompatActivity {
                 String res = HttpGetUtils.parseUserJson(s,MainMyLogonPhone.this);
                 if (!res.equals("账号密码不匹配")) {
                     //账号检测成功的执行操作
+
+                    //TODO
+                    // 1、清空当前账号表
+                    helper0 = new AuthoritySQLite(MainMyLogonPhone.this, DBName0, null, version);
+                    AuthoritySQLiteUserDao dao = new AuthoritySQLiteUserDao(helper0);
+                    dao.deleteAll();
 
                     //2、获取用户的各个表的数据13348445363
                     AuthorityQueryTask authorityQueryTask = new AuthorityQueryTask(MainMyLogonPhone.this, uiHandler);
@@ -210,7 +214,7 @@ public class MainMyLogonPhone extends AppCompatActivity {
                 msg.what = 1;
                 uiHandler.sendMessage(msg);
 
-            } catch (JSONException e) {
+            } catch (JSONException ignored) {
             }
         }
     }

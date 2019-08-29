@@ -2,9 +2,7 @@ package com.schedule.record.app.mainmy;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.adapter.MyFinishAdapter;
@@ -16,17 +14,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainMy2FinishSch extends AppCompatActivity {
 
     @BindView(R.id.finSchedulesListView)
     ListView finSchedulesListView;
-
-    private List<FinishSQLiteUser> dataList;
-    private FinishSQLite helper;
-    private String DBName = "finish";
-    private int version = 1, j=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +37,13 @@ public class MainMy2FinishSch extends AppCompatActivity {
     }
 
     public void onResume1() {
-
-        helper = new FinishSQLite(MainMy2FinishSch.this, DBName, null, version);
+        String DBName = "finish";
+        int version = 1;
+        FinishSQLite helper = new FinishSQLite(MainMy2FinishSch.this, DBName, null, version);
         helper.getReadableDatabase();
         FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper);
-        dataList = dao.quiryAndSetItem();
+        List<FinishSQLiteUser> dataList = dao.quiryAndSetItem();
         MyFinishAdapter adapter = new MyFinishAdapter(MainMy2FinishSch.this, dataList);
-
-        Toast.makeText(this, "finish表查询", Toast.LENGTH_SHORT).show();
 
         finSchedulesListView.setAdapter(adapter);
     }

@@ -21,8 +21,6 @@ import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.utils.CalendarDateUtils;
 
-import java.time.Year;
-
 public class CalendarDateAdapter extends BaseAdapter {
     private int[] days = new int[42];
 
@@ -34,13 +32,17 @@ public class CalendarDateAdapter extends BaseAdapter {
     public CalendarDateAdapter(Context context, int[][] days, int year, int month) {
         this.context = context;
         int dayNum = 0;
-        //将二维数组转化为一维数组，方便使用
-        for (int i = 0; i < days.length; i++) {
+
+        //将二维数组转化为一维数组
+        int i = 0;
+        while (i < days.length) {
             for (int j = 0; j < days[i].length; j++) {
                 this.days[dayNum] = days[i][j];
                 dayNum++;
             }
+            i++;
         }
+
         this.year = year;
         this.month = month;
         this.inflater = LayoutInflater.from(context);
@@ -61,7 +63,7 @@ public class CalendarDateAdapter extends BaseAdapter {
         return i;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "InflateParams"})
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
@@ -96,7 +98,7 @@ public class CalendarDateAdapter extends BaseAdapter {
 
             if (i == today){
                 //格式区别
-                viewHolder.lin.setBackgroundResource(R.drawable.abaa_item_im_no);
+                viewHolder.lin.setBackgroundResource(R.drawable.abaa_item_important2);
                 //对今天的日程求和
                 TodaySQLite helper1;
                 String DBName1 = "today";
@@ -143,18 +145,16 @@ public class CalendarDateAdapter extends BaseAdapter {
         viewHolder.date_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO
                 //是否考虑转跳查看日程
-                String text = year + "年" + month + "月" + days[i] + "日";
 
-                if (i < 7 && days[i] > 20) {
-                } else if (i > 20 && days[i] < 15) {
-                } else {
+                String text = year + "年" + month + "月" + days[i] + "日";
+                if (!(i < 7 && days[i] > 20) && !(i > 20 && days[i] < 15)) {
                     Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-
         return view;
     }
 

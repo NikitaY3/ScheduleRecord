@@ -1,6 +1,5 @@
 package com.schedule.record.app;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -30,18 +29,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@SuppressLint("Registered")
-public
-class FutureEdit extends AppCompatActivity {
+public class FutureEdit extends AppCompatActivity {
 
     @BindView(R.id.mfEditEditText0)
     EditText mfEditEditText0;
     @BindView(R.id.mfEditEditText1)
     EditText mfEditEditText1;
-
     @BindView(R.id.mfEditLinearLayout1)
     LinearLayout mfEditLinearLayout1;
-
     @BindView(R.id.mfEditButton21)
     Button mfEditButton21;
     @BindView(R.id.mfEditButton22)
@@ -56,14 +51,12 @@ class FutureEdit extends AppCompatActivity {
     Button mfEditButton26;
     @BindView(R.id.mfEditButton27)
     Button mfEditButton27;
-
     @BindView(R.id.mfEditRadio1)
     RadioButton mfEditRadio1;
     @BindView(R.id.mfEditRadio2)
     RadioButton mfEditRadio2;
     @BindView(R.id.mfEditRadioGroup)
     RadioGroup mfEditRadioGroup;
-
     @BindView(R.id.mfEditRadio41)
     RadioButton mfEditRadio41;
     @BindView(R.id.mfEditRadio42)
@@ -74,7 +67,6 @@ class FutureEdit extends AppCompatActivity {
     RadioButton mfEditRadio44;
     @BindView(R.id.mfEditRadioGroup4)
     RadioGroup mfEditRadioGroup4;
-
     @BindView(R.id.mfEditweekItemButton0)
     CheckBox mfEditweekItemButton0;
     @BindView(R.id.mfEditweekItemButton1)
@@ -91,20 +83,18 @@ class FutureEdit extends AppCompatActivity {
     CheckBox mfEditweekItemButton6;
     @BindView(R.id.mfEditLinearLayout41)
     LinearLayout mfEditLinearLayout41;
-
     @BindView(R.id.mfEditButton51)
     TextView mfEditButton51;
-
     @BindView(R.id.mfEditEditText2)
     EditText mfEditEditText2;
 
-    int fr = 1;
+    private int fr = 1;
 
-    private FutureSQLite helper;
-    FutureSQLiteUserDao dao;
-    FutureSQLiteUser user;
-    String DBName = "future";
-    int version = 1;
+    protected FutureSQLite helper;
+    protected FutureSQLiteUserDao dao;
+    protected FutureSQLiteUser user;
+    protected String DBName = "future";
+    protected int version = 1;
 
     public String radio2, radio3;
     final Calendar cale1 = Calendar.getInstance();
@@ -125,29 +115,37 @@ class FutureEdit extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.mfEditRadio41:
+
                         if (fr == 1) {
                             mfEditLinearLayout41.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
                             fr = 0;
                         }
+
                         break;
                     case R.id.mfEditRadio42:
+
                         mfEditRadio42.setText("每周");
                         fr = 1;
                         mfEditLinearLayout41.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
+
                         break;
                     case R.id.mfEditRadio43:
+
                         if (fr == 1) {
                             mfEditLinearLayout41.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
                             fr = 0;
                         }
                         radio3 = "每月1日";
                         mfEditRadio43.setText(radio3);
+
                         break;
                     case R.id.mfEditRadio44:
+
                         if (fr == 1) {
                             mfEditLinearLayout41.setLayoutParams(new LinearLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, 0));
                             fr = 0;
                         }
+
                         break;
                 }
             }
@@ -158,6 +156,7 @@ class FutureEdit extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mfEditEditText0:
+
                 new TimePickerDialog(FutureEdit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -173,43 +172,57 @@ class FutureEdit extends AppCompatActivity {
                         mfEditEditText0.setText(radio2);
                     }
                 }, cale1.get(Calendar.HOUR), cale1.get(Calendar.MINUTE), true).show();
+
                 break;
             case R.id.mfEditButton21:
+
                 user.setImportant("a");
                 dao.updateAll(user);
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important1);
+
                 break;
             case R.id.mfEditButton22:
+
                 user.setImportant("b");
                 dao.updateAll(user);
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important2);
+
                 break;
             case R.id.mfEditButton23:
                 user.setImportant("c");
                 dao.updateAll(user);
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important3);
                 break;
             case R.id.mfEditButton24:
+
                 user.setImportant("d");
                 dao.updateAll(user);
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important4);
+
                 break;
             case R.id.mfEditButton25:
+
                 user.setImportant("e");
                 dao.updateAll(user);
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important5);
+
                 break;
             case R.id.mfEditButton26:
+
                 user.setImportant("f");
                 dao.updateAll(user);
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important6);
+
                 break;
             case R.id.mfEditButton27:
+
                 user.setImportant("g");
                 dao.updateAll(user);
-                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+                mfEditLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important7);
+
                 break;
             case R.id.mfEditButton51:
+
                 new DatePickerDialog(FutureEdit.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -226,6 +239,7 @@ class FutureEdit extends AppCompatActivity {
                         mfEditButton51.setText(radio);
                     }
                 }, cale1.get(Calendar.YEAR), cale1.get(Calendar.MONTH), cale1.get(Calendar.DAY_OF_MONTH)).show();
+
                 break;
         }
     }
@@ -254,21 +268,20 @@ class FutureEdit extends AppCompatActivity {
         super.onPause();
     }
 
-    @SuppressLint("ResourceType")
     private void layoutFilling() {
+
         //获取DayItem传递的Dayid
         helper = new FutureSQLite(this, DBName, null, version);
         helper.getReadableDatabase();
         dao = new FutureSQLiteUserDao(helper);
         Intent intent = getIntent();
         String dayid = intent.getStringExtra("dayid");
-        //查询Dayid对应数据
         FutureSQLiteUser d = dao.queryBydayid(dayid);
+
         //设置当前布局填充
         mfEditEditText0.setText(d.getTime());
         mfEditEditText1.setText(d.getTitle());
         mfEditEditText2.setText(d.getDiary());
-
         new ColorImportant(d.getImportant(),mfEditLinearLayout1).LinearLayoutSet();
 
         String repeat = d.getRepeatType();
@@ -303,6 +316,8 @@ class FutureEdit extends AppCompatActivity {
                 break;
         }
         mfEditButton51.setText(d.getEndDay());
+
+        //获取当前Dayid的数据的内容
         user = d;//获取当前Dayid的数据的内容
     }
 

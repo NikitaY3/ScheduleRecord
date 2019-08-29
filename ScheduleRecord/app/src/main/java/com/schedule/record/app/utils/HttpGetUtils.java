@@ -34,6 +34,7 @@ import java.net.URL;
 public class HttpGetUtils {
 
     private static int version = 1;
+
     private static GeneralUserSQLite helper;
     private static String DBName = "general_user";
     private static AuthoritySQLite helper0;
@@ -99,30 +100,32 @@ public class HttpGetUtils {
     //解析json数据(user/findbyid的解析)查询用户是否注册
     public static String parseUserJson(String jsonStr, Context context) throws JSONException {
 
-        JSONObject jsonObject = new JSONObject(jsonStr);
+        if (new JSONObject(jsonStr).length() !=  0){
 
-        if ((jsonObject.get("code").toString()).equals("111")) {
+            JSONObject jsonObject = new JSONObject(jsonStr);
+            if ((jsonObject.get("code").toString()).equals("111")) {
 
-            String nameid = jsonObject.getJSONObject("data").getString("nameid");
-            String name = jsonObject.getJSONObject("data").getString("name");
-            String password = jsonObject.getJSONObject("data").getString("password");
-            String sex = jsonObject.getJSONObject("data").getString("sex");
-            String birthday = jsonObject.getJSONObject("data").getString("birthday");
-            String head = jsonObject.getJSONObject("data").getString("head");
+                String nameid = jsonObject.getJSONObject("data").getString("nameId");
+                String name = jsonObject.getJSONObject("data").getString("name");
+                String password = jsonObject.getJSONObject("data").getString("password");
+                String sex = jsonObject.getJSONObject("data").getString("sex");
+                String birthday = jsonObject.getJSONObject("data").getString("birthday");
+                String head = jsonObject.getJSONObject("data").getString("head");
 
-            //插入本地数据库
-            GeneralSQLiteUser things = new GeneralSQLiteUser(nameid,name,password,sex,birthday,head);
-            helper = new GeneralUserSQLite(context, DBName, null, version);
-            GeneralSQLiteUserDao dao = new GeneralSQLiteUserDao(helper);
-            dao.deleteAll();//保证本地账号唯一性
-            dao.insert(things);
+                //插入本地数据库
+                GeneralSQLiteUser things = new GeneralSQLiteUser(nameid,name,password,sex,birthday,head);
+                helper = new GeneralUserSQLite(context, DBName, null, version);
+                GeneralSQLiteUserDao dao = new GeneralSQLiteUserDao(helper);
+                dao.deleteAll();//保证本地账号唯一性
+                dao.insert(things);
 
-            return name;
+                return name;
 
-        }else {
-            return jsonObject.get("message").toString();
+            }else {
+                return jsonObject.get("message").toString();
+            }
         }
-
+        return "账号密码不匹配";
     }
 
     //解析json数据(authority/query的解析)查询用户可管理的用户和用户授予他人的权限
@@ -132,10 +135,9 @@ public class HttpGetUtils {
 
         if (!jsonObject.getString("data").equals("")){
             JSONArray jsonArray = jsonObject.getJSONArray("data");
-            //先清空本地再插入(不能清空本地)
+
             helper0 = new AuthoritySQLite(context, DBName0, null, version);
             AuthoritySQLiteUserDao dao = new AuthoritySQLiteUserDao(helper0);
-//            dao.deleteAll();
 
             //循环取出
             for (int i = 0; i < jsonArray.length(); i++){
@@ -170,7 +172,7 @@ public class HttpGetUtils {
                 String title = object.getString("title");
                 String important = object.getString("important");
                 String diary = object.getString("diary");
-                String endday = object.getString("endday");
+                String endday = object.getString("endDay");
 
                 boolean remind = true;
                 if (!remind1.equals("true")){
@@ -196,7 +198,6 @@ public class HttpGetUtils {
         if (!jsonObject.getString("data").equals("")){
             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-            //循环取出[{"dayId":"12248445363222","checkbox":null,"remind":true,"time":null,"title":null,"important":null,"diary":null,"thisDay":null}]}
             for (int i = 0; i < jsonArray.length(); i++){
                 JSONObject object = (JSONObject) jsonArray.get(i);
                 String dayid = object.getString("dayId");
@@ -235,7 +236,6 @@ public class HttpGetUtils {
         if (!jsonObject.getString("data").equals("")){
             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-            //循环取出[{"finishId":"12248445363222233","dayId":"12248445363222","checkbox":null,"remind":true,"time":null,"title":null,"important":null,"diary":null}]}
             for (int i = 0; i < jsonArray.length(); i++){
                 JSONObject object = (JSONObject) jsonArray.get(i);
                 String finishid = object.getString("finishId");
@@ -274,7 +274,6 @@ public class HttpGetUtils {
         if (!jsonObject.getString("data").equals("")){
             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-            //循环取出[{"dayId":"12248445363222","title":null,"passDay":null,"completion":null}]
             for (int i = 0; i < jsonArray.length(); i++){
                 JSONObject object = (JSONObject) jsonArray.get(i);
                 String dayid = object.getString("dayId");
@@ -282,7 +281,10 @@ public class HttpGetUtils {
                 String passday = object.getString("passDay");
                 String completion1 = object.getString("completion");
 
-                int completion = Integer.parseInt(completion1);
+                int completion = 0;
+                if (!completion1.equals("null")){
+                    completion = Integer.parseInt(completion1);
+                }
 
                 //插入本地数据库
                 PassSQLiteUser things = new PassSQLiteUser(dayid,title,passday,completion,"a");

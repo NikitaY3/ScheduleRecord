@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FinishSQLiteUserDao {
+
     private FinishSQLite helper;
     private static final String TABLE = "finish";
 
@@ -24,7 +25,9 @@ public class FinishSQLiteUserDao {
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
 
-        content.put("finish_id",user.getFinishId());
+        String finishId = user.getFinishId();
+
+        content.put("finish_id",finishId);
         content.put("day_id",user.getDayId());
         content.put("checkbox",user.getCheckbox());
         content.put("remind",user.getRemind());
@@ -32,6 +35,12 @@ public class FinishSQLiteUserDao {
         content.put("title",user.getTitle());
         content.put("important",user.getImportant());
         content.put("diary",user.getDiary());
+
+        if (queryByFinishid(finishId) == null) {
+            db = helper.getWritableDatabase();
+            db.insert(TABLE, null, content);
+        }
+
         db.insert(TABLE,null,content);
         db.close();
     }
@@ -96,7 +105,7 @@ public class FinishSQLiteUserDao {
     }
 
     public  List<FinishSQLiteUser> quiryAndSetItem(){
-        List<FinishSQLiteUser> dataList = new ArrayList<FinishSQLiteUser>();//item的list
+        List<FinishSQLiteUser> dataList = new ArrayList<>();
         SQLiteDatabase db = helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, null, null, null, null, "finish_id");
         while (cursor.moveToNext()) {
@@ -121,7 +130,7 @@ public class FinishSQLiteUserDao {
 
     //查询Week,根据日期查询
     public List<CalenderWeekItem> quiryAndSetWeekItem(String day) {
-        List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();//item的list
+        List<CalenderWeekItem> dataList = new ArrayList<>();
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
@@ -133,13 +142,11 @@ public class FinishSQLiteUserDao {
             String important = cursor.getString(6);
             boolean checkbox;
             checkbox = checkbox1 > 0;
-            //你自己知道这里是什么时候调用的码我知道，都说了是数据手动插入类型和长度都不符合
-            // 等它下载数据太久了，在访问页面后没有刷新，退出会调用这里，退出后再次进入可以刷新
-            // 那刚刚那个错误是没有问题了,刚刚的云端删除没有成功，而且加载还是太慢了，超时是多久？？？
-            // 然后Post还是不行、
-            if (finishid.substring(11, 21).equals(day)){
-                CalenderWeekItem things = new CalenderWeekItem(finishid,title,important,checkbox);
-                dataList.add(things);
+            if (finishid.length() >= 21){
+                if (finishid.substring(11, 21).equals(day)){
+                    CalenderWeekItem things = new CalenderWeekItem(finishid,title,important,checkbox);
+                    dataList.add(things);
+                }
             }
         }
         db.close();

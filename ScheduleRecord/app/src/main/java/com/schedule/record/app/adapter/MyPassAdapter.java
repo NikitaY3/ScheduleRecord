@@ -3,7 +3,8 @@ package com.schedule.record.app.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.constraint.ConstraintLayout;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.ColorImportant;
+import com.schedule.record.app.function.GetFunctions.PassDeleteTask;
 import com.schedule.record.app.sqlite.FinishSQLite;
 import com.schedule.record.app.sqlite.PassSQLite;
 import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
@@ -27,10 +30,7 @@ public class MyPassAdapter extends BaseAdapter {
     private List<PassSQLiteUser> list;
     private LayoutInflater inflater;
 
-    private FinishSQLite helperf;
-    private String DBName="finish";
     private int version = 1;
-    private AlertDialog.Builder frame1;
 
     private PassSQLite helper;
     private String DBName1="pass";
@@ -70,16 +70,18 @@ public class MyPassAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        //数据
         final PassSQLiteUser pb = list.get(position);
 
-        holder.tv1.setText(pb.getTitle());
-
-        helperf=new FinishSQLite(context,DBName,null,version);
+        String DBName = "finish";
+        FinishSQLite helperf = new FinishSQLite(context, DBName, null, version);
         FinishSQLiteUserDao dao=new FinishSQLiteUserDao(helperf);
         int countFinish = dao.CountFinishByDayid(pb.getDayid());
 
+        holder.tv1.setText(pb.getTitle());
         holder.tv2.setText(countFinish+" 天");
-        holder.tv3.setText("失效日期："+pb.getPassday());
+        holder.tv3.setText("失效日期：" + pb.getPassday().substring(0,10));
+        new ColorImportant(pb.getImportant(),holder.linearLayout).LinearLayoutSet();
 
         holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -90,17 +92,6 @@ public class MyPassAdapter extends BaseAdapter {
             }
         });
 
-//        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, MainMy2FinishSchNote.class);
-//                intent.putExtra("dayid",pb.getDayid());
-//                context.startActivity(intent);
-//            }
-//        });
-
-        new ColorImportant(pb.getImportant(),holder.linearLayout).LinearLayoutSet();
-
         return convertView;
     }
     static class ViewHolder{
@@ -109,10 +100,11 @@ public class MyPassAdapter extends BaseAdapter {
     }
     //弹框函数
     private void dayConfirmationDialogs(final int position, final String time) {
-        frame1 = new AlertDialog.Builder(context);
+        AlertDialog.Builder frame1 = new AlertDialog.Builder(context);
         frame1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 //删除Item对应的数据库
                 helper = new PassSQLite(context,DBName1,null,version);
                 PassSQLiteUserDao dao=new PassSQLiteUserDao(helper);
@@ -120,6 +112,10 @@ public class MyPassAdapter extends BaseAdapter {
                 //删除Item
                 list.remove(position);
                 MyPassAdapter.this.notifyDataSetChanged();
+
+                //删除云端
+                new PassDeleteTask(uiHandler).execute("http://120.77.222.242:10024/pass/deletebyid?dayId=" + time);
+
             }
         });
         frame1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -132,5 +128,17 @@ public class MyPassAdapter extends BaseAdapter {
         frame1.setTitle("提示");
         frame1.show();
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 66:
+                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 }
 

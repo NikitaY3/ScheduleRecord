@@ -34,7 +34,6 @@
         <activity android:name=".Mode3CompletionScale"/>
         <activity android:name=".mainmy.MainMy1FutureSch"/>
         <activity android:name=".mainmy.MainMy2FinishSch"/>
-        <activity android:name=".mainmy.MainMy2FinishSchNote"/>
         <activity android:name=".mainmy.MainMy3PassSch"/>
         <activity android:name=".mainmy.MainMyL1Doc"/>
         <activity android:name=".mainmy.MainMyL2General"/>

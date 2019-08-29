@@ -134,12 +134,15 @@ public class MyFragment extends Fragment {
             case R.id.myButton5:
                 Intent intent8 = new Intent(getActivity(), MainMyL5Information.class);
                 startActivity(intent8);
+
+                Objects.requireNonNull(getActivity()).finish();
+
                 break;
             case R.id.myImageView2:
                 Intent intent = new Intent(getActivity(), MainMyLogonPhone.class);
                 startActivity(intent);
 
-                getActivity().finish();
+                Objects.requireNonNull(getActivity()).finish();
 
                 break;
         }

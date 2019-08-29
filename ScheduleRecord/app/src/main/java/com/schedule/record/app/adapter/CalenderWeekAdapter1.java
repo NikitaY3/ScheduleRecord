@@ -25,7 +25,7 @@ public class CalenderWeekAdapter1 extends BaseAdapter {
     public CalenderWeekAdapter1(Context context, List<CalenderWeekItem> list) {
         this.context = context;
         this.list = list;
-        inflater=LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
@@ -43,7 +43,7 @@ public class CalenderWeekAdapter1 extends BaseAdapter {
     }
 
     //每一个item调用该方法---视图缓存机制
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "InflateParams"})
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -60,6 +60,7 @@ public class CalenderWeekAdapter1 extends BaseAdapter {
         else{
             holder = (ViewHolder) convertView.getTag();
         }
+
         //数据
         CalenderWeekItem pb=list.get(position);
         holder.btn2.setBackgroundResource(R.color.nullcolor);

@@ -1,6 +1,5 @@
 package com.schedule.record.app;
 
-import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,22 +14,17 @@ import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.function.ColorImportant;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@SuppressLint("Registered")
 public class TodayEdit extends AppCompatActivity {
 
     @BindView(R.id.editCheckBox1)
@@ -68,18 +62,14 @@ public class TodayEdit extends AppCompatActivity {
     @BindView(R.id.editEditText2)
     EditText editEditText2;
 
-    private TodaySQLite helper;
-    private TodaySQLiteUserDao dao;
-    private TodaySQLiteUser user;
-    private String DBName = "today";
-    private int version = 1;
+    protected TodaySQLite helper;
+    protected TodaySQLiteUserDao dao;
+    protected TodaySQLiteUser user;
+    protected String DBName = "today";
+    protected int version = 1;
 
     private String radio2;
     private final Calendar cale1 = Calendar.getInstance();
-
-    private boolean remind;
-    private String dayid;
-    private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +83,7 @@ public class TodayEdit extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.editEditText0:
+
                 new TimePickerDialog(TodayEdit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -106,52 +97,58 @@ public class TodayEdit extends AppCompatActivity {
                             radio2 = hourOfDay + ":" + minute;
                         }
                         editEditText0.setText(radio2);
-                        //设置闹钟
-                        if (!editEditText0.getText().toString().equals("XX:XX") && remind) {
-                            int t = hourOfDay + minute;
-                            String dayid1 = getInternetTime();
-                            int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
-                            if (t > t1) {
-                                new AlarmSet(TodayEdit.this, hourOfDay, minute, dayid, i).myAlarmSet();
-                            }
-                        }
                     }
                 }, cale1.get(Calendar.HOUR), cale1.get(Calendar.MINUTE), true).show();
+
                 break;
             case R.id.editButton21:
+
                 user.setImportant("a");
                 dao.updateAll(user,TodayEdit.this);
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
+                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important1);
+
                 break;
             case R.id.editButton22:
+
                 user.setImportant("b");
                 dao.updateAll(user,TodayEdit.this);
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
+                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important2);
+
                 break;
             case R.id.editButton23:
+
                 user.setImportant("c");
                 dao.updateAll(user,TodayEdit.this);
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
+                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important3);
+
                 break;
             case R.id.editButton24:
+
                 user.setImportant("d");
                 dao.updateAll(user,TodayEdit.this);
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
+                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important4);
+
                 break;
             case R.id.editButton25:
+
                 user.setImportant("e");
                 dao.updateAll(user,TodayEdit.this);
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
+                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important5);
+
                 break;
             case R.id.editButton26:
+
                 user.setImportant("f");
                 dao.updateAll(user,TodayEdit.this);
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
+                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important6);
+
                 break;
             case R.id.editButton27:
+
                 user.setImportant("g");
                 dao.updateAll(user,TodayEdit.this);
-                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
+                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important7);
+
                 break;
         }
     }
@@ -163,36 +160,14 @@ public class TodayEdit extends AppCompatActivity {
         user.setTime(time);
         if (editRadio1.isChecked()) {
             user.setRemind(true);
-            //删除Item对应的闹钟
-            new AlarmSet(this,dayid,i).myAlarmCancel();
         }
         if (editRadio2.isChecked()) {
             user.setRemind(false);
-            //设置闹钟
-            if (!time.equals("XX:XX") && remind) {
-                int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
-                String dayid1 = getInternetTime();
-                int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
-                if (t > t1) {
-                    new AlarmSet(this, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
-                }
-            }
         }
         if (editCheckBox1.isChecked()) {
             user.setCheckbox(true);
-            //删除Item对应的闹钟
-            new AlarmSet(this,dayid,i).myAlarmCancel();
         }else {
             user.setCheckbox(false);
-//            //设置闹钟
-//            if (!time.equals("XX:XX") && remind) {
-//                int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
-//                String dayid1 = getInternetTime();
-//                int t1 = Integer.parseInt(dayid1.substring(0, 2) + dayid1.substring(3, 5));
-//                if (t > t1) {
-//                    new AlarmSet(this, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
-//                }
-//            }
         }
         user.setDiary(editEditText2.getText().toString());
         dao.updateAll(user,TodayEdit.this);
@@ -200,16 +175,15 @@ public class TodayEdit extends AppCompatActivity {
         super.onPause();
     }
 
-    @SuppressLint("ResourceType")
     private void layoutFilling() {
+
         //获取DayItem传递的Dayid
         helper = new TodaySQLite(this, DBName, null, version);
         dao = new TodaySQLiteUserDao(helper);
         Intent intent = getIntent();
-        dayid = intent.getStringExtra("dayid");
-        i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
-        //查询Dayid对应数据
+        String dayid = intent.getStringExtra("dayid");
         TodaySQLiteUser d = dao.queryBydayid(dayid);
+
         //设置当前布局填充
         if (d.isCheckbox()) {
             editCheckBox1.setChecked(true);
@@ -219,48 +193,16 @@ public class TodayEdit extends AppCompatActivity {
         editEditText0.setText(d.getTime());
         editEditText1.setText(d.getTitle());
         editEditText2.setText(d.getDiary());
-
-//        switch (d.getImportant()) {
-//            case "a":
-//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-//                break;
-//            case "b":
-//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_no);
-//                break;
-//            case "c":
-//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_em);
-//                break;
-//            case "d":
-//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no);
-//                break;
-//            case "e":
-//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_1);
-//                break;
-//            case "f":
-//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_2);
-//                break;
-//            case "g":
-//                editLinearLayout1.setBackgroundResource(R.drawable.abaa_item_no_no_3);
-//                break;
-//        }
-
         new ColorImportant(d.getImportant(),editLinearLayout1).LinearLayoutSet();
 
-        remind = d.isRemind();
+        boolean remind = d.isRemind();
         if (remind) {
             editRadio1.setChecked(true);
         }else {
             editRadio2.setChecked(true);
         }
-        user = d;//获取当前Dayid的数据的内容
-    }
 
-
-    //联网获取当前时间
-    private String getInternetTime() {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("HH:mm:ss");
-        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        String Dayid = timesimple.format(new Date());
-        return Dayid;
+        //获取当前Dayid的数据的内容
+        user = d;
     }
 }

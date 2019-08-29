@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="5dp"
-        android:background="@drawable/abaa_item_im_em"
+        android:background="@drawable/abaa_item_important1"
         android:paddingHorizontal="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mfEditTextView1">
@@ -89,7 +89,7 @@
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/abaa_item_im_em" />
+                android:background="@drawable/abaa_item_important1" />
 
             <Button
                 android:id="@+id/mfEditButton22"
@@ -97,7 +97,7 @@
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/abaa_item_im_no" />
+                android:background="@drawable/abaa_item_important2" />
 
             <Button
                 android:id="@+id/mfEditButton23"
@@ -105,7 +105,7 @@
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/abaa_item_no_em" />
+                android:background="@drawable/abaa_item_important3" />
 
             <Button
                 android:id="@+id/mfEditButton24"
@@ -113,7 +113,7 @@
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/abaa_item_no_no" />
+                android:background="@drawable/abaa_item_important4" />
 
             <Button
                 android:id="@+id/mfEditButton25"
@@ -121,7 +121,7 @@
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/abaa_item_no_no_1" />
+                android:background="@drawable/abaa_item_important5" />
 
             <Button
                 android:id="@+id/mfEditButton26"
@@ -129,7 +129,7 @@
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/abaa_item_no_no_2" />
+                android:background="@drawable/abaa_item_important6" />
 
             <Button
                 android:id="@+id/mfEditButton27"
@@ -137,7 +137,7 @@
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/abaa_item_no_no_3" />
+                android:background="@drawable/abaa_item_important7" />
         </LinearLayout>
 
     </LinearLayout>
@@ -181,7 +181,7 @@
                 android:checked="true"
                 android:gravity="center"
                 android:text="需要提醒"
-                android:textColor="@color/varygray2" />
+                android:textColor="@color/varygray1" />
 
             <RadioButton
                 android:id="@+id/mfEditRadio2"
@@ -192,7 +192,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="不需提醒"
-                android:textColor="@color/varygray2" />
+                android:textColor="@color/varygray1" />
         </RadioGroup>
     </LinearLayout>
 
@@ -232,7 +232,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:checked="true"
-                android:textColor="@color/varygray2"
+                android:textColor="@color/varygray1"
                 android:background="@drawable/abaaa_edit_repat"
                 android:gravity="center"
                 android:text="每天" />
@@ -246,7 +246,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="每周"
-                android:textColor="@color/varygray2" />
+                android:textColor="@color/varygray1" />
 
             <RadioButton
                 android:id="@+id/mfEditRadio43"
@@ -257,7 +257,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="每月1日"
-                android:textColor="@color/varygray2" />
+                android:textColor="@color/varygray1" />
 
             <RadioButton
                 android:id="@+id/mfEditRadio44"
@@ -269,7 +269,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="不重复"
-                android:textColor="@color/varygray2" />
+                android:textColor="@color/varygray1" />
         </RadioGroup>
     </LinearLayout>
 
@@ -411,7 +411,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:gravity="center"
-                android:textColor="@color/varygray2"
+                android:textColor="@color/varygray1"
                 android:background="@drawable/abaaa_edit_deadline"
                 android:layout_margin="10dp"
                 android:text="**年**月**日" />
@@ -448,7 +448,7 @@
             android:gravity="top"
             android:textSize="18sp"
             android:padding="10dp"
-            android:textColor="@color/varygray2"
+            android:textColor="@color/varygray1"
             android:hint="写下你的记录吧！"
             android:inputType="textMultiLine" />
 

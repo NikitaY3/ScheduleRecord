@@ -1,14 +1,13 @@
 package com.schedule.record.app.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -18,7 +17,6 @@ import com.schedule.record.app.utils.CalendarDateUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class Calendar3ViewFragment extends Fragment {
@@ -27,24 +25,20 @@ public class Calendar3ViewFragment extends Fragment {
     GridView recordGridView;
     @BindView(R.id.record_title)
     TextView recordTitle;
-    Unbinder unbinder;
-    private View view;
+    private Unbinder unbinder;
 
-    private CalendarDateAdapter dateAdapter;//定义adapter
     private int year;
     private int month;
-    private String title;
-    private int[][] days = new int[6][7];
+    public int[][] days = new int[6][7];
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_calendar_mode3_view, container, false);
+        View view = inflater.inflate(R.layout.main_calendar_mode3_view, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         //初始化日期数据
         initData();
-
-        unbinder = ButterKnife.bind(this, view);
 
         return view;
     }
@@ -61,14 +55,14 @@ public class Calendar3ViewFragment extends Fragment {
 
         //初始化组件
         initView();
-
     }
 
     @SuppressLint("SetTextI18n")
     private void initView() {
 
         days = CalendarDateUtils.getDayOfMonthFormat(2016, 8);
-        dateAdapter = new CalendarDateAdapter(getActivity(), days, year, month);//传入当前月的年
+        //定义adapter
+        CalendarDateAdapter dateAdapter = new CalendarDateAdapter(getActivity(), days, year, month);
 
         recordGridView.setAdapter(dateAdapter);
         recordGridView.setVerticalSpacing(0);

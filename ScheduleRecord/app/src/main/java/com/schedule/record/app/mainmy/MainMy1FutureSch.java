@@ -24,11 +24,8 @@ public class MainMy1FutureSch extends AppCompatActivity {
     Button effSchedulesButton;
     @BindView(R.id.effSchedulesListView)
     ListView effSchedulesListView;
-    ;
+
     private List<FutureSQLiteUser> dataList;
-    private FutureSQLite helper;
-    String DBName = "future";
-    int version = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +48,9 @@ public class MainMy1FutureSch extends AppCompatActivity {
     }
 
     public void onResume1() {
-        helper = new FutureSQLite(MainMy1FutureSch.this, DBName, null, version);
+        String DBName = "future";
+        int version = 1;
+        FutureSQLite helper = new FutureSQLite(MainMy1FutureSch.this, DBName, null, version);
         helper.getReadableDatabase();
         FutureSQLiteUserDao dao = new FutureSQLiteUserDao(helper);
         dataList = dao.quiryAndSetItem();

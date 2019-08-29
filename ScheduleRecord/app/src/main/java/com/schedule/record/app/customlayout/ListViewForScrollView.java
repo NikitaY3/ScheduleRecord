@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ListView;
 
 public class ListViewForScrollView extends ListView {
+
     public ListViewForScrollView(Context context) {
         super(context);
     }
@@ -13,8 +14,7 @@ public class ListViewForScrollView extends ListView {
         super(context, attrs);
     }
 
-    public ListViewForScrollView(Context context, AttributeSet attrs,
-                                 int defStyle) {
+    public ListViewForScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

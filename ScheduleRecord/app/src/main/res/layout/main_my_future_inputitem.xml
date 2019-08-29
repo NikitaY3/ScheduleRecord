@@ -13,7 +13,7 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="4dp"
         android:gravity="center_vertical"
-        android:background="@drawable/abaa_item_im_em"
+        android:background="@drawable/abaa_item_important1"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -78,7 +78,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:background="@drawable/abaa_item_im_em"
+            android:background="@drawable/abaa_item_important1"
             android:textColor="@drawable/ac_my_button1_text"/>
 
         <Spinner
@@ -88,7 +88,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:background="@drawable/abaa_item_im_no"
+            android:background="@drawable/abaa_item_important2"
             android:textColor="@color/colorPrimary" />
 
 
@@ -101,7 +101,7 @@
             android:textAlignment="center"
             android:text="截止日期"
             android:textSize="15sp"
-            android:background="@drawable/abaa_item_no_em"
+            android:background="@drawable/abaa_item_important3"
             android:textColor="@color/colorPrimary"/>
 
         <Spinner
@@ -111,7 +111,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:background="@drawable/abaa_item_no_no"
+            android:background="@drawable/abaa_item_important4"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>

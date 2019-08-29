@@ -19,11 +19,6 @@ public class MainMy3PassSch extends AppCompatActivity {
 
     @BindView(R.id.passListView)
     ListView passListView;
-    ;
-    private List<PassSQLiteUser> dataList;
-    private PassSQLite helper;
-    private String DBName = "pass";
-    private int version = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +31,13 @@ public class MainMy3PassSch extends AppCompatActivity {
 
     public void onResume1() {
 
-        helper = new PassSQLite(MainMy3PassSch.this, DBName, null, version);
+        String DBName = "pass";
+        int version = 1;
+        PassSQLite helper = new PassSQLite(MainMy3PassSch.this, DBName, null, version);
         helper.getReadableDatabase();
         PassSQLiteUserDao dao = new PassSQLiteUserDao(helper);
-        dataList = dao.quiryAndSetItem();
-        MyPassAdapter adapter = new MyPassAdapter(MainMy3PassSch.this,dataList);
+        List<PassSQLiteUser> dataList = dao.quiryAndSetItem();
+        MyPassAdapter adapter = new MyPassAdapter(MainMy3PassSch.this, dataList);
 
         passListView.setAdapter(adapter);
     }

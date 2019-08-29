@@ -16,24 +16,13 @@ import android.widget.Toast;
 import com.schedule.record.app.R;
 import com.schedule.record.app.function.GetFunctions.AuthorityQueryTask;
 import com.schedule.record.app.sqlite.AuthoritySQLite;
-import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
-import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
-import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
-import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@SuppressLint("Registered")
 public class MainMyL2General extends AppCompatActivity {
-
 
     @BindView(R.id.generalEditText)
     EditText generalEditText;
@@ -43,14 +32,6 @@ public class MainMyL2General extends AppCompatActivity {
     Button generalButton2;
     @BindView(R.id.generalTextView2)
     TextView generalTextView2;
-
-    private AuthoritySQLiteUser user;
-    private AuthoritySQLite helper;
-    private String DBName = "authority";
-    private int version = 1;
-
-    private TodaySQLite helper1;
-    private String DBName1="today";
 
     private AuthoritySQLiteUserDao dao;
     private String nameid;
@@ -65,11 +46,11 @@ public class MainMyL2General extends AppCompatActivity {
         SharedPreferences sharedPreferences;
         sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
         nameid = sharedPreferences.getString("nameid","");
-        user = new AuthoritySQLiteUser(null, nameid);
-//        user.setSnameid(nameid);
 
         //特殊用户是我，普通用户是编辑框里面的
-        helper = new AuthoritySQLite(MainMyL2General.this, DBName, null, version);
+        String DBName = "authority";
+        int version = 1;
+        AuthoritySQLite helper = new AuthoritySQLite(MainMyL2General.this, DBName, null, version);
         dao = new AuthoritySQLiteUserDao(helper);
         generalTextView2.setText(dao.queryGeneral(nameid));
     }
@@ -86,6 +67,10 @@ public class MainMyL2General extends AppCompatActivity {
                         //执行对对方的日程指派,跳转到对应于该用户的日程指派页面
                         Intent intent = new Intent(MainMyL2General.this, MainMyL2GInsert.class);
                         startActivity(intent);
+
+                        //TODO
+                        //将数据插入到云端
+
 
 //                    //数据写入数据库
 //                    String dayidbutton = getInternetTime();
@@ -106,38 +91,30 @@ public class MainMyL2General extends AppCompatActivity {
 
                 break;
             case R.id.generalButton2:
-                //刷新数据，查询云端并更新本地
+
+                //刷新数据，查询云端并更新本地，Hander
                 AuthorityQueryTask authorityQueryTask = new AuthorityQueryTask(MainMyL2General.this, uiHandler );
                 authorityQueryTask.execute("http://120.77.222.242:10024/authority/query?gnameId=" + nameid);
 
-                generalTextView2.setText(dao.queryGeneral(nameid));
                 break;
         }
     }
 
-
-    //联网获取当前时间
-    private String getInternetTime() {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        String time = timesimple.format(new Date());
-        return time;
-    }
+//
+//    //联网获取当前时间
+//    private String getInternetTime() {
+//        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+//        return timesimple.format(new Date());
+//    }
 
     @SuppressLint("HandlerLeak")
     private Handler uiHandler = new Handler(){
-        // 覆写这个方法，接收并处理消息。
-        int a = 0;
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case 1:
-                    a++;
-                    break;
                 case 2:
-
                     generalTextView2.setText(dao.queryGeneral(nameid));
-
                     break;
             }
         }

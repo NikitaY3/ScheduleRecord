@@ -24,9 +24,8 @@ public class TodayFindAllTask extends AsyncTask<String,Void,String>{
     @Override
     protected String doInBackground(String... params) {
         try {
-            String res = HttpGetUtils.getJson(params[0]);
-            return  res;
-        } catch (Exception e) {
+            return HttpGetUtils.getJson(params[0]);
+        } catch (Exception ignored) {
         }
         return null;
     }
@@ -36,11 +35,11 @@ public class TodayFindAllTask extends AsyncTask<String,Void,String>{
             //查询权限表并在函数内存好数据库
             String res = HttpGetUtils.parseTodayFindAllJson(s, context);
 
-            Message msg = new Message();
-            msg.what = 4;
-            uiHandler.sendMessage(msg);
-
-        } catch (JSONException e) {
+        } catch (JSONException ignored) {
         }
+
+        Message msg = new Message();
+        msg.what = 4;
+        uiHandler.sendMessage(msg);
     }
 }

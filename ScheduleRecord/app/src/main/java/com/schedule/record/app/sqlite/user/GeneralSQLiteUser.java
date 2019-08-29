@@ -2,8 +2,6 @@ package com.schedule.record.app.sqlite.user;
 
 public class GeneralSQLiteUser {
 
-//    (nameid varchar(12) primary key,name vchar(32)
-// ,password vchar(32),sex char(2),birthday date,head vchar(128))
     private String nameId,name,password,sex,birthday,head;
 
     public GeneralSQLiteUser(String nameid, String name, String password, String sex, String birthday, String head) {

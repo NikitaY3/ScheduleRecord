@@ -1,23 +1,26 @@
 package com.schedule.record.app.function;
 
+import android.annotation.SuppressLint;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class CalculationWeek {
 
-    String time;
+    private String time;
 
     public CalculationWeek(String time) {
         this.time = time;
     }
+
     /**
      * 根据当前日期获得是星期几
-     * time=yyyy-MM-dd
+     * time = yyyy-MM-dd
      */
     public String getWeek() {
         String Week = "";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         try {
             c.setTime(format.parse(time));

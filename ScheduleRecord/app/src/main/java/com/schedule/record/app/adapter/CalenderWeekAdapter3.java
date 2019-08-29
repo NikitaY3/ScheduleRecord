@@ -42,8 +42,7 @@ public class CalenderWeekAdapter3 extends BaseAdapter {
         return position;
     }
 
-    //每一个item调用该方法---视图缓存机制
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "InflateParams"})
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -60,15 +59,12 @@ public class CalenderWeekAdapter3 extends BaseAdapter {
         else{
             holder = (ViewHolder) convertView.getTag();
         }
+
         //数据
         CalenderWeekItem pb=list.get(position);
-//        holder.btn2.setBackgroundResource(R.color.nullcolor);
-//        if (pb.isCheckbox()) {
-//            holder.btn2.setBackgroundResource(R.drawable.abb_mode2_finish);
-//        }
-
         holder.tv1.setText((position+1)+"");
         holder.tv2.setText(pb.getTitle());
+
         holder.btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +74,7 @@ public class CalenderWeekAdapter3 extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
+
         new ColorImportant(pb.getImportant(),holder.btn1).LinearLayoutSet();
 
         return convertView;

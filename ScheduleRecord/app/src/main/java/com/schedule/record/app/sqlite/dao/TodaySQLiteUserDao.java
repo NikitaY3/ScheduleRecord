@@ -5,11 +5,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
+import android.os.Handler;
+import android.os.Message;
 
 import com.schedule.record.app.clock.AlarmSet;
-import com.schedule.record.app.function.AlarmDTT;
 import com.schedule.record.app.function.CalenderWeekItem;
+import com.schedule.record.app.function.GetFunctions.TodayDeleteTask;
+import com.schedule.record.app.function.PostFunctions;
 import com.schedule.record.app.sqlite.FinishSQLite;
 import com.schedule.record.app.sqlite.FutureSQLite;
 import com.schedule.record.app.sqlite.PassSQLite;
@@ -17,14 +19,11 @@ import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 import com.schedule.record.app.sqlite.user.PassSQLiteUser;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 import com.schedule.record.app.sqlite.TodaySQLite;
-import com.schedule.record.app.utils.HttpPostUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 
 public class TodaySQLiteUserDao {
@@ -32,12 +31,18 @@ public class TodaySQLiteUserDao {
     private TodaySQLite helper;
     private static final String TABLE = "today";
 
+    private Context context;
+    private String today;
+    private int day;
+    private Boolean can = true,can2 = true;
+    private Cursor cursortt;
+
     public TodaySQLiteUserDao(TodaySQLite helper) {
         this.helper = helper;
     }
 
     public void insert(TodaySQLiteUser user,Context context){
-        SQLiteDatabase db=helper.getWritableDatabase();
+        SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues content=new ContentValues();
 
         String time = user.getTime();
@@ -53,7 +58,10 @@ public class TodaySQLiteUserDao {
         content.put("diary",user.getDiary());
         content.put("this_day",user.getThisday());
 
-        db.insert(TABLE,null,content);
+        if (queryBydayid(dayid) == null) {
+            db = helper.getWritableDatabase();
+            db.insert(TABLE, null, content);
+        }
 
         //设置闹钟,当前时间小于闹钟时间
         if (!time.equals("XX:XX") && remind) {
@@ -93,7 +101,7 @@ public class TodaySQLiteUserDao {
     }
 
     public List<TodaySQLiteUser> quiryAndSetItem() {
-        List<TodaySQLiteUser> dataList = new ArrayList<TodaySQLiteUser>();//item的list
+        List<TodaySQLiteUser> dataList = new ArrayList<>();//item的list
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
@@ -120,11 +128,11 @@ public class TodaySQLiteUserDao {
 
     //查询Week
     public List<CalenderWeekItem> quiryAndSetWeekItem() {
-        List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();//item的list
+        List<CalenderWeekItem> dataList = new ArrayList<>();//item的list
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"time,important");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);
@@ -220,22 +228,27 @@ public class TodaySQLiteUserDao {
     //将Today插入Finish和Pass的函数
     public void TodayToFinishPass(Context context, String today, int day){
 
+        this.context = context;
+        this.today = today;
+        this.day = day;
+
         FinishSQLite helper1;
         String DBName1="finish";
-        int version1=1;
+        int version1 = 1;
 
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, null, null, null, null, null);
-
-        while (cursor.moveToNext()) {
-            String dayid = cursor.getString(0);
-            int checkbox1 = cursor.getInt(1);
-            int remind1 = cursor.getInt(2);
-            String time = cursor.getString(3);
-            String title = cursor.getString(4);
-            String important = cursor.getString(5);
-            String diary = cursor.getString(6);
-            String thisday = cursor.getString(7);
+        if (can2) {
+            cursortt = db.query(TABLE, null, null, null, null, null, null);
+        }
+        while (can && cursortt.moveToNext()) {
+            String dayid = cursortt.getString(0);
+            int checkbox1 = cursortt.getInt(1);
+            int remind1 = cursortt.getInt(2);
+            String time = cursortt.getString(3);
+            String title = cursortt.getString(4);
+            String important = cursortt.getString(5);
+            String diary = cursortt.getString(6);
+            String thisday = cursortt.getString(7);
 
             String finishid = dayid.substring(0,11)+today+dayid.substring(21);
             boolean checkbox;
@@ -252,35 +265,57 @@ public class TodaySQLiteUserDao {
                 FinishSQLiteUser things = new FinishSQLiteUser(finishid, dayid, checkbox, remind, time, title, important, diary);
                 helper1 = new FinishSQLite(context, DBName1, null, version1);
                 FinishSQLiteUserDao dao = new FinishSQLiteUserDao(helper1);
+
+                can = false;
                 dao.insert(things);
 
+                //数据上传到云端
+                String res = new PostFunctions().SaveFinishPost(things,uiHandler);
+
                 PassSQLite helper2;
-                String DBName2="pass";
+                String DBName2 = "pass";
 
                 FutureSQLite helper3;
-                String DBName3="future";
+                String DBName3 = "future";
 
                 helper3 = new FutureSQLite(context, DBName3, null, version1);
                 FutureSQLiteUserDao daof = new FutureSQLiteUserDao(helper3);
                 if (daof.queryBydayid(dayid) != null) {
                     String endday = daof.queryBydayid(dayid).getEndDay();
-                    int end = Integer.parseInt((endday.substring(0, 4) + endday.substring(5, 7) + endday.substring(8, 10)));
+
+                    int end = 0;
+                    if (!endday.equals("null")){
+                        end = Integer.parseInt((endday.substring(0,4)+endday.substring(5,7)+endday.substring(8,10)));
+                    }
+
                     if (end < day && end != 0) {
                         //数据写入数据库
                         PassSQLiteUser things1 = new PassSQLiteUser(dayid, title, today, 1, important);
                         helper2 = new PassSQLite(context, DBName2, null, version1);
                         PassSQLiteUserDao dao1 = new PassSQLiteUserDao(helper2);
+                        can = false;
                         dao1.insert(things1);
+
+                        //数据上传到云端
+                        new PostFunctions().SavePassPost(things1,uiHandler);
                     }
                 } else {
                     //数据写入数据库
                     PassSQLiteUser things1 = new PassSQLiteUser(dayid, title, today, 1, important);
                     helper2 = new PassSQLite(context, DBName2, null, version1);
                     PassSQLiteUserDao dao1 = new PassSQLiteUserDao(helper2);
+                    can = false;
                     dao1.insert(things1);
+
+                    //数据上传到云端
+                    new PostFunctions().SavePassPost(things1,uiHandler);
                 }
                 //从数据库删除
+                can = false;
                 deleteByDayid(dayid,context);
+
+                //删除云端
+                new TodayDeleteTask(uiHandler).execute("http://120.77.222.242:10024/today/deletebyid?dayId=" + dayid);
             }
         }
         db.close();
@@ -290,8 +325,28 @@ public class TodaySQLiteUserDao {
     private String getInternetTime() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        String Dayid = timesimple.format(new Date());
-        return Dayid;
+        return timesimple.format(new Date());
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 21:
+                    can = true;
+                    can2 = false;
+                    TodayToFinishPass(context,today,day);
+                    //TODO
+                    //刷新fragment
+                    break;
+                case 44:
+                    //删除Future成功，不做操作
+                    can = true;
+                    can2 = false;
+                    break;
+            }
+        }
+    };
 
 }

@@ -28,7 +28,6 @@
 
     <color name="my8">#FA8978</color>
 
-
     <color name="rainbow1">#FF0000</color>
     <color name="rainbow2">#FF7F00</color>
     <color name="rainbow3">#FFFF00</color>
@@ -45,13 +44,11 @@
     <color name="rain6">#700000FF</color>
     <color name="rain7">#708B00FF</color>
 
-
-
     <color name="nullcolor">#00000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="varygray3">#E7E9EB</color>
-    <color name="gray">#2494A199</color>
-    <color name="varygray">#8394A199</color>
-    <color name="varygray2">#333333</color>
+    <color name="gray1">#E7E9EB</color>
+    <color name="gray2">#2494A199</color>
+    <color name="gray3">#8394A199</color>
+    <color name="varygray1">#333333</color>
 
 </resources>

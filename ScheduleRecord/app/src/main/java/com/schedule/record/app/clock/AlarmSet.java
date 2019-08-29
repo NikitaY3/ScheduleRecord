@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import static android.content.Context.ALARM_SERVICE;
 
@@ -51,8 +52,7 @@ public class AlarmSet {
         AlarmManager am1= (AlarmManager)context.getSystemService(ALARM_SERVICE);
 
         //设置一次性闹钟，第一个参数表示闹钟类型，第二个参数表示闹钟执行时间，第三个参数表示闹钟响应动作
-
-        am1.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent2);
+        Objects.requireNonNull(am1).set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent2);
     }
 
     public void myAlarmCancel() {
@@ -65,6 +65,6 @@ public class AlarmSet {
         //获取系统进程
         am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-        am.cancel(pendingIntent);
+        Objects.requireNonNull(am).cancel(pendingIntent);
     }
 }

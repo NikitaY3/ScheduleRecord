@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,24 +47,19 @@ public class FutureDialog extends Dialog {
     private Context context;
     private LinearLayout myFInputLinearLayout1;
     private ListView calendar1ListView;
-    private ArrayAdapter<String> arrayAdapter;
     private List<FutureSQLiteUser> dataList;
 
-    private FutureSQLite helper;
-    private String DBName="future";
-    private int version=1;
-    private String Dayid,Dayidbutton;
-
     private EditText myFInputEditText1,myFInputEditText2;
-    private Button myFInputButton,myFInputButton23;
+    private Button myFInputButton23;
     private Spinner myFInputButton21,myFInputButton22,myFInputButton24;
-    private List<String> button21List,button22List,button24List;
 
-    public String radio2;
+    private String radio2;
     private final Calendar cale1 = Calendar.getInstance();
 
     private String important,endday,repeat,diary;
     private boolean remind = true;
+
+    private FutureSQLiteUser things;
 
     public FutureDialog(Context context, ListView calendar1ListView, List<FutureSQLiteUser> dataList) {
         super(context, R.style.MyDialog);
@@ -74,24 +70,16 @@ public class FutureDialog extends Dialog {
         updateDiaLog();
     }
 
-    private void updateDiaLog() {
-        important = "a";
-        endday = "0000-00-00";
-        repeat = "everyday";
-        remind = true;
-        diary = "无";
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_my_future_inputitem);
 
+        Button myFInputButton = findViewById(R.id.myFInputButton);
         myFInputLinearLayout1 = findViewById(R.id.myFInputLinearLayout1);
         myFInputEditText1 = findViewById(R.id.myFInputEditText1);
         myFInputEditText2 = findViewById(R.id.myFInputEditText2);
-        myFInputButton = findViewById(R.id.myFInputButton);
         myFInputButton21 = findViewById(R.id.myFInputButton21);
         myFInputButton22 = findViewById(R.id.myFInputButton22);
         myFInputButton23 = findViewById(R.id.myFInputButton23);
@@ -133,37 +121,20 @@ public class FutureDialog extends Dialog {
         myFInputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //延时函数
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!myFInputEditText2.getText().toString().equals("")) {
-                            insertDataBase();
-                        } else {
-                            Toast.makeText(context,"请输入日程标题",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },10);
-                //延时函数
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                        myFInputEditText1.setText("XX:XX");
-                        myFInputEditText2.setText("");
-                        updateDiaLog();
-                        myFInputButton21.setSelection(0);
-                        myFInputButton22.setSelection(0);
-                        myFInputButton23.setText("截止日期");
-                        myFInputButton24.setSelection(0);
-                    }
-                },100);
+                //判断标题是否为空
+                if (!myFInputEditText2.getText().toString().equals("")) {
+                    insertDataBase();
+                } else {
+                    Toast.makeText(context,"请输入日程标题",Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
         myFInputButton23.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(context,new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String radio;
@@ -191,6 +162,8 @@ public class FutureDialog extends Dialog {
                 },cale1.get(Calendar.YEAR),cale1.get(Calendar.MONTH),cale1.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        //调用下拉列表函数
         SpinnerList();
 
     }
@@ -205,54 +178,40 @@ public class FutureDialog extends Dialog {
         getWindow().setAttributes(layoutParams);
     }
 
+    //确认添加按钮点击后创建Item及将数据写入数据库
     private void insertDataBase() {
-        //确认添加按钮点击后创建Item及将数据写入数据库
-        Dayidbutton = getInternetTime();
-
+        String dayidbutton = getInternetTime();
         String dayTitle = myFInputEditText2.getText().toString();
         String time = myFInputEditText1.getText().toString();
-
         //取得登录用户的ID
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences("myuser",MODE_PRIVATE);
         String nameid = sharedPreferences.getString("nameid","");
-        String dayid = nameid + Dayidbutton;
+        String dayid = nameid + dayidbutton;
 
-        FutureSQLiteUser things = new FutureSQLiteUser(dayid,repeat,endday,remind,time,dayTitle,important,diary);
-
-        //数据写入数据库
-        helper=new FutureSQLite(context,DBName,null,version);
-        FutureSQLiteUserDao dao=new FutureSQLiteUserDao(helper);
-        dao.insert(things);
+        things = new FutureSQLiteUser(dayid,repeat,endday,remind,time,dayTitle,important,diary);
 
         //数据上传到云端
         PostFunctions postFunctions = new PostFunctions();
-        postFunctions.SaveFuturePost(things);
-
-        //刷新所有Item
-        dataList = new ArrayList<FutureSQLiteUser>();
-        dataList = (List<FutureSQLiteUser>) dao.quiryAndSetItem();
-        final MyFutureAdapter adapter = new MyFutureAdapter(context, dataList);
-        calendar1ListView.setAdapter(adapter);
+        postFunctions.SaveFuturePost(things,uiHandler);
 
     }
 
-
     private void SpinnerList() {
         //设置下拉框的列表内容
-        button21List = new ArrayList<>();
+        List<String> button21List = new ArrayList<>();
         button21List.add("是否提醒");
         button21List.add("提醒");
         button21List.add("不提醒");
 
-        button22List = new ArrayList<>();
+        List<String> button22List = new ArrayList<>();
         button22List.add("重复设置");
         button22List.add("不重复");
         button22List.add("每天");
         button22List.add("每周");
         button22List.add("每月");
 
-        button24List = new ArrayList<>();
+        List<String> button24List = new ArrayList<>();
         button24List.add("重要程度");
         button24List.add("等级一");
         button24List.add("等级二");
@@ -269,7 +228,7 @@ public class FutureDialog extends Dialog {
 
     private void MySpinner(List<String> teamList,Spinner spinner) {
         //下拉列表函数
-        arrayAdapter = new ArrayAdapter<String>(context,R.layout.main_calendar_item,teamList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.main_calendar_item, teamList);
         arrayAdapter.setDropDownViewResource(R.layout.main_calendar_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setSelection(0);
@@ -309,7 +268,49 @@ public class FutureDialog extends Dialog {
     private String getInternetTime() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        Dayid = timesimple.format(new Date());
-        return Dayid;
+        return timesimple.format(new Date());
     }
+
+    private void updateDiaLog() {
+        important = "a";
+        endday = "0000-00-00";
+        repeat = "everyday";
+        remind = true;
+        diary = "无";
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void handleMessage(Message msg) {
+            int version = 1;
+            String DBName = "future";
+            switch (msg.what) {
+            case 21:
+                //数据写入数据库
+                FutureSQLite helper = new FutureSQLite(context, DBName, null, version);
+                FutureSQLiteUserDao dao=new FutureSQLiteUserDao(helper);
+                dao.insert(things);
+
+                //刷新所有Item
+                dataList = new ArrayList<>();
+                dataList = dao.quiryAndSetItem();
+                final MyFutureAdapter adapter = new MyFutureAdapter(context, dataList);
+                calendar1ListView.setAdapter(adapter);
+
+                //重置输入
+                myFInputLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important1);
+                myFInputEditText1.setText("XX:XX");
+                myFInputEditText2.setText("");
+                updateDiaLog();
+                myFInputButton21.setSelection(0);
+                myFInputButton22.setSelection(0);
+                myFInputButton23.setText("截止日期");
+                myFInputButton24.setSelection(0);
+
+                break;
+        }
+        }
+    };
 }

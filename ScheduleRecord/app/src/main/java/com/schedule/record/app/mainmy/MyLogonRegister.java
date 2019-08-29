@@ -1,9 +1,11 @@
 package com.schedule.record.app.mainmy;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +17,6 @@ import com.schedule.record.app.function.PostFunctions;
 import com.schedule.record.app.sqlite.GeneralUserSQLite;
 import com.schedule.record.app.sqlite.dao.GeneralSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.GeneralSQLiteUser;
-import com.schedule.record.app.utils.HttpPostUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,19 +35,17 @@ public class MyLogonRegister extends AppCompatActivity {
     @BindView(R.id.registerButton1)
     Button registerButton1;
 
-    private static int version = 1;
-    private static GeneralUserSQLite helper;
-    private static String DBName = "general_user";
+    public int version = 1;
+    public static GeneralUserSQLite helper;
+    public static String DBName = "general_user";
 
-    private String nameid,name,password;
-    private SharedPreferences sharedPreferences;
+    private String nameid,name,password,res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_logon_register);
         ButterKnife.bind(this);
-
     }
 
     @OnClick(R.id.registerButton1)
@@ -63,42 +59,46 @@ public class MyLogonRegister extends AppCompatActivity {
             password = registerEditText3.getText().toString();
             name = registerEditText4.getText().toString();
 
-            saveIn();//保存信息和转跳
+            //1、将账号信息保存到云端
+            res = new PostFunctions().SaveUserPost(nameid,password,name,uiHandler);
         }
     }
 
-    private void saveIn() {
-        //1、将账号信息保存到云端
-        String res = new PostFunctions().SaveUserPost(nameid,password,name);
 
-            //2、将账号信息保存到本地数据库
-            GeneralSQLiteUser things = new GeneralSQLiteUser(nameid,name,password,"男",null,null);
-            helper = new GeneralUserSQLite(MyLogonRegister.this, DBName, null, version);
-            GeneralSQLiteUserDao dao = new GeneralSQLiteUserDao(helper);
-            dao.deleteAll();//保证本地账号唯一性
-            dao.insert(things);
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 21:
+                    //2、将账号信息保存到本地数据库
+                    GeneralSQLiteUser things = new GeneralSQLiteUser(nameid,name,password,"男",null,null);
+                    helper = new GeneralUserSQLite(MyLogonRegister.this, DBName, null, version);
+                    GeneralSQLiteUserDao dao = new GeneralSQLiteUserDao(helper);
+                    dao.deleteAll();//保证本地账号唯一性
+                    dao.insert(things);
 
-            //3、保存数据+转跳到登录页面
-            sharedPreferences = this.getSharedPreferences("myuser", MODE_PRIVATE);
-            SharedPreferences.Editor myuser = sharedPreferences.edit();
-            myuser.putString("nameid", nameid);
-            myuser.putString("password", password);
-            myuser.putString("name", name);
-            myuser.apply();
+                    //3、保存数据+转跳到登录页面
+                    SharedPreferences sharedPreferences = MyLogonRegister.this.getSharedPreferences("myuser", MODE_PRIVATE);
+                    SharedPreferences.Editor myuser = sharedPreferences.edit();
+                    myuser.putString("nameid", nameid);
+                    myuser.putString("password", password);
+                    myuser.putString("name", name);
+                    myuser.apply();
 
-            Toast.makeText(MyLogonRegister.this,"账号注册成功"+res,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyLogonRegister.this,"账号注册成功" + res,Toast.LENGTH_SHORT).show();
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
                     Intent intent2 = new Intent(MyLogonRegister.this, MainActivity.class);
                     startActivity(intent2);
                     MyLogonRegister.this.finish();
-                }
-            },50);
 
-//            Toast.makeText(MyLogonRegister.this,"账号注册失败"+res,Toast.LENGTH_SHORT).show();
+                    break;
+                case 210:
 
-    }
+                    Toast.makeText(MyLogonRegister.this,"账号注册失败" + res,Toast.LENGTH_SHORT).show();
 
+                    break;
+            }
+        }
+    };
 }

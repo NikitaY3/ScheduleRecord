@@ -1,29 +1,30 @@
 package com.schedule.record.app.function.GetFunctions;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 
 import com.schedule.record.app.utils.HttpGetUtils;
 
-import org.json.JSONException;
-
 public class PassDeleteTask extends AsyncTask<String,Void,String>{
 
-    @SuppressLint("StaticFieldLeak")
-    private Context context;
+    private Handler uiHandler;
 
-    public PassDeleteTask(Context context) {
-        this.context = context;
+    public PassDeleteTask(Handler uiHandler) {
+        this.uiHandler = uiHandler;
     }
 
     @Override
     protected String doInBackground(String... params) {
         try {
-            String res = HttpGetUtils.getJson(params[0]);
-            return  res;
-        } catch (Exception e) {
+            return HttpGetUtils.getJson(params[0]);
+        } catch (Exception ignored) {
         }
+
+        Message msg = new Message();
+        msg.what = 66;
+        uiHandler.sendMessage(msg);
+
         return null;
     }
 }

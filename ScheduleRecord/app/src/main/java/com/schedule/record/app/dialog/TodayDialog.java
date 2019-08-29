@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,8 +25,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.function.ColorImportant;
+import com.schedule.record.app.function.PostFunctions;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.adapter.CalenderDayAdapter;
 import com.schedule.record.app.function.Mode1ProgressBar;
@@ -43,26 +44,21 @@ import java.util.TimeZone;
 import static android.content.Context.MODE_PRIVATE;
 
 public class TodayDialog extends Dialog {
+
     private Context context;
     private LinearLayout inputItemLinearLayout1;
     private ListView calendar1ListView;
     private List<TodaySQLiteUser> dataList;
 
-    private TodaySQLite helper;
-    private String DBName="today";
-    private int version=1;
-
     private EditText inputItemEditText1,inputItemEditText2;
-    private Button inputItemButton;
     private Spinner inputItemButton21,inputItemButton24;
-    private List<String> button21List,button24List;
 
-    private String radio2;
+    private String radio,important,diary;
     private final Calendar cale1 = Calendar.getInstance();
     private ProgressBar mode1ProgressBar;
 
-    private String important,diary;
     private boolean remind = true;
+    private TodaySQLiteUser things;
 
     public TodayDialog(Context context, ListView calendar1ListView, List<TodaySQLiteUser> dataList, ProgressBar mode1ProgressBar) {
         super(context, R.style.MyDialog);
@@ -74,22 +70,16 @@ public class TodayDialog extends Dialog {
         updateDiaLog();
     }
 
-    private void updateDiaLog() {
-        important = "a";
-        remind = true;
-        diary = "无";
-    }
-
-    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_calendar_mode1_inputitem);
 
+        Button inputItemButton = findViewById(R.id.inputItemButton);
         inputItemLinearLayout1 = findViewById(R.id.inputItemLinearLayout1);
         inputItemEditText1 = findViewById(R.id.inputItemEditText1);
         inputItemEditText2 = findViewById(R.id.inputItemEditText2);
-        inputItemButton = findViewById(R.id.inputItemButton);
         inputItemButton21 = findViewById(R.id.inputItemButton21);
         inputItemButton24 = findViewById(R.id.inputItemButton24);
 
@@ -112,15 +102,15 @@ public class TodayDialog extends Dialog {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         if (minute<10 && hourOfDay<10){
-                            radio2 = "0"+hourOfDay + ":0" + minute;
+                            radio = "0"+hourOfDay + ":0" + minute;
                         }else if(minute<10) {
-                            radio2 = hourOfDay + ":0" + minute;
+                            radio = hourOfDay + ":0" + minute;
                         }else if(hourOfDay<10) {
-                            radio2 = "0"+hourOfDay + ":" + minute;
+                            radio = "0"+hourOfDay + ":" + minute;
                         }else {
-                            radio2 = hourOfDay+":"+minute ;
+                            radio = hourOfDay+":"+minute ;
                         }
-                        inputItemEditText1.setText(radio2);
+                        inputItemEditText1.setText(radio);
                     }
                 },cale1.get(Calendar.HOUR_OF_DAY),cale1.get(Calendar.MINUTE),true).show();
             }
@@ -129,35 +119,16 @@ public class TodayDialog extends Dialog {
         inputItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //延时函数
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!inputItemEditText2.getText().toString().equals("")) {
-                            insertDataBase();
-                        } else {
-                            Toast.makeText(context,"请输入日程标题",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },10);
-                //延时函数
-                new Handler().postDelayed(new Runnable() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void run() {
-                        inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_im_em);
-                        inputItemEditText1.setText("XX:XX");
-                        inputItemEditText2.setText("");
-                        updateDiaLog();
-                        inputItemButton21.setSelection(0);
-                        inputItemButton24.setSelection(0);
-                    }
-                },100);
+                //判断标题是否为空
+                if (!inputItemEditText2.getText().toString().equals("")) {
+                    insertDataBase();
+                } else {
+                    Toast.makeText(context,"请输入日程标题",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         SpinnerList();
-
     }
 
     @Override
@@ -182,19 +153,11 @@ public class TodayDialog extends Dialog {
         String nameid = sharedPreferences.getString("nameid","");
         String dayid = nameid + dayidbutton;
 
-        //数据写入数据库
-        TodaySQLiteUser things = new TodaySQLiteUser(dayid,false,remind,time,dayTitle,important,diary, dayidbutton.substring(0,10));
-        helper=new TodaySQLite(context,DBName,null,version);
-        helper.getReadableDatabase();
-        TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
-        dao.insert(things,context);
+        things = new TodaySQLiteUser(dayid,false,remind,time,dayTitle,important,diary, dayidbutton.substring(0,10));
 
-        //刷新所有Item
-        dataList = new ArrayList<TodaySQLiteUser>();
-        dataList = dao.quiryAndSetItem();
-        final CalenderDayAdapter adapter = new CalenderDayAdapter(context, dataList,mode1ProgressBar);
-        new Mode1ProgressBar(dao.CountBar(),dataList.size(),mode1ProgressBar);
-        calendar1ListView.setAdapter(adapter);
+        //数据上传到云端
+        PostFunctions postFunctions = new PostFunctions();
+        postFunctions.SaveTodayPost(things,uiHandler);
 
     }
 
@@ -202,17 +165,16 @@ public class TodayDialog extends Dialog {
     private String getInternetTime() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        String dayid = timesimple.format(new Date());
-        return dayid;
+        return timesimple.format(new Date());
     }
 
     //设置下拉框的列表内容
     private void SpinnerList() {
-        button21List = new ArrayList<>();
+        List<String> button21List = new ArrayList<>();
         button21List.add("提醒");
         button21List.add("不提醒");
 
-        button24List = new ArrayList<>();
+        List<String> button24List = new ArrayList<>();
         button24List.add("重要程度");
         button24List.add("等级一");
         button24List.add("等级二");
@@ -228,7 +190,7 @@ public class TodayDialog extends Dialog {
 
     private void MySpinner(List<String> teamList,Spinner spinner) {
         //下拉列表函数
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, R.layout.main_calendar_item, teamList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.main_calendar_item, teamList);
         arrayAdapter.setDropDownViewResource(R.layout.main_calendar_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setSelection(0);
@@ -251,4 +213,46 @@ public class TodayDialog extends Dialog {
             }
         });
     }
+
+    private void updateDiaLog() {
+        important = "a";
+        remind = true;
+        diary = "无";
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void handleMessage(Message msg) {
+            String DBName = "today";
+            int version = 1;
+            switch (msg.what) {
+                case 21:
+
+                    //数据写入数据库
+                    TodaySQLite helper = new TodaySQLite(context, DBName, null, version);
+                    helper.getReadableDatabase();
+                    TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
+                    dao.insert(things,context);
+
+                    //刷新所有Item
+                    dataList = new ArrayList<>();
+                    dataList = dao.quiryAndSetItem();
+                    final CalenderDayAdapter adapter = new CalenderDayAdapter(context, dataList,mode1ProgressBar);
+                    new Mode1ProgressBar(dao.CountBar(),dataList.size(),mode1ProgressBar);
+                    calendar1ListView.setAdapter(adapter);
+
+                    //重置输入
+                    inputItemLinearLayout1.setBackgroundResource(R.drawable.abaa_item_important1);
+                    inputItemEditText1.setText("XX:XX");
+                    inputItemEditText2.setText("");
+                    updateDiaLog();
+                    inputItemButton21.setSelection(0);
+                    inputItemButton24.setSelection(0);
+
+                    break;
+            }
+        }
+    };
 }

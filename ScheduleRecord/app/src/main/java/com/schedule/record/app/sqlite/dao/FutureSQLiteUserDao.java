@@ -5,9 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
+import android.os.Handler;
+import android.os.Message;
 
-import com.schedule.record.app.clock.AlarmSet;
 import com.schedule.record.app.function.CalenderWeekItem;
 import com.schedule.record.app.function.GetFunctions.FutureDeleteTask;
 import com.schedule.record.app.function.PostFunctions;
@@ -24,11 +24,18 @@ public class FutureSQLiteUserDao {
     private FutureSQLite helper;
     private static final String TABLE = "future";
 
+    private Boolean can = true,can2 = true;
+    private Context context;
+    private int today, m;
+    private String week,thisday;
+    private Cursor cursorft;
+
     public FutureSQLiteUserDao(FutureSQLite helper) {
         this.helper = helper;
     }
 
     public void insert(FutureSQLiteUser user){
+
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
         content.put("day_id",user.getDayId());
@@ -42,10 +49,6 @@ public class FutureSQLiteUserDao {
         db.insert(TABLE,null,content);
         db.close();
 
-//        //数据上传到云端
-//        PostFunctions postFunctions = new PostFunctions();
-//        postFunctions.SaveFuturePost(user);
-//        String r = new PostFunctions().SaveFuturePost(user);
     }
 
     public  FutureSQLiteUser queryBydayid(String Dayid){
@@ -70,11 +73,11 @@ public class FutureSQLiteUserDao {
     }
 
     public List<FutureSQLiteUser> quiryAndSetItem() {
-        List<FutureSQLiteUser> dataList = new ArrayList<FutureSQLiteUser>();//item的list
+        List<FutureSQLiteUser> dataList = new ArrayList<>();
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null,null, null,null,null,"time,important");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             String repeat = cursor.getString(1);
@@ -95,10 +98,10 @@ public class FutureSQLiteUserDao {
 
     //查询Week,根据日期查询
     public List<CalenderWeekItem> quiryAndSetWeekItem(int today, int m, String week, String thisday) {
-        List<CalenderWeekItem> dataList = new ArrayList<CalenderWeekItem>();//item的list
+        List<CalenderWeekItem> dataList = new ArrayList<>();
         //查询数据库并初始化日程列表
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"important,time");
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null,null, null,null,null,"time,important");
         while (cursor.moveToNext()) {
             String dayid = cursor.getString(0);
             String repeat = cursor.getString(1);
@@ -107,11 +110,12 @@ public class FutureSQLiteUserDao {
             String important = cursor.getString(6);
             CalenderWeekItem things = new CalenderWeekItem(dayid, title, important, false);
 
-            int end = Integer.parseInt((endday.substring(0, 4) + endday.substring(5, 7) + endday.substring(8, 10)));
+            int end = 0;
+            if (!endday.equals("null")){
+                end = Integer.parseInt((endday.substring(0, 4) + endday.substring(5, 7) + endday.substring(8, 10)));
+            }
             if (end >= today || end == 0) {
-
                 String repeat1 = repeat.substring(0, 8);
-
                 if (repeat1.equals("everywee")) {
                     String re = repeat.substring(8);
                     while (!re.equals("")) {
@@ -138,14 +142,11 @@ public class FutureSQLiteUserDao {
         db.close();
     }
 
-    public void deleteByDayid(String dayid, Context context){
-        //删除云端
-        new FutureDeleteTask(context).execute("http://120.77.222.242:10024/future/deletebyid?dayId=" + dayid);
-
+    public void deleteByDayid(String dayid){
         SQLiteDatabase db=helper.getWritableDatabase();
         db.delete(TABLE,"day_id=?",new String[]{dayid});
         db.close();
-}
+    }
 
     public void updateAll(FutureSQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
@@ -176,30 +177,38 @@ public class FutureSQLiteUserDao {
     //将Future插入Today的函数
     public void FutureToToday(Context context, int today, int m, String week, String thisday){
 
+        this.context = context;
+        this.today = today;
+        this.m = m;
+        this.week = week;
+        this.thisday = thisday;
+
         TodaySQLite helper1;
         String DBName="today";
         int version=1;
-
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, null, null, null, null, null);
 
-        while (cursor.moveToNext()) {
-            String dayid = cursor.getString(0);
-            String repeat = cursor.getString(1);
-            String endday = cursor.getString(2);
-            int remind1 = cursor.getInt(3);
-            String time = cursor.getString(4);
-            String title = cursor.getString(5);
-            String important = cursor.getString(6);
-            String diary = cursor.getString(7);
+        if (can2) {
+            cursorft = db.query(TABLE, null, null, null, null, null, null);
+        }
+        while (can && cursorft.moveToNext()) {
+            String dayid = cursorft.getString(0);
+            String repeat = cursorft.getString(1);
+            String endday = cursorft.getString(2);
+            int remind1 = cursorft.getInt(3);
+            String time = cursorft.getString(4);
+            String title = cursorft.getString(5);
+            String important = cursorft.getString(6);
+            String diary = cursorft.getString(7);
             boolean remind;
             remind = remind1 > 0;
 
-
-            int end = Integer.parseInt((endday.substring(0,4)+endday.substring(5,7)+endday.substring(8,10)));
+            int end = 0;
+            if (!endday.equals("null")){
+               end = Integer.parseInt((endday.substring(0,4)+endday.substring(5,7)+endday.substring(8,10)));
+            }
             if (end >= today || end == 0) {
                 String repeat1 = repeat.substring(0, 8);
-
                 //数据写入数据库
                 TodaySQLiteUser things = new TodaySQLiteUser(dayid, false, remind, time, title, important, diary, thisday);
                 helper1 = new TodaySQLite(context, DBName, null, version);
@@ -210,20 +219,58 @@ public class FutureSQLiteUserDao {
                     while (!re.equals("")) {
                         String a = re.substring(0, 1);
                         if (a.equals(week)) {
+                            can = false;
                             dao.insert(things,context);
+
+                            //数据上传到云端
+                            new PostFunctions().SaveTodayPost(things,uiHandler);
                         }
                         re = re.substring(1);
                     }
                 } else if (repeat1.equals("everyday") || (repeat1.equals("everymou") && m == 1)) {
+                    can = false;
                     dao.insert(things,context);
+
+                    //数据上传到云端
+                    new PostFunctions().SaveTodayPost(things,uiHandler);
                 } else if (end == today && repeat1.equals("norepeat")){
+                    can = false;
                     dao.insert(things,context);
+
+                    //数据上传到云端
+                    new PostFunctions().SaveTodayPost(things,uiHandler);
                 }
             }
             if (end <= today && end != 0){
-                deleteByDayid(dayid,context);
+                can = false;
+                deleteByDayid(dayid);
+
+                //删除云端
+                new FutureDeleteTask(uiHandler).execute("http://120.77.222.242:10024/future/deletebyid?dayId=" + dayid);
             }
         }
         db.close();
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler uiHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 21:
+                    can = true;
+                    can2 = false;
+                    FutureToToday(context,today,m,week,thisday);
+                    //TODO
+                    //刷新fragment
+                    break;
+                case 33:
+                    //可以向下循环取出，但是不能重新查表
+                    can = true;
+                    can2 = false;
+                    //删除Future成功，不做操作
+                    break;
+            }
+        }
+    };
 }

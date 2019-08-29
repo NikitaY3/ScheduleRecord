@@ -11,7 +11,7 @@
         android:id="@+id/mode2ItemLinear1"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="@drawable/abaa_item_im_em"
+        android:background="@drawable/abaa_item_important1"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

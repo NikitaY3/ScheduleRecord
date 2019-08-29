@@ -1,7 +1,7 @@
 package com.schedule.record.app.customlayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,15 +18,17 @@ import android.view.WindowManager;
 import com.schedule.record.app.R;
 
 import java.util.LinkedList;
-//折线图
+import java.util.Objects;
+
+/**
+ * 折线图
+ */
 public class ChartView extends SurfaceView implements SurfaceHolder.Callback , Runnable
 {
     private Context mContext;
     private Paint mPaint;
-    private Resources res;
     private DisplayMetrics dm;
 
-    private int canvasHeight;
     private int canvasWidth;
     private int bHeight = 0;
     private int bWidth;
@@ -60,7 +62,6 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
     private boolean isRunning = true;
     private int lastX;
     private int offSet;
-    private Rect mRect;
 
     private int xAverageValue = 0;
 
@@ -79,11 +80,10 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
 
     private void initView()
     {
-        this.res = mContext.getResources();
         this.mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         dm = new DisplayMetrics();
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(dm);
+        Objects.requireNonNull(wm).getDefaultDisplay().getMetrics(dm);
 
         xPreData.add("05-18");
         xPreData.add("05-17");
@@ -122,7 +122,7 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
     {
         if (isMeasure)
         {
-            this.canvasHeight = getHeight();
+            int canvasHeight = getHeight();
             this.canvasWidth = getWidth();
             if (bHeight == 0)
             {
@@ -141,8 +141,7 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
         while (isRunning)
         {
             drawView();
-            try
-            {
+            try {
                 Thread.sleep(100);
             }
             catch (InterruptedException e)
@@ -156,9 +155,9 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
     {
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
-        mPaint.setColor(getResources().getColor(R.color.gray));
+        mPaint.setColor(getResources().getColor(R.color.gray2));
         drawAllXLine(canvas);
-        mRect = new Rect(bWidth - 3, marginTop - 5 ,
+        Rect mRect = new Rect(bWidth - 3, marginTop - 5,
                 bWidth + (canvasWidth - bWidth) / yRawData.size() * (yRawData.size() - 1) + 3, bHeight + marginTop + marginBottom);
         //锁定画图区域
         canvas.clipRect(mRect);
@@ -172,9 +171,10 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
         drawLine(canvas);
 
         mPaint.setStyle(Paint.Style.FILL);
-        for (int i = 0 ; i < mPoints.length ; i++)
-        {
+        int i = 0 ;
+        while (i < mPoints.length) {
             canvas.drawCircle(mPoints[i].x , mPoints[i].y , 5 , mPaint);
+            i++;
         }
 
         holder.unlockCanvasAndPost(canvas);
@@ -183,8 +183,7 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
     //绘制折线图
     private void drawLine(Canvas canvas)
     {
-        Point startP = null;
-        Point endP = null;
+        Point startP, endP ;
         for (int i = 0 ; i < mPoints.length - 1; i++)
         {
             startP = mPoints[i];
@@ -229,7 +228,7 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
     {
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setTextSize(dip2px(12));
-        p.setColor(getResources().getColor(R.color.varygray));
+        p.setColor(getResources().getColor(R.color.gray3));
         p.setTextAlign(Paint.Align.LEFT);
         canvas.drawText(text , x , y , p);
     }
@@ -261,6 +260,7 @@ public class ChartView extends SurfaceView implements SurfaceHolder.Callback , R
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {

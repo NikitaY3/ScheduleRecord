@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="4dp"
-        android:background="@drawable/abaa_item_im_em"
+        android:background="@drawable/abaa_item_important1"
         android:orientation="horizontal">
 
         <CheckBox

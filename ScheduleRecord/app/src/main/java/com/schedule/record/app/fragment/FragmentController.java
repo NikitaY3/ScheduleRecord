@@ -31,7 +31,7 @@ public class FragmentController {
     }
 
     private void initFragment() {
-        fragments = new ArrayList<Fragment>();
+        fragments = new ArrayList<>();
         fragments.add(new EquimentFragment());
         fragments.add(new CalendarFragment());
         fragments.add(new MyFragment());
@@ -51,7 +51,7 @@ public class FragmentController {
         ft.commit();
     }
 
-    public void hideFragments() {
+    private void hideFragments() {
         FragmentTransaction ft = fm.beginTransaction();
         for(Fragment fragment : fragments) {
             if(fragment != null) {
@@ -59,12 +59,12 @@ public class FragmentController {
             }
         }
         ft.commit();
-        // commitAllowingStateLoss()
     }
 
     public Fragment getFragment(int position) {
         return fragments.get(position);
     }
+
     public static void destoryController(){
         controller = null;
     }

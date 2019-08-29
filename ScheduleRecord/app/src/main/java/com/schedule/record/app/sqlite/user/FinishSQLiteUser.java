@@ -97,15 +97,4 @@ public class FinishSQLiteUser {
                 "日程重要程度：等级" + important + '\n'+
                 "日程详细记录：" + '\n'+ diary + '\n';
     }
-
-    public String toString1() {
-        return "当前日程Finishid为：" + finishId + '\n' +
-                "当前日程Dayid为：" + dayId + '\n' +
-                "是否已经完成：" + checkbox + '\n' +
-                "是否提醒：" + remind + '\n' +
-                "日程开始时间：" + time + '\n' +
-                "日程标题：" + title + '\n' +
-                "日程重要程度：" + important + '\n'+
-                "日程详细记录：" + diary + '\n';
-    }
 }

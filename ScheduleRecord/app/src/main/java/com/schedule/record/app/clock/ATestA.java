@@ -14,8 +14,6 @@ import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,15 +27,7 @@ public class ATestA extends AppCompatActivity {
     @BindView(R.id.mAlaButton2)
     Button mAlaButton2;
 
-//    private MediaPlayer player;
-
-    private TodaySQLite helper;
-    private String DBName="today";
-    private int version=1;
     private TodaySQLiteUser user;
-
-    private String dayid;
-//    private int i;
     private TodaySQLiteUserDao dao;
 
     @Override
@@ -46,16 +36,16 @@ public class ATestA extends AppCompatActivity {
         setContentView(R.layout.mode1_alarm);
         ButterKnife.bind(this);
 
-        dayid = getIntent().getStringExtra("dayid");
-//        i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
+        String dayid = getIntent().getStringExtra("dayid");
 
-        helper = new TodaySQLite(this, DBName, null, version);
+        String DBName = "today";
+        int version = 1;
+        TodaySQLite helper = new TodaySQLite(this, DBName, null, version);
         dao = new TodaySQLiteUserDao(helper);
         user = dao.queryBydayid(dayid);
 
         mAlaTextView2.setText(user.getTitle());
 
-//        playMusic();
     }
 
     @OnClick({R.id.mAlaButton1, R.id.mAlaButton2})
@@ -66,16 +56,13 @@ public class ATestA extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.mAlaButton1:
-//                stopMusic();
                 startService(serviceIntent);
                 user.setCheckbox(true);
                 dao.updateAll(user,ATestA.this);
                 finish();
                 break;
             case R.id.mAlaButton2:
-//                stopMusic();
                 startService(serviceIntent);
-
                 //取得延时设置
                 SharedPreferences sharedPreferences;
                 sharedPreferences = this.getSharedPreferences("delaytime",MODE_PRIVATE);
@@ -84,46 +71,10 @@ public class ATestA extends AppCompatActivity {
                 gettime(user.getTime(),min);
                 //更新数据库
                 dao.updateAll(user,ATestA.this);
-
                 finish();
                 break;
         }
     }
-
-//    public void playMusic() {
-//        if(player == null) {
-//            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-//            try {
-//                player = new MediaPlayer();
-//                player.setDataSource(this, uri);
-//                final AudioManager audioManager = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
-//                if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
-//                    player.setAudioStreamType(AudioManager.STREAM_ALARM);
-//                    player.setLooping(true);
-//                    player.prepare();
-//                }
-//            } catch (IllegalStateException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        if(!player.isPlaying()) {
-//            player.start();
-//        }
-//    }
-//
-//    public void stopMusic() {
-//        if (player != null) {
-//            player.stop();
-//            try {
-//                // 在调用stop后如果需要再次通过start进行播放,需要之前调用prepare函数
-//                player.prepare();
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-//    }
 
     //获取并设置延时日程
     public void gettime(String beforeTime,String min) {
@@ -172,6 +123,7 @@ public class ATestA extends AppCompatActivity {
         } else {
             time = minH + ":" + minM;
         }
+
         user.setTime(time);
     }
 }

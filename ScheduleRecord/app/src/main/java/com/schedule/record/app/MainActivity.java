@@ -9,8 +9,11 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.schedule.record.app.fragment.FragmentCalendarController;
 import com.schedule.record.app.fragment.FragmentController;
 import com.schedule.record.app.mainmy.MainMyLogonPhone;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mainRadioGroup)
     RadioGroup mainRadioGroup;
 
-    private FragmentController controller;
-    private SharedPreferences sharedPreferences;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,30 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-        controller = FragmentController.getInstance(MainActivity.this, R.id.mainFrameLayout);
-        if (controller != null) {
-            controller.showFragment(0);
-        }
-
-        mainRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radioButton1:
-                        controller.showFragment(0);
-                        break;
-                    case R.id.radioButton2:
-                        controller.showFragment(1);
-                        break;
-                    case R.id.radioButton3:
-                        controller.showFragment(2);
-                        break;
-                }
-            }
-        });
-
-        sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myuser", MODE_PRIVATE);
         String a = sharedPreferences.getString("nameid","");
         if (a.equals("")){
 
@@ -69,23 +46,45 @@ public class MainActivity extends AppCompatActivity {
             intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent2);
 
-            MainActivity.this.onDestroy();
+            finish();
+
+        }else {
+            final FragmentController controller;
+            controller = FragmentController.getInstance(MainActivity.this, R.id.mainFrameLayout);
+            if (controller != null) {
+                controller.showFragment(0);
+            }
+            mainRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch (checkedId) {
+                        case R.id.radioButton1:
+                            Objects.requireNonNull(controller).showFragment(0);
+                            controller.getFragment(0).onResume();
+
+                            break;
+                        case R.id.radioButton2:
+                            Objects.requireNonNull(controller).showFragment(1);
+                            controller.getFragment(1).onResume();
+
+                            break;
+                        case R.id.radioButton3:
+                            Objects.requireNonNull(controller).showFragment(2);
+                            controller.getFragment(2).onResume();
+
+                            break;
+                    }
+                }
+            });
         }
     }
 
-//    @Override
-//    protected void onResume() {
-//        controller = FragmentController.getInstance(MainActivity.this, R.id.mainFrameLayout);
-//        if (controller != null) {
-//            controller.showFragment(0);
-//        }
-//        super.onResume();
-//    }
 
     @Override
     public void finish() {
 
-//        MainActivity.this.onDestroy();
+        FragmentCalendarController.destoryController();
+        FragmentController.destoryController();
 
         super.finish();
     }

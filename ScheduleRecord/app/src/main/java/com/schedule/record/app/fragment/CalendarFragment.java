@@ -1,6 +1,5 @@
 package com.schedule.record.app.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,16 +26,11 @@ public class CalendarFragment extends Fragment {
 
     @BindView(R.id.calenderTextView1)
     TextView calenderTextView1;
-
     Unbinder unbinder;
 
     private View view;
     private FragmentCalendarController calenderFrameLayout;
-    private List<String> teamList;
-    private Spinner calendarSpinner;
-    private ArrayAdapter<String> arrayAdapter;
 
-    @SuppressLint("ResourceType")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,31 +46,33 @@ public class CalendarFragment extends Fragment {
     }
 
     private void MySpinner() {
-        calendarSpinner = view.findViewById(R.id.calendarSpinner);
-        teamList = new ArrayList<>();
+        Spinner calendarSpinner = view.findViewById(R.id.calendarSpinner);
+
+        List<String> teamList = new ArrayList<>();
         teamList.add("我的一天");
         teamList.add("我的一周");
         teamList.add("我的一个月");
-        arrayAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getActivity()),R.layout.main_calendar_item,teamList);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), R.layout.main_calendar_item, teamList);
         arrayAdapter.setDropDownViewResource(R.layout.main_calendar_item);
         calendarSpinner.setAdapter(arrayAdapter);
         calendarSpinner.setSelection(0);
         calendarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-//                String s=((TextView)view).getText().toString();
-//                if (s.equals("我的一个月")){
-////                    calenderFrameLayout.showFragment3();
-//                }else if (s.equals("我的一周")){
-//                    calenderFrameLayout.showFragment2();
-//                }else {
-//                    calenderFrameLayout.showFragment(position);
-//                }
                 calenderFrameLayout.showFragment(position);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        calenderFrameLayout.getFragment(0).onResume();
+        calenderFrameLayout.getFragment(1).onResume();
+        calenderFrameLayout.getFragment(2).onResume();
+        super.onResume();
     }
 }

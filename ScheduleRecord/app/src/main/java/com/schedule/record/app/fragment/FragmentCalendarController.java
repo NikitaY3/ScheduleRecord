@@ -30,7 +30,7 @@ public class FragmentCalendarController {
     }
 
     private void initFragment() {
-        fragments = new ArrayList<Fragment>();
+        fragments = new ArrayList<>();
         fragments.add(new Calendar1Fragment());
         fragments.add(new Calendar2Fragment());
         fragments.add(new Calendar3Fragment());
@@ -42,7 +42,7 @@ public class FragmentCalendarController {
         ft.commit();
     }
 
-    public void showFragment(int position) {
+    void showFragment(int position) {
         hideFragments();
         Fragment fragment = fragments.get(position);
         FragmentTransaction ft = fm.beginTransaction();
@@ -50,27 +50,7 @@ public class FragmentCalendarController {
         ft.commit();
     }
 
-//    public void showFragment1() {
-//        hideFragments();
-//        Fragment fragment = new  Calendar1Fragment();
-//        FragmentTransaction ft = fm.beginTransaction();
-//        ft.show(fragment);
-//        ft.commit();
-//    }
-    public void showFragment2() {
-        Calendar2Fragment fragment = new Calendar2Fragment();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.show(fragment);
-        ft.commit();
-    }
-    public void showFragment3() {
-        Calendar3Fragment fragment = new Calendar3Fragment();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.show(fragment);
-        ft.commit();
-    }
-
-    public void hideFragments() {
+    private void hideFragments() {
         FragmentTransaction ft = fm.beginTransaction();
         for(Fragment fragment : fragments) {
             if(fragment != null) {
@@ -82,5 +62,9 @@ public class FragmentCalendarController {
 
     public Fragment getFragment(int position) {
         return fragments.get(position);
+    }
+
+    public static void destoryController(){
+        controller = null;
     }
 }

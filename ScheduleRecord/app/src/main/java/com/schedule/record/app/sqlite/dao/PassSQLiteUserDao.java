@@ -66,11 +66,10 @@ public class PassSQLiteUserDao {
     }
 
     public List<PassSQLiteUser> quiryAndSetItem() {
-        List<PassSQLiteUser> dataList = new ArrayList<PassSQLiteUser>();//item的list
-        //查询数据库并初始化日程列表
+        List<PassSQLiteUser> dataList = new ArrayList<>();
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"pass_day");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"pass_day,important");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             String title = cursor.getString(1);

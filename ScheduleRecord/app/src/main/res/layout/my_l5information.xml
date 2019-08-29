@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,66 +18,147 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/informationButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/aa_refresh"
+        android:text="保存"
+        android:textColor="@drawable/ac_my_button1_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray"
+        android:background="@color/gray2"
         android:orientation="vertical"
         android:paddingBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/informationTextView1">
 
+        <TextView
+            android:id="@+id/informationText1"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="100dp"
+            android:text="TextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/informationButton1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ac_my_button1"
+            android:layout_height="48dp"
+            android:layout_marginTop="25dp"
+            android:background="@color/nullcolor"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
             android:text="昵称"
-            android:textColor="@drawable/ac_my_button1_text" />
+            android:textColor="@drawable/ac_my_button1_text"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/informationText2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="100dp"
+            android:text="TextView"
+            app:layout_constraintTop_toBottomOf="@id/informationButton1"/>
 
         <Button
             android:id="@+id/informationButton2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ac_my_button1"
+            android:layout_height="48dp"
+            android:background ="@color/nullcolor"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
             android:text="头像"
-            android:textColor="@drawable/ac_my_button1_text" />
+            android:textColor="@drawable/ac_my_button1_text"
+            app:layout_constraintTop_toBottomOf="@id/informationButton1"/>
+
+        <TextView
+            android:id="@+id/informationText3"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="130dp"
+            android:text="TextView"
+            app:layout_constraintTop_toBottomOf="@id/informationButton2"/>
 
         <Button
             android:id="@+id/informationButton3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ac_my_button1"
+            android:layout_height="48dp"
+            android:background ="@color/nullcolor"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
             android:text="主页背景"
-            android:textColor="@drawable/ac_my_button1_text" />
+            android:textColor="@drawable/ac_my_button1_text"
+            app:layout_constraintTop_toBottomOf="@id/informationButton2" />
+
+        <TextView
+            android:id="@+id/informationText4"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="100dp"
+            android:text="TextView"
+            app:layout_constraintTop_toBottomOf="@id/informationButton3"/>
 
         <Button
             android:id="@+id/informationButton4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ac_my_button1"
+            android:background ="@color/nullcolor"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
             android:text="性别"
-            android:textColor="@drawable/ac_my_button1_text" />
+            android:textColor="@drawable/ac_my_button1_text"
+            app:layout_constraintTop_toBottomOf="@id/informationButton3" />
+
+        <TextView
+            android:id="@+id/informationText5"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ac_my_button1"
+            android:gravity="center_vertical"
+            android:paddingStart="100dp"
+            android:text="TextView"
+            app:layout_constraintTop_toBottomOf="@id/informationButton4"/>
 
         <Button
             android:id="@+id/informationButton5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ac_my_button1"
+            android:layout_height="48dp"
+            android:background ="@color/nullcolor"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
             android:text="生日"
-            android:textColor="@drawable/ac_my_button1_text" />
+            android:textColor="@drawable/ac_my_button1_text"
+            app:layout_constraintTop_toBottomOf="@id/informationButton4" />
+
+        <Button
+            android:id="@+id/informationButton6"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ac_my_button1"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="修改密码"
+            android:textColor="@drawable/ac_my_button1_text"
+            app:layout_constraintTop_toBottomOf="@id/informationButton5" />
 
         <!--<Button-->
         <!--android:id="@+id/informationButton6"-->
@@ -119,6 +201,6 @@
         <!--android:text="我的注册信息"-->
         <!--android:textColor="@drawable/ac_my_button1_text" />-->
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

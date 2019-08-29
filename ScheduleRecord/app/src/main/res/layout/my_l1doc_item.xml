@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/abaa_item_im_em"
+    android:background="@drawable/abaa_item_important1"
     android:orientation="vertical">
 
     <TextView

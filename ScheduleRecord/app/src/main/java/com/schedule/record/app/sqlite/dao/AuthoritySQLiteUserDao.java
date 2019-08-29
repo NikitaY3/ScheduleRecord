@@ -5,12 +5,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-
 import com.schedule.record.app.sqlite.AuthoritySQLite;
 import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AuthoritySQLiteUserDao {
 
@@ -45,21 +41,6 @@ public class AuthoritySQLiteUserDao {
         return user != null;
     }
 
-    public String queryAllString(){
-        SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null,null,null,null,null);
-        StringBuilder sb=new StringBuilder();
-        while (cursor.moveToNext()){
-            String authorization = cursor.getString(0);
-            String snameid = cursor.getString(1);
-            String gnameid = cursor.getString(2);
-            AuthoritySQLiteUser user = new AuthoritySQLiteUser(authorization,snameid,gnameid);
-            sb.append(user.toString()).append("\n");
-        }
-        db.close();
-        return sb.toString();
-    }
-
     public String querySpecial(String myid){
         SQLiteDatabase db=helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"gname_id =?", new String[]{myid},null,null,null);
@@ -84,22 +65,6 @@ public class AuthoritySQLiteUserDao {
         return sb.toString();
     }
 
-    public List<AuthoritySQLiteUser> quiryAll() {
-        List<AuthoritySQLiteUser> dataList = new ArrayList<AuthoritySQLiteUser>();
-        helper.getReadableDatabase();
-        SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,null);
-        while (cursor.moveToNext()){
-            String authorization = cursor.getString(0);
-            String snameid = cursor.getString(1);
-            String gnameid = cursor.getString(2);
-            AuthoritySQLiteUser things = new AuthoritySQLiteUser(authorization,snameid,gnameid);
-            dataList.add(things);
-        }
-        db.close();
-        return dataList;
-    }
-
     public void deleteAll(){
         SQLiteDatabase db=helper.getWritableDatabase();
         db.delete(TABLE,null,null);
@@ -112,13 +77,13 @@ public class AuthoritySQLiteUserDao {
         db.close();
     }
 
-    public int CountAll(){
-        SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from Authority ",null);
-        cursor.moveToFirst();
-        long count = cursor.getLong(0);
-        cursor.close();
-        db.close();
-        return (int) count;
-    }
+//    public int CountAll(){
+//        SQLiteDatabase db = helper.getWritableDatabase();
+//        Cursor cursor = db.rawQuery("select count(*) from Authority ",null);
+//        cursor.moveToFirst();
+//        long count = cursor.getLong(0);
+//        cursor.close();
+//        db.close();
+//        return (int) count;
+//    }
 }
