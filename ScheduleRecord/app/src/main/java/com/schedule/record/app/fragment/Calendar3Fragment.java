@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.schedule.record.app.Mode3CompletionScale;
 import com.schedule.record.app.R;
@@ -44,6 +45,9 @@ public class Calendar3Fragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mode3Button1:
+
+                Toast.makeText(getActivity(),"暂不支持查看",Toast.LENGTH_SHORT).show();
+
                 Intent intent1 = new Intent(getActivity(), Mode3CompletionScale.class);
                 startActivity(intent1);
                 break;

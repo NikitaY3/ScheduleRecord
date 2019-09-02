@@ -2,6 +2,7 @@ package com.schedule.record.app.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.utils.CalendarDateUtils;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class CalendarDateAdapter extends BaseAdapter {
     private int[] days = new int[42];
@@ -105,7 +108,12 @@ public class CalendarDateAdapter extends BaseAdapter {
                 helper1 = new TodaySQLite(context, DBName1, null, 1);
                 TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper1);
 
-                String sText = "日程：" + dao.CountBar() + "/" + dao.CountAllBar();
+                //取得登录用户的ID
+                SharedPreferences sharedPreferences;
+                sharedPreferences = context.getSharedPreferences("myuser", MODE_PRIVATE);
+                String nameid = sharedPreferences.getString("nameid", "");
+
+                String sText = "日程：" + dao.CountBar(nameid) + "/" + dao.CountAllBar(nameid);
                 viewHolder.m3ItemText2.setText(sText);
 
             }else if (i < today){

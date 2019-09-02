@@ -110,7 +110,7 @@ public class MainActivity1 extends AppCompatActivity {
                         calendar.set(Calendar.SECOND, 0);           //设置闹钟的秒数
                         calendar.set(Calendar.MILLISECOND, 0);          //设置闹钟的毫秒数
 
-                        Intent intent = new Intent(MainActivity1.this, AlermReceiver.class);
+                        Intent intent = new Intent(MainActivity1.this, AlarmReceiver.class);
                         intent.putExtra("music", "stop");
                         //Intent intentService = new Intent(MainActivity1.this, AlarmService.class);
 
@@ -133,7 +133,7 @@ public class MainActivity1 extends AppCompatActivity {
         mcancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity1.this, AlermReceiver.class);
+                Intent intent = new Intent(MainActivity1.this, AlarmReceiver.class);
                 intent.putExtra("music", true);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity1.this, 0, intent, 0);
                 AlarmManager am;

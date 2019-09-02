@@ -86,8 +86,8 @@ public class PostFunctions {
         //参数
         final Map<String,Object> params = new HashMap<>();
 
-        params.put("gnameId",user.getGnameid());
-        params.put("snameId",user.getSnameid());
+        params.put("gnameId",user.getGnameId());
+        params.put("snameId",user.getSnameId());
 
         final String[] strResult = new String[1];
         new Thread() {

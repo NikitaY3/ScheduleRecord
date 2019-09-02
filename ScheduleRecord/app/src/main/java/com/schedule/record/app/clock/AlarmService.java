@@ -85,7 +85,7 @@ public class AlarmService extends Service {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), ATestA.class);
+                Intent intent = new Intent(getApplicationContext(), AlarmActivityDialog.class);
                 intent.putExtra("dayid",dayid);
                 startActivity(intent);
             }

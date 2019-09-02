@@ -1,5 +1,6 @@
 package com.schedule.record.app.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,11 +21,14 @@ import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 import com.schedule.record.app.sqlite.TodaySQLite;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Calendar1Fragment extends Fragment{
 
@@ -71,11 +75,17 @@ public class Calendar1Fragment extends Fragment{
 
     public void onResume1() {
 
+
+        //取得登录用户的ID
+        SharedPreferences sharedPreferences;
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("myuser", MODE_PRIVATE);
+        String nameid = sharedPreferences.getString("nameid", "");
+
         helper = new TodaySQLite(getActivity(), DBName, null, version);
         TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper);
-        dataList = dao.quiryAndSetItem();
+        dataList = dao.quiryAndSetItem(nameid);
         CalenderDayAdapter adapter = new CalenderDayAdapter(getActivity(),dataList,mode1ProgressBar);
-        int countBar = dao.CountBar();
+        int countBar = dao.CountBar(nameid);
 
         new Mode1ProgressBar(countBar,dataList.size(),mode1ProgressBar);
         calendar1ListView.setAdapter(adapter);

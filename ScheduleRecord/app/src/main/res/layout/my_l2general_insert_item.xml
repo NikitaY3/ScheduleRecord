@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/myInsertLinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="4dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/abaa_item_important1"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UnusedAttribute,UselessParent">
+
+        <EditText
+            android:id="@+id/myInsertEditText1"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/abaa_item_edittext"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:text="XX:XX"
+            android:editable="false"
+            android:textColor="#000"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/myInsertEditText2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/abaa_item_edittext"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="点击写入日程"
+            android:maxLines="3"
+            android:paddingHorizontal="3dp"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/myInsertButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="9dp"
+        android:background="@color/colorPrimary"
+        android:text="T"
+        app:layout_constraintBottom_toTopOf="@id/myInsertLinearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/myInsertLinearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/myInsertLinearLayout1">
+
+        <EditText
+            android:id="@+id/myInsertEditText3"
+            android:background="@drawable/diary"
+            android:padding="5dp"
+            android:textSize="10sp"
+            android:hint="点击可写入日程注解"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

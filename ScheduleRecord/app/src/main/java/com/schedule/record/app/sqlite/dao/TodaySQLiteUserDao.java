@@ -3,6 +3,7 @@ package com.schedule.record.app.sqlite.dao;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
@@ -26,22 +27,31 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class TodaySQLiteUserDao {
 
     private TodaySQLite helper;
     private static final String TABLE = "today";
 
     private Context context;
-    private String today;
+    private String today,nameid;
     private int day;
     private Boolean can = true,can2 = true;
     private Cursor cursortt;
+    private Handler handler;
+
 
     public TodaySQLiteUserDao(TodaySQLite helper) {
         this.helper = helper;
     }
 
     public void insert(TodaySQLiteUser user,Context context){
+        //取得登录用户的ID
+        SharedPreferences sharedPreferences;
+        sharedPreferences = context.getSharedPreferences("myuser", MODE_PRIVATE);
+        String nameid = sharedPreferences.getString("nameid", "");
+
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues content=new ContentValues();
 
@@ -64,7 +74,7 @@ public class TodaySQLiteUserDao {
         }
 
         //设置闹钟,当前时间小于闹钟时间
-        if (!time.equals("XX:XX") && remind) {
+        if (!time.equals("XX:XX") && remind && dayid.substring(0, 11).equals(nameid)) {
             String nowTime = getInternetTime();
             int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
             int t1 = Integer.parseInt(nowTime.substring(11, 13) + nowTime.substring(14, 16));
@@ -77,10 +87,35 @@ public class TodaySQLiteUserDao {
         db.close();
     }
 
+    public void insert(TodaySQLiteUser user){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues content=new ContentValues();
+
+        String time = user.getTime();
+        boolean remind = user.isRemind();
+        String dayid = user.getDayid();
+
+        content.put("day_id",dayid);
+        content.put("checkbox",user.isCheckbox());
+        content.put("remind",remind);
+        content.put("time",time);
+        content.put("title",user.getTitle());
+        content.put("important",user.getImportant());
+        content.put("diary",user.getDiary());
+        content.put("this_day",user.getThisday());
+
+        if (queryBydayid(dayid) == null) {
+            db = helper.getWritableDatabase();
+            db.insert(TABLE, null, content);
+        }
+
+        db.close();
+    }
+
     public  TodaySQLiteUser queryBydayid(String Dayid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "day_id=?", new String[]{Dayid}, null, null, null);
-        TodaySQLiteUser user = null;
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "day_id =?", new String[]{Dayid}, null, null, null);
+       TodaySQLiteUser user = null;
         while (cursor.moveToNext()) {
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);
@@ -100,12 +135,65 @@ public class TodaySQLiteUserDao {
         return user;
     }
 
-    public List<TodaySQLiteUser> quiryAndSetItem() {
-        List<TodaySQLiteUser> dataList = new ArrayList<>();//item的list
+    //查询所有当前账号的日程
+    public List<TodaySQLiteUser> quiryAndSetItem(String nameid) {
+        List<TodaySQLiteUser> dataList = new ArrayList<>();
         //查询数据库并初始化日程列表
         helper.getReadableDatabase();
         SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"time,important");
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"day_id like ?", new String[]{nameid + "%"},null,null,"time,important");
+        while (cursor.moveToNext()){
+            String dayid = cursor.getString(0);
+            int checkbox1 = cursor.getInt(1);
+            int remind1 = cursor.getInt(2);
+            String time = cursor.getString(3);
+            String title = cursor.getString(4);
+            String important = cursor.getString(5);
+            String diary = cursor.getString(6);
+            String thisday = cursor.getString(7);
+            boolean checkbox;
+            checkbox = checkbox1 > 0;
+            boolean remind;
+            remind = remind1 > 0;
+            TodaySQLiteUser things = new TodaySQLiteUser(dayid,checkbox,remind,time,title,important,diary,thisday);
+            dataList.add(things);
+        }
+        db.close();
+        return dataList;
+    }
+
+    //查询插入给特定用户的日程
+    public List<TodaySQLiteUser> quiryAndSetInsertItem(String myNameId) {
+        List<TodaySQLiteUser> dataList = new ArrayList<>();
+        helper.getReadableDatabase();
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null,"day_id like ?", new String[]{myNameId + "%"},null,null,"day_id");
+        while (cursor.moveToNext()){
+            String dayid = cursor.getString(0);
+            int checkbox1 = cursor.getInt(1);
+            int remind1 = cursor.getInt(2);
+            String time = cursor.getString(3);
+            String title = cursor.getString(4);
+            String important = cursor.getString(5);
+            String diary = cursor.getString(6);
+            String thisday = cursor.getString(7);
+            boolean checkbox;
+            checkbox = checkbox1 > 0;
+            boolean remind;
+            remind = remind1 > 0;
+            TodaySQLiteUser things = new TodaySQLiteUser(dayid,checkbox,remind,time,title,important,diary,thisday);
+            dataList.add(things);
+        }
+        db.close();
+        return dataList;
+    }
+
+    //查询所有插入给别人的日程
+    public List<TodaySQLiteUser> quiryAndSetAllInsertItem(String NameId) {
+        List<TodaySQLiteUser> dataList = new ArrayList<>();
+        helper.getReadableDatabase();
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null,"day_id not like ?", new String[]{NameId + "%"},null,null,"day_id");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);
@@ -127,12 +215,11 @@ public class TodaySQLiteUserDao {
     }
 
     //查询Week
-    public List<CalenderWeekItem> quiryAndSetWeekItem() {
-        List<CalenderWeekItem> dataList = new ArrayList<>();//item的list
-        //查询数据库并初始化日程列表
+    public List<CalenderWeekItem> quiryAndSetWeekItem(String nameid) {
+        List<CalenderWeekItem> dataList = new ArrayList<>();
         helper.getReadableDatabase();
-        SQLiteDatabase db=helper.getWritableDatabase();
-        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,null, null,null,null,"time,important");
+        SQLiteDatabase db = helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"day_id like ?", new String[]{nameid + "%"},null,null,"time,important");
         while (cursor.moveToNext()){
             String dayid = cursor.getString(0);
             int checkbox1 = cursor.getInt(1);
@@ -165,8 +252,8 @@ public class TodaySQLiteUserDao {
     }
 
     public void updateAll(TodaySQLiteUser user,Context context){
-        SQLiteDatabase db=helper.getWritableDatabase();
-        ContentValues content=new ContentValues();
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues content = new ContentValues();
         String time = user.getTime();
         boolean remind = user.isRemind();
         String dayid = user.getDayid();
@@ -181,13 +268,14 @@ public class TodaySQLiteUserDao {
         content.put("diary",user.getDiary());
         content.put("this_day",user.getThisday());
 
-        db.update(TABLE,content,"day_id=?",new String[]{user.getDayid()});
+        db.update(TABLE,content,"day_id =?",new String[]{user.getDayid()});
 
-        //设置闹钟,当前时间小于闹钟时间
+        //当日程有提示时间、需要提醒、没有完成时，设置闹钟
         if (!time.equals("XX:XX") && remind && !checkbox) {
             String nowTime = getInternetTime();
             int t = Integer.parseInt(time.substring(0, 2) + time.substring(3, 5));
             int t1 = Integer.parseInt(nowTime.substring(11, 13) + nowTime.substring(14, 16));
+            //设置闹钟,当前时间小于闹钟时间
             if (t1 < t ) {
                 int i = Integer.parseInt(dayid.substring(22,24)+dayid.substring(25,27)+dayid.substring(28,30));
                 new AlarmSet(context, Integer.parseInt(time.substring(0, 2)), Integer.parseInt(time.substring(3, 5)), dayid, i).myAlarmSet();
@@ -205,9 +293,9 @@ public class TodaySQLiteUserDao {
         db.close();
     }
 
-    public int CountBar(){
+    public int CountBar(String nameid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from today where checkbox =1 " ,null);
+        Cursor cursor = db.rawQuery("select count(*) from today where checkbox =1 and day_id like ?" ,new String[]{nameid + "%"});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();
@@ -215,9 +303,9 @@ public class TodaySQLiteUserDao {
         return (int) count;
     }
 
-    public int CountAllBar(){
+    public int CountAllBar(String nameid){
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from today",null);
+        Cursor cursor = db.rawQuery("select count(*) from today where day_id like ?",new String[]{nameid + "%"});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
         cursor.close();
@@ -226,20 +314,25 @@ public class TodaySQLiteUserDao {
     }
 
     //将Today插入Finish和Pass的函数
-    public void TodayToFinishPass(Context context, String today, int day){
+    public void TodayToFinishPass(Context context, String today, int day, String nameid, Handler handler){
 
         this.context = context;
         this.today = today;
         this.day = day;
+        this.nameid = nameid;
+        this.handler = handler;
 
         FinishSQLite helper1;
         String DBName1="finish";
         int version1 = 1;
 
         SQLiteDatabase db = helper.getWritableDatabase();
+
         if (can2) {
-            cursortt = db.query(TABLE, null, null, null, null, null, null);
+
+            cursortt = db.query(TABLE, null, "day_id like ?", new String[]{nameid + "%"}, null, null, null);
         }
+
         while (can && cursortt.moveToNext()) {
             String dayid = cursortt.getString(0);
             int checkbox1 = cursortt.getInt(1);
@@ -317,6 +410,13 @@ public class TodaySQLiteUserDao {
                 //删除云端
                 new TodayDeleteTask(uiHandler).execute("http://120.77.222.242:10024/today/deletebyid?dayId=" + dayid);
             }
+
+            //如果是最后一条，就发送message
+            if (cursortt.isLast()){
+                Message msg = new Message();
+                msg.what = 1;
+                handler.sendMessage(msg);
+            }
         }
         db.close();
     }
@@ -336,7 +436,7 @@ public class TodaySQLiteUserDao {
                 case 21:
                     can = true;
                     can2 = false;
-                    TodayToFinishPass(context,today,day);
+                    TodayToFinishPass(context,today,day,nameid,handler);
                     //TODO
                     //刷新fragment
                     break;

@@ -29,6 +29,7 @@ public class FutureSQLiteUserDao {
     private int today, m;
     private String week,thisday;
     private Cursor cursorft;
+    private Handler handler;
 
     public FutureSQLiteUserDao(FutureSQLite helper) {
         this.helper = helper;
@@ -175,13 +176,14 @@ public class FutureSQLiteUserDao {
     }
 
     //将Future插入Today的函数
-    public void FutureToToday(Context context, int today, int m, String week, String thisday){
+    public void FutureToToday(Context context, int today, int m, String week, String thisday, Handler handler){
 
         this.context = context;
         this.today = today;
         this.m = m;
         this.week = week;
         this.thisday = thisday;
+        this.handler = handler;
 
         TodaySQLite helper1;
         String DBName="today";
@@ -189,6 +191,7 @@ public class FutureSQLiteUserDao {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         if (can2) {
+
             cursorft = db.query(TABLE, null, null, null, null, null, null);
         }
         while (can && cursorft.moveToNext()) {
@@ -248,6 +251,13 @@ public class FutureSQLiteUserDao {
                 //删除云端
                 new FutureDeleteTask(uiHandler).execute("http://120.77.222.242:10024/future/deletebyid?dayId=" + dayid);
             }
+
+            //如果是最后一条，就发送message
+            if (cursorft.isLast()){
+                Message msg = new Message();
+                msg.what = 1;
+                handler.sendMessage(msg);
+            }
         }
         db.close();
     }
@@ -260,9 +270,8 @@ public class FutureSQLiteUserDao {
                 case 21:
                     can = true;
                     can2 = false;
-                    FutureToToday(context,today,m,week,thisday);
-                    //TODO
-                    //刷新fragment
+                    FutureToToday(context,today,m,week,thisday,handler);
+
                     break;
                 case 33:
                     //可以向下循环取出，但是不能重新查表

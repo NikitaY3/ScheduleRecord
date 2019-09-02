@@ -46,7 +46,7 @@
         <activity android:name=".mainmy.MyLogonRegister"/>
         <activity android:name=".mainmy.MyLogonFoget"/>
 
-        <activity android:name=".clock.ATestA"
+        <activity android:name=".clock.AlarmActivityDialog"
             android:theme="@style/Base.V7.Theme.AppCompat.Light.Dialog"/>
 
         <!--<activity android:name=".clock.MainActivity1"-->
@@ -63,6 +63,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
-        <receiver android:name=".clock.AlermReceiver" android:process=":remote"/>
+        <receiver android:name=".clock.AlarmReceiver" android:process=":remote"/>
     </application>
 </manifest>

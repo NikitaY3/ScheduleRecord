@@ -39,7 +39,7 @@ public class AlarmSet {
         calendar.set(Calendar.SECOND, 0);           //设置闹钟的秒数
         calendar.set(Calendar.MILLISECOND, 0);          //设置闹钟的毫秒数
 
-//        Intent intent = new Intent(MainActivity.this, AlermReceiver.class);
+//        Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
 //        intent.putExtra("music", dayid);
         Intent intentService = new Intent(context, AlarmService.class);
         intentService.putExtra("music", dayid);

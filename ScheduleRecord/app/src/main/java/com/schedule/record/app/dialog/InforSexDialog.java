@@ -2,6 +2,7 @@ package com.schedule.record.app.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -34,6 +35,7 @@ public class InforSexDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 textView.setText("男");
+                InforSexDialog.this.dismiss();
             }
         });
 
@@ -41,6 +43,7 @@ public class InforSexDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 textView.setText("女");
+                InforSexDialog.this.dismiss();
             }
         });
 
@@ -48,6 +51,7 @@ public class InforSexDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 textView.setText("无");
+                InforSexDialog.this.dismiss();
             }
         });
     }

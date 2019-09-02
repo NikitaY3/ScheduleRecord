@@ -9,18 +9,21 @@ import com.schedule.record.app.sqlite.FinishSQLite;
 import com.schedule.record.app.sqlite.FutureSQLite;
 import com.schedule.record.app.sqlite.GeneralUserSQLite;
 import com.schedule.record.app.sqlite.PassSQLite;
+import com.schedule.record.app.sqlite.RemarkSQLite;
 import com.schedule.record.app.sqlite.TodaySQLite;
 import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.FinishSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.GeneralSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.PassSQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.RemarkSQLiteUserDao;
 import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
 import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
 import com.schedule.record.app.sqlite.user.FinishSQLiteUser;
 import com.schedule.record.app.sqlite.user.FutureSQLiteUser;
 import com.schedule.record.app.sqlite.user.GeneralSQLiteUser;
 import com.schedule.record.app.sqlite.user.PassSQLiteUser;
+import com.schedule.record.app.sqlite.user.RemarkSQLiteUser;
 import com.schedule.record.app.sqlite.user.TodaySQLiteUser;
 
 import org.json.JSONArray;
@@ -39,6 +42,9 @@ public class HttpGetUtils {
     private static String DBName = "general_user";
     private static AuthoritySQLite helper0;
     private static String DBName0 = "authority";
+
+    private static RemarkSQLite helper10;
+    private static String DBName10 = "remark";
 
     private static FutureSQLite helper1;
     private static String DBName1 = "future";
@@ -147,11 +153,22 @@ public class HttpGetUtils {
 
                 //插入本地数据库
                 AuthoritySQLiteUser things = new AuthoritySQLiteUser(gnameid,snameid);
-                dao.insert(things);
+                if (!dao.queryByGSNameid(gnameid,snameid)){
+                    //本地数据库没有才插入
+                    dao.insert(things);
+
+                    //插入备注表
+                    helper10 = new RemarkSQLite(context,DBName10,null,version);
+                    RemarkSQLiteUserDao dao10 = new RemarkSQLiteUserDao(helper10);
+                    RemarkSQLiteUser user10 = new RemarkSQLiteUser(gnameid,"");
+                    dao10.insert(user10);
+
+                }
             }
         }
-        return jsonObject.getString("data");
+        return jsonObject.getString("message");
     }
+
 
     //解析json数据(/future/findall的解析)所有未来日程
     public static String parseFutureFindAllJson(String jsonStr, Context context) throws JSONException {

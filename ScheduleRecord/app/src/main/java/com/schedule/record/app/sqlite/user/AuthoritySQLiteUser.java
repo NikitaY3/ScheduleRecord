@@ -14,6 +14,7 @@ public class AuthoritySQLiteUser {
         this.snameId = snameid;
     }
 
+
     public String getAuthorization() {
         return authorization;
     }
@@ -22,19 +23,19 @@ public class AuthoritySQLiteUser {
         this.authorization = authorization;
     }
 
-    public String getGnameid() {
+    public String getGnameId() {
         return gnameId;
     }
 
-    public void setGnameid(String gnameid) {
-        this.gnameId = gnameid;
+    public void setGnameId(String gnameId) {
+        this.gnameId = gnameId;
     }
 
-    public String getSnameid() {
+    public String getSnameId() {
         return snameId;
     }
 
-    public void setSnameid(String snameid) {
-        this.snameId = snameid;
+    public void setSnameId(String snameId) {
+        this.snameId = snameId;
     }
 }

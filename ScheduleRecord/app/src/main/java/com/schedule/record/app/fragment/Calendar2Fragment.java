@@ -1,6 +1,7 @@
 package com.schedule.record.app.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,11 +33,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Calendar2Fragment extends Fragment {
 
@@ -285,7 +289,12 @@ public class Calendar2Fragment extends Fragment {
         helper2.getReadableDatabase();
         TodaySQLiteUserDao dao = new TodaySQLiteUserDao(helper2);
 
-        todayData = dao.quiryAndSetWeekItem();
+        //取得登录用户的ID
+        SharedPreferences sharedPreferences;
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("myuser", MODE_PRIVATE);
+        String nameid = sharedPreferences.getString("nameid", "");
+
+        todayData = dao.quiryAndSetWeekItem(nameid);
         for (int i = 0; i < todayData.size(); i++) {
             mydata = todayData.get(i);
             setChoiceWeek(week,mydata);

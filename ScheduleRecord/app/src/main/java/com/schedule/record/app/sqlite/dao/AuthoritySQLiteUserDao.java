@@ -8,10 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import com.schedule.record.app.sqlite.AuthoritySQLite;
 import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AuthoritySQLiteUserDao {
 
     private AuthoritySQLite helper;
     private static final String TABLE = "authority";
+
 
     public AuthoritySQLiteUserDao(AuthoritySQLite helper) {
         this.helper = helper;
@@ -20,8 +24,8 @@ public class AuthoritySQLiteUserDao {
     public void insert(AuthoritySQLiteUser user){
         SQLiteDatabase db=helper.getWritableDatabase();
         ContentValues content=new ContentValues();
-        content.put("gname_id",user.getGnameid());
-        content.put("sname_id",user.getSnameid());
+        content.put("gname_id",user.getGnameId());
+        content.put("sname_id",user.getSnameId());
         db.insert(TABLE,null,content);
         db.close();
     }
@@ -41,10 +45,24 @@ public class AuthoritySQLiteUserDao {
         return user != null;
     }
 
+    public  AuthoritySQLiteUser queryUserByGSNameid(String gnameid, String snameid){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null, "gname_id =? and sname_id =?", new String[]{gnameid,snameid}, null, null, null);
+
+        AuthoritySQLiteUser user = null;
+        while (cursor.moveToNext()) {
+            String authorization = cursor.getString(0);
+            user = new AuthoritySQLiteUser(authorization,gnameid,snameid);
+        }
+        db.close();
+
+        return user;
+    }
+
     public String querySpecial(String myid){
-        SQLiteDatabase db=helper.getWritableDatabase();
+        SQLiteDatabase db = helper.getWritableDatabase();
         @SuppressLint("Recycle") Cursor cursor=db.query(TABLE,null,"gname_id =?", new String[]{myid},null,null,null);
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         while (cursor.moveToNext()){
             String snameid = cursor.getString(1);
             sb.append(snameid).append("\n");
@@ -63,6 +81,36 @@ public class AuthoritySQLiteUserDao {
         }
         db.close();
         return sb.toString();
+    }
+
+    public List<AuthoritySQLiteUser> quiryAndSetGeneralItem(String myNameId) {
+        List<AuthoritySQLiteUser> dataList = new ArrayList<>();
+        helper.getReadableDatabase();
+        SQLiteDatabase db=helper.getWritableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE,null,"sname_id =?", new String[]{myNameId},null,null,null);
+        while (cursor.moveToNext()){
+            String authorization = cursor.getString(0);
+            String snameid = cursor.getString(1);
+            String gnameid = cursor.getString(2);
+
+            AuthoritySQLiteUser things = new AuthoritySQLiteUser(authorization,gnameid,snameid);
+            dataList.add(things);
+        }
+        db.close();
+        return dataList;
+    }
+
+
+    public void updateAll(AuthoritySQLiteUser user){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues content = new ContentValues();
+
+        content.put("authorization",user.getAuthorization());
+        content.put("gname_id",user.getGnameId());
+        content.put("sname_id",user.getSnameId());
+
+        db.update(TABLE,content,"authorization =?",new String[]{user.getAuthorization()});
+        db.close();
     }
 
     public void deleteAll(){

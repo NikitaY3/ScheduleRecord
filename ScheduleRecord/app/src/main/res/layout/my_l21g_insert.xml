@@ -1,44 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/gInsertView1"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="对用户的指派日程"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/gInsertButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="5dp"
-        android:background="#00AAAAAA"
-        android:text="+"
-        android:textSize="30sp"
+        <TextView
+            android:id="@+id/gInsertText1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="对用户的指派日程"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/gInsertButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="#00AAAAAA"
+            android:gravity="center"
+            android:text="+"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="@id/gInsertText1"
+            app:layout_constraintTop_toTopOf="@id/gInsertText1" />
+    </android.support.constraint.ConstraintLayout>
+
+
+    <LinearLayout
+        android:id="@+id/gInsertLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/gInsertView1"
-        app:layout_constraintTop_toTopOf="@id/gInsertView1" />
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gInsertText1">
+
+        <TextView
+            android:id="@+id/gInsertText2"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginVertical="5dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="备注名:"
+            android:textColor="@color/varygray1"
+            android:textSize="18sp" />
+
+        <!--android:editable="false"-->
+
+        <EditText
+            android:id="@+id/gInsertEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:hint="点击写入备注名"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/colorPrimary"
+            tools:ignore="Autofill,TextFields" />
+
+        <Button
+            android:id="@+id/gInsertButton1"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/abaa_item_important1"
+            android:text="编辑"
+            android:textColor="@drawable/ac_my_button1_text"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/gInsertButton2"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/abaa_item_important1"
+            android:text="确认"
+            android:textColor="@drawable/ac_my_button1_text"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/gInsertListView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gInsertView1" />
+        app:layout_constraintTop_toBottomOf="@id/gInsertLinearLayout" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

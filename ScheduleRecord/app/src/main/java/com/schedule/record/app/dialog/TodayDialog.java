@@ -230,17 +230,23 @@ public class TodayDialog extends Dialog {
             switch (msg.what) {
                 case 21:
 
+                    //取得登录用户的ID
+                    SharedPreferences sharedPreferences;
+                    sharedPreferences = context.getSharedPreferences("myuser", MODE_PRIVATE);
+                    String nameid = sharedPreferences.getString("nameid", "");
+
                     //数据写入数据库
                     TodaySQLite helper = new TodaySQLite(context, DBName, null, version);
                     helper.getReadableDatabase();
                     TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
                     dao.insert(things,context);
 
+
                     //刷新所有Item
                     dataList = new ArrayList<>();
-                    dataList = dao.quiryAndSetItem();
+                    dataList = dao.quiryAndSetItem(nameid);
                     final CalenderDayAdapter adapter = new CalenderDayAdapter(context, dataList,mode1ProgressBar);
-                    new Mode1ProgressBar(dao.CountBar(),dataList.size(),mode1ProgressBar);
+                    new Mode1ProgressBar(dao.CountBar(nameid),dataList.size(),mode1ProgressBar);
                     calendar1ListView.setAdapter(adapter);
 
                     //重置输入

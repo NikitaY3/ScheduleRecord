@@ -1,6 +1,5 @@
 package com.schedule.record.app.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,17 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.schedule.record.app.R;
-import com.schedule.record.app.function.CalculationWeek;
-import com.schedule.record.app.sqlite.FutureSQLite;
-import com.schedule.record.app.sqlite.TodaySQLite;
-import com.schedule.record.app.sqlite.dao.FutureSQLiteUserDao;
-import com.schedule.record.app.sqlite.dao.TodaySQLiteUserDao;
+import com.schedule.record.app.utils.RefreshUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,13 +25,13 @@ public class EquimentFragment extends Fragment {
     Button equButton;
     Unbinder unbinder;
 
-    private String today;
-
-    public TodaySQLite helper2;
-    String DBName2 = "today";
-
-    public FutureSQLite helper3;
-    String DBName3 = "future";
+//    private String today;
+//
+//    protected TodaySQLite helper2;
+//    private String DBName2 = "today";
+//
+//    protected FutureSQLite helper3;
+//    private String DBName3 = "future";
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,23 +44,25 @@ public class EquimentFragment extends Fragment {
     @OnClick(R.id.equButton)
     public void onViewClicked() {
 
-        today = getInternetTime();
-        int todayint = Integer.parseInt((today.substring(0,4)+today.substring(5,7)+today.substring(8,10)));
-        String week = new CalculationWeek(today).getWeek();
+//        today = getInternetTime();
+//        int todayint = Integer.parseInt((today.substring(0,4)+today.substring(5,7)+today.substring(8,10)));
+//        String week = new CalculationWeek(today).getWeek();
+//
+//        int version = 1;
+//
+//        //1.判断将Today日程插入到Finish日程,判断Today日程是否Pass
+//        String todayb = getDay(-1);
+//        int todaybint = Integer.parseInt((todayb.substring(0,4)+todayb.substring(5,7)+todayb.substring(8,10)));
+//        helper2 = new TodaySQLite(getActivity(), DBName2, null, version);
+//        TodaySQLiteUserDao dao2 = new TodaySQLiteUserDao(helper2);
+//        dao2.TodayToFinishPass(getActivity(),todayb,todaybint);
+//
+//        //2.判断Future日程是否应该插入到Today
+//        helper3 = new FutureSQLite(getActivity(), DBName3, null, version);
+//        FutureSQLiteUserDao dao3 = new FutureSQLiteUserDao(helper3);
+//        dao3.FutureToToday(getActivity(),todayint, Integer.parseInt(today.substring(9,10)),week,today);
 
-        int version = 1;
-
-        //1.判断将Today日程插入到Finish日程,判断Today日程是否Pass
-        String todayb = getDay(-1);
-        int todaybint = Integer.parseInt((todayb.substring(0,4)+todayb.substring(5,7)+todayb.substring(8,10)));
-        helper2 = new TodaySQLite(getActivity(), DBName2, null, version);
-        TodaySQLiteUserDao dao2 = new TodaySQLiteUserDao(helper2);
-        dao2.TodayToFinishPass(getActivity(),todayb,todaybint);
-
-        //2.判断Future日程是否应该插入到Today
-        helper3 = new FutureSQLite(getActivity(), DBName3, null, version);
-        FutureSQLiteUserDao dao3 = new FutureSQLiteUserDao(helper3);
-        dao3.FutureToToday(getActivity(),todayint, Integer.parseInt(today.substring(9,10)),week,today);
+        new RefreshUtils(Objects.requireNonNull(getActivity()));
 
     }
 
@@ -79,27 +72,4 @@ public class EquimentFragment extends Fragment {
         unbinder.unbind();
     }
 
-    //联网获取当前时间yyyy-MM-dd
-    private String getInternetTime() {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat timesimple = new SimpleDateFormat("yyyy-MM-dd");
-        timesimple.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        return timesimple.format(new Date());
-    }
-
-    //获取当前天的前后日期
-    @SuppressLint("SimpleDateFormat")
-    public String getDay(int i) {
-        Calendar c = Calendar.getInstance();
-        Date date = null;
-        try {
-            date = new SimpleDateFormat("yy-MM-dd").parse(today);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        c.setTime(date);
-        int day1 = c.get(Calendar.DATE);
-        c.set(Calendar.DATE, day1 + i);
-
-        return new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-    }
 }

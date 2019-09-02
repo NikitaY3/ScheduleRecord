@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class AlermReceiver  extends BroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver {
 
     private Context context;
     private Intent intent;

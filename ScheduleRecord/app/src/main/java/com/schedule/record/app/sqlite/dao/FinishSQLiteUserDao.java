@@ -40,8 +40,6 @@ public class FinishSQLiteUserDao {
             db = helper.getWritableDatabase();
             db.insert(TABLE, null, content);
         }
-
-        db.insert(TABLE,null,content);
         db.close();
     }
 

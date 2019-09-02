@@ -73,13 +73,11 @@ public class MyFragment extends Fragment {
     ImageView myImageView2;
     Unbinder unbinder;
 
-    private View view;
-
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_my, container, false);
+        View view = inflater.inflate(R.layout.main_my, container, false);
 
         unbinder = ButterKnife.bind(this, view);
 
@@ -88,7 +86,7 @@ public class MyFragment extends Fragment {
         sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("myuser", MODE_PRIVATE);
         String nameid = sharedPreferences.getString("nameid","");
         String name = sharedPreferences.getString("name","");
-        myTextView2.setText("账号："+nameid);
+        myTextView2.setText("账号：" + nameid);
         myTextView1.setText(name);
 
         return view;

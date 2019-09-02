@@ -17,8 +17,11 @@ import com.schedule.record.app.function.GetFunctions.AuthorityDeleteTask;
 import com.schedule.record.app.function.GetFunctions.AuthorityQueryTask;
 import com.schedule.record.app.function.PostFunctions;
 import com.schedule.record.app.sqlite.AuthoritySQLite;
+import com.schedule.record.app.sqlite.RemarkSQLite;
 import com.schedule.record.app.sqlite.dao.AuthoritySQLiteUserDao;
+import com.schedule.record.app.sqlite.dao.RemarkSQLiteUserDao;
 import com.schedule.record.app.sqlite.user.AuthoritySQLiteUser;
+import com.schedule.record.app.sqlite.user.RemarkSQLiteUser;
 
 import java.util.List;
 
@@ -39,7 +42,11 @@ public class MainMyL3Special extends AppCompatActivity {
 
     private AuthoritySQLiteUser user;
     private AuthoritySQLiteUserDao dao;
-    private String nameid, aForPost;
+    private String nameid, snameid;
+
+    private String DBName = "authority";
+    private String DBName1 = "remark";
+    private int version = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +58,9 @@ public class MainMyL3Special extends AppCompatActivity {
         SharedPreferences sharedPreferences;
         sharedPreferences = this.getSharedPreferences("myuser",MODE_PRIVATE);
         nameid = sharedPreferences.getString("nameid","");
-        user = new AuthoritySQLiteUser(nameid,null);
+        user = new AuthoritySQLiteUser(nameid,"");
 
         //普通用户是我，特殊用户是编辑框里面的,查询
-        String DBName = "authority";
-        int version = 1;
         AuthoritySQLite helper = new AuthoritySQLite(MainMyL3Special.this, DBName, null, version);
         dao = new AuthoritySQLiteUserDao(helper);
         specialTextView2.setText(dao.querySpecial(nameid));
@@ -63,14 +68,15 @@ public class MainMyL3Special extends AppCompatActivity {
 
     @OnClick({R.id.specialButton1, R.id.specialButton2})
     public void onViewClicked(View view) {
-        String snameid = specialEditText.getText().toString();
+        snameid = specialEditText.getText().toString();
         switch (view.getId()) {
             case R.id.specialButton1:
                 if (snameid.length() == 11){
-                    user.setSnameid(snameid);
-                    //数据发送到云端
-                    PostFunctions postFunctions = null;
-                    aForPost = postFunctions.SaveAuthorityPost(user,uiHandler);
+
+                    //插入特殊用户数据发送到云端
+                    user.setSnameId(snameid);
+                    new PostFunctions().SaveAuthorityPost(user,uiHandler);
+
                 }else {
                     specialEditText.setText("");
                     Toast.makeText(this,"您输入的ID不正确",Toast.LENGTH_SHORT).show();
@@ -96,10 +102,16 @@ public class MainMyL3Special extends AppCompatActivity {
                     Toast.makeText(MainMyL3Special.this,"删除成功",Toast.LENGTH_SHORT).show();
                     break;
                 case 21:
-                    if (aForPost != null){
-                        dao.insert(user);
-                        specialTextView2.setText(dao.querySpecial(nameid));
-                    }
+                    //插入本地权限表
+                    dao.insert(user);
+                    specialTextView2.setText(dao.querySpecial(nameid));
+
+                    //插入备注表
+                    RemarkSQLite helper10 = new RemarkSQLite(MainMyL3Special.this,DBName1,null,version);
+                    RemarkSQLiteUserDao dao10 = new RemarkSQLiteUserDao(helper10);
+                    RemarkSQLiteUser user10 = new RemarkSQLiteUser(snameid,"");
+                    dao10.insert(user10);
+
                     break;
             }
         }

@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ATestA extends AppCompatActivity {
+public class AlarmActivityDialog extends AppCompatActivity {
 
     @BindView(R.id.mAlaTextView2)
     TextView mAlaTextView2;
@@ -58,7 +58,7 @@ public class ATestA extends AppCompatActivity {
             case R.id.mAlaButton1:
                 startService(serviceIntent);
                 user.setCheckbox(true);
-                dao.updateAll(user,ATestA.this);
+                dao.updateAll(user, AlarmActivityDialog.this);
                 finish();
                 break;
             case R.id.mAlaButton2:
@@ -70,7 +70,7 @@ public class ATestA extends AppCompatActivity {
                 //计算延时后的时间，获取并设置延时日程
                 gettime(user.getTime(),min);
                 //更新数据库
-                dao.updateAll(user,ATestA.this);
+                dao.updateAll(user, AlarmActivityDialog.this);
                 finish();
                 break;
         }

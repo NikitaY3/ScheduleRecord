@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
@@ -31,6 +32,7 @@ import com.schedule.record.app.sqlite.TodaySQLite;
 import java.util.Calendar;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.schedule.record.app.R.*;
 
 public class CalenderDayAdapter extends BaseAdapter {
@@ -103,7 +105,13 @@ public class CalenderDayAdapter extends BaseAdapter {
                 helper = new TodaySQLite(context,DBName,null,version);
                 TodaySQLiteUserDao dao=new TodaySQLiteUserDao(helper);
                 dao.updateAll(pb,context);
-                new Mode1ProgressBar(dao.CountBar(),dao.CountAllBar(),mode1ProgressBar);
+
+                //取得登录用户的ID
+                SharedPreferences sharedPreferences;
+                sharedPreferences = context.getSharedPreferences("myuser", MODE_PRIVATE);
+                String nameid = sharedPreferences.getString("nameid", "");
+
+                new Mode1ProgressBar(dao.CountBar(nameid),dao.CountAllBar(nameid),mode1ProgressBar);
             }
         });
 
